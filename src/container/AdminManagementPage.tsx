@@ -33,10 +33,10 @@ const AdminManagementPage = (): JSX.Element => {
           >
             <SubMenu key="sub1" title="Plate Management">
               <Menu.Item key="1" onClick={() => toPage("plateAdd")}>
-                Plate Add
+                Plates Add
               </Menu.Item>
               <Menu.Item key="3" onClick={() => toPage("labelAdd")}>
-                Label Add
+                Labels Add
               </Menu.Item>
               <Menu.Item key="2" onClick={() => toPage("plateManagement")}>
                 Plates Management
