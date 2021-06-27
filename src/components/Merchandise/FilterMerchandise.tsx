@@ -208,6 +208,7 @@ const FilterMerchandise = (): JSX.Element => {
   const getMerchandiseDiv = () => {
     if (merchandisesState.merchandises && !loading) {
       return merchandisesState.merchandises.map((merchandise, index) => {
+        console.log(merchandise)
         return (
           <MerchandiseCard key={index}>
             <MerchandiseCardLeft>
@@ -244,7 +245,7 @@ const FilterMerchandise = (): JSX.Element => {
               </div>
             </MerchandiseCardLeft>
             <img
-              src={(merchandise.imageBodies as ImageBody[])[0].imgBase64}
+              src={merchandise.urlLinks[0]}
               style={{ width: "100px", height: "100px" }}
             />
           </MerchandiseCard>

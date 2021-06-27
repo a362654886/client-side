@@ -1,5 +1,6 @@
 import { NewUserBody } from "../redux/newUser";
 import { BooleanType, LoginType } from "./EnumTypes";
+import { LoadingPercentageType } from "./LoadingType";
 import { MerchandiseReturnBody } from "./MerchandiseType";
 import { MessageReturnBody } from "./MessageType";
 import { Post } from "./PostType";
@@ -15,4 +16,5 @@ export interface IStoreState {
   likeBodyState: LikeBody[];
   administerState: BooleanType;
   merchandisesState: MerchandiseReturnBody;
+  loadingState: LoadingPercentageType;
 }

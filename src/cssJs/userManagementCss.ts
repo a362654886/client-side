@@ -178,3 +178,9 @@ export const IconButtonDelete = styled(Button)`
   bottom: 5px;
   right: 5px;
 `;
+
+//video add
+
+export const VideoAddDiv = styled.div`
+  margin: 1rem auto;
+`;

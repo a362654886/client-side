@@ -7,6 +7,7 @@ import { messagesState } from "../messages";
 import { likeBodyState } from "../likeBodyState";
 import { administerState } from "../administerState";
 import { merchandisesState } from "../merchandises";
+import { loadingState } from "../loading";
 
 export default combineReducers({
   authState,
@@ -16,5 +17,6 @@ export default combineReducers({
   messagesState,
   likeBodyState,
   administerState,
-  merchandisesState
+  merchandisesState,
+  loadingState
 });

@@ -43,6 +43,17 @@ export const labelAdd = async (label: Label): Promise<number | null> => {
     });
 };
 
+export const labelDelete = async (labelId: string): Promise<number | null> => {
+  const endpoint = basicURL + `labelDelete?labelId=${labelId}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const userLabelsUpdate = async (
   labels: UpdateLabel[]
 ): Promise<UserLabel[] | null> => {

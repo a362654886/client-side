@@ -104,6 +104,7 @@ const NewMerchandise = (): JSX.Element => {
       imageBodies: imageArr,
       label: label,
       auctionEmail: (loginUser as User)._id,
+      urlLinks:[]
     };
     await merchandiseAdd(newMerchandise);
   };

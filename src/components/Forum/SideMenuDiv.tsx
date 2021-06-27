@@ -57,7 +57,7 @@ const SideMenuDiv = ({ toPage }: IProps): JSX.Element => {
         const popLabels: popUpBlock[] | undefined = labels.map((label) => {
           return {
             name: label.labelName,
-            imageBase64: label.imgBase64,
+            url: label.url as string,
           };
         });
         plateLabels.push({
@@ -121,7 +121,7 @@ const SideMenuDiv = ({ toPage }: IProps): JSX.Element => {
                     onMouseEnter={() => getLabels(plate.plateName, index)}
                   >
                     <PlateImg
-                      src={"data:image/jpeg;base64," + plate.imgBase64}
+                      src={`${plate.url}`}
                     />
                     <a>{plate.plateName}</a>
                   </div>

@@ -3,7 +3,7 @@ import { LabelPopUp, PlatePopUp } from "../../cssJs/forumCss";
 
 export type popUpBlock = {
   name: string;
-  imageBase64: string;
+  url: string;
 };
 
 const getAllBlocks = (
@@ -21,7 +21,7 @@ const getAllBlocks = (
       const columnNum = Math.ceil((i + 1) / rowNumber) - 1;
       popArray[columnNum].push(
         <LabelPopUp key={i}>
-          <img src={"data:image/jpeg;base64," + popUpValues[i].imageBase64} />
+          <img src={`${popUpValues[i].url}`} />
           <a onClick={() => foFunction(popUpValues[i].name)}>
             {popUpValues[i].name}
           </a>
