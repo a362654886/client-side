@@ -42,16 +42,6 @@ const VideoUploadDiv = ({ setVideo }: IProps): JSX.Element => {
     setVideo(files);
   };
 
-  const getBase64file = (file: File) => {
-    return new Promise((resolve: (value: string) => void) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async () => {
-        resolve(reader.result as string);
-      };
-    });
-  };
-
   return (
     <ImageUploadBody>
       <Title>

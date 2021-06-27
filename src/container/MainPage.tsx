@@ -107,7 +107,7 @@ const MainPage = (): JSX.Element => {
                   <p>Videos</p>
                 </MenuButton>
                 <MenuButton to="/mainPage/merchandise/filterMerchandise">
-                  <p>Merchandise</p>
+                  <p>Market</p>
                 </MenuButton>
                 <MenuButton to="/mainPage/forumMain">
                   <p>Forum</p>
