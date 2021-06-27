@@ -12,7 +12,7 @@ import {
   NewMerchandiseImg,
   NewMerchandiseLabel,
 } from "../../cssJs/MerchandiseCss";
-import { ButtonDiv, ButtonPrimary } from "../../cssJs/publicCss";
+import { ButtonDiv, ButtonPrimary, Loading } from "../../cssJs/publicCss";
 import { ImageBody } from "../../types/BasicType";
 import { InputBoxType } from "../../types/EnumTypes";
 import { IStoreState } from "../../types/IStoreState";
@@ -43,6 +43,7 @@ const NewMerchandise = (): JSX.Element => {
     imgName: "",
   });
   const [num, setUpdatePage] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -90,6 +91,7 @@ const NewMerchandise = (): JSX.Element => {
   const onSelectChange = (e: SelectValue): void => setLabel(e as string[]);
 
   const submit = async () => {
+    setLoading(true);
     const time = new Date();
     const newMerchandise = {
       _id: (loginUser as User)._id + time.valueOf(),
@@ -104,66 +106,75 @@ const NewMerchandise = (): JSX.Element => {
       imageBodies: imageArr,
       label: label,
       auctionEmail: (loginUser as User)._id,
-      urlLinks:[]
+      urlLinks: [],
     };
     await merchandiseAdd(newMerchandise);
+    setLoading(false);
   };
 
-  return (
-    <NewMerchandiseDiv>
-      <InputBox
-        Title="Title"
-        onChange={onChange}
-        type={InputBoxType.INPUT}
-        value={title}
-      />
-      <InputBox
-        Title="Opening Bid"
-        onChange={onChange}
-        type={InputBoxType.INPUT}
-        value={openingPrice}
-      />
-      <InputBox
-        Title="Deadline Day"
-        onChange={onTimeChange}
-        type={InputBoxType.DATE_PICKER}
-      />
-      <InputBox
-        Title="Label"
-        onMultipleSelectChange={onSelectChange}
-        type={InputBoxType.MULTIPLE_SELECT}
-        options={allLabels}
-      />
-      <ImgUploadDiv setImg={addImg} />
-      <NewImage>
-        <label>Image</label>
-        <div>
-          <NewMerchandiseImg
-            src={(uploadImg as ImageBody).imgBase64}
-            style={{
-              width: "300px",
-              height: "300px",
-            }}
-          />
-        </div>
-      </NewImage>
-      <NewImage>
-        <NewMerchandiseLabel>Images</NewMerchandiseLabel>
-        {imageArr.map((img, index) => {
-          return (
-            <NewMerchandiseImg
-              src={img.imgBase64}
-              key={index}
-              style={{ width: "100px", height: "100px" }}
+  const getBody = () => {
+    if (!loading) {
+      return (
+        <>
+            <InputBox
+              Title="Title"
+              onChange={onChange}
+              type={InputBoxType.INPUT}
+              value={title}
             />
-          );
-        })}
-      </NewImage>
-      <ButtonDiv>
-        <ButtonPrimary onClick={submit}>Submit</ButtonPrimary>
-      </ButtonDiv>
-    </NewMerchandiseDiv>
-  );
+            <InputBox
+              Title="Opening Bid"
+              onChange={onChange}
+              type={InputBoxType.INPUT}
+              value={openingPrice}
+            />
+            <InputBox
+              Title="Deadline Day"
+              onChange={onTimeChange}
+              type={InputBoxType.DATE_PICKER}
+            />
+            <InputBox
+              Title="Label"
+              onMultipleSelectChange={onSelectChange}
+              type={InputBoxType.MULTIPLE_SELECT}
+              options={allLabels}
+            />
+            <ImgUploadDiv setImg={addImg} />
+            <NewImage>
+              <label>Image</label>
+              <div>
+                <NewMerchandiseImg
+                  src={(uploadImg as ImageBody).imgBase64}
+                  style={{
+                    width: "300px",
+                    height: "300px",
+                  }}
+                />
+              </div>
+            </NewImage>
+            <NewImage>
+              <NewMerchandiseLabel>Images</NewMerchandiseLabel>
+              {imageArr.map((img, index) => {
+                return (
+                  <NewMerchandiseImg
+                    src={img.imgBase64}
+                    key={index}
+                    style={{ width: "100px", height: "100px" }}
+                  />
+                );
+              })}
+            </NewImage>
+            <ButtonDiv>
+              <ButtonPrimary onClick={submit}>Submit</ButtonPrimary>
+            </ButtonDiv>
+        </>
+      );
+    } else {
+      return <Loading />;
+    }
+  };
+
+  return <NewMerchandiseDiv>{getBody()}</NewMerchandiseDiv>;
 };
 
 export default NewMerchandise;
