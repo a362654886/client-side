@@ -15,13 +15,14 @@ export const filesAdd = async (chunk: any): Promise<number | null> => {
     });
 };
 
-export const filesUpload = async (name: any): Promise<number | null> => {
-    const endpoint = basicURL + `video/all?name=${name}`;
-    return Axios.get(endpoint)
-      .then((response) => {
-        return response.status;
-      })
-      .catch(() => {
-        return null;
-      });
-  };
+export const filesUpload = async (): Promise<number | null> => {
+  const endpoint = basicURL + `video/all`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      console.log(response)
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
