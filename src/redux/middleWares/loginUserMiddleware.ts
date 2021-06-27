@@ -17,6 +17,6 @@ export const loginUserMiddleware =
         payload: action.payload.admin,
         type: ADMINISTER_STATE,
       })
-      connection(action.payload.userEmail, store);
+      //connection(action.payload.userEmail, store);
     }
   };

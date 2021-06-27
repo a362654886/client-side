@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { GetAlertDiv } from "../components/conponentDivs/GetAlertDiv";
 import MerchandiseRouter from "../components/Router/MeichandiseRouter";
-import { MerchandiseDiv} from "../cssJs/MerchandiseCss";
+import { MerchandiseDiv } from "../cssJs/MerchandiseCss";
 import { TitleWithLine } from "../cssJs/publicCss";
 import { showAlert } from "../helperFns/showFn";
 import { BooleanType } from "../types/EnumTypes";
@@ -48,12 +48,12 @@ const MerchandisePage = (): JSX.Element => {
   return (
     <MerchandiseDiv>
       <TitleWithLine>
-        <h5>Merchandise</h5>
+        <h5>Market</h5>
         <NewMerchandiseButton
           style={{ display: newMerchandiseShow }}
           onClick={() => toForum(`newMerchandise`)}
         >
-          New Merchandise
+          New Item
         </NewMerchandiseButton>
       </TitleWithLine>
       <GetAlertDiv

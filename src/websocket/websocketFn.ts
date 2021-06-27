@@ -5,7 +5,8 @@ export let socket: WebSocket | null = null;
 
 export const connection = (userEmail: string, store: middleStoreType ) => {
   //`ws://localhost:5001/ws?userEmail=${userEmail}`
-  socket = new WebSocket(`wss://ec2-3-85-175-249.compute-1.amazonaws.com/websocket?userEmail=${userEmail}`);
+  //`wss://ec2-3-85-175-249.compute-1.amazonaws.com/websocket?userEmail=${userEmail}`
+  socket = new WebSocket(`ws://localhost:5001/ws?userEmail=${userEmail}`);
   socket.onopen = function () {
     (socket as WebSocket).send(`{
         "fileName":"",

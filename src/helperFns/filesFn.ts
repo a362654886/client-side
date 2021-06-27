@@ -1,7 +1,12 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import { filesAdd } from "../api/fileAPI";
-import { LOADING_ADD_TOTAL, LOADING_INI } from "../redux/loading";
+import {
+  LOADING_ADD_NOW,
+  LOADING_ADD_TOTAL,
+  LOADING_INI,
+} from "../redux/loading";
 import { socketSend } from "../websocket/websocketFn";
+import AWS, { AWSError } from "aws-sdk";
 
 export const sendFile = async (value: FileList, dispatch: Dispatch<any>) => {
   dispatch({
@@ -27,11 +32,11 @@ export const sendFile = async (value: FileList, dispatch: Dispatch<any>) => {
     // send files
     await filesAdd(obj);
   }
-  sendFileToS3(uploadFileData.file.name,fileChunkList.length);
+  sendFileToS3(uploadFileData.file.name, fileChunkList.length);
   //send file to video
 };
 
-export const sendFileToS3 = (name: string,length: number) => {
+export const sendFileToS3 = (name: string, length: number) => {
   socketSend(`{
         "fileName":"${name}",
         "type":"uploadFile",
@@ -61,4 +66,52 @@ export const createFileChunk = (file: any) => {
     }
   }
   return chunks;
+};
+
+export const sendFileToAws = (file: File, dispatch: Dispatch<any>) => {
+  dispatch({
+    payload: 0,
+    type: LOADING_INI,
+  });
+
+  const SESConfig = {
+    apiVersion: "2006-03-01",
+    accessKeyId: `AKIAQHA4MFR2WBOVFECF`,
+    accessSecretKey: `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`,
+    region: "us-east-1",
+  };
+
+  const s3 = new AWS.S3({
+    apiVersion: "2006-03-01",
+    accessKeyId: SESConfig.accessKeyId,
+    secretAccessKey: SESConfig.accessSecretKey,
+  });
+
+  const params = {
+    Bucket: "animevideobucket" /* required */,
+    Key: file.name /* required */,
+    Body: file,
+  };
+
+  s3.putObject(params, (err, data) => {
+    if (err) {
+      console.log("失败");
+      console.log(err, err.stack); // an error occurred
+    } else {
+      // successful response
+      console.log("成功");
+      //成功之后将获取的objectKey值来替换img的路径
+      //this.urlData = objectKey
+      // console.log(data)
+    }
+  }).on("httpUploadProgress", function (evt) {
+    dispatch({
+      payload: evt.total,
+      type: LOADING_ADD_TOTAL,
+    });
+    dispatch({
+      payload: evt.loaded,
+      type: LOADING_ADD_NOW,
+    });
+  });
 };
