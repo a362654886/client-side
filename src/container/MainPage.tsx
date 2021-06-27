@@ -133,9 +133,6 @@ const MainPage = (): JSX.Element => {
           <MainPageRouter />
         </MainBody>
       </BackGroundBody>
-      <video width="750" height="500" controls>
-        <source src="https://dqw58loehfh4p.cloudfront.net/sss.mp4" type="video/mp4" />
-      </video>
       <FooterDiv style={{ textAlign: "center" }}>
         anime web ©2021 Created by XXX
       </FooterDiv>

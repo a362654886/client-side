@@ -5,7 +5,7 @@ import { VideoAddDiv } from "../../cssJs/userManagementCss";
 import VideoUploadDiv from "../conponentDivs/videoUploadDiv";
 import InputBox from "../InputBox";
 import { InputBoxType } from "../../types/EnumTypes";
-import { sendFile } from "../../helperFns/filesFn";
+import { sendFile, sendFileToAws } from "../../helperFns/filesFn";
 import { videoAdd } from "../../api/videoAPI";
 import { User } from "../../types/User";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import { IStoreState } from "../../types/IStoreState";
 import { LoadingPercentageType } from "../../types/LoadingType";
 import { Progress } from "antd";
 import { filesUpload } from "../../api/fileAPI";
+import AWS, { AWSError } from "aws-sdk";
 
 const UserVideoUpload = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -32,8 +33,7 @@ const UserVideoUpload = (): JSX.Element => {
   useEffect(() => {
     const percentageString = (loadingState.now / loadingState.total).toFixed(2);
     const percentageNum = Number(percentageString);
-    setLoading(percentageNum*100);
-    console.log(loading);
+    setLoading(percentageNum * 100);
   }, [loadingState]);
 
   const setVideo = (value: FileList | null) => {
@@ -42,8 +42,9 @@ const UserVideoUpload = (): JSX.Element => {
 
   const submit = async () => {
     if (videoUrl) {
-      await sendFile(videoUrl, dispatch);
-      await filesUpload();
+      //await sendFile(videoUrl, dispatch);
+      //await filesUpload();
+      sendFileToAws(videoUrl[0], dispatch);
       await videoAdd({
         _id: loginUser?.userEmail + videoName,
         videoId: loginUser?.userEmail + videoName,

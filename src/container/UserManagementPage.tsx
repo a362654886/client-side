@@ -42,7 +42,7 @@ const UserManagementPage = (): JSX.Element => {
             </SubMenu>
             <SubMenu key="sub4" title="Video">
               <Menu.Item key="7" onClick={() => toPage("userVideoUpload")}>Upload Video</Menu.Item>
-              <Menu.Item key="8">Video Management</Menu.Item>
+              <Menu.Item key="8" onClick={() => toPage("UserVideoManagement")}>Video Management</Menu.Item>
             </SubMenu>
           </Menu>
         </SideMenu>

@@ -6,6 +6,7 @@ import UserMerchandiseManagement from "../UserManagement/UserMerchandiseManageme
 import UserMerchandiseMessageManagement from "../UserManagement/UserMerchandiseMessageManagement";
 import UserPostManagement from "../UserManagement/UserPostManagement";
 import UserPostMessageManagement from "../UserManagement/UserPostMessageManagement";
+import UserVideoManagement from "../UserManagement/UserVideoManagement";
 import UserVideoUpload from "../UserManagement/UserVideoUpload";
 
 const UserManagementRouter = (): JSX.Element => {
@@ -39,6 +40,10 @@ const UserManagementRouter = (): JSX.Element => {
         <Route
           component={UserVideoUpload}
           path="/mainPage/userManagement/userVideoUpload"
+        />
+        <Route
+          component={UserVideoManagement}
+          path="/mainPage/userManagement/UserVideoManagement"
         />
       </Switch>
     </>
