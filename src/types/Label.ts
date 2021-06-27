@@ -11,6 +11,7 @@ export type Label = {
   imgName: string;
   imgBase64: string;
   plateId: string;
+  url?:string;
   ifChoose?: boolean;
 };
 

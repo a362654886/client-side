@@ -20,6 +20,7 @@ export type Plate = {
   plateName: string;
   imgName: string;
   imgBase64: string;
+  url?:string;
   showPost?: boolean;
 };
 

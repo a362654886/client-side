@@ -7,6 +7,7 @@ import {
 import { AdministerAction } from "../redux/administerState";
 import { AuthUser } from "../redux/auth";
 import { LikeBodyAction } from "../redux/likeBodyState";
+import { LoadingAction } from "../redux/loading";
 import { LoginUser } from "../redux/loginUser";
 import { MerchandiseAction } from "../redux/merchandises";
 import { MessagesAction } from "../redux/messages";
@@ -41,6 +42,7 @@ export type actionBody =
   | MessagesAction
   | LikeBodyAction
   | AdministerAction
-  | MerchandiseAction;
+  | MerchandiseAction
+  | LoadingAction;
 
 export type nextAction = (action: actionBody) => void;

@@ -71,7 +71,6 @@ const LoginForm = (): JSX.Element => {
       type: AUTH_LOADING,
     });
     const result = await userAuth(userEmail, password);
-    console.log(result)
     if (result == null) {
       dispatch({
         payload: LoginType.FAIL,

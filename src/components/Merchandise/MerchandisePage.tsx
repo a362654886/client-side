@@ -95,9 +95,9 @@ const MerchandisePage = (): JSX.Element => {
     const index = para.index;
     setMerchandise(merchandisesState.merchandises[+index]);
     //set image
-    const imageBody = merchandisesState.merchandises[+index].imageBodies;
-    if (imageBody) {
-      setMainImage(imageBody[0].imgBase64);
+    const urlLinks = merchandisesState.merchandises[+index].urlLinks;
+    if (urlLinks) {
+      setMainImage(urlLinks[0]);
     }
     //set messages
     (async function anyNameFunction() {
@@ -292,11 +292,11 @@ const MerchandisePage = (): JSX.Element => {
             </MerchandiseShowDivRight>
           </MerchandiseShowDivTop>
           <MerchandiseShowDivBottom>
-            {merchandise?.imageBodies?.map((imageBody, index) => {
+            {merchandise?.urlLinks?.map((url, index) => {
               return (
                 <BottomImg
-                  onClick={() => setMainImage(imageBody.imgBase64)}
-                  src={imageBody.imgBase64}
+                  onClick={() => setMainImage(url)}
+                  src={url}
                   key={index}
                 />
               );

@@ -63,9 +63,7 @@ const MainPage = (): JSX.Element => {
               >
                 Profile
               </LoginButton>
-              <LoginButton
-                onClick={() => toProfile("/adminManagement")}
-              >
+              <LoginButton onClick={() => toProfile("/adminManagement")}>
                 Admin Profile
               </LoginButton>
             </ProfileDiv>
@@ -96,7 +94,7 @@ const MainPage = (): JSX.Element => {
     <div className="backBody">
       <Header>
         <LOGO>
-          <img src={logo} />
+          <img src={`https://animevideobucket.s3.amazonaws.com/onepiece.jpg`} />
         </LOGO>
         <div style={{ width: "100%" }}>
           <HeaderRow1>
@@ -135,6 +133,9 @@ const MainPage = (): JSX.Element => {
           <MainPageRouter />
         </MainBody>
       </BackGroundBody>
+      <video width="750" height="500" controls>
+        <source src="https://dqw58loehfh4p.cloudfront.net/sss.mp4" type="video/mp4" />
+      </video>
       <FooterDiv style={{ textAlign: "center" }}>
         anime web ©2021 Created by XXX
       </FooterDiv>

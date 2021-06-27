@@ -12,6 +12,7 @@ export type Merchandise = {
   top: boolean;
   like?: boolean;
   imageBodies?: ImageBody[];
+  urlLinks:string[];
   label: string[];
   auctionEmail: string;
   messages?: number;
