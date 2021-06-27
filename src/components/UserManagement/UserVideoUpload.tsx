@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStoreState } from "../../types/IStoreState";
 import { LoadingPercentageType } from "../../types/LoadingType";
 import { Progress } from "antd";
+import { filesUpload } from "../../api/fileAPI";
 
 const UserVideoUpload = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const UserVideoUpload = (): JSX.Element => {
   const submit = async () => {
     if (videoUrl) {
       await sendFile(videoUrl, dispatch);
+      await filesUpload();
       await videoAdd({
         _id: loginUser?.userEmail + videoName,
         videoId: loginUser?.userEmail + videoName,

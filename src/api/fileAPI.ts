@@ -15,7 +15,7 @@ export const filesAdd = async (chunk: any): Promise<number | null> => {
     });
 };
 
-export const filesUpload = async (name: any): Promise<number | null> => {
+export const filesUpload = async (): Promise<number | null> => {
   const endpoint = basicURL + `video/all`;
   return Axios.get(endpoint)
     .then((response) => {
