@@ -76,8 +76,8 @@ export const sendFileToAws = (file: File, dispatch: Dispatch<any>) => {
 
   const SESConfig = {
     apiVersion: "2006-03-01",
-    accessKeyId: `AKIAQHA4MFR2WBOVFECF`,
-    accessSecretKey: `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`,
+    accessKeyId: `AKIAQHA4MFR2UXS6H4FT`,
+    accessSecretKey: `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`,
     region: "us-east-1",
   };
 
