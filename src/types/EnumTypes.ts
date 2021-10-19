@@ -26,16 +26,3 @@ export enum BooleanType {
   FAIL = "FAIL",
   INI = "INI"
 }
-
-export enum ColorType {
-  PINK = "#ee6fa9",
-  LIGHTPINK = "#f0afcd",
-  WHITE = "white"
-}
-
-export enum LikeUpdateType {
-  POST = "post",
-  MERCHANDISE = "merchandise",
-  MESSAGE = "message",
-  VIDEO ="video"
-}

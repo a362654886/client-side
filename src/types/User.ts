@@ -1,19 +1,24 @@
-import { UserLabel } from "./Label";
-
 export type User = {
   _id: string;
   userEmail: string;
-  firstName: string;
-  lastName: string;
-  address: string;
+  password: string;
+  name: string;
   gender: Gender;
   birthday: Date;
-  password: string;
-  admin: boolean;
-  labels?: UserLabel[];
+  location: string;
+  facebook: string;
+  ins: string;
+  avatar: string;
+  avatarImage?:Avatar[]
 };
 
 export enum Gender {
   male = "male",
   female = "female",
 }
+
+export type Avatar = {
+  _id: string;
+  imageName: string;
+  imageUrl: string;
+};

@@ -2,7 +2,6 @@ import { User } from "../types/User";
 import Axios from "axios";
 import { setToken } from "../helperFns/tokenFn";
 import { backEndLink } from "../globalValues";
-import { UserLabel } from "../types/Label";
 
 const basicURL = backEndLink;
 
@@ -20,11 +19,6 @@ export const userAuth = async (
         setToken(response.data.token);
       }
       const user = response.data?.user;
-      const labelsArr: UserLabel[][] = user.labels;
-      const labels = labelsArr.map((x: UserLabel[]) => {
-        return x[0];
-      });
-      user.labels = labels
       return user;
     })
     .catch(() => {
