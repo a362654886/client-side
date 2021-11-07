@@ -55,7 +55,6 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
         modules={modules}
         formats={formats}
         bounds={".app"}
-        placeholder={"Say something"}
       />
     </>
   );

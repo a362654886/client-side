@@ -35,9 +35,7 @@ const AnimeShowPage = (): JSX.Element => {
 
   useEffect(() => {
     (async function anyNameFunction() {
-      setLoading(true);
       await search();
-      setLoading(false);
     })();
   }, [page]);
 

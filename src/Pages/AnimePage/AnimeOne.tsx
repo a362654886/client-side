@@ -99,7 +99,7 @@ const AnimeOne = (): JSX.Element => {
   const getChildDiv = () => {
     switch (chooseButton) {
       case 0:
-        return <AnimeOnePage toVideo={(page: number) => changeButton(page)} />;
+        return <AnimeOnePage toPage={(page: number) => changeButton(page)} />;
       case 1:
         return (
           <AnimeOneVideo
@@ -107,6 +107,7 @@ const AnimeOne = (): JSX.Element => {
             pageSizeSetting={1}
             ifShowHeader={true}
             ifShowAdd={false}
+            toAddVideo={(page: number) => changeButton(page)}
           />
         );
       case 2:
@@ -116,6 +117,7 @@ const AnimeOne = (): JSX.Element => {
             pageSizeSetting={3}
             ifShowHeader={true}
             ifShowAdd={false}
+            toAddProduct={(page: number) => changeButton(page)}
           />
         );
       case 3:

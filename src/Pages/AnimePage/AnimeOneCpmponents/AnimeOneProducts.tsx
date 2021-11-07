@@ -25,6 +25,7 @@ interface IProps {
   pageSizeSetting: number;
   ifShowHeader: boolean;
   ifShowAdd: boolean;
+  toAddProduct?: (page: number) => void;
 }
 
 const AnimeOneProducts = ({
@@ -32,6 +33,7 @@ const AnimeOneProducts = ({
   pageSizeSetting,
   ifShowHeader,
   ifShowAdd,
+  toAddProduct,
 }: IProps): JSX.Element => {
   const [productArr, setProductArr] = useState<Product[][] | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
@@ -150,7 +152,7 @@ const AnimeOneProducts = ({
     <AnimOneVideo>
       <div
         style={{
-          marginBottom: "16px"
+          marginBottom: "16px",
         }}
       >
         <Subtitle
@@ -176,7 +178,7 @@ const AnimeOneProducts = ({
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="#FFC300"
-          buttonClick={() => console.log("s")}
+          buttonClick={() => (toAddProduct ? toAddProduct(5) : "")}
         />
       </div>
       {getExistProducts()}

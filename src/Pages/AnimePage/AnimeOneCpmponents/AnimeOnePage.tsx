@@ -26,10 +26,10 @@ import AnimeOneProducts from "./AnimeOneProducts";
 import AnimeOneVideo from "./AnimeOneVideo";
 
 interface IProps {
-  toVideo: (page: number) => void;
+  toPage: (page: number) => void;
 }
 
-const AnimeOnePage = ({ toVideo }: IProps): JSX.Element => {
+const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const chooseAnime: Anime | null = useSelector(
     (state: IStoreState) => state.animeState
   );
@@ -118,6 +118,7 @@ const AnimeOnePage = ({ toVideo }: IProps): JSX.Element => {
         pageSizeSetting={1}
         ifShowHeader={false}
         ifShowAdd={true}
+        toAddVideo={toPage}
       />
       <AnimeOneTitle>Products</AnimeOneTitle>
       <AnimeOneProducts
@@ -125,6 +126,7 @@ const AnimeOnePage = ({ toVideo }: IProps): JSX.Element => {
         pageSizeSetting={3}
         ifShowHeader={false}
         ifShowAdd={true}
+        toAddProduct={toPage}
       />
       <AnimeOneTitle>Forum</AnimeOneTitle>
       <AnimeOneForum

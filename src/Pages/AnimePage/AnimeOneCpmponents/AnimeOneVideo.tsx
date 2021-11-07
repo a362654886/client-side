@@ -24,13 +24,15 @@ interface IProps {
   pageSizeSetting: number;
   ifShowHeader: boolean;
   ifShowAdd: boolean;
+  toAddVideo?: (page: number) => void;
 }
 
 const AnimeOneVideo = ({
   anime,
   pageSizeSetting,
   ifShowHeader,
-  ifShowAdd
+  ifShowAdd,
+  toAddVideo,
 }: IProps): JSX.Element => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(false);
@@ -124,12 +126,12 @@ const AnimeOneVideo = ({
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="#FFC300"
-          buttonClick={() => console.log("s")}
+          buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
         />
       </MiddleDiv>
       <div
         style={{
-          display: ifShowAdd ? "inline":"none",
+          display: ifShowAdd ? "inline" : "none",
         }}
       >
         <AnimeButton
@@ -140,7 +142,7 @@ const AnimeOneVideo = ({
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="#FFC300"
-          buttonClick={() => console.log("s")}
+          buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
         />
       </div>
       <div style={{ marginTop: "23px" }}>

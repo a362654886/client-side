@@ -9,6 +9,7 @@ import LoginPage from "../Pages/LoginPage/LoginPage";
 import SignUpPage from "../Pages/LoginPage/SignUpPage";
 import Mall from "../Pages/Mall/Mall";
 import Marketplace from "../Pages/Marketplace/Marketplace";
+import NewOnePage from "../Pages/NewsPage/NewOnePage";
 import NewsPage from "../Pages/NewsPage/NewsPage";
 import NewPage from "../Pages/NewsPage/NewsPage";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
@@ -29,6 +30,7 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={Marketplace} path="/mainPage/marketplace" />
         <Route component={Mall} path="/mainPage/mall" />
         <Route component={NewsPage} path="/mainPage/news" />
+        <Route component={NewOnePage} path="/mainPage/oneNew" />
       </Switch>
     </>
   );
