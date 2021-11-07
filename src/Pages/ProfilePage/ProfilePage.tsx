@@ -9,6 +9,7 @@ import {
   MessageDiv,
   NamePic,
   NameText,
+  ProfileBox,
   ProfileChildDiv,
   ProfileDiv,
 } from "../../cssJs/ProfilePage/ProfileCss";
@@ -52,9 +53,7 @@ const ProfilePage = (): JSX.Element => {
   const toPage = (url: string) => history.replace(url);
   const [chooseButton, setChooseButton] = useState<number>(0);
 
-  const changeButton = (index: number) => {
-    setChooseButton(index);
-  };
+  const changeButton = (index: number) => setChooseButton(index);
 
   const getButtons = () => {
     return buttonsColor.map(
@@ -117,7 +116,7 @@ const ProfilePage = (): JSX.Element => {
   };
 
   return (
-    <>
+    <ProfileBox>
       <ProfileDiv>
         <NamePic
           src={((loginUser as User).avatarImage as Avatar[])[0].imageUrl}
@@ -170,7 +169,7 @@ const ProfilePage = (): JSX.Element => {
       </InfoDiv>
       <ButtonsDiv>{getButtons()}</ButtonsDiv>
       <ProfileChildDiv>{getProfileDiv()}</ProfileChildDiv>
-    </>
+    </ProfileBox>
   );
 };
 

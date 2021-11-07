@@ -20,3 +20,11 @@ P {
   font-family: "baloo";
   src: url("./fontFamily/Baloo-Regular.ttf");
 }
+
+.ant-alert-with-description.ant-alert-no-icon {
+  padding: 5px !important;
+}
+
+.ql-container {
+  height: 200px !important;
+}

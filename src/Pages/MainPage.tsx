@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { LoginType } from "../types/EnumTypes";
 import { IStoreState } from "../types/IStoreState";
@@ -17,6 +16,13 @@ import {
   LoginImg,
 } from "../cssJs/headerCss";
 import ProfilePageRouter from "../router/ProfilePageRouter";
+import {
+  Footer,
+  FooterLogo,
+  FooterText1,
+  FooterText2,
+  FooterText3,
+} from "../cssJs/footerCss";
 
 const MainPage = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -29,7 +35,6 @@ const MainPage = (): JSX.Element => {
     history.push({
       pathname: "/mainPage/home",
     });
-    console.log(loginUser);
   }, []);
 
   useEffect(() => {
@@ -39,11 +44,6 @@ const MainPage = (): JSX.Element => {
   const authState: LoginType = useSelector(
     (state: IStoreState) => state.authState
   );
-
-  const childrenRef: React.MutableRefObject<{ popUp: () => void }> =
-    useRef() as React.MutableRefObject<{ popUp: () => void }>;
-
-  const login = () => childrenRef.current.popUp();
 
   const toProfile = (url: string) => history.replace(url);
 
@@ -81,18 +81,62 @@ const MainPage = (): JSX.Element => {
         <HeaderContainer>
           <HeaderTitle>ANIMEPARK</HeaderTitle>
           <HeaderContext>
-            <p>Discovery</p>
-            <p>Anime</p>
-            <p>Showcase</p>
-            <p>Marketplace</p>
-            <p>Mall</p>
-            <p>News</p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/discovery");
+              }}
+            >
+              Discovery
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/animeShowPage");
+              }}
+            >
+              Anime
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/showcase");
+              }}
+            >
+              Showcase
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/marketplace");
+              }}
+            >
+              Marketplace
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/mall");
+              }}
+            >
+              Mall
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/news");
+              }}
+            >
+              News
+            </p>
           </HeaderContext>
           {getProfile()}
         </HeaderContainer>
       </Header>
       <MainPageRouter />
       <ProfilePageRouter />
+      <Footer>
+        <HeaderContainer>
+          <FooterLogo>©2021 AnimePark Limited Inc</FooterLogo>
+          <FooterText1>First time visitors</FooterText1>
+          <FooterText2>Help/FAQ</FooterText2>
+          <FooterText3>About Us</FooterText3>
+        </HeaderContainer>
+      </Footer>
     </div>
   );
 };

@@ -13,9 +13,7 @@ import {
   AvatarInput,
   ConfirmInput,
   EmailInput,
-  LoginBox,
   LoginButton,
-  LoginClickButton,
   LoginTitle,
   NameInput,
   PasswordInput,
@@ -25,7 +23,8 @@ import {
 } from "../../cssJs/loginCss";
 import { Avatar, Gender, User } from "../../types/User";
 import { userAdd } from "../../api/userApi";
-import { Loading } from "../../cssJs/loadingCss";
+import LoadingDiv from "../../components/LoadingDiv";
+import AlertBox, { ColorType } from "../../components/AlertBox";
 
 const SignUpPage = (): JSX.Element => {
   const history = useHistory();
@@ -36,9 +35,9 @@ const SignUpPage = (): JSX.Element => {
   const [name, setName] = useState<string>("");
   const [avatars, setAvatars] = useState<Avatar[] | null>(null);
   const [avatarArr, setAvatarArr] = useState<Avatar[][] | null>(null);
-  const [num, serRefresh] = useState(0);
   const [chooseAvatar, setChooseAvatarIndex] = useState<Avatar | null>(null);
   const [ifLoading, setLoading] = useState<boolean>(false);
+  const [ifLoadingAlert, setLoadingAlert] = useState<boolean>(false);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -80,6 +79,7 @@ const SignUpPage = (): JSX.Element => {
   };
 
   const submit = async () => {
+    setLoadingAlert(false);
     const user: User = {
       _id: email,
       userEmail: email,
@@ -90,13 +90,16 @@ const SignUpPage = (): JSX.Element => {
       location: "",
       facebook: "",
       ins: "",
+      tel: "",
       avatar: chooseAvatar ? chooseAvatar.imageName : "",
     };
     const r = await userAdd(user);
     if (r) {
       toPage("/mainPage/login");
     }
-    console.log(r);
+    if (r == null) {
+      setLoadingAlert(true);
+    }
   };
 
   const getAvatarArr = () => {
@@ -115,7 +118,6 @@ const SignUpPage = (): JSX.Element => {
       }
     });
     setAvatarArr([arr1, arr2, arr3]);
-    console.log(avatarArr);
   };
 
   const setChooseAvatar = (avatar: Avatar) => setChooseAvatarIndex(avatar);
@@ -148,16 +150,16 @@ const SignUpPage = (): JSX.Element => {
         }
       });
     } else {
-      return <>sdfd</>;
+      return <></>;
     }
   };
 
   const getAvatarBox = () => {
-    console.log(ifLoading);
     if (ifLoading) {
       return (
         <>
-          <Loading />
+          <p>Avatar:</p>
+          <LoadingDiv height="230px" width="230px" />
         </>
       );
     } else {
@@ -181,6 +183,11 @@ const SignUpPage = (): JSX.Element => {
   return (
     <SignUpBox>
       <LoginTitle>Welcome to ANIMEPARK</LoginTitle>
+      <AlertBox
+        text="user add fail, please connect manager"
+        color={ColorType.ERROR}
+        show={ifLoadingAlert}
+      />
       <SignUpButton>
         <AnimeButton
           para=""

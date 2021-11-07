@@ -5,6 +5,7 @@ import AnimeButton from "../../components/Button";
 import {
   NamePic,
   NameText,
+  ProfileBox,
   ProfileDiv,
 } from "../../cssJs/ProfilePage/ProfileCss";
 import { IStoreState } from "../../types/IStoreState";
@@ -20,7 +21,7 @@ const ProfileMessagePage = (): JSX.Element => {
   const toPage = (url: string) => history.replace(url);
 
   return (
-    <>
+    <ProfileBox>
       <ProfileDiv>
         <NamePic
           src={((loginUser as User).avatarImage as Avatar[])[0].imageUrl}
@@ -49,7 +50,8 @@ const ProfileMessagePage = (): JSX.Element => {
           buttonClick={() => toPage("/mainPage/ProfileMessage")}
         />
       </ProfileDiv>
-    </>
+      message
+    </ProfileBox>
   );
 };
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const LoginBox = styled.div`
-  height: 331px;
+  height: 810px;
   width: 289px;
   margin: auto;
   margin-top: 23px;
@@ -77,11 +77,10 @@ export const LoginClickButton = styled.div`
   position: absolute;
 `;
 
-
 // signup
 
 export const SignUpBox = styled.div`
-  height: 674px;
+  height: 810px;
   width: 289px;
   margin: auto;
   margin-top: 23px;
@@ -165,12 +164,25 @@ export const AvatarBox3 = styled.div`
 export const AvatarImg = styled.img`
   width: 40px;
   height: 40px;
-  margin:10px;
+  margin: 10px;
 `;
 
 export const AvatarChooseImg = styled.img`
   width: 40px;
   height: 40px;
-  margin:10px;
-  background-color: #FFC300;
+  margin: 10px;
+  background-color: #ffc300;
+`;
+
+// alert
+export const AlertDiv = styled.p`
+  p {
+    color: #4a4a4a;
+    font-size: 14px;
+    line-height: 22px;
+    width: 281px;
+    height: 36px;
+    padding: 7px 20px;
+    background-color: ${(props) => props.color};
+  }
 `;

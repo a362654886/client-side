@@ -12,6 +12,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "antd/dist/antd.css";
 import { persistReducer, persistStore } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
+import AdminPage from "./Pages/AdminPage/AdminPage";
+import AdminMainPage from "./Pages/AdminPage/AdminMainPage";
 
 const persistConfig = {
   key: "root",
@@ -34,6 +36,8 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route path="/mainPage" component={MainPage} />
+        <Route path="/adminPage" component={AdminPage} />
+        <Route path="/adminManagement"  component={AdminMainPage} />
       </Switch>
     </Router>
   </Provider>,

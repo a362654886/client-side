@@ -8,6 +8,7 @@ export type User = {
   location: string;
   facebook: string;
   ins: string;
+  tel:string;
   avatar: string;
   avatarImage?:Avatar[]
 };

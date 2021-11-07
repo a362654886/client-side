@@ -1,9 +1,15 @@
 import styled from "styled-components";
 
+export const ProfileBox = styled.div`
+  height: 44px;
+  width: 1121px;
+  margin: auto;
+  height: 800px;
+`;
+
 export const ProfileDiv = styled.div`
   height: 44px;
   width: 600px;
-  margin-left: 129px;
   margin-top: 29px;
   display: flex;
   button {
@@ -37,13 +43,11 @@ export const NameText = styled.p`
 `;
 
 export const MessageDiv = styled.div`
-  margin-left: 129px;
   margin-top: 16px;
 `;
 
 export const InfoDiv = styled.div`
   height: 22px;
-  margin-left: 129px;
   margin-top: 16px;
   display: flex;
   font-size: 14px;
@@ -58,7 +62,6 @@ export const InfoDiv = styled.div`
 `;
 
 export const ButtonsDiv = styled.div`
-  margin-left: 129px;
   margin-top: 38px;
   button {
     margin-right: 16px;
@@ -66,6 +69,5 @@ export const ButtonsDiv = styled.div`
 `;
 
 export const ProfileChildDiv = styled.div`
-  margin-left: 129px;
   margin-top: 38px;
 `;

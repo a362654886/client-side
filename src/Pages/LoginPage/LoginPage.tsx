@@ -17,8 +17,8 @@ import {
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { LoginType } from "../../types/EnumTypes";
-import { Spinner } from "react-bootstrap";
-import { Loading } from "../../cssJs/loadingCss";
+import LoadingDiv from "../../components/LoadingDiv";
+import AlertBox, { ColorType } from "../../components/AlertBox";
 
 const LoginPage = (): JSX.Element => {
   const history = useHistory();
@@ -27,6 +27,7 @@ const LoginPage = (): JSX.Element => {
   const [email, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [ifLoading, setLoading] = useState<boolean>(false);
+  const [ifLoadingAlert, setLoadingAlert] = useState<boolean>(false);
 
   const toPage = (url: string) => history.replace(url);
 
@@ -37,11 +38,15 @@ const LoginPage = (): JSX.Element => {
       type: AUTH_LOADING,
     });
     const user = await userAuth(email, password);
+    setLoadingAlert(false);
     if (user == null) {
+      console.log("Asd")
       dispatch({
         payload: LoginType.FAIL,
         type: AUTH_FAIL,
       });
+      setLoadingAlert(true);
+      console.log(ifLoadingAlert)
     } else {
       dispatch({
         payload: LoginType.SUCCESS,
@@ -71,23 +76,33 @@ const LoginPage = (): JSX.Element => {
   const loadingShow = (): JSX.Element => {
     if (ifLoading) {
       return (
-        <>
-          <Loading />
-        </>
+        <div style={{ position: "absolute", top: "130px", left: "60px" }}>
+          <LoadingDiv height="200px" width="200px" />
+        </div>
       );
     } else {
       return (
         <>
-          <AnimeButton
-            para=""
-            text="Log In"
-            width="120px"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() => login()}
-          />
+          <EmailInput>
+            <p>Email:</p>
+            <Input placeholder={"email"} onChange={onChange}></Input>
+          </EmailInput>
+          <PasswordInput>
+            <p>Password:</p>
+            <Input placeholder={"password"} onChange={onChange}></Input>
+          </PasswordInput>
+          <LoginClickButton>
+            <AnimeButton
+              para=""
+              text="Log In"
+              width="120px"
+              height="32px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() => login()}
+            />
+          </LoginClickButton>
         </>
       );
     }
@@ -96,6 +111,11 @@ const LoginPage = (): JSX.Element => {
   return (
     <LoginBox>
       <LoginTitle>Welcome to ANIMEPARK</LoginTitle>
+      <AlertBox
+        text="wrong email or password"
+        color={ColorType.ERROR}
+        show={ifLoadingAlert}
+      />
       <SignUpButton>
         <AnimeButton
           para=""
@@ -120,15 +140,7 @@ const LoginPage = (): JSX.Element => {
           buttonClick={() => toPage("/mainPage/login")}
         />
       </LoginButton>
-      <EmailInput>
-        <p>Email:</p>
-        <Input placeholder={"email"} onChange={onChange}></Input>
-      </EmailInput>
-      <PasswordInput>
-        <p>Password:</p>
-        <Input placeholder={"password"} onChange={onChange}></Input>
-      </PasswordInput>
-      <LoginClickButton>{loadingShow()}</LoginClickButton>
+      {loadingShow()}
     </LoginBox>
   );
 };

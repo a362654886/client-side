@@ -8,34 +8,23 @@ type ImageCheck = {
   height: number;
 };
 
+export const Upload = styled.input`
+  width: 300px;
+  height: 40px;
+  line-height: 32px;
+  background-color: white;
+  border-radius: 4px;
+`;
+
 export const ImageUploadBody = styled.div`
   display: flex;
-`;
-
-export const Title = styled.div`
-  width: 150px;
-  height: 28px;
-  line-height: 28px;
-  background-color: #ee6fa9;
-  border-radius: 15px 0 0 15px;
-  label {
-    text-align: center;
-    padding-top: 1px;
-    padding-left: 25px;
-    color: white;
-  }
-`;
-
-export const InputBody = styled.input`
-  height: 28px;
-  width: 80%;
 `;
 
 interface IProps {
   setImg: (value: ImageBody) => void;
 }
 
-const ImgUploadDiv = ({ setImg }: IProps): JSX.Element => {
+const ImgUploadDiv = ({ setImg}: IProps): JSX.Element => {
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     let resultImg: ImageBody = {
@@ -89,12 +78,7 @@ const ImgUploadDiv = ({ setImg }: IProps): JSX.Element => {
   };
 
   return (
-    <ImageUploadBody>
-      <Title>
-        <label>upload image</label>
-      </Title>
-      <InputBody type="file" onChange={(e) => handleImageChange(e)} />
-    </ImageUploadBody>
+      <Upload type="file" onChange={(e) => handleImageChange(e)} />
   );
 };
 
