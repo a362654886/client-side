@@ -18,7 +18,6 @@ import Funimation from "../../../files/fun.jpg";
 import mal from "../../../files/mal.png";
 import tubi from "../../../files/tub.jpg";
 import hidive from "../../../files/hi.jpg";
-import VIZ from "../../../files/v.jpg";
 import AnimeButton from "../../../components/Button";
 import { animeUpdate } from "../../../api/animeAPI";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
@@ -187,11 +186,6 @@ const AdminEditComponent = ({ anime }: IProps): JSX.Element => {
             <Col style={{ marginRight: "42px", width: "82px" }}>
               <Checkbox value={"hidive"} style={{ marginTop: "32px" }}>
                 <WhereWatchImg src={hidive} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"VIZ"} style={{ marginTop: "32px" }}>
-                <WhereWatchImg src={VIZ} />
               </Checkbox>
             </Col>
           </Row>
