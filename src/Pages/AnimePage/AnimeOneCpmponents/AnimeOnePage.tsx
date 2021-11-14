@@ -59,11 +59,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
     loginUser?.likeAnime ? loginUser?.likeAnime : []
   );
 
-  const toOther = (url: string) => {
-    history.replace({
-      pathname: url,
-    });
-  };
+  const toOther = (url: string) => window.open(url);
 
   useEffect(() => {
     //
