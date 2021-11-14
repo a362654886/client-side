@@ -13,11 +13,12 @@ import {
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import { Anime } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
-import crunchyroll from "../../../files/crun.jpg";
+import crunchyroll from "../../../files/mal.png";
 import mal from "../../../files/mal.png";
-import tubi from "../../../files/tub.jpg";
-import Funimation from "../../../files/fun.jpg";
-import hidive from "../../../files/hi.jpg";
+import tubi from "../../../files/mal.png";
+import Funimation from "../../../files/mal.png";
+import hidive from "../../../files/mal.png";
+import VIZ from "../../../files/mal.png";
 import AnimeButton from "../../../components/Button";
 import starBorder from "../../../files/Star-border.png";
 import starFill from "../../../files/Star-filled.png";
@@ -150,6 +151,8 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
           return <AnimOneWhereWatchImg src={hidive} key={index} />;
         case "tubi":
           return <AnimOneWhereWatchImg src={tubi} key={index} />;
+        case "VIZ":
+          return <AnimOneWhereWatchImg src={VIZ} key={index} />;
       }
     });
 
