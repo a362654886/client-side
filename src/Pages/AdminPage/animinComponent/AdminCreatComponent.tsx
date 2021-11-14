@@ -18,7 +18,7 @@ import Funimation from "../../../files/fun.jpg";
 import mal from "../../../files/mal.png";
 import tubi from "../../../files/tub.jpg";
 import hidive from "../../../files/hi.jpg";
-import VIZ from "../../../files/viz.jpg";
+import VIZ from "../../../files/v.jpg";
 import AnimeButton from "../../../components/Button";
 import { Anime } from "../../../types/Amine";
 import { animeAdd } from "../../../api/animeAPI";

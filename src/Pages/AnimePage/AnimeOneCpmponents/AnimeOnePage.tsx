@@ -18,7 +18,7 @@ import mal from "../../../files/mal.png";
 import tubi from "../../../files/tub.jpg";
 import Funimation from "../../../files/fun.jpg";
 import hidive from "../../../files/hi.jpg";
-import VIZ from "../../../files/viz.jpg";
+import VIZ from "../../../files/v.jpg";
 import AnimeButton from "../../../components/Button";
 import starBorder from "../../../files/Star-border.png";
 import starFill from "../../../files/Star-filled.png";
