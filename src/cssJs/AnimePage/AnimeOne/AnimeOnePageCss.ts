@@ -10,18 +10,18 @@ export const AnimOneHeader = styled.div`
 `;
 
 export const AnimOneHeaderLeft = styled.div`
-  width: 260px;
+  width: 280px;
   display: inline;
   position: relative;
   img {
-    height: 260px;
-    width: 260px;
+    height: 280px;
+    width: 280px;
   }
   div {
     position: absolute;
     height: 77px;
     background-color: #302d46;
-    width: 260px;
+    width: 280px;
     top: 278px;
   }
   p {
@@ -33,28 +33,33 @@ export const AnimOneHeaderLeft = styled.div`
 `;
 
 export const AnimOneHeaderRight = styled.div`
-  width: 260px;
-  margin-left: 103px;
+  width: 520px;
+  margin-left: 40px;
   display: inline;
 `;
 
 export const AnimOneHeaderLabel = styled.div`
   display: flex;
   width: 100%;
+  height: auto;
   h6 {
     color: #302d46;
     height: 24px;
-    font-size: 16px;
+    font-size: 16px !important;
     margin-right: 24px;
     font-weight: bold;
     line-height: 24px;
   }
   p {
     font-size: 16px;
-    height: 24px;
+    height: 100%;
     color: #4a4a4a;
     margin-bottom: 0;
     line-height: 24px;
+    width: 520px;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
   }
 `;
 
@@ -63,7 +68,7 @@ export const AnimOneWhereWatchLabel = styled.div`
   h6 {
     color: #302d46;
     height: 24px;
-    font-size: 16px;
+    font-size: 16px !important;
     margin-right: 24px;
     font-weight: bold;
     line-height: 24px;
@@ -79,6 +84,7 @@ export const AnimOneWhereWatchImg = styled.img`
 
 export const LikeButton = styled.div`
   margin-top: 33px;
+  display: flex;
 `;
 
 export const VideoButton = styled.div`

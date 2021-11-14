@@ -34,3 +34,17 @@ export const AnimeOneTitle = styled.h3`
   color: #302d46;
   line-height: 24px;
 `;
+
+export const AnimeAddButtonDiv = styled.div`
+  button {
+    margin-left: 16px;
+  }
+  h6 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #302d46;
+    line-height: 36px;
+    margin-bottom: 0px;
+    height: 36px;
+  }
+`;

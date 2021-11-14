@@ -1,5 +1,4 @@
 import * as React from "react";
-import styled from "styled-components";
 import loading from "../files/loading.gif";
 
 interface IProps {

@@ -1,6 +1,9 @@
-import { Button, notification } from "antd";
+import { notification } from "antd";
 
-export const openNotification = (message: string, description: string) => {
+export const openNotification = (
+  message: string,
+  description: string
+): void => {
   notification.open({
     message: message,
     description: description,

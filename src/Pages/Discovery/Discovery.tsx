@@ -7,7 +7,6 @@ import {
   DiscoveryTitle,
 } from "../../cssJs/DiscoveryPage/discoveryPageCss";
 import AnimeOneForum from "../AnimePage/AnimeOneCpmponents/AnimeOneForums";
-import AnimeOnePage from "../AnimePage/AnimeOneCpmponents/AnimeOnePage";
 import AnimeOneProducts from "../AnimePage/AnimeOneCpmponents/AnimeOneProducts";
 import AnimeOneVideo from "../AnimePage/AnimeOneCpmponents/AnimeOneVideo";
 

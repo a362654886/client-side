@@ -1,6 +1,5 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
-import { Anime } from "../types/Amine";
 import { NewType } from "../types/NewsType";
 
 const basicURL = backEndLink;

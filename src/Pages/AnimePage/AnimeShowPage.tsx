@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { animeAllGet } from "../../api/animeAPI";
 import AnimeButton from "../../components/Button";
-import LoadingDiv from "../../components/LoadingDiv";
 import {
   AnimeBox,
   AnimeShowBox,
@@ -20,13 +19,14 @@ import { ANIME_ADD } from "../../redux/anime";
 import { Anime } from "../../types/Amine";
 import starBorder from "../../files/Star-border.png";
 import starFill from "../../files/Star-filled.png";
+import { LoadingType } from "../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 
 const AnimeShowPage = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const [searchValue, setSearchValue] = useState<string>("");
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(0);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
@@ -40,7 +40,7 @@ const AnimeShowPage = (): JSX.Element => {
   }, [page]);
 
   useEffect(() => {
-    console.log(allAnime)
+    console.log(allAnime);
     getAnimeArr();
   }, [allAnime]);
 
@@ -54,21 +54,19 @@ const AnimeShowPage = (): JSX.Element => {
   };
 
   const search = async () => {
-    setLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     const animeResult = await animeAllGet(searchValue, page, pageSize);
     if (animeResult) {
       setAllAnime(allAnime.concat(animeResult.result));
       setCount(animeResult.count);
     }
-    setLoading(false);
-  };
-
-  const getResult = () => {
-    if (loading) {
-      return <LoadingDiv height="300px" width="300px" />;
-    } else {
-      return <></>;
-    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const getAnimeArr = () => {
@@ -77,16 +75,16 @@ const AnimeShowPage = (): JSX.Element => {
     const arr3: Anime[] = [];
     const arr4: Anime[] = [];
     allAnime?.forEach((anime, index) => {
-      if (index% 4 == 0 || index == 0) {
+      if (index % 4 == 0 || index == 0) {
         arr1.push(anime);
       }
-      if (index% 4 == 1 || index == 1) {
+      if (index % 4 == 1 || index == 1) {
         arr2.push(anime);
       }
-      if (index% 4 == 2 || index == 2) {
+      if (index % 4 == 2 || index == 2) {
         arr3.push(anime);
       }
-      if (index% 4 == 3 || index == 3) {
+      if (index % 4 == 3 || index == 3) {
         arr4.push(anime);
       }
     });
@@ -126,8 +124,8 @@ const AnimeShowPage = (): JSX.Element => {
               <h6>{anime.title}</h6>
             </AnimeBox>
             <LikeDiv>
-              <StarDiv>{getStar(anime.likes.length)}</StarDiv>
-              <p>{anime.likes.length} Fans</p>
+              <StarDiv>{getStar(anime.likes)}</StarDiv>
+              <p>{anime.likes} Fans</p>
             </LikeDiv>
           </div>
         );
@@ -169,10 +167,7 @@ const AnimeShowPage = (): JSX.Element => {
           buttonClick={() => search()}
         />
       </AnimSearchBox>
-      <AnimeShowBox>
-        {getExistAnime()}
-      </AnimeShowBox>
-      {getResult()}
+      <AnimeShowBox>{getExistAnime()}</AnimeShowBox>
       <CenterDiv>
         <AnimeButton
           para=""

@@ -16,9 +16,9 @@ import {
 } from "../../cssJs/loginCss";
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
-import { LoginType } from "../../types/EnumTypes";
-import LoadingDiv from "../../components/LoadingDiv";
+import { LoadingType, LoginType } from "../../types/EnumTypes";
 import AlertBox, { ColorType } from "../../components/AlertBox";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 
 const LoginPage = (): JSX.Element => {
   const history = useHistory();
@@ -26,13 +26,15 @@ const LoginPage = (): JSX.Element => {
 
   const [email, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [ifLoading, setLoading] = useState<boolean>(false);
   const [ifLoadingAlert, setLoadingAlert] = useState<boolean>(false);
 
   const toPage = (url: string) => history.replace(url);
 
   const login = async () => {
-    setLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     dispatch({
       payload: LoginType.LOADING,
       type: AUTH_LOADING,
@@ -40,13 +42,11 @@ const LoginPage = (): JSX.Element => {
     const user = await userAuth(email, password);
     setLoadingAlert(false);
     if (user == null) {
-      console.log("Asd")
       dispatch({
         payload: LoginType.FAIL,
         type: AUTH_FAIL,
       });
       setLoadingAlert(true);
-      console.log(ifLoadingAlert)
     } else {
       dispatch({
         payload: LoginType.SUCCESS,
@@ -58,7 +58,10 @@ const LoginPage = (): JSX.Element => {
       });
       toPage("/mainPage/home");
     }
-    setLoading(false);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const onChange = (e: React.ChangeEvent<Element>): void => {
@@ -70,41 +73,6 @@ const LoginPage = (): JSX.Element => {
       case "password":
         setPassword((e.target as HTMLInputElement).value);
         break;
-    }
-  };
-
-  const loadingShow = (): JSX.Element => {
-    if (ifLoading) {
-      return (
-        <div style={{ position: "absolute", top: "130px", left: "60px" }}>
-          <LoadingDiv height="200px" width="200px" />
-        </div>
-      );
-    } else {
-      return (
-        <>
-          <EmailInput>
-            <p>Email:</p>
-            <Input placeholder={"email"} onChange={onChange}></Input>
-          </EmailInput>
-          <PasswordInput>
-            <p>Password:</p>
-            <Input placeholder={"password"} onChange={onChange}></Input>
-          </PasswordInput>
-          <LoginClickButton>
-            <AnimeButton
-              para=""
-              text="Log In"
-              width="120px"
-              height="32px"
-              textColor="white"
-              backGroundColor="#FFC300"
-              borderColor="#FFC300"
-              buttonClick={() => login()}
-            />
-          </LoginClickButton>
-        </>
-      );
     }
   };
 
@@ -140,7 +108,26 @@ const LoginPage = (): JSX.Element => {
           buttonClick={() => toPage("/mainPage/login")}
         />
       </LoginButton>
-      {loadingShow()}
+      <EmailInput>
+        <p>Email:</p>
+        <Input placeholder={"email"} onChange={onChange}></Input>
+      </EmailInput>
+      <PasswordInput>
+        <p>Password:</p>
+        <Input placeholder={"password"} onChange={onChange}></Input>
+      </PasswordInput>
+      <LoginClickButton>
+        <AnimeButton
+          para=""
+          text="Log In"
+          width="120px"
+          height="32px"
+          textColor="white"
+          backGroundColor="#FFC300"
+          borderColor="#FFC300"
+          buttonClick={() => login()}
+        />
+      </LoginClickButton>
     </LoginBox>
   );
 };

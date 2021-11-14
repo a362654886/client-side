@@ -44,7 +44,7 @@ const NewEditComponent = ({ newBody }: IProps): JSX.Element => {
       time: newBody.time
     };
     setLoading(true);
-    const r = await newUpdate(updateNew);
+    await newUpdate(updateNew);
     setLoading(false);
   };
 

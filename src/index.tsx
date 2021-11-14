@@ -23,12 +23,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 // store type??
-const store: any = createStore(
-  persistedReducer,
-  applyMiddleware(
-    thunk
-  )
-);
+const store: any = createStore(persistedReducer, applyMiddleware(thunk));
 persistStore(store);
 
 ReactDOM.render(
@@ -37,7 +32,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/mainPage" component={MainPage} />
         <Route path="/adminPage" component={AdminPage} />
-        <Route path="/adminManagement"  component={AdminMainPage} />
+        <Route path="/adminManagement" component={AdminMainPage} />
       </Switch>
     </Router>
   </Provider>,

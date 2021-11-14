@@ -55,8 +55,6 @@ const ProfileContactPage = (): JSX.Element => {
         break;
       case tel:
         setTel((e.target as HTMLInputElement).value);
-        console.log((e.target as HTMLInputElement).value);
-        console.log(tel);
         break;
       case location:
         setLocation((e.target as HTMLInputElement).value);
@@ -83,6 +81,7 @@ const ProfileContactPage = (): JSX.Element => {
       ins: ins,
       tel: tel,
       avatar: loginUser ? loginUser.avatar : "",
+      likeAnime: loginUser?.likeAnime ? loginUser?.likeAnime : [],
       avatarImage: loginUser ? loginUser.avatarImage : [],
     };
     setLoading(true);

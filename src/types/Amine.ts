@@ -7,5 +7,5 @@ export type Anime = {
   rating: string;
   whereToWatch: string[];
   headImage: string;
-  likes:string[];
+  likes:number;
 };

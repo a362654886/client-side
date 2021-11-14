@@ -26,3 +26,8 @@ export enum BooleanType {
   FAIL = "FAIL",
   INI = "INI"
 }
+
+export enum LoadingType {
+  OPEN = "OPEN",
+  CLOSE = "CLOSE"
+}

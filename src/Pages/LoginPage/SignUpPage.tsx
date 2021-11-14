@@ -23,27 +23,36 @@ import {
 } from "../../cssJs/loginCss";
 import { Avatar, Gender, User } from "../../types/User";
 import { userAdd } from "../../api/userApi";
-import LoadingDiv from "../../components/LoadingDiv";
 import AlertBox, { ColorType } from "../../components/AlertBox";
+import { LoadingType } from "../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import { useDispatch } from "react-redux";
 
 const SignUpPage = (): JSX.Element => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [email, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [errorText, setErrorText] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [avatars, setAvatars] = useState<Avatar[] | null>(null);
   const [avatarArr, setAvatarArr] = useState<Avatar[][] | null>(null);
   const [chooseAvatar, setChooseAvatarIndex] = useState<Avatar | null>(null);
-  const [ifLoading, setLoading] = useState<boolean>(false);
   const [ifLoadingAlert, setLoadingAlert] = useState<boolean>(false);
 
   useEffect(() => {
     (async function anyNameFunction() {
-      setLoading(true);
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
       await getAvatars();
-      setLoading(false);
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
     })();
   }, []);
 
@@ -80,6 +89,25 @@ const SignUpPage = (): JSX.Element => {
 
   const submit = async () => {
     setLoadingAlert(false);
+    if (
+      password !== confirmPassword ||
+      password.trim() == "" ||
+      confirmPassword.trim() == ""
+    ) {
+      setErrorText("confirm password isn't equal password, please check");
+      setLoadingAlert(true);
+      return;
+    }
+    if (email.trim() == "") {
+      setErrorText("please input email");
+      setLoadingAlert(true);
+      return;
+    }
+    if (name.trim() == "") {
+      setErrorText("please input name");
+      setLoadingAlert(true);
+      return;
+    }
     const user: User = {
       _id: email,
       userEmail: email,
@@ -91,6 +119,7 @@ const SignUpPage = (): JSX.Element => {
       facebook: "",
       ins: "",
       tel: "",
+      likeAnime: [],
       avatar: chooseAvatar ? chooseAvatar.imageName : "",
     };
     const r = await userAdd(user);
@@ -98,6 +127,7 @@ const SignUpPage = (): JSX.Element => {
       toPage("/mainPage/login");
     }
     if (r == null) {
+      setErrorText("add new account wrong, please connect manager");
       setLoadingAlert(true);
     }
   };
@@ -154,37 +184,11 @@ const SignUpPage = (): JSX.Element => {
     }
   };
 
-  const getAvatarBox = () => {
-    if (ifLoading) {
-      return (
-        <>
-          <p>Avatar:</p>
-          <LoadingDiv height="230px" width="230px" />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <p>Avatar:</p>
-          <AvatarBox1>
-            {getAvatarDiv(avatarArr ? avatarArr[0] : null)}
-          </AvatarBox1>
-          <AvatarBox2>
-            {getAvatarDiv(avatarArr ? avatarArr[1] : null)}
-          </AvatarBox2>
-          <AvatarBox3>
-            {getAvatarDiv(avatarArr ? avatarArr[2] : null)}
-          </AvatarBox3>
-        </>
-      );
-    }
-  };
-
   return (
     <SignUpBox>
       <LoginTitle>Welcome to ANIMEPARK</LoginTitle>
       <AlertBox
-        text="user add fail, please connect manager"
+        text={errorText}
         color={ColorType.ERROR}
         show={ifLoadingAlert}
       />
@@ -194,9 +198,9 @@ const SignUpPage = (): JSX.Element => {
           text="Sign Up"
           width="120px"
           height="36px"
-          textColor="#4BA3C3"
-          backGroundColor="white"
-          borderColor="#4BA3C3"
+          textColor="black"
+          backGroundColor="#F6F6F6"
+          borderColor="white"
           buttonClick={() => toPage("/mainPage/signUpPage")}
         />
       </SignUpButton>
@@ -206,9 +210,9 @@ const SignUpPage = (): JSX.Element => {
           text="Log in"
           width="120px"
           height="36px"
-          textColor="black"
-          backGroundColor="#F6F6F6"
-          borderColor="white"
+          textColor="#4BA3C3"
+          backGroundColor="white"
+          borderColor="#4BA3C3"
           buttonClick={() => toPage("/mainPage/login")}
         />
       </LoginButton>
@@ -228,7 +232,12 @@ const SignUpPage = (): JSX.Element => {
         <p>Name:</p>
         <Input placeholder={"name"} onChange={onChange}></Input>
       </NameInput>
-      <AvatarInput>{getAvatarBox()}</AvatarInput>
+      <AvatarInput>
+        <p>Avatar:</p>
+        <AvatarBox1>{getAvatarDiv(avatarArr ? avatarArr[0] : null)}</AvatarBox1>
+        <AvatarBox2>{getAvatarDiv(avatarArr ? avatarArr[1] : null)}</AvatarBox2>
+        <AvatarBox3>{getAvatarDiv(avatarArr ? avatarArr[2] : null)}</AvatarBox3>
+      </AvatarInput>
       <SubmitClickButton>
         <AnimeButton
           para=""

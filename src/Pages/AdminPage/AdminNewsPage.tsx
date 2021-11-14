@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { AnimeButton } from "../../components/Button";
 import { AdminAnimeDiv, ButtonsDiv } from "../../cssJs/AdminPage/adminAdminCss";
-import { AdminPageDiv } from "../../cssJs/AdminPage/adminCss";
 import { NewType } from "../../types/NewsType";
 import NewEditComponent from "./newsComponent/NewEditComponent";
 import NewsCreatComponent from "./newsComponent/NewsCreatComponent";

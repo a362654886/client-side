@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { productAllGet } from "../../../api/productAPI";
 import AnimeButton, { MiddleDiv } from "../../../components/Button";
-import LoadingDiv from "../../../components/LoadingDiv";
 import {
   AvatarImg,
   AvatarName,
@@ -17,7 +17,10 @@ import {
   AnimOneVideo,
   Subtitle,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
+import { AnimeAddButtonDiv } from "../../../cssJs/AnimePage/AnimeOneCss";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
+import { LoadingType } from "../../../types/EnumTypes";
 import { Product } from "../../../types/ProductType";
 
 interface IProps {
@@ -37,10 +40,11 @@ const AnimeOneProducts = ({
 }: IProps): JSX.Element => {
   const [productArr, setProductArr] = useState<Product[][] | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
   const [pageNum, setPageNum] = useState<number>(1);
 
   const pageSize = pageSizeSetting;
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -53,7 +57,10 @@ const AnimeOneProducts = ({
   }, [products]);
 
   const getProducts = async () => {
-    setLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     const productsResult = await productAllGet(
       anime ? anime._id : "",
       pageNum,
@@ -62,7 +69,10 @@ const AnimeOneProducts = ({
     if (productsResult) {
       setProducts(products.concat(productsResult.result));
     }
-    setLoading(false);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const getProductArr = () => {
@@ -115,18 +125,6 @@ const AnimeOneProducts = ({
     }
   };
 
-  const getProductBox = () => {
-    if (loading) {
-      return (
-        <MiddleDiv>
-          <LoadingDiv width="200px" height="200px" />
-        </MiddleDiv>
-      );
-    } else {
-      return <></>;
-    }
-  };
-
   const getExistProducts = () => {
     return (
       <div style={{ display: "flex", marginTop: "16px" }}>
@@ -163,13 +161,14 @@ const AnimeOneProducts = ({
           Post product shopping links here to tell those fans who want it
         </Subtitle>
       </div>
-      <div
+      <AnimeAddButtonDiv
         style={{
           marginTop: "16px",
           display:
-            ifShowAdd == true || ifShowHeader == true ? "inline" : "none",
+            ifShowAdd == true || ifShowHeader == true ? "flex" : "none",
         }}
       >
+        <h6>Products</h6>
         <AnimeButton
           para=""
           text={"Add"}
@@ -180,9 +179,8 @@ const AnimeOneProducts = ({
           borderColor="#FFC300"
           buttonClick={() => (toAddProduct ? toAddProduct(5) : "")}
         />
-      </div>
+      </AnimeAddButtonDiv>
       {getExistProducts()}
-      {getProductBox()}
       <MiddleDiv>
         <AnimeButton
           para=""

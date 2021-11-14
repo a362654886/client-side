@@ -1,17 +1,18 @@
 import * as React from "react";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { LoginType } from "../types/EnumTypes";
+import { LoadingType, LoginType } from "../types/EnumTypes";
 import { IStoreState } from "../types/IStoreState";
 import avatar from "../files/avatar.png";
 import MainPageRouter from "../router/MainPageRouter";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { User } from "../types/User";
 import {
   Header,
   HeaderContainer,
   HeaderContext,
   HeaderTitle,
+  LoadingBox,
   LoginBox,
   LoginImg,
 } from "../cssJs/headerCss";
@@ -23,18 +24,28 @@ import {
   FooterText2,
   FooterText3,
 } from "../cssJs/footerCss";
+import loadingImg from "../files/loading.gif";
 
 const MainPage = (): JSX.Element => {
+  const param = useParams();
+
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
+  );
+
+  const loading: LoadingType = useSelector(
+    (state: IStoreState) => state.loadingState
   );
 
   const history = useHistory();
 
   useEffect(() => {
-    history.push({
-      pathname: "/mainPage/home",
-    });
+    console.log(param);
+    if (param != null) {
+      history.push({
+        pathname: "/mainPage/home",
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -48,6 +59,7 @@ const MainPage = (): JSX.Element => {
   const toProfile = (url: string) => history.replace(url);
 
   const getProfile = () => {
+    console.log(loginUser);
     if (loginUser) {
       return (
         <>
@@ -76,7 +88,12 @@ const MainPage = (): JSX.Element => {
   };
 
   return (
-    <div className="backBody">
+    <div>
+      <LoadingBox>
+        <div className={loading == LoadingType.OPEN ? "mask" : "noMask"}>
+          <img src={`${loadingImg}`} />
+        </div>
+      </LoadingBox>
       <Header>
         <HeaderContainer>
           <HeaderTitle>ANIMEPARK</HeaderTitle>
@@ -97,7 +114,7 @@ const MainPage = (): JSX.Element => {
             </p>
             <p
               onClick={() => {
-                toProfile("/mainPage/showcase");
+                toProfile("/mainPage/showcase/show");
               }}
             >
               Showcase

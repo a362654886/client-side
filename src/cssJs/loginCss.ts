@@ -180,8 +180,8 @@ export const AlertDiv = styled.p`
     color: #4a4a4a;
     font-size: 14px;
     line-height: 22px;
-    width: 281px;
-    height: 36px;
+    width: 100%;
+    height: auto;
     padding: 7px 20px;
     background-color: ${(props) => props.color};
   }

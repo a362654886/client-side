@@ -1,7 +1,6 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
 import { Product } from "../types/ProductType";
-import { Video } from "../types/VideoType";
 
 const basicURL = backEndLink;
 

@@ -1,7 +1,5 @@
 import * as React from "react";
 import ReactQuill from "react-quill";
-import styled from "styled-components";
-import loading from "../files/loading.gif";
 
 interface IProps {
   html: string;

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { videosAllGet } from "../../../api/videoAPI";
 import AnimeButton, { MiddleDiv } from "../../../components/Button";
-import LoadingDiv from "../../../components/LoadingDiv";
 import {
   FromText,
   TimeText,
@@ -16,7 +16,13 @@ import {
   AnimOneVideo,
   Subtitle,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
+import {
+  AnimeAddButtonDiv,
+  AnimeOneTitle,
+} from "../../../cssJs/AnimePage/AnimeOneCss";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
+import { LoadingType } from "../../../types/EnumTypes";
 import { Video } from "../../../types/VideoType";
 
 interface IProps {
@@ -34,8 +40,9 @@ const AnimeOneVideo = ({
   ifShowAdd,
   toAddVideo,
 }: IProps): JSX.Element => {
+  const dispatch = useDispatch();
+
   const [videos, setVideos] = useState<Video[]>([]);
-  const [loading, setLoading] = useState(false);
   const [pageNum, setPageNum] = useState<number>(1);
 
   const pageSize = pageSizeSetting;
@@ -47,7 +54,10 @@ const AnimeOneVideo = ({
   }, [pageNum]);
 
   const getVideos = async () => {
-    setLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     const videoResult = await videosAllGet(
       anime ? anime._id : "",
       pageNum,
@@ -56,17 +66,11 @@ const AnimeOneVideo = ({
     if (videoResult && videos.length < videoResult.count) {
       setVideos(videos.concat(videoResult.result));
     }
-    setLoading(false);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
-
-  const getVideosDiv = () =>
-    !loading ? (
-      <></>
-    ) : (
-      <MiddleDiv>
-        <LoadingDiv width="200px" height="200px" />
-      </MiddleDiv>
-    );
 
   const getExistVideos = () =>
     videos.map((video, index) => {
@@ -129,11 +133,12 @@ const AnimeOneVideo = ({
           buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
         />
       </MiddleDiv>
-      <div
+      <AnimeAddButtonDiv
         style={{
-          display: ifShowAdd ? "inline" : "none",
+          display: ifShowAdd ? "flex" : "none",
         }}
       >
+        <h6>Videos</h6>
         <AnimeButton
           para=""
           text={"Add"}
@@ -144,11 +149,8 @@ const AnimeOneVideo = ({
           borderColor="#FFC300"
           buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
         />
-      </div>
-      <div style={{ marginTop: "23px" }}>
-        {getExistVideos()}
-        {getVideosDiv()}
-      </div>
+      </AnimeAddButtonDiv>
+      <div style={{ marginTop: "23px" }}>{getExistVideos()}</div>
       <MiddleDiv>
         <AnimeButton
           para=""

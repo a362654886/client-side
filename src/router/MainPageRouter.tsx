@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 import AnimeOne from "../Pages/AnimePage/AnimeOne";
-import AnimeOnePage from "../Pages/AnimePage/AnimeOne";
 import AnimeShowPage from "../Pages/AnimePage/AnimeShowPage";
 import Discovery from "../Pages/Discovery/Discovery";
 import HomePage from "../Pages/HomePage/HomePage";
@@ -11,7 +10,6 @@ import Mall from "../Pages/Mall/Mall";
 import Marketplace from "../Pages/Marketplace/Marketplace";
 import NewOnePage from "../Pages/NewsPage/NewOnePage";
 import NewsPage from "../Pages/NewsPage/NewsPage";
-import NewPage from "../Pages/NewsPage/NewsPage";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
 import Showcase from "../Pages/Showcase/Showcase";
 

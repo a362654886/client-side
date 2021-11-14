@@ -1,11 +1,10 @@
 import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { productAdd } from "../../../api/productAPI";
 import AnimeButton from "../../../components/Button";
 import ImgUploadDiv from "../../../components/conponentDivs/ImgUploadDiv";
-import LoadingDiv from "../../../components/LoadingDiv";
 import {
   ProductImg,
   ProductInput,
@@ -16,8 +15,10 @@ import {
   Subtitle,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
 import { openNotification } from "../../../helperFns/popUpAlert";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
 import { ImageBody } from "../../../types/BasicType";
+import { LoadingType } from "../../../types/EnumTypes";
 import { IStoreState } from "../../../types/IStoreState";
 import { Product } from "../../../types/ProductType";
 import { Avatar, User } from "../../../types/User";
@@ -31,9 +32,10 @@ const AnimeOneProductAdd = (): JSX.Element => {
     (state: IStoreState) => state.loginUserState
   );
 
+  const dispatch = useDispatch();
+
   const [uploadImg, setLoadImg] = useState<string>("");
   const [link, setLink] = useState<string>("");
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log(uploadImg);
@@ -45,7 +47,10 @@ const AnimeOneProductAdd = (): JSX.Element => {
     setLink((e.target as HTMLInputElement).value);
 
   const post = async () => {
-    setLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     if (loginUser) {
       const product: Product = {
         _id: `${loginUser?._id}${link}`,
@@ -58,31 +63,13 @@ const AnimeOneProductAdd = (): JSX.Element => {
         userName: loginUser.name,
       };
       await productAdd(product);
-    }else{
+    } else {
       openNotification("error", "please login and then reply");
     }
-    setLoading(false);
-  };
-
-  const getSubmitButton = () => {
-    if (loading) {
-      return <LoadingDiv height="40px" width="40px" />;
-    } else {
-      return (
-        <>
-          <AnimeButton
-            para=""
-            text="Post"
-            width="840px"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="white"
-            buttonClick={() => post()}
-          />
-        </>
-      );
-    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   return (
@@ -101,7 +88,16 @@ const AnimeOneProductAdd = (): JSX.Element => {
         <h6>Shopping Link</h6>
         <Input placeholder={"link"} onChange={onChange}></Input>
       </ProductInput>
-      {getSubmitButton()}
+      <AnimeButton
+        para=""
+        text="Post"
+        width="840px"
+        height="32px"
+        textColor="white"
+        backGroundColor="#FFC300"
+        borderColor="white"
+        buttonClick={() => post()}
+      />
       <div style={{ minHeight: "32px" }}></div>
     </AnimOneVideo>
   );

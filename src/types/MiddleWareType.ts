@@ -1,9 +1,7 @@
-import {
-  $CombinedState,
-  MiddlewareAPI,
-} from "@reduxjs/toolkit";
+import { $CombinedState, MiddlewareAPI } from "@reduxjs/toolkit";
 import { AnimeAction } from "../redux/anime";
 import { AuthUser } from "../redux/auth";
+import { LoadingAction } from "../redux/loading";
 import { LoginUser } from "../redux/loginUser";
 import { NewAction } from "../redux/newBody";
 import { User } from "./User";
@@ -21,5 +19,6 @@ export type actionBody =
   | LoginUser
   | AnimeAction
   | NewAction
+  | LoadingAction;
 
 export type nextAction = (action: actionBody) => void;

@@ -1,4 +1,3 @@
-import { Button } from "antd";
 import styled from "styled-components";
 
 export const SearchDiv = styled.div`
@@ -37,7 +36,7 @@ export const AnimeTableTitle = styled.div`
 `;
 
 export const AnimeTableItem = styled.div`
-  width: 20%;
+  width: 60%;
   text-align: center;
 `;
 
@@ -46,4 +45,9 @@ export const ViewButton = styled.p`
   text-align: center;
   color: blue;
   cursor: pointer;
+`;
+
+export const ViewButtonText = styled.p`
+  width: 20%;
+  text-align: center;
 `;

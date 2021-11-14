@@ -35,7 +35,7 @@ const NewsCreatComponent = (): JSX.Element => {
       html: html,
       time: new Date()
     };
-    const r = await newAdd(newNew);
+    await newAdd(newNew);
     setLoading(false);
   };
 

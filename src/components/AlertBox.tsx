@@ -1,6 +1,4 @@
-import { Alert } from "antd";
 import * as React from "react";
-import styled from "styled-components";
 import { AlertDiv } from "../cssJs/loginCss";
 
 export enum ColorType {
@@ -19,7 +17,7 @@ interface IProps {
 const AlertBox = ({ color, text, show }: IProps): JSX.Element => {
   return (
     <AlertDiv color={color} style={{ display: show ? "inline" : "none" }}>
-      <p>{text}</p>
+      {text}
     </AlertDiv>
   );
 };

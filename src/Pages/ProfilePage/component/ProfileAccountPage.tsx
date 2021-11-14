@@ -171,6 +171,7 @@ const ProfileAccountPage = (): JSX.Element => {
       facebook: loginUser ? loginUser.facebook : "",
       ins: loginUser ? loginUser.ins : "",
       tel: loginUser ? loginUser.tel : "",
+      likeAnime: loginUser?.likeAnime ? loginUser?.likeAnime : [],
       avatar: chooseAvatar,
       avatarImage: newArr,
     };

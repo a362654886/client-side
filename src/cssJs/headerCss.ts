@@ -32,7 +32,7 @@ export const HeaderContext = styled.div`
     font-size: 16px;
     font-family: "Arial";
     font-weight: bold;
-    cursor:pointer;
+    cursor: pointer;
   }
 `;
 
@@ -53,6 +53,27 @@ export const LoginBox = styled.div`
     font-size: 16px;
     font-family: "Arial";
     font-weight: bold;
-    cursor:pointer;
+    cursor: pointer;
+  }
+`;
+
+export const LoadingBox = styled.div`
+  .mask {
+    background-color: #e5e7e9;
+    opacity: 0.9;
+    z-index: 1000;
+    height: 100vw;
+    position: fixed;
+    width: 100vw;
+    pointer-events: none;
+    text-align: center;
+    align-items: center;
+  }
+  .noMask {
+    display: none;
+  }
+  img {
+    margin-top: 10vw;
+    opacity: 1;
   }
 `;

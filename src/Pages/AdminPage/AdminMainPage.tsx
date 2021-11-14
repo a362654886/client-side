@@ -14,13 +14,20 @@ import {
   MenuButton,
   MenuChooseButton,
 } from "../../cssJs/AdminPage/adminManagementCss";
+import { LoadingBox } from "../../cssJs/headerCss";
 import AdminPageRouter from "../../router/AdminPageRouter";
+import { LoadingType } from "../../types/EnumTypes";
 import { IStoreState } from "../../types/IStoreState";
 import { User } from "../../types/User";
+import loadingImg from "../../files/loading.gif";
 
 const AdminMainPage = (): JSX.Element => {
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
+  );
+
+  const loading: LoadingType = useSelector(
+    (state: IStoreState) => state.loadingState
   );
 
   const history = useHistory();
@@ -71,16 +78,23 @@ const AdminMainPage = (): JSX.Element => {
   };
 
   return (
-    <AdminPageDiv>
-      <AdminLeftMenuDiv>
-        <AdminLogoutDiv>
-          <AdminText>{loginUser?.userEmail}</AdminText>
-          <LogoutButton>Log out</LogoutButton>
-        </AdminLogoutDiv>
-        <AdminMenuDiv>{getMenu()}</AdminMenuDiv>
-      </AdminLeftMenuDiv>
-      <AdminPageRouter />
-    </AdminPageDiv>
+    <>
+      <LoadingBox>
+        <div className={loading == LoadingType.OPEN ? "mask" : "noMask"}>
+          <img src={`${loadingImg}`} />
+        </div>
+      </LoadingBox>
+      <AdminPageDiv>
+        <AdminLeftMenuDiv>
+          <AdminLogoutDiv>
+            <AdminText>{loginUser?.userEmail}</AdminText>
+            <LogoutButton>Log out</LogoutButton>
+          </AdminLogoutDiv>
+          <AdminMenuDiv>{getMenu()}</AdminMenuDiv>
+        </AdminLeftMenuDiv>
+        <AdminPageRouter />
+      </AdminPageDiv>
+    </>
   );
 };
 

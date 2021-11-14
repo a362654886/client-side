@@ -2,7 +2,7 @@ import { Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AnimeButton from "../../../components/Button";
 import {
   AnimOneVideo,
@@ -15,8 +15,9 @@ import { IStoreState } from "../../../types/IStoreState";
 import { Avatar, User } from "../../../types/User";
 import { videoAdd } from "../../../api/videoAPI";
 import { Video, VideoType } from "../../../types/VideoType";
-import LoadingDiv from "../../../components/LoadingDiv";
 import { openNotification } from "../../../helperFns/popUpAlert";
+import { LoadingType } from "../../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 
 const AnimeOneVideoAdd = (): JSX.Element => {
   const chooseAnime: Anime | null = useSelector(
@@ -27,11 +28,12 @@ const AnimeOneVideoAdd = (): JSX.Element => {
     (state: IStoreState) => state.loginUserState
   );
 
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState<string>("");
   const [link, setLink] = useState<string>("");
   const [embed, setEmbed] = useState<string>("");
   const [videoType, setVideoType] = useState<boolean>(true);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     //
@@ -55,7 +57,10 @@ const AnimeOneVideoAdd = (): JSX.Element => {
   };
 
   const submit = async () => {
-    setLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     if (loginUser) {
       const video: Video = {
         _id: `${loginUser?._id}${videoType ? link : embed}`,
@@ -72,7 +77,10 @@ const AnimeOneVideoAdd = (): JSX.Element => {
     } else {
       openNotification("error", "please login and then reply");
     }
-    setLoading(false);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const getBody = () =>
@@ -92,27 +100,6 @@ const AnimeOneVideoAdd = (): JSX.Element => {
         <TextArea rows={4} placeholder={"embed"} onChange={onChange} />
       </>
     );
-
-  const getSubmitButton = () => {
-    if (loading) {
-      return <LoadingDiv height="40px" width="40px" />;
-    } else {
-      return (
-        <>
-          <AnimeButton
-            para=""
-            text={"Post"}
-            width="830px"
-            height="36px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() => submit()}
-          />
-        </>
-      );
-    }
-  };
 
   return (
     <AnimOneVideo>
@@ -144,7 +131,18 @@ const AnimeOneVideoAdd = (): JSX.Element => {
           buttonClick={() => setVideoType(true)}
         />
       </VideoButtonsDiv>
-      {getSubmitButton()}
+      <>
+        <AnimeButton
+          para=""
+          text={"Post"}
+          width="830px"
+          height="36px"
+          textColor="white"
+          backGroundColor="#FFC300"
+          borderColor="#FFC300"
+          buttonClick={() => submit()}
+        />
+      </>
     </AnimOneVideo>
   );
 };

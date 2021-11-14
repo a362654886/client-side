@@ -1,5 +1,5 @@
 import { Anime } from "./Amine";
-import { LoginType } from "./EnumTypes";
+import { LoadingType, LoginType } from "./EnumTypes";
 import { NewType } from "./NewsType";
 import { User } from "./User";
 
@@ -8,4 +8,5 @@ export interface IStoreState {
   loginUserState: User | null;
   animeState: Anime | null;
   newState: NewType | null;
+  loadingState: LoadingType;
 }

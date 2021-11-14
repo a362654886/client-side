@@ -28,11 +28,11 @@ const AdminAnimeCreatePage = (): JSX.Element => {
     setEdit(true);
   };
 
-  const tabButton = (value: string)=>{
+  const tabButton = (value: string) => {
     setEdit(false);
     setEditAnime(null);
     setButton(value);
-  }
+  };
 
   const getButtonComponentDiv = () => {
     return menu.map((menuString: string, index: number) => {
@@ -73,7 +73,7 @@ const AdminAnimeCreatePage = (): JSX.Element => {
   const getAminComponent = () => {
     if (!edit) {
       return buttonString == "Create" ? (
-        <AdminCreatComponent />
+        <AdminCreatComponent editAnime={onEdit} />
       ) : (
         <AdminSearch editAnime={onEdit} />
       );

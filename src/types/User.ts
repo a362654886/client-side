@@ -10,6 +10,7 @@ export type User = {
   ins: string;
   tel:string;
   avatar: string;
+  likeAnime: string[];
   avatarImage?:Avatar[]
 };
 

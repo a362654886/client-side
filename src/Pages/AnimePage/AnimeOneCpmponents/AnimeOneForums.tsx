@@ -1,11 +1,10 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { forumAdd, forumItemAdd, forumsAllGet } from "../../../api/forumAPI";
 import { AnimeButton, MiddleDiv } from "../../../components/Button";
 import FullTextEditor from "../../../components/FullTextEditor";
-import LoadingDiv from "../../../components/LoadingDiv";
 import {
   AnimOneForum,
   ForumIframe,
@@ -16,7 +15,9 @@ import {
   TextInput,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import { openNotification } from "../../../helperFns/popUpAlert";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
+import { LoadingType } from "../../../types/EnumTypes";
 import { ForumItem, ForumType } from "../../../types/forumType";
 import { IStoreState } from "../../../types/IStoreState";
 import { Avatar, User } from "../../../types/User";
@@ -34,6 +35,8 @@ const AnimeOneForum = ({
   ifShowHeader,
   ifShowAdd,
 }: IProps): JSX.Element => {
+  const dispatch = useDispatch();
+
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
   );
@@ -42,10 +45,7 @@ const AnimeOneForum = ({
   const [html, setHtml] = useState<string>("");
   const [newItemHtml, setNewItemHtml] = useState<string>("");
   const [showPost, setShowPost] = useState<boolean>(false);
-  const [addLoading, setAddLoading] = useState(false);
-  const [addItemLoading, setAddItemLoading] = useState(false);
   const [pageNum, setPageNum] = useState<number>(1);
-  const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(0);
 
   const pageSize = pageSizeSetting;
@@ -57,11 +57,14 @@ const AnimeOneForum = ({
   }, [pageNum]);
 
   useEffect(() => {
-    console.log(forums);
+    //console.log(forums);
   }, [forums, update]);
 
   const getForums = async () => {
-    setLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     const forumResult = await forumsAllGet(
       anime ? anime._id : "",
       pageNum,
@@ -70,11 +73,17 @@ const AnimeOneForum = ({
     if (forumResult && forums.length < forumResult.count) {
       setForums(forums.concat(forumResult.result));
     }
-    setLoading(false);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const submitNewForum = async () => {
-    setAddLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     if (loginUser) {
       const forum: ForumType = {
         _id: `${loginUser?._id}${new Date().toTimeString()}`,
@@ -85,16 +94,25 @@ const AnimeOneForum = ({
         userName: loginUser.name,
         anime: anime?._id as string,
       };
-      await forumAdd(forum);
+      const r = await forumAdd(forum);
+      if (r && r < 300) {
+        forums.push(forum);
+        setForums(forums);
+      }
     } else {
       openNotification("error", "please login and then reply");
     }
-    setAddLoading(false);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const submitNewForumItem = async (forum: ForumType) => {
-    console.log("asd");
-    setAddItemLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     if (loginUser) {
       const forumItem: ForumItem = {
         _id: `${forum._id}${forum.items ? forum.items.length + 1 : 1}`,
@@ -114,7 +132,10 @@ const AnimeOneForum = ({
     } else {
       openNotification("error", "please login and then reply");
     }
-    setAddItemLoading(false);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const addForumItemToForum = (forumItem: ForumItem) => {
@@ -123,63 +144,53 @@ const AnimeOneForum = ({
     setForums(forums);
   };
 
-  const getAddBox = () =>
-    addLoading ? (
-      <MiddleDiv>
-        <LoadingDiv width="200px" height="200px" />
-      </MiddleDiv>
-    ) : (
-      <div style={{ marginBottom: "16px" }}>
-        <TextInput style={{ display: showPost ? "inline" : "none" }}>
-          <FullTextEditor
-            html={html}
-            setFullText={(e) => {
-              setHtml(e);
-            }}
-          />
-          <br />
-          <AnimeButton
-            para=""
-            text={"Post"}
-            width="100%"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() => submitNewForum()}
-          />
-        </TextInput>
-      </div>
-    );
+  const getAddBox = () => (
+    <div style={{ marginBottom: "16px" }}>
+      <TextInput style={{ display: showPost ? "inline" : "none" }}>
+        <FullTextEditor
+          html={html}
+          setFullText={(e) => {
+            setHtml(e);
+          }}
+        />
+        <br />
+        <AnimeButton
+          para=""
+          text={"Post"}
+          width="100%"
+          height="32px"
+          textColor="white"
+          backGroundColor="#FFC300"
+          borderColor="#FFC300"
+          buttonClick={() => submitNewForum()}
+        />
+      </TextInput>
+    </div>
+  );
 
-  const getAddItemBox = (forum: ForumType) =>
-    addItemLoading ? (
-      <MiddleDiv>
-        <LoadingDiv width="100px" height="100px" />
-      </MiddleDiv>
-    ) : (
-      <div style={{ marginTop: "16px" }}>
-        <TextInput>
-          <FullTextEditor
-            html={newItemHtml}
-            setFullText={(e) => {
-              setNewItemHtml(e);
-            }}
-          />
-          <br />
-          <AnimeButton
-            para=""
-            text={"Post"}
-            width="100%"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() => submitNewForumItem(forum)}
-          />
-        </TextInput>
-      </div>
-    );
+  const getAddItemBox = (forum: ForumType) => (
+    <div style={{ marginTop: "16px" }}>
+      <TextInput>
+        <FullTextEditor
+          html={newItemHtml}
+          setFullText={(e) => {
+            setNewItemHtml(e);
+          }}
+        />
+        <br />
+        <AnimeButton
+          para=""
+          text={"Post"}
+          width="100%"
+          height="32px"
+          textColor="white"
+          backGroundColor="#FFC300"
+          borderColor="#FFC300"
+          buttonClick={() => submitNewForumItem(forum)}
+        />
+      </TextInput>
+    </div>
+  );
 
   const openReply = (index: number) => {
     forums[index].showReplay = !forums[index].showReplay;
@@ -263,15 +274,6 @@ const AnimeOneForum = ({
     setPageNum(newPage);
   };
 
-  const getForumsDiv = () =>
-    !loading ? (
-      <></>
-    ) : (
-      <MiddleDiv>
-        <LoadingDiv width="200px" height="200px" />
-      </MiddleDiv>
-    );
-
   return (
     <AnimOneForum>
       <div
@@ -313,7 +315,6 @@ const AnimeOneForum = ({
       </div>
       {getAddBox()}
       {getExistForums()}
-      {getForumsDiv()}
       <MiddleDiv>
         <AnimeButton
           para=""
