@@ -13,11 +13,11 @@ import {
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import { Anime } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
-import crunchyroll from "../../../files/crunchyroll.png";
-import mal from "../../../files/mal.png";
-import tubi from "../../../files/tubi.png";
-import Funimation from "../../../files/funimation.png";
-import VIZ from "../../../files/viz.png";
+import crunchyroll from "../../../files/Star-border.png";
+import mal from "../../../files/Star-border.png";
+import tubi from "../../../files/Star-border.png";
+import Funimation from "../../../files/Star-border.png";
+import VIZ from "../../../files/Star-border.png";
 import AnimeButton from "../../../components/Button";
 import starBorder from "../../../files/Star-border.png";
 import starFill from "../../../files/Star-filled.png";

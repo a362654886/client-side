@@ -13,12 +13,12 @@ import {
   WhereWatchImg,
 } from "../../../cssJs/AdminPage/adminAdminCss";
 import { ImageBody } from "../../../types/BasicType";
-import crunchyroll from "../../../files/crunchyroll.png";
-import Funimation from "../../../files/funimation.png";
-import mal from "../../../files/mal.png";
-import tubi from "../../../files/tubi.png";
-import hidive from "../../../files/hidive.png";
-import VIZ from "../../../files/viz.png";
+import crunchyroll from "../../../files/Star-border.png";
+import Funimation from "../../../files/Star-border.png";
+import mal from "../../../files/Star-border.png";
+import tubi from "../../../files/Star-border.png";
+import hidive from "../../../files/Star-border.png";
+import VIZ from "../../../files/Star-border.png";
 import AnimeButton from "../../../components/Button";
 import { Anime } from "../../../types/Amine";
 import { animeAdd } from "../../../api/animeAPI";
