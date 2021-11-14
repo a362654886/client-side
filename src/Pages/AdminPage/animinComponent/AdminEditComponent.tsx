@@ -14,11 +14,12 @@ import {
 } from "../../../cssJs/AdminPage/adminAdminCss";
 import { ImageBody } from "../../../types/BasicType";
 import crunchyroll from "../../../files/cunp.png";
-import Funimation from "../../../files/mal.png";
+import Funimation from "../../../files/Funimation.png";
 import mal from "../../../files/mal.png";
-import tubi from "../../../files/mal.png";
-import hidive from "../../../files/mal.png";
-import VIZ from "../../../files/mal.png";
+import tubi from "../../../files/Tubi.png";
+import hidive from "../../../files/Hidive.png";
+import VIZ from "../../../files/VIZ.png";
+import AnimePlant from "../../../files/AnimePlant.png";
 import AnimeButton from "../../../components/Button";
 import { animeUpdate } from "../../../api/animeAPI";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
@@ -192,6 +193,11 @@ const AdminEditComponent = ({ anime }: IProps): JSX.Element => {
             <Col style={{ marginRight: "42px", width: "82px" }}>
               <Checkbox value={"VIZ"} style={{ marginTop: "32px" }}>
                 <WhereWatchImg src={VIZ} />
+              </Checkbox>
+            </Col>
+            <Col style={{ marginRight: "42px", width: "82px" }}>
+              <Checkbox value={"AnimePlant"} style={{ marginTop: "32px" }}>
+                <WhereWatchImg src={AnimePlant} />
               </Checkbox>
             </Col>
           </Row>

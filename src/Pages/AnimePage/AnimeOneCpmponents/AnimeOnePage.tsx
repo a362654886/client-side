@@ -13,12 +13,13 @@ import {
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import { Anime } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
-import crunchyroll from "../../../files/mal.png";
+import crunchyroll from "../../../files/cunp.png";
+import Funimation from "../../../files/Funimation.png";
 import mal from "../../../files/mal.png";
-import tubi from "../../../files/mal.png";
-import Funimation from "../../../files/mal.png";
-import hidive from "../../../files/mal.png";
-import VIZ from "../../../files/mal.png";
+import tubi from "../../../files/Tubi.png";
+import hidive from "../../../files/Hidive.png";
+import VIZ from "../../../files/VIZ.png";
+import AnimePlant from "../../../files/AnimePlant.png";
 import AnimeButton from "../../../components/Button";
 import starBorder from "../../../files/Star-border.png";
 import starFill from "../../../files/Star-filled.png";
@@ -33,6 +34,7 @@ import { userUpdateLike } from "../../../api/userApi";
 import { LOGIN_USER_ADD } from "../../../redux/loginUser";
 import { ANIME_ADD } from "../../../redux/anime";
 import { Spin } from "antd";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   toPage: (page: number) => void;
@@ -40,6 +42,8 @@ interface IProps {
 
 const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -54,6 +58,12 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const [likeAnime, setLikeAnime] = useState<string[]>(
     loginUser?.likeAnime ? loginUser?.likeAnime : []
   );
+
+  const toOther = (url: string) => {
+    history.replace({
+      pathname: url,
+    });
+  };
 
   useEffect(() => {
     //
@@ -142,17 +152,53 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
     chooseAnime?.whereToWatch.map((img, index) => {
       switch (img) {
         case "Funimation":
-          return <AnimOneWhereWatchImg src={Funimation} key={index} />;
+          return (
+            <AnimOneWhereWatchImg
+              src={Funimation}
+              key={index}
+              onClick={() => toOther("https://www.funimation.com")}
+            />
+          );
         case "crunchyroll":
-          return <AnimOneWhereWatchImg src={crunchyroll} key={index} />;
-        case "mal":
-          return <AnimOneWhereWatchImg src={mal} key={index} />;
+          return (
+            <AnimOneWhereWatchImg
+              src={crunchyroll}
+              key={index}
+              onClick={() => toOther("https://www.crunchyroll.com")}
+            />
+          );
         case "hidive":
-          return <AnimOneWhereWatchImg src={hidive} key={index} />;
+          return (
+            <AnimOneWhereWatchImg
+              src={hidive}
+              key={index}
+              onClick={() => toOther("https://www.hidive.com/dashboard")}
+            />
+          );
         case "tubi":
-          return <AnimOneWhereWatchImg src={tubi} key={index} />;
+          return (
+            <AnimOneWhereWatchImg
+              src={tubi}
+              key={index}
+              onClick={() => toOther("https://tubitv.com/")}
+            />
+          );
         case "VIZ":
-          return <AnimOneWhereWatchImg src={VIZ} key={index} />;
+          return (
+            <AnimOneWhereWatchImg
+              src={VIZ}
+              key={index}
+              onClick={() => toOther("https://www.viz.com/")}
+            />
+          );
+        case "AnimePlant":
+          return (
+            <AnimOneWhereWatchImg
+              src={AnimePlant}
+              key={index}
+              onClick={() => toOther("https://www.anime-planet.com/ ")}
+            />
+          );
       }
     });
 
