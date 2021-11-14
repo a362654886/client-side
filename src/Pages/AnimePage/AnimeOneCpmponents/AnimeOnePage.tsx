@@ -13,6 +13,11 @@ import {
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import { Anime } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
+import crunchyroll from "../../../files/crunchyroll.png";
+import mal from "../../../files/mal.png";
+import tubi from "../../../files/tubi.png";
+import Funimation from "../../../files/funimation.png";
+import VIZ from "../../../files/viz.png";
 import AnimeButton from "../../../components/Button";
 import starBorder from "../../../files/Star-border.png";
 import starFill from "../../../files/Star-filled.png";
@@ -134,7 +139,18 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
 
   const getWhereToWatch = () =>
     chooseAnime?.whereToWatch.map((img, index) => {
-      //
+      switch (img) {
+        case "Funimation":
+          return <AnimOneWhereWatchImg src={Funimation} key={index} />;
+        case "crunchyroll":
+          return <AnimOneWhereWatchImg src={crunchyroll} key={index} />;
+        case "mal":
+          return <AnimOneWhereWatchImg src={mal} key={index} />;
+        case "tubi":
+          return <AnimOneWhereWatchImg src={tubi} key={index} />;
+        case "VIZ":
+          return <AnimOneWhereWatchImg src={VIZ} key={index} />;
+      }
     });
 
   const getStar = (length: number) => {
