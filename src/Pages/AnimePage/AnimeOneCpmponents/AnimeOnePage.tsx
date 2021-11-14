@@ -15,7 +15,6 @@ import { Anime } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
 import crunchyroll from "../../../files/Crunchyroll.png";
 import mal from "../../../files/mal.png";
-import tubi from "../../../files/Tubi.png";
 import Funimation from "../../../files/Funimation.png";
 import VIZ from "../../../files/VIZ.png";
 import AnimeButton from "../../../components/Button";
@@ -146,8 +145,6 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
           return <AnimOneWhereWatchImg src={crunchyroll} key={index} />;
         case "mal":
           return <AnimOneWhereWatchImg src={mal} key={index} />;
-        case "tubi":
-          return <AnimOneWhereWatchImg src={tubi} key={index} />;
         case "VIZ":
           return <AnimOneWhereWatchImg src={VIZ} key={index} />;
       }
