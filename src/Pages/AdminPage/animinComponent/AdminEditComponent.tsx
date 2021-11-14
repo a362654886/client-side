@@ -13,7 +13,7 @@ import {
   WhereWatchImg,
 } from "../../../cssJs/AdminPage/adminAdminCss";
 import { ImageBody } from "../../../types/BasicType";
-import crunchyroll from "../../../files/mal.png";
+import crunchyroll from "../../../files/cun.png";
 import Funimation from "../../../files/mal.png";
 import mal from "../../../files/mal.png";
 import tubi from "../../../files/mal.png";
