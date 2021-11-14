@@ -20,7 +20,7 @@ import {
   HomePageHeaderRightDiv,
   HomePageNewDiv,
 } from "../../cssJs/homePageCss";
-import crunchyroll from "../../files/Crunchyroll.png";
+import mainPagePic from "../../files/mainPagePic.jpg";
 import starBorder from "../../files/Star-border.png";
 import starFill from "../../files/Star-filled.png";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
@@ -127,7 +127,7 @@ const HomePage = (): JSX.Element => {
       <HomePageBodyDiv>
         <HomePageHeaderDiv>
           <HomePageHeaderLeftDiv>
-            <img src={crunchyroll} />
+            <img src={mainPagePic} />
           </HomePageHeaderLeftDiv>
           <HomePageHeaderRightDiv>{getNewDiv()}</HomePageHeaderRightDiv>
         </HomePageHeaderDiv>
