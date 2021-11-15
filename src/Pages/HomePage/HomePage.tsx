@@ -19,20 +19,22 @@ import {
   HomePageHeaderLeftDiv,
   HomePageHeaderRightDiv,
   HomePageNewDiv,
+  LoadingImgDiv,
 } from "../../cssJs/homePageCss";
 import mainPagePic from "../../files/mainPagePic.jpg";
 import starBorder from "../../files/Star-border.png";
 import starFill from "../../files/Star-filled.png";
-import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { Anime } from "../../types/Amine";
-import { LoadingType } from "../../types/EnumTypes";
 import { NewType } from "../../types/NewsType";
+import loadingImg from "../../files/loading.gif";
 
 const HomePage = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const [allNews, setAllNews] = useState<NewType[]>([]);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
+  const [newLoading, setNewLoading] = useState<boolean>(false);
+  const [animeLoading, setAnimeLoading] = useState<boolean>(false);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -42,56 +44,51 @@ const HomePage = (): JSX.Element => {
   }, []);
 
   const getNews = async () => {
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
+    setNewLoading(true);
     const animeResult = await newAllGet("", 1, 2);
     if (animeResult) {
       setAllNews(animeResult.result);
     }
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
+    setNewLoading(false);
   };
 
   const getAnimes = async () => {
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
+    setAnimeLoading(true);
     const animeResult = await animeAllGet("", 1, 4);
     if (animeResult) {
       setAllAnime(animeResult.result);
     }
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
+    setAnimeLoading(false);
   };
 
-  const getNewDiv = () =>
-    allNews.map((news, index) => (
-      <HomePageNewDiv key={index}>
-        <h2>{news.header}</h2>
-        <HomeNewsBodyDiv
-          dangerouslySetInnerHTML={{ __html: news.html }}
-        ></HomeNewsBodyDiv>
-        <AnimeButton
-          para=""
-          text="See All"
-          width="120px"
-          height="36px"
-          textColor="#4BA3C3"
-          backGroundColor="#302D46"
-          borderColor="#4BA3C3"
-          buttonClick={() => {
-            console.log("asdqwe");
-          }}
-        />
-      </HomePageNewDiv>
-    ));
+  const getNewDiv = () => {
+    return newLoading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      allNews.map((news, index) => (
+        <HomePageNewDiv key={index}>
+          <h2>{news.header}</h2>
+          <HomeNewsBodyDiv
+            dangerouslySetInnerHTML={{ __html: news.html }}
+          ></HomeNewsBodyDiv>
+          <AnimeButton
+            para=""
+            text="See All"
+            width="120px"
+            height="36px"
+            textColor="#4BA3C3"
+            backGroundColor="#302D46"
+            borderColor="#4BA3C3"
+            buttonClick={() => {
+              console.log("");
+            }}
+          />
+        </HomePageNewDiv>
+      ))
+    );
+  };
 
   const getStar = (length: number) => {
     const numArr = [0, 100, 200, 300, 400];
@@ -108,19 +105,26 @@ const HomePage = (): JSX.Element => {
     });
   };
 
-  const getAnimeDiv = () =>
-    allAnime.map((anime, index) => (
-      <div key={index}>
-        <AnimeBox>
-          <img src={`${anime.headImage}`} />
-          <h6>{anime.title}</h6>
-        </AnimeBox>
-        <LikeDiv>
-          <StarDiv>{getStar(anime.likes)}</StarDiv>
-          <p>{anime.likes} Fans</p>
-        </LikeDiv>
-      </div>
-    ));
+  const getAnimeDiv = () => {
+    return animeLoading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      allAnime.map((anime, index) => (
+        <div key={index}>
+          <AnimeBox>
+            <img src={`${anime.headImage}`} />
+            <h6>{anime.title}</h6>
+          </AnimeBox>
+          <LikeDiv>
+            <StarDiv>{getStar(anime.likes)}</StarDiv>
+            <p>{anime.likes} Fans</p>
+          </LikeDiv>
+        </div>
+      ))
+    );
+  };
 
   return (
     <HomePageDiv>

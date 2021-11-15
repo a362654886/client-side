@@ -40,7 +40,6 @@ const MainPage = (): JSX.Element => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log(param);
     if (param != null) {
       history.push({
         pathname: "/mainPage/home",
@@ -49,7 +48,7 @@ const MainPage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(loginUser);
+    //console.log(loginUser);
   }, [loginUser]);
 
   const authState: LoginType = useSelector(
@@ -59,7 +58,6 @@ const MainPage = (): JSX.Element => {
   const toProfile = (url: string) => history.replace(url);
 
   const getProfile = () => {
-    console.log(loginUser);
     if (loginUser) {
       return (
         <>

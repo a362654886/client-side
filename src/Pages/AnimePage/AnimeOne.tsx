@@ -25,7 +25,7 @@ const AnimeOne = (): JSX.Element => {
   const [chooseButton, setChooseButton] = useState<number>(0);
 
   useEffect(() => {
-    console.log(chooseAnime);
+    //
   }, [chooseAnime, chooseButton]);
 
   const buttonsColor = [

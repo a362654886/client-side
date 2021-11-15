@@ -24,7 +24,6 @@ export const PaginationDiv = ({
 
   const newPage = async (page: number) => {
     await propFn(page);
-    console.log(page)
     setPageNum(page);
   };
 

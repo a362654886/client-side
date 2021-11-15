@@ -38,7 +38,7 @@ const AnimeOneProductAdd = (): JSX.Element => {
   const [link, setLink] = useState<string>("");
 
   useEffect(() => {
-    console.log(uploadImg);
+    //
   }, [uploadImg]);
 
   const setImg = (value: ImageBody) => setLoadImg(value.imgBase64);

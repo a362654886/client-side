@@ -39,7 +39,7 @@ const ProfileSettingPage = (): JSX.Element => {
   const [account, setAccount] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log(account);
+    //
   }, [account]);
 
   const toPage = (url: string) => history.replace(url);

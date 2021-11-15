@@ -49,7 +49,6 @@ const handlers = {
     LOGIN_USER_NONE: (state: User|null, action: LoginUser) => action.payload,
     LOGIN_USER_ADD: (state: User|null, action: LoginUser) => {
       const newUser = Object.assign({}, action.payload);
-      console.log(newUser)
       return newUser
     },
 };

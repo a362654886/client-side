@@ -14,7 +14,7 @@ const Discovery = (): JSX.Element => {
   const [chooseButton, setChooseButton] = useState<number>(0);
 
   useEffect(() => {
-    console.log(chooseButton);
+    //
   }, [chooseButton]);
 
   const buttonsColor = [

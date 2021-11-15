@@ -18,11 +18,10 @@ import {
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
 import {
   AnimeAddButtonDiv,
-  AnimeOneTitle,
 } from "../../../cssJs/AnimePage/AnimeOneCss";
-import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
+import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { Anime } from "../../../types/Amine";
-import { LoadingType } from "../../../types/EnumTypes";
+import loadingImg from "../../../files/loading.gif";
 import { Video } from "../../../types/VideoType";
 
 interface IProps {
@@ -44,6 +43,7 @@ const AnimeOneVideo = ({
 
   const [videos, setVideos] = useState<Video[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const pageSize = pageSizeSetting;
 
@@ -54,10 +54,7 @@ const AnimeOneVideo = ({
   }, [pageNum]);
 
   const getVideos = async () => {
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
+    setLoading(true);
     const videoResult = await videosAllGet(
       anime ? anime._id : "",
       pageNum,
@@ -66,10 +63,7 @@ const AnimeOneVideo = ({
     if (videoResult && videos.length < videoResult.count) {
       setVideos(videos.concat(videoResult.result));
     }
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
+    setLoading(false);
   };
 
   const getExistVideos = () =>
@@ -114,6 +108,15 @@ const AnimeOneVideo = ({
     setPageNum(newPage);
   };
 
+  const getLoading = () =>
+    loading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      <></>
+    );
+
   return (
     <AnimOneVideo>
       <Subtitle style={{ display: ifShowHeader ? "" : "none" }}>
@@ -151,6 +154,7 @@ const AnimeOneVideo = ({
         />
       </AnimeAddButtonDiv>
       <div style={{ marginTop: "23px" }}>{getExistVideos()}</div>
+      {getLoading()}
       <MiddleDiv>
         <AnimeButton
           para=""

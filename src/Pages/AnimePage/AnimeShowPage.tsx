@@ -19,14 +19,15 @@ import { ANIME_ADD } from "../../redux/anime";
 import { Anime } from "../../types/Amine";
 import starBorder from "../../files/Star-border.png";
 import starFill from "../../files/Star-filled.png";
-import { LoadingType } from "../../types/EnumTypes";
-import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import loadingImg from "../../files/loading.gif";
+import { LoadingImgDiv } from "../../cssJs/homePageCss";
 
 const AnimeShowPage = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const [searchValue, setSearchValue] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(0);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
@@ -40,7 +41,6 @@ const AnimeShowPage = (): JSX.Element => {
   }, [page]);
 
   useEffect(() => {
-    console.log(allAnime);
     getAnimeArr();
   }, [allAnime]);
 
@@ -54,19 +54,13 @@ const AnimeShowPage = (): JSX.Element => {
   };
 
   const search = async () => {
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
+    setLoading(true);
     const animeResult = await animeAllGet(searchValue, page, pageSize);
     if (animeResult) {
       setAllAnime(allAnime.concat(animeResult.result));
       setCount(animeResult.count);
     }
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
+    setLoading(false);
   };
 
   const getAnimeArr = () => {
@@ -135,16 +129,23 @@ const AnimeShowPage = (): JSX.Element => {
     }
   };
 
-  const getExistAnime = () => {
-    return (
-      <>
-        <div>{getAnimeDiv(animeArr ? animeArr[0] : null)}</div>
-        <div>{getAnimeDiv(animeArr ? animeArr[1] : null)}</div>
-        <div>{getAnimeDiv(animeArr ? animeArr[2] : null)}</div>
-        <div>{getAnimeDiv(animeArr ? animeArr[3] : null)}</div>
-      </>
+  const getExistAnime = () => (
+    <>
+      <div>{getAnimeDiv(animeArr ? animeArr[0] : null)}</div>
+      <div>{getAnimeDiv(animeArr ? animeArr[1] : null)}</div>
+      <div>{getAnimeDiv(animeArr ? animeArr[2] : null)}</div>
+      <div>{getAnimeDiv(animeArr ? animeArr[3] : null)}</div>
+    </>
+  );
+
+  const getLoading = () =>
+    loading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      <></>
     );
-  };
 
   const getMore = () => {
     const newPage = page + 1;
@@ -167,7 +168,10 @@ const AnimeShowPage = (): JSX.Element => {
           buttonClick={() => search()}
         />
       </AnimSearchBox>
-      <AnimeShowBox>{getExistAnime()}</AnimeShowBox>
+      <AnimeShowBox>
+        {getExistAnime()}
+      </AnimeShowBox>
+      {getLoading()}
       <CenterDiv>
         <AnimeButton
           para=""

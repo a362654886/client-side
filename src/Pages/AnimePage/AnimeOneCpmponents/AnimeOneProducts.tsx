@@ -22,6 +22,8 @@ import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
 import { LoadingType } from "../../../types/EnumTypes";
 import { Product } from "../../../types/ProductType";
+import loadingImg from "../../../files/loading.gif";
+import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 
 interface IProps {
   anime: Anime | null;
@@ -41,6 +43,7 @@ const AnimeOneProducts = ({
   const [productArr, setProductArr] = useState<Product[][] | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const pageSize = pageSizeSetting;
 
@@ -57,10 +60,7 @@ const AnimeOneProducts = ({
   }, [products]);
 
   const getProducts = async () => {
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
+    setLoading(true);
     const productsResult = await productAllGet(
       anime ? anime._id : "",
       pageNum,
@@ -69,10 +69,7 @@ const AnimeOneProducts = ({
     if (productsResult) {
       setProducts(products.concat(productsResult.result));
     }
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
+    setLoading(false);
   };
 
   const getProductArr = () => {
@@ -146,6 +143,15 @@ const AnimeOneProducts = ({
     setPageNum(newPage);
   };
 
+  const getLoading = () =>
+    loading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      <></>
+    );
+
   return (
     <AnimOneVideo>
       <div
@@ -164,8 +170,7 @@ const AnimeOneProducts = ({
       <AnimeAddButtonDiv
         style={{
           marginTop: "16px",
-          display:
-            ifShowAdd == true || ifShowHeader == true ? "flex" : "none",
+          display: ifShowAdd == true || ifShowHeader == true ? "flex" : "none",
         }}
       >
         <h6>Products</h6>
@@ -181,6 +186,7 @@ const AnimeOneProducts = ({
         />
       </AnimeAddButtonDiv>
       {getExistProducts()}
+      {getLoading()}
       <MiddleDiv>
         <AnimeButton
           para=""

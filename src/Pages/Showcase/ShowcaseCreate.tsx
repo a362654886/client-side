@@ -30,7 +30,7 @@ const ShowcaseCreate = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(imgArr);
+    //
   }, [imgArr]);
 
   const onChange = (e: RadioChangeEvent): void =>

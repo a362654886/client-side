@@ -24,7 +24,6 @@ const NewEditComponent = ({ newBody }: IProps): JSX.Element => {
 
   useEffect(() => {
     //
-    console.log("s");
   }, [loading]);
 
   const onChange = (e: React.ChangeEvent<Element> | RadioChangeEvent): void => {

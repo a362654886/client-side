@@ -66,82 +66,74 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   }, [loginUser, chooseAnime]);
 
   const likeAnimeFn = async () => {
-    //post like num
-    setLoading(true);
-    const animeLikeResult = await animeUpdateLike(
-      chooseAnime?._id as string,
-      chooseAnime?.likes ? chooseAnime?.likes + 1 : 1
-    );
-    let likesArr: string[] = [];
-    if (loginUser?.likeAnime) {
-      likesArr = loginUser?.likeAnime;
+    if (loading == false) {
+      let likesArr: string[] = [];
+      if (loginUser?.likeAnime) {
+        likesArr = loginUser?.likeAnime;
+      }
+      likesArr.push(chooseAnime?._id as string);
+
+      changeLikeUi(likesArr, 1);
+      //post like num
+      setLoading(true);
+      const animeLikeResult = await animeUpdateLike(
+        chooseAnime?._id as string,
+        chooseAnime?.likes ? chooseAnime?.likes : 0
+      );
+      const userLikeResult = await userUpdateLike(
+        loginUser?._id as string,
+        likesArr
+      );
+      setLoading(false);
+    } else {
+      console.log("please wait some seconds");
     }
-    likesArr.push(chooseAnime?._id as string);
-    const userLikeResult = await userUpdateLike(
-      loginUser?._id as string,
-      likesArr
-    );
+  };
 
-    if (animeLikeResult == 200 && userLikeResult == 200) {
-      setLikeAnime(likesArr);
+  const changeLikeUi = (likesArr: string[], num: number) => {
+    setLikeAnime(likesArr);
 
-      const readyUpdateUser: User = loginUser as User;
-      readyUpdateUser.likeAnime = likesArr;
+    const readyUpdateUser: User = loginUser as User;
+    readyUpdateUser.likeAnime = likesArr;
 
-      dispatch({
-        payload: readyUpdateUser,
-        type: LOGIN_USER_ADD,
-      });
+    dispatch({
+      payload: readyUpdateUser,
+      type: LOGIN_USER_ADD,
+    });
 
-      const readyUpdateAnime: Anime = chooseAnime as Anime;
-      readyUpdateAnime.likes = readyUpdateAnime.likes + 1;
+    const readyUpdateAnime: Anime = chooseAnime as Anime;
+    readyUpdateAnime.likes = readyUpdateAnime.likes + num;
 
-      dispatch({
-        payload: readyUpdateAnime,
-        type: ANIME_ADD,
-      });
-    }
-    setLoading(false);
+    dispatch({
+      payload: readyUpdateAnime,
+      type: ANIME_ADD,
+    });
   };
 
   const unlikeAnimeFn = async () => {
-    setLoading(true);
-    //post like num
-    const animeLikeResult = await animeUpdateLike(
-      chooseAnime?._id as string,
-      (chooseAnime?.likes as number) - 1
-    );
-    const likesArr = loginUser?.likeAnime as string[];
-    const index = loginUser?.likeAnime.indexOf(chooseAnime?._id as string);
-    if (index != undefined) {
-      likesArr.splice(index, 1);
-      console.log(likesArr);
+    if (loading == false) {
+      const likesArr = loginUser?.likeAnime as string[];
+      const index = loginUser?.likeAnime.indexOf(chooseAnime?._id as string);
+      if (index != undefined) {
+        likesArr.splice(index, 1);
+      }
+
+      changeLikeUi(likesArr, -1);
+      //post like num
+      setLoading(true);
+      //post like num
+      const animeLikeResult = await animeUpdateLike(
+        chooseAnime?._id as string,
+        chooseAnime?.likes as number
+      );
+      const userLikeResult = await userUpdateLike(
+        loginUser?._id as string,
+        likesArr
+      );
+      setLoading(false);
+    } else {
+      console.log("please wait some seconds");
     }
-    const userLikeResult = await userUpdateLike(
-      loginUser?._id as string,
-      likesArr
-    );
-
-    if (animeLikeResult == 200 && userLikeResult == 200) {
-      setLikeAnime(likesArr);
-
-      const readyUpdateUser: User = loginUser as User;
-      readyUpdateUser.likeAnime = likesArr;
-
-      dispatch({
-        payload: readyUpdateUser,
-        type: LOGIN_USER_ADD,
-      });
-
-      const readyUpdateAnime: Anime = chooseAnime as Anime;
-      readyUpdateAnime.likes = readyUpdateAnime.likes - 1;
-
-      dispatch({
-        payload: readyUpdateAnime,
-        type: ANIME_ADD,
-      });
-    }
-    setLoading(false);
   };
 
   const getWhereToWatch = () =>
@@ -277,7 +269,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
             <h6>Where to Watch:</h6>
             {getWhereToWatch()}
           </AnimOneWhereWatchLabel>
-          <LikeButton>{loading ? <Spin /> : getLikesButton()}</LikeButton>
+          <LikeButton>{getLikesButton()}</LikeButton>
         </AnimOneHeaderRight>
       </AnimOneHeader>
       <AnimeOneVideo

@@ -71,10 +71,17 @@ export const HomePageAnimeDiv = styled.div`
     font-family: Arial;
   }
   h3 {
-    color: #FAE7D5;
+    color: #fae7d5;
     font-size: 16px;
     line-height: 24px;
     font-weight: bold;
     font-family: Arial;
+  }
+`;
+export const LoadingImgDiv = styled.div`
+  text-align: center;
+  margin-top: 10%;
+  img {
+    opacity: 0.5;
   }
 `;

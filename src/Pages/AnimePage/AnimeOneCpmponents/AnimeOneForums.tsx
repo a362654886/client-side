@@ -21,6 +21,8 @@ import { LoadingType } from "../../../types/EnumTypes";
 import { ForumItem, ForumType } from "../../../types/forumType";
 import { IStoreState } from "../../../types/IStoreState";
 import { Avatar, User } from "../../../types/User";
+import loadingImg from "../../../files/loading.gif";
+import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 
 interface IProps {
   anime: Anime | null;
@@ -47,6 +49,7 @@ const AnimeOneForum = ({
   const [showPost, setShowPost] = useState<boolean>(false);
   const [pageNum, setPageNum] = useState<number>(1);
   const [update, setUpdate] = useState(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const pageSize = pageSizeSetting;
 
@@ -61,10 +64,7 @@ const AnimeOneForum = ({
   }, [forums, update]);
 
   const getForums = async () => {
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
+    setLoading(true);
     const forumResult = await forumsAllGet(
       anime ? anime._id : "",
       pageNum,
@@ -73,10 +73,7 @@ const AnimeOneForum = ({
     if (forumResult && forums.length < forumResult.count) {
       setForums(forums.concat(forumResult.result));
     }
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
+    setLoading(false);
   };
 
   const submitNewForum = async () => {
@@ -274,6 +271,15 @@ const AnimeOneForum = ({
     setPageNum(newPage);
   };
 
+  const getLoading = () =>
+    loading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      <></>
+    );
+
   return (
     <AnimOneForum>
       <div
@@ -315,6 +321,7 @@ const AnimeOneForum = ({
       </div>
       {getAddBox()}
       {getExistForums()}
+      {getLoading()}
       <MiddleDiv>
         <AnimeButton
           para=""
