@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
-import { ForumItem, ForumType } from "../types/forumType";
+import { ForumItem, ForumSecondItem, ForumType } from "../types/forumType";
 
 const basicURL = backEndLink;
 
@@ -17,11 +17,70 @@ export const forumAdd = async (
     });
 };
 
+export const forumUpdate = async (forumBody: {
+  _id: string;
+  forumId: string;
+  text: string;
+}): Promise<number | null> => {
+  const endpoint = basicURL + "forumUpdate";
+  return Axios.put(endpoint, { forum: forumBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const forumItemAdd = async (
   forumItemBody: ForumItem
 ): Promise<number | null> => {
   const endpoint = basicURL + "forumItemInsert";
   return Axios.post(endpoint, { forumItem: forumItemBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const forumItemUpdate = async (forumBody: {
+  _id: string;
+  forumId: string;
+  text: string;
+}): Promise<number | null> => {
+  const endpoint = basicURL + "forumItemUpdate";
+  return Axios.put(endpoint, { forum: forumBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const forumSecondItemAdd = async (
+  forumSecondItemBody: ForumSecondItem
+): Promise<number | null> => {
+  const endpoint = basicURL + "forumSecondItemInsert";
+  return Axios.post(endpoint, { forumSecondItem: forumSecondItemBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const forumSecondUpdate = async (forumBody: {
+  _id: string;
+  forumId: string;
+  forumSecondItemId: string;
+  text: string;
+}): Promise<number | null> => {
+  const endpoint = basicURL + "forumSecondItemUpdate";
+  return Axios.put(endpoint, { forum: forumBody })
     .then((response) => {
       return response.status;
     })

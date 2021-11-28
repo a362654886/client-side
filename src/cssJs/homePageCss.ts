@@ -7,7 +7,7 @@ export const HomePageDiv = styled.div`
 `;
 
 export const HomePageBodyDiv = styled.div`
-  width: 1170px;
+  max-width: 1170px;
   margin: 0 auto;
   padding-top: 19px;
 `;
@@ -18,17 +18,15 @@ export const HomePageHeaderDiv = styled.div`
 
 export const HomePageHeaderLeftDiv = styled.div`
   height: 470px;
-  width: 557px;
-  margin-right: 56px;
   img {
     height: 470px;
-    width: 557px;
+    width: 100%;
   }
 `;
 
 export const HomePageHeaderRightDiv = styled.div`
   height: 470px;
-  width: 557px;
+  width: 100%;
   background-color: #302d46;
 `;
 

@@ -1,13 +1,16 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { LoadingType, LoginType } from "../types/EnumTypes";
 import { IStoreState } from "../types/IStoreState";
 import avatar from "../files/avatar.png";
+import titleTextWhite from "../files/titleTextWhite.png";
 import MainPageRouter from "../router/MainPageRouter";
 import { useHistory, useParams } from "react-router-dom";
 import { User } from "../types/User";
 import {
+  AnimeParkImg,
+  FootContainer,
   Header,
   HeaderContainer,
   HeaderContext,
@@ -15,6 +18,8 @@ import {
   LoadingBox,
   LoginBox,
   LoginImg,
+  MenuButton,
+  ProfileDiv,
 } from "../cssJs/headerCss";
 import ProfilePageRouter from "../router/ProfilePageRouter";
 import {
@@ -25,9 +30,15 @@ import {
   FooterText3,
 } from "../cssJs/footerCss";
 import loadingImg from "../files/loading.gif";
+import { Button, Dropdown, Menu } from "antd";
 
 const MainPage = (): JSX.Element => {
   const param = useParams();
+
+  const [size, setSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  });
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
@@ -39,8 +50,18 @@ const MainPage = (): JSX.Element => {
 
   const history = useHistory();
 
+  const onResize = React.useCallback(() => {
+    setSize({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    });
+  }, []);
+
   useEffect(() => {
-    if (param != null) {
+    if (
+      history.location.pathname == "/mainPage" ||
+      history.location.pathname.indexOf("/mainPage") == -1
+    ) {
       history.push({
         pathname: "/mainPage/home",
       });
@@ -48,8 +69,26 @@ const MainPage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    //console.log(loginUser);
-  }, [loginUser]);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (
+      history.location.pathname == "/mainPage" ||
+      history.location.pathname.indexOf("/mainPage") == -1
+    ) {
+      history.push({
+        pathname: "/mainPage/home",
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    //console.log(size.width);
+  }, [size]);
 
   const authState: LoginType = useSelector(
     (state: IStoreState) => state.authState
@@ -85,17 +124,11 @@ const MainPage = (): JSX.Element => {
     }
   };
 
-  return (
-    <div>
-      <LoadingBox>
-        <div className={loading == LoadingType.OPEN ? "mask" : "noMask"}>
-          <img src={`${loadingImg}`} />
-        </div>
-      </LoadingBox>
-      <Header>
-        <HeaderContainer>
-          <HeaderTitle>ANIMEPARK</HeaderTitle>
-          <HeaderContext>
+  const getMenu = () => {
+    if (size.width > 1200) {
+      return (
+        <>
+          <HeaderContext className="col-xl-6 col-lg-5">
             <p
               onClick={() => {
                 toProfile("/mainPage/discovery");
@@ -139,18 +172,111 @@ const MainPage = (): JSX.Element => {
               News
             </p>
           </HeaderContext>
-          {getProfile()}
+          <ProfileDiv className="col-xl-2 col-lg-2">{getProfile()}</ProfileDiv>
+        </>
+      );
+    } else {
+      const menu = (
+        <Menu>
+          <Menu.Item>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/discovery");
+              }}
+            >
+              Discovery
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/animeShowPage");
+              }}
+            >
+              Anime
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/showcase/show");
+              }}
+            >
+              Showcase
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/marketplace");
+              }}
+            >
+              Marketplace
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/mall");
+              }}
+            >
+              Mall
+            </p>
+            <p
+              onClick={() => {
+                toProfile("/mainPage/news");
+              }}
+            >
+              News
+            </p>
+          </Menu.Item>
+        </Menu>
+      );
+      return (
+        <>
+          <ProfileDiv>
+            {getProfile()}
+            <Dropdown overlay={menu}>
+              <MenuButton
+                className="ant-dropdown-link"
+                onClick={(e) => e.preventDefault()}
+              >
+                Menu
+              </MenuButton>
+            </Dropdown>
+          </ProfileDiv>
+        </>
+      );
+    }
+  };
+
+  return (
+    <div>
+      <LoadingBox>
+        <div className={loading == LoadingType.OPEN ? "mask" : "noMask"}>
+          <img src={`${loadingImg}`} />
+        </div>
+      </LoadingBox>
+      <Header>
+        <HeaderContainer className="row">
+          <HeaderTitle
+            className="col-xl-3 col-lg-3 col-md-4 col-sm-5"
+            placeholder={"searchValue"}
+          >
+            <AnimeParkImg src={titleTextWhite} />
+          </HeaderTitle>
+          {getMenu()}
         </HeaderContainer>
       </Header>
       <MainPageRouter />
       <ProfilePageRouter />
       <Footer>
-        <HeaderContainer>
-          <FooterLogo>©2021 AnimePark Limited Inc</FooterLogo>
-          <FooterText1>First time visitors</FooterText1>
-          <FooterText2>Help/FAQ</FooterText2>
-          <FooterText3>About Us</FooterText3>
-        </HeaderContainer>
+        <FootContainer className="col-xl-12 col-lg-12 col-md-12 col-sm-12 row">
+          <FooterLogo className="col-xl-6 col-lg-3 col-md-3 col-sm-3">
+            ©2021 AnimePark Limited Inc
+          </FooterLogo>
+          <FooterText1 className="col-xl-2 col-lg-3 col-md-3 col-sm-3">
+            First time visitors
+          </FooterText1>
+          <FooterText2 className="col-xl-2 col-lg-3 col-md-3 col-sm-3">
+            Help/FAQ
+          </FooterText2>
+          <FooterText3 className="col-xl-2 col-lg-3 col-md-3 col-sm-3">
+            About Us
+          </FooterText3>
+        </FootContainer>
       </Footer>
     </div>
   );

@@ -1,19 +1,19 @@
 import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { showCaseAllGet } from "../../api/showcaseAPI";
-import AnimeButton from "../../components/Button";
+import AnimeButton, { MiddleDiv } from "../../components/Button";
 import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
 import {
   ShowCaseDiv,
+  ShowcasePostDiv,
   ShowcaseSearchInputDiv,
-  ShowcaseType,
-  ShowIframe,
-  ShowImg,
-  ShowName,
-  ShowTime,
+  ShowCaseTitle,
+  ShowCaseTitleDiv,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import { ShowCaseEnum, ShowCaseType } from "../../types/showCaseType";
+import ShowcaseForum from "./ShowcaseForum";
 
 const ShowcaseShow = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
@@ -34,17 +34,36 @@ const ShowcaseShow = (): JSX.Element => {
       backColor: "white",
     },
     {
-      text: "Originals",
+      text: "Drawings",
+      color: "#4BA3C3",
+      backColor: "white",
+    },
+    {
+      text: "Comics",
       color: "#4BA3C3",
       backColor: "white",
     },
   ];
 
+  const history = useHistory();
+
+  useEffect(() => {
+    // console.log(showCaseType)
+  }, [showCaseType]);
+
   const changeButton = (index: number) => {
     setChooseButton(index);
-    setShowCaseType(
-      index == 0 ? ShowCaseEnum.Collections : ShowCaseEnum.Originals
-    );
+    switch (index) {
+      case 0:
+        setShowCaseType(ShowCaseEnum.Collections);
+        break;
+      case 1:
+        setShowCaseType(ShowCaseEnum.Drawings);
+        break;
+      case 2:
+        setShowCaseType(ShowCaseEnum.Comics);
+        break;
+    }
   };
 
   const getButtons = () => {
@@ -59,8 +78,8 @@ const ShowcaseShow = (): JSX.Element => {
               width="120px"
               height="32px"
               textColor="black"
-              backGroundColor="#F6F6F6 "
-              borderColor="white"
+              backGroundColor="#AAFFC9"
+              borderColor="#AAFFC9"
               buttonClick={() => changeButton(index)}
             />
           </div>
@@ -84,6 +103,87 @@ const ShowcaseShow = (): JSX.Element => {
     });
   };
 
+  const getHeader = () => {
+    switch (showCaseType) {
+      case ShowCaseEnum.Collections:
+        return (
+          <ShowcasePostDiv>
+            <p>
+              Collections is a place for you to share and appreciate anime
+              accessories.
+            </p>
+            <MiddleDiv>
+              <AnimeButton
+                para=""
+                text={"Post"}
+                width="120px"
+                height="36px"
+                textColor="white"
+                backGroundColor="#FFC300"
+                borderColor="white"
+                buttonClick={() => {
+                  history.push({
+                    pathname: "/mainPage/showcase/create",
+                    state: { type: ShowCaseEnum.Collections },
+                  });
+                }}
+              />
+            </MiddleDiv>
+          </ShowcasePostDiv>
+        );
+      case ShowCaseEnum.Drawings:
+        return (
+          <ShowcasePostDiv>
+            <p>
+              Drawings is a place for you to post and enjoy anime drawing works.
+            </p>
+            <MiddleDiv>
+              <AnimeButton
+                para=""
+                text={"Post"}
+                width="120px"
+                height="36px"
+                textColor="white"
+                backGroundColor="#FFC300"
+                borderColor="white"
+                buttonClick={() => {
+                  history.push({
+                    pathname: "/mainPage/showcase/create",
+                    state: { type: ShowCaseEnum.Drawings },
+                  });
+                }}
+              />
+            </MiddleDiv>
+          </ShowcasePostDiv>
+        );
+      case ShowCaseEnum.Comics:
+        return (
+          <ShowcasePostDiv>
+            <p>
+              Comics is a place for you to publish and appreciate comic works.
+            </p>
+            <MiddleDiv style={{ width: "200px" }}>
+              <AnimeButton
+                para=""
+                text={"Create a new Series"}
+                width="200px"
+                height="36px"
+                textColor="white"
+                backGroundColor="#FFC300"
+                borderColor="white"
+                buttonClick={() => {
+                  history.push({
+                    pathname: "/mainPage/showcase/create",
+                    state: { type: ShowCaseEnum.Comics },
+                  });
+                }}
+              />
+            </MiddleDiv>
+          </ShowcasePostDiv>
+        );
+    }
+  };
+
   useEffect(() => {
     (async function anyNameFunction() {
       await search();
@@ -104,68 +204,34 @@ const ShowcaseShow = (): JSX.Element => {
     setLoading(false);
   };
 
-  const getExistShowcases = () =>
-    allShowCases.map((showcase, index) => {
-      const date = new Date(parseInt(showcase._id));
-      return (
-        <ShowIframe key={index}>
-          <div style={{ display: "flex" }}>
-            <ShowImg src={`${showcase.userAvatar}`} />
-            <ShowName>{showcase.userName}</ShowName>
-            <ShowTime>{`${date.getDate()}-${
-              date.getMonth() + 1
-            }-${date.getFullYear()}`}</ShowTime>
-            <AnimeButton
-              para=""
-              text="Edit"
-              width="120px"
-              height="32px"
-              textColor="black"
-              backGroundColor="white"
-              borderColor="#bdbdbd"
-              buttonClick={() => console.log("edit")}
-            />
-            <AnimeButton
-              para=""
-              text="Delete"
-              width="120px"
-              height="32px"
-              textColor="black"
-              backGroundColor="white"
-              borderColor="#bdbdbd"
-              buttonClick={() => console.log("delete")}
-            />
-          </div>
-          {showcase.imageArr.map((image: string, index: number) => {
-            return <img key={index} src={image} />;
-          })}
-          <div
-            style={{ marginTop: "16px" }}
-            dangerouslySetInnerHTML={{ __html: showcase.text }}
-          ></div>
-          <ShowcaseType>{showcase.type}</ShowcaseType>
-        </ShowIframe>
-      );
-    });
-
   return (
-    <ShowCaseDiv>
-      <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
-      <ShowcaseSearchInputDiv>
-        <Input />
-        <AnimeButton
-          para=""
-          text="Search"
-          width="120px"
-          height="40px"
-          textColor="white"
-          backGroundColor="#FFC300"
-          borderColor="#FFC300"
-          buttonClick={() => search()}
-        />
-      </ShowcaseSearchInputDiv>
-      {getExistShowcases()}
-    </ShowCaseDiv>
+    <>
+      <ShowCaseTitleDiv>
+        <ShowCaseTitle>Showcase</ShowCaseTitle>
+      </ShowCaseTitleDiv>
+      <div style={{ display: "flex" }}>
+        <ShowCaseDiv className="col-xl-9 col-md-9 col-sm-9 col-9">
+          <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
+          {getHeader()}
+          <ShowcaseSearchInputDiv>
+            <Input />
+            <AnimeButton
+              para=""
+              text="Search"
+              width="120px"
+              height="40px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() => search()}
+            />
+          </ShowcaseSearchInputDiv>
+          <ShowcaseForum showcases={allShowCases} />
+        </ShowCaseDiv>
+
+        <div className="col-xl-3 col-md-3 col-sm-3 col-3">side</div>
+      </div>
+    </>
   );
 };
 

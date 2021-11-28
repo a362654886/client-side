@@ -1,6 +1,10 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
-import { ShowCaseReply, ShowCaseType } from "../types/showCaseType";
+import {
+  ShowCaseReply,
+  ShowCaseType,
+  ShowSecondCaseReply,
+} from "../types/showCaseType";
 
 const basicURL = backEndLink;
 
@@ -30,6 +34,19 @@ export const showCaseReplyAdd = async (
     });
 };
 
+export const showCaseSecondReplyAdd = async (
+  showCaseSecondReplyBody: ShowSecondCaseReply
+): Promise<number | null> => {
+  const endpoint = basicURL + "showCaseSecondReplyInsert";
+  return Axios.post(endpoint, { showCaseSecondReply: showCaseSecondReplyBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const showCaseAllGet = async (
   page: number,
   pageSize: number
@@ -41,6 +58,49 @@ export const showCaseAllGet = async (
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+//update
+
+export const showCaseUpdate = async (showcaseBody: {
+  _id: string;
+  text: string;
+}): Promise<number | null> => {
+  const endpoint = basicURL + "showCaseUpdate";
+  return Axios.put(endpoint, { showCase: showcaseBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const showCaseReplyUpdate = async (showcaseBody: {
+  _id: string;
+  text: string;
+}): Promise<number | null> => {
+  const endpoint = basicURL + "showCaseReplyUpdate";
+  return Axios.put(endpoint, { showCaseReply: showcaseBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const showCaseSecondReplyUpdate = async (showcaseBody: {
+  _id: string;
+  text: string;
+}): Promise<number | null> => {
+  const endpoint = basicURL + "showCaseSecondReplyUpdate";
+  return Axios.put(endpoint, { showCaseSecondReply: showcaseBody })
+    .then((response) => {
+      return response.status;
     })
     .catch(() => {
       return null;

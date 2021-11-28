@@ -103,7 +103,7 @@ const LoginPage = (): JSX.Element => {
           width="120px"
           height="32px"
           textColor="black"
-          backGroundColor="#F6F6F6"
+          backGroundColor="#AAFFC9"
           borderColor="white"
           buttonClick={() => toPage("/mainPage/login")}
         />

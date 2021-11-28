@@ -112,7 +112,7 @@ const HomePage = (): JSX.Element => {
       </LoadingImgDiv>
     ) : (
       allAnime.map((anime, index) => (
-        <div key={index}>
+        <div className="col-xl-3 col-md-4 col-sm-6" key={index}>
           <AnimeBox>
             <img src={`${anime.headImage}`} />
             <h6>{anime.title}</h6>
@@ -129,11 +129,13 @@ const HomePage = (): JSX.Element => {
   return (
     <HomePageDiv>
       <HomePageBodyDiv>
-        <HomePageHeaderDiv>
-          <HomePageHeaderLeftDiv>
+        <HomePageHeaderDiv className="row">
+          <HomePageHeaderLeftDiv className="col-xl-6 col-md-6 col-sm-6">
             <img src={mainPagePic} />
           </HomePageHeaderLeftDiv>
-          <HomePageHeaderRightDiv>{getNewDiv()}</HomePageHeaderRightDiv>
+          <HomePageHeaderRightDiv className="col-xl-6 col-md-6 col-sm-6">
+            {getNewDiv()}
+          </HomePageHeaderRightDiv>
         </HomePageHeaderDiv>
         <HomePageAnimeDiv>
           <h1>Meet your favourite anime</h1>
@@ -141,7 +143,9 @@ const HomePage = (): JSX.Element => {
             Find the most popular anime, as well as the peripheral products and
             fans.
           </h3>
-          <div style={{ display: "flex" }}>{getAnimeDiv()}</div>
+          <div className="row" style={{ display: "flex" }}>
+            {getAnimeDiv()}
+          </div>
         </HomePageAnimeDiv>
         <CenterDiv>
           <AnimeButton

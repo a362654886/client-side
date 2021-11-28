@@ -1,4 +1,3 @@
-
 export type Anime = {
   _id: string;
   title: string;
@@ -7,5 +6,11 @@ export type Anime = {
   rating: string;
   whereToWatch: string[];
   headImage: string;
-  likes:number;
+  likes: number;
+  rate: RateBody;
+};
+
+export type RateBody = {
+  ratePeople: number;
+  totalRate: number;
 };

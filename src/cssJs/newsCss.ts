@@ -3,7 +3,7 @@ import styled from "styled-components";
 //news
 export const NewMainBox = styled.div`
   margin-top: 32px;
-  width: 1121px;
+  max-width: 1121px;
   margin: auto;
 `;
 

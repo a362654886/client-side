@@ -16,7 +16,7 @@ import {
   StarDiv,
 } from "../../cssJs/AnimePage/AnimeShowCss";
 import { ANIME_ADD } from "../../redux/anime";
-import { Anime } from "../../types/Amine";
+import { Anime, RateBody } from "../../types/Amine";
 import starBorder from "../../files/Star-border.png";
 import starFill from "../../files/Star-filled.png";
 import loadingImg from "../../files/loading.gif";
@@ -41,7 +41,7 @@ const AnimeShowPage = (): JSX.Element => {
   }, [page]);
 
   useEffect(() => {
-    getAnimeArr();
+    // getAnimeArr();
   }, [allAnime]);
 
   const onChange = (e: React.ChangeEvent<Element>): void => {
@@ -63,28 +63,6 @@ const AnimeShowPage = (): JSX.Element => {
     setLoading(false);
   };
 
-  const getAnimeArr = () => {
-    const arr1: Anime[] = [];
-    const arr2: Anime[] = [];
-    const arr3: Anime[] = [];
-    const arr4: Anime[] = [];
-    allAnime?.forEach((anime, index) => {
-      if (index % 4 == 0 || index == 0) {
-        arr1.push(anime);
-      }
-      if (index % 4 == 1 || index == 1) {
-        arr2.push(anime);
-      }
-      if (index % 4 == 2 || index == 2) {
-        arr3.push(anime);
-      }
-      if (index % 4 == 3 || index == 3) {
-        arr4.push(anime);
-      }
-    });
-    setAnimeArr([arr1, arr2, arr3, arr4]);
-  };
-
   const chooseAnime = (anime: Anime) => {
     dispatch({
       payload: anime,
@@ -93,10 +71,10 @@ const AnimeShowPage = (): JSX.Element => {
     history.replace("oneAnime");
   };
 
-  const getStar = (length: number) => {
-    const numArr = [0, 100, 200, 300, 400];
-    return numArr.map((n, index) => {
-      if (length > n) {
+  const getStar = (rate: RateBody) => {
+    const rateNum = rate.totalRate / rate.ratePeople;
+    return [1, 2, 3, 4, 5].map((n, index) => {
+      if (rateNum > n) {
         return (
           <img key={index} style={{ marginRight: "8px" }} src={starFill} />
         );
@@ -112,13 +90,17 @@ const AnimeShowPage = (): JSX.Element => {
     if (animeArr) {
       return animeArr.map((anime: Anime, index: number) => {
         return (
-          <div key={index} onClick={() => chooseAnime(anime)}>
+          <div
+            className="col-xl-3 col-md-4 col-sm-6"
+            key={index}
+            onClick={() => chooseAnime(anime)}
+          >
             <AnimeBox>
               <img src={`${anime.headImage}`} />
               <h6>{anime.title}</h6>
             </AnimeBox>
             <LikeDiv>
-              <StarDiv>{getStar(anime.likes)}</StarDiv>
+              <StarDiv>{getStar(anime.rate)}</StarDiv>
               <p>{anime.likes} Fans</p>
             </LikeDiv>
           </div>
@@ -129,14 +111,7 @@ const AnimeShowPage = (): JSX.Element => {
     }
   };
 
-  const getExistAnime = () => (
-    <>
-      <div>{getAnimeDiv(animeArr ? animeArr[0] : null)}</div>
-      <div>{getAnimeDiv(animeArr ? animeArr[1] : null)}</div>
-      <div>{getAnimeDiv(animeArr ? animeArr[2] : null)}</div>
-      <div>{getAnimeDiv(animeArr ? animeArr[3] : null)}</div>
-    </>
-  );
+  const getExistAnime = () => <>{getAnimeDiv(allAnime ? allAnime : null)}</>;
 
   const getLoading = () =>
     loading ? (
@@ -155,34 +130,42 @@ const AnimeShowPage = (): JSX.Element => {
   return (
     <AnimMainBox>
       <AnimTitle>Anime</AnimTitle>
-      <AnimSearchBox>
-        <Input placeholder={"searchValue"} onChange={onChange}></Input>
-        <AnimeButton
-          para=""
-          text="Search"
-          width="120px"
-          height="32px"
-          textColor="white"
-          backGroundColor="#FFC300"
-          borderColor="white"
-          buttonClick={() => search()}
-        />
+      <AnimSearchBox className="row">
+        <Input
+          className="col-xl-10 col-md-10 col-sm-10 col-10"
+          placeholder={"searchValue"}
+          onChange={onChange}
+        ></Input>
+        <div className="col-xl-2 col-md-2 col-sm-3 col-3">
+          <AnimeButton
+            para=""
+            text="Search"
+            width="120px"
+            height="32px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="white"
+            buttonClick={() => search()}
+          />
+        </div>
       </AnimSearchBox>
-      <AnimeShowBox>
-        {getExistAnime()}
-      </AnimeShowBox>
+      <AnimeShowBox className="row">{getExistAnime()}</AnimeShowBox>
       {getLoading()}
       <CenterDiv>
-        <AnimeButton
-          para=""
-          text="View more"
-          width="120px"
-          height="32px"
-          textColor="white"
-          backGroundColor="#FFC300"
-          borderColor="white"
-          buttonClick={() => getMore()}
-        />
+        {allAnime.length < count ? (
+          <AnimeButton
+            para=""
+            text="View more"
+            width="120px"
+            height="32px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="white"
+            buttonClick={() => getMore()}
+          />
+        ) : (
+          <></>
+        )}
       </CenterDiv>
     </AnimMainBox>
   );

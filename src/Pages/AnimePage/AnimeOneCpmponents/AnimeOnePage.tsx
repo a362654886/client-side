@@ -5,17 +5,17 @@ import {
   AnimOneHeaderLabel,
   AnimOneHeaderLeft,
   AnimOneHeaderRight,
+  AnimOneIcons,
   AnimOnePage,
   AnimOneWhereWatchImg,
   AnimOneWhereWatchLabel,
   LikeButton,
   OnePageStarDiv,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
-import { Anime } from "../../../types/Amine";
+import { Anime, RateBody } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
 import crunchyroll from "../../../files/cunp.png";
 import Funimation from "../../../files/Funimation.png";
-import mal from "../../../files/mal.png";
 import tubi from "../../../files/Tubi.png";
 import hidive from "../../../files/Hidive.png";
 import VIZ from "../../../files/VIZ.png";
@@ -23,6 +23,10 @@ import AnimePlant from "../../../files/AnimePlant.png";
 import AnimeButton from "../../../components/Button";
 import starBorder from "../../../files/Star-border.png";
 import starFill from "../../../files/Star-filled.png";
+import facebook from "../../../files/facebook.png";
+import insImage from "../../../files/insImage.png";
+import twitter from "../../../files/twitterP.png";
+import copy from "../../../files/copy.png";
 import AnimeOneForum from "./AnimeOneForums";
 import { AnimeOneTitle } from "../../../cssJs/AnimePage/AnimeOneCss";
 import AnimeOneProducts from "./AnimeOneProducts";
@@ -33,8 +37,8 @@ import { animeUpdateLike } from "../../../api/animeAPI";
 import { userUpdateLike } from "../../../api/userApi";
 import { LOGIN_USER_ADD } from "../../../redux/loginUser";
 import { ANIME_ADD } from "../../../redux/anime";
-import { Spin } from "antd";
 import { useHistory } from "react-router-dom";
+import { openNotification } from "../../../helperFns/popUpAlert";
 
 interface IProps {
   toPage: (page: number) => void;
@@ -190,25 +194,37 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
       }
     });
 
-  const getStar = (length: number) => {
-    const numArr = [0, 100, 200, 300, 400];
-    return numArr.map((n) => {
-      if (length > n) {
-        return (
-          <img
-            style={{ width: "32px", height: "32px", marginRight: "8px" }}
-            src={starFill}
-          />
-        );
-      } else {
-        return (
-          <img
-            style={{ width: "32px", height: "32px", marginRight: "8px" }}
-            src={starBorder}
-          />
-        );
-      }
-    });
+  const isLogin = (likeFn: () => Promise<void>) => {
+    if (loginUser) {
+      likeFn();
+    } else {
+      openNotification("error", "please login and then reply");
+    }
+  };
+
+  const getStar = (rate: RateBody | null) => {
+    if (rate) {
+      const rateNum = rate.totalRate / rate.ratePeople;
+      return [1, 2, 3, 4, 5].map((n, index) => {
+        if (rateNum > n) {
+          return (
+            <img
+              style={{ width: "32px", height: "32px", marginRight: "8px" }}
+              src={starFill}
+            />
+          );
+        } else {
+          return (
+            <img
+              style={{ width: "32px", height: "32px", marginRight: "8px" }}
+              src={starBorder}
+            />
+          );
+        }
+      });
+    } else {
+      return <></>;
+    }
   };
 
   const getLikesButton = () => {
@@ -223,7 +239,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
           textColor="white"
           backGroundColor="#892E2F "
           borderColor="#892E2F"
-          buttonClick={() => unlikeAnimeFn()}
+          buttonClick={() => isLogin(() => unlikeAnimeFn())}
         />
       );
     } else {
@@ -236,7 +252,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
           textColor="black"
           backGroundColor="white"
           borderColor="#892E2F"
-          buttonClick={() => likeAnimeFn()}
+          buttonClick={() => isLogin(() => likeAnimeFn())}
         />
       );
     }
@@ -248,7 +264,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         <AnimOneHeaderLeft>
           <img src={chooseAnime?.headImage} />
           <OnePageStarDiv>
-            {getStar(chooseAnime ? chooseAnime.likes : 0)}
+            {getStar(chooseAnime ? chooseAnime.rate : null)}
           </OnePageStarDiv>
           <p>Give it a rate if you watched it</p>
         </AnimOneHeaderLeft>
@@ -270,6 +286,32 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
             {getWhereToWatch()}
           </AnimOneWhereWatchLabel>
           <LikeButton>{getLikesButton()}</LikeButton>
+          <AnimOneIcons>
+            <img
+              onClick={() => {
+                console.log("facebook");
+              }}
+              src={`${facebook}`}
+            />
+            <img
+              onClick={() => {
+                console.log("insImage");
+              }}
+              src={`${insImage}`}
+            />
+            <img
+              onClick={() => {
+                console.log("twitter");
+              }}
+              src={`${twitter}`}
+            />
+            <img
+              onClick={() => {
+                console.log("copy");
+              }}
+              src={`${copy}`}
+            />
+          </AnimOneIcons>
         </AnimOneHeaderRight>
       </AnimOneHeader>
       <AnimeOneVideo
@@ -278,6 +320,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         ifShowHeader={false}
         ifShowAdd={true}
         toAddVideo={toPage}
+        toVideo={(num: number) => toPage(num)}
       />
       <AnimeOneProducts
         anime={chooseAnime}
@@ -285,6 +328,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         ifShowHeader={false}
         ifShowAdd={true}
         toAddProduct={toPage}
+        toProduct={(num: number) => toPage(num)}
       />
       <AnimeOneTitle>Forum</AnimeOneTitle>
       <AnimeOneForum
@@ -292,6 +336,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         pageSizeSetting={1}
         ifShowHeader={false}
         ifShowAdd={true}
+        toForum={(num: number) => toPage(num)}
       />
     </AnimOnePage>
   );

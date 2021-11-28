@@ -18,9 +18,7 @@ import {
   Subtitle,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
 import { AnimeAddButtonDiv } from "../../../cssJs/AnimePage/AnimeOneCss";
-import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
-import { LoadingType } from "../../../types/EnumTypes";
 import { Product } from "../../../types/ProductType";
 import loadingImg from "../../../files/loading.gif";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
@@ -31,6 +29,7 @@ interface IProps {
   ifShowHeader: boolean;
   ifShowAdd: boolean;
   toAddProduct?: (page: number) => void;
+  toProduct?: (num: number) => void;
 }
 
 const AnimeOneProducts = ({
@@ -39,15 +38,15 @@ const AnimeOneProducts = ({
   ifShowHeader,
   ifShowAdd,
   toAddProduct,
+  toProduct,
 }: IProps): JSX.Element => {
   const [productArr, setProductArr] = useState<Product[][] | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const [count, setCount] = useState<number>(0);
 
   const pageSize = pageSizeSetting;
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -68,6 +67,7 @@ const AnimeOneProducts = ({
     );
     if (productsResult) {
       setProducts(products.concat(productsResult.result));
+      setCount(productsResult.count);
     }
     setLoading(false);
   };
@@ -187,18 +187,41 @@ const AnimeOneProducts = ({
       </AnimeAddButtonDiv>
       {getExistProducts()}
       {getLoading()}
-      <MiddleDiv>
-        <AnimeButton
-          para=""
-          text={"View More"}
-          width="120px"
-          height="32px"
-          textColor="#F5A623"
-          backGroundColor="#FBFCDB"
-          borderColor="#F5A623"
-          buttonClick={() => getMore()}
-        />
-      </MiddleDiv>
+      {ifShowAdd ? (
+        <>
+          <MiddleDiv>
+            <AnimeButton
+              para=""
+              text={"View More"}
+              width="120px"
+              height="32px"
+              textColor="#F5A623"
+              backGroundColor="#FBFCDB"
+              borderColor="#F5A623"
+              buttonClick={() => (toProduct ? toProduct(2) : {})}
+            />
+          </MiddleDiv>
+        </>
+      ) : (
+        <>
+          {products.length < count ? (
+            <MiddleDiv>
+              <AnimeButton
+                para=""
+                text={"View More"}
+                width="120px"
+                height="32px"
+                textColor="#F5A623"
+                backGroundColor="#FBFCDB"
+                borderColor="#F5A623"
+                buttonClick={() => getMore()}
+              />
+            </MiddleDiv>
+          ) : (
+            <></>
+          )}
+        </>
+      )}
       <br />
     </AnimOneVideo>
   );

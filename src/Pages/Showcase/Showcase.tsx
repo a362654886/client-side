@@ -10,26 +10,12 @@ import {
 import ShowCaseRouter from "../../router/ShowCaseRouter";
 
 const Showcase = (): JSX.Element => {
-
   const history = useHistory();
 
-  const toPage = (url: string) => history.replace(url)
+  const toPage = (url: string) => history.replace(url);
 
   return (
     <ShowCaseDiv>
-      <ShowCaseTitleDiv>
-        <ShowCaseTitle>Showcase</ShowCaseTitle>
-        <AnimeButton
-          para=""
-          text={"Post"}
-          width="120px"
-          height="36px"
-          textColor="white"
-          backGroundColor="#FFC300"
-          borderColor="white"
-          buttonClick={() => toPage("/mainPage/showcase/create")}
-        />
-      </ShowCaseTitleDiv>
       <ShowCaseRouter />
     </ShowCaseDiv>
   );

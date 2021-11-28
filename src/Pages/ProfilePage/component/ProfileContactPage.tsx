@@ -81,6 +81,7 @@ const ProfileContactPage = (): JSX.Element => {
       ins: ins,
       tel: tel,
       avatar: loginUser ? loginUser.avatar : "",
+      rate: loginUser ? loginUser.rate : [],
       likeAnime: loginUser?.likeAnime ? loginUser?.likeAnime : [],
       avatarImage: loginUser ? loginUser.avatarImage : [],
     };

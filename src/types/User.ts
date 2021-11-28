@@ -8,10 +8,16 @@ export type User = {
   location: string;
   facebook: string;
   ins: string;
-  tel:string;
+  tel: string;
   avatar: string;
+  rate: UserRate[];
   likeAnime: string[];
-  avatarImage?:Avatar[]
+  avatarImage?: Avatar[];
+};
+
+export type UserRate = {
+  animeId: string;
+  rate: number;
 };
 
 export enum Gender {

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { videosAllGet } from "../../../api/videoAPI";
 import AnimeButton, { MiddleDiv } from "../../../components/Button";
 import {
@@ -16,13 +15,12 @@ import {
   AnimOneVideo,
   Subtitle,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
-import {
-  AnimeAddButtonDiv,
-} from "../../../cssJs/AnimePage/AnimeOneCss";
+import { AnimeAddButtonDiv } from "../../../cssJs/AnimePage/AnimeOneCss";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { Anime } from "../../../types/Amine";
 import loadingImg from "../../../files/loading.gif";
 import { Video } from "../../../types/VideoType";
+import { useHistory } from "react-router";
 
 interface IProps {
   anime: Anime | null;
@@ -30,6 +28,7 @@ interface IProps {
   ifShowHeader: boolean;
   ifShowAdd: boolean;
   toAddVideo?: (page: number) => void;
+  toVideo?: (num: number) => void;
 }
 
 const AnimeOneVideo = ({
@@ -38,14 +37,16 @@ const AnimeOneVideo = ({
   ifShowHeader,
   ifShowAdd,
   toAddVideo,
+  toVideo,
 }: IProps): JSX.Element => {
-  const dispatch = useDispatch();
-
   const [videos, setVideos] = useState<Video[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const [count, setCount] = useState<number>(0);
 
   const pageSize = pageSizeSetting;
+
+  const history = useHistory();
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -62,6 +63,7 @@ const AnimeOneVideo = ({
     );
     if (videoResult && videos.length < videoResult.count) {
       setVideos(videos.concat(videoResult.result));
+      setCount(videoResult.count);
     }
     setLoading(false);
   };
@@ -155,18 +157,41 @@ const AnimeOneVideo = ({
       </AnimeAddButtonDiv>
       <div style={{ marginTop: "23px" }}>{getExistVideos()}</div>
       {getLoading()}
-      <MiddleDiv>
-        <AnimeButton
-          para=""
-          text={"View More"}
-          width="120px"
-          height="32px"
-          textColor="#F5A623"
-          backGroundColor="#FBFCDB"
-          borderColor="#F5A623"
-          buttonClick={() => getMore()}
-        />
-      </MiddleDiv>
+      {ifShowAdd ? (
+        <>
+          <MiddleDiv>
+            <AnimeButton
+              para=""
+              text={"View More"}
+              width="120px"
+              height="32px"
+              textColor="#F5A623"
+              backGroundColor="#FBFCDB"
+              borderColor="#F5A623"
+              buttonClick={() => (toVideo ? toVideo(1) : {})}
+            />
+          </MiddleDiv>
+        </>
+      ) : (
+        <>
+          {videos.length < count ? (
+            <MiddleDiv>
+              <AnimeButton
+                para=""
+                text={"View More"}
+                width="120px"
+                height="32px"
+                textColor="#F5A623"
+                backGroundColor="#FBFCDB"
+                borderColor="#F5A623"
+                buttonClick={() => getMore()}
+              />
+            </MiddleDiv>
+          ) : (
+            <></>
+          )}
+        </>
+      )}
       <br />
     </AnimOneVideo>
   );

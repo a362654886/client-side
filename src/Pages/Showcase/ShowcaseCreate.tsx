@@ -1,4 +1,4 @@
-import { Button, Radio, RadioChangeEvent } from "antd";
+import { Button, Input, Radio, RadioChangeEvent, Select, Space } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -8,19 +8,32 @@ import FullTextEditor from "../../components/FullTextEditor";
 import ImageUpload, { ImageBody } from "../../components/ImageUpload";
 import { TextInput } from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import {
+  CancelButton,
+  DescriptionInput,
   ShowCaseCreateImage,
   ShowcaseRadioDiv,
   ShowcaseTextInput,
+  ShowCaseTitle,
+  ShowCaseTitleDiv,
+  TagRadioInput,
+  TagSelect,
+  TagSelectDiv,
+  TitleInput,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import { IStoreState } from "../../types/IStoreState";
 import { ShowCaseEnum, ShowCaseType } from "../../types/showCaseType";
 import { User } from "../../types/User";
 import avatar from "../../files/avatar.png";
+import { useHistory, useLocation } from "react-router-dom";
+import { SelectValue } from "antd/lib/select";
+import { openNotification } from "../../helperFns/popUpAlert";
 
 const ShowcaseCreate = (): JSX.Element => {
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
   );
+
+  const history = useHistory();
 
   const [imgArr, setImgArr] = useState<ImageBody[]>([]);
   const [html, setHtml] = useState<string>("");
@@ -28,13 +41,31 @@ const ShowcaseCreate = (): JSX.Element => {
     ShowCaseEnum.Collections
   );
   const [loading, setLoading] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagAdd, setTagAdd] = useState<boolean>(true);
+  const [sourceType, setSourceType] = useState<string>("origin");
+  const [sourceValue, setSourceValue] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   useEffect(() => {
-    //
-  }, [imgArr]);
+    setShowCaseType((history.location.state as any).type);
+  }, []);
 
-  const onChange = (e: RadioChangeEvent): void =>
-    setShowCaseType(e.target.value as ShowCaseEnum);
+  useEffect(() => {
+    console.log(tags);
+  }, [imgArr, tags]);
+
+  const getHeader = () => {
+    switch (showCaseType) {
+      case ShowCaseEnum.Collections:
+        return "Collections";
+      case ShowCaseEnum.Drawings:
+        return "Drawings";
+      case ShowCaseEnum.Comics:
+        return "Series";
+    }
+  };
 
   const setNewImage = (imageBody: ImageBody) => {
     const exist = imgArr
@@ -56,6 +87,7 @@ const ShowcaseCreate = (): JSX.Element => {
   };
 
   const showCaseCreate = async () => {
+    console.log(tags);
     const id = new Date().valueOf().toString();
     const showCase: ShowCaseType = {
       _id: id,
@@ -68,16 +100,62 @@ const ShowcaseCreate = (): JSX.Element => {
           : avatar
         : avatar,
       userName: loginUser ? loginUser.name : "",
-      tags: [],
+      tags: tags.map((tag, index) => {
+        return {
+          _id: id + index,
+          text: tag,
+        };
+      }),
       text: html,
+      source: sourceType == "origin" ? sourceType : "source" + sourceValue,
+      title: title,
+      description: description,
+      aweSome: 0,
     };
     setLoading(true);
-    const r = await showCaseAdd(showCase);
+    if (tagAdd) {
+      const r = await showCaseAdd(showCase);
+    } else {
+      openNotification("fail", "please add # before tag");
+    }
     setLoading(false);
   };
 
+  const addTag = (e: SelectValue) => {
+    (e as string[]).forEach((tag: string) => {
+      if (tag.indexOf("#") == -1) {
+        setTagAdd(false);
+      }
+    });
+    console.log(e);
+    if (tagAdd) {
+      setTags(e as string[]);
+    } else {
+      console.log("please add # before tag");
+    }
+  };
+
+  const onSourceChange = (e: RadioChangeEvent) => setSourceType(e.target.value);
+
   return (
     <>
+      <ShowCaseTitleDiv>
+        <ShowCaseTitle>{getHeader()}</ShowCaseTitle>
+      </ShowCaseTitleDiv>
+      {showCaseType == ShowCaseEnum.Comics ? (
+        <>
+          <TitleInput
+            placeholder="Titles"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <DescriptionInput
+            placeholder="Descriptions"
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </>
+      ) : (
+        <></>
+      )}
       {imgArr.map((image, index) => {
         return (
           <ShowCaseCreateImage
@@ -99,7 +177,7 @@ const ShowcaseCreate = (): JSX.Element => {
         textColor={"#F5A623"}
         backGroundColor={"#FBFCDB"}
         border={"1px solid #F5A623"}
-        text={"+ Image"}
+        text={"Change Cover Image"}
         setImg={(value: ImageBody) => setNewImage(value)}
       />
       <ShowcaseTextInput>
@@ -110,12 +188,33 @@ const ShowcaseCreate = (): JSX.Element => {
           }}
         />
         <br />
+        <TagSelectDiv>
+          <p>Tags:</p>
+          <TagSelect
+            mode="tags"
+            placeholder=""
+            defaultValue={tags}
+            onChange={(e) => addTag(e)}
+            dropdownStyle={{ display: "none" }}
+          ></TagSelect>
+        </TagSelectDiv>
         <ShowcaseRadioDiv>
-          <Radio.Group onChange={onChange} value={showCaseType}>
-            <Radio value={ShowCaseEnum.Collections}>Collections</Radio>
-            <Radio value={ShowCaseEnum.Originals}>Originals</Radio>
+          <Radio.Group onChange={onSourceChange} value={sourceType}>
+            <Space direction="vertical">
+              <Radio value="origin">It is my original work</Radio>
+              <TagRadioInput value="source">
+                <p>Source: </p>
+                <Input
+                  placeholder={"Authors and/or Publishers"}
+                  onChange={(e) => {
+                    setSourceValue(e.target.value);
+                  }}
+                ></Input>
+              </TagRadioInput>
+            </Space>
           </Radio.Group>
         </ShowcaseRadioDiv>
+        <br />
         <AnimeButton
           para=""
           text={"Post"}
@@ -126,6 +225,20 @@ const ShowcaseCreate = (): JSX.Element => {
           borderColor="#FFC300"
           buttonClick={() => showCaseCreate()}
         />
+        <CancelButton>
+          <AnimeButton
+            para=""
+            text={"Cancel"}
+            width="120px"
+            height="32px"
+            textColor="black"
+            backGroundColor="white"
+            borderColor="#302D46"
+            buttonClick={() => {
+              console.log("console");
+            }}
+          />
+        </CancelButton>
       </ShowcaseTextInput>
     </>
   );

@@ -1,15 +1,18 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { newAllGet } from "../../api/newsAPI";
 import AnimeButton from "../../components/Button";
 import {
   AnimeButtonsDiv,
   AnimOne,
   AnimOneMain,
   AnimOneSide,
+  AnimOneSideTwo,
 } from "../../cssJs/AnimePage/AnimeOneCss";
 import { Anime } from "../../types/Amine";
 import { IStoreState } from "../../types/IStoreState";
+import { NewType } from "../../types/NewsType";
 import AnimeOneForum from "./AnimeOneCpmponents/AnimeOneForums";
 import AnimeOnePage from "./AnimeOneCpmponents/AnimeOnePage";
 import AnimeOneProductAdd from "./AnimeOneCpmponents/AnimeOneProductAdd";
@@ -23,6 +26,20 @@ const AnimeOne = (): JSX.Element => {
   );
 
   const [chooseButton, setChooseButton] = useState<number>(0);
+  const [allNews, setAllNews] = useState<NewType[]>([]);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      await getNews();
+    })();
+  }, []);
+
+  const getNews = async () => {
+    const animeResult = await newAllGet("", 1, 3);
+    if (animeResult) {
+      setAllNews(animeResult.result);
+    }
+  };
 
   useEffect(() => {
     //
@@ -71,8 +88,8 @@ const AnimeOne = (): JSX.Element => {
               width="120px"
               height="32px"
               textColor="black"
-              backGroundColor="#F6F6F6 "
-              borderColor="white"
+              backGroundColor="#AAFFC9 "
+              borderColor="#AAFFC9"
               buttonClick={() => changeButton(index)}
             />
           </div>
@@ -108,6 +125,7 @@ const AnimeOne = (): JSX.Element => {
             ifShowHeader={true}
             ifShowAdd={false}
             toAddVideo={(page: number) => changeButton(page)}
+            toVideo={(num: number) => setChooseButton(num)}
           />
         );
       case 2:
@@ -139,15 +157,52 @@ const AnimeOne = (): JSX.Element => {
   };
 
   return (
-    <AnimOne>
-      <AnimOneMain>
-        <h6>Anime</h6>
-        <h6>{chooseAnime?.title}</h6>
-        <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
-        {getChildDiv()}
-      </AnimOneMain>
-      <AnimOneSide></AnimOneSide>
-    </AnimOne>
+    <div>
+      <AnimOne>
+        <AnimOneMain className="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+          <h6>Anime</h6>
+          <h6>{chooseAnime?.title}</h6>
+          <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
+          <div>{getChildDiv()}</div>
+        </AnimOneMain>
+        <div
+          style={{
+            width: "276px",
+            display:
+              document.documentElement.clientWidth > 1181 ? "inline" : "none",
+          }}
+        >
+          <AnimOneSide>
+            <h6>News</h6>
+            {allNews.map((news, index) => {
+              return (
+                <p key={index}>
+                  {news.header.length > 35
+                    ? `${news.header.substring(0, 35)}.....`
+                    : news.header}
+                </p>
+              );
+            })}
+            <AnimeButton
+              para=""
+              text={"More"}
+              width="120px"
+              height="36px"
+              textColor="#F5A623"
+              backGroundColor="#FBFCDB"
+              borderColor="#F5A623"
+              buttonClick={() => console.log("more")}
+            />
+          </AnimOneSide>
+          <AnimOneSideTwo>
+            <h6>FQA</h6>
+            <p>How to gain points?</p>
+            <p>How to redeem a gift product?</p>
+            <p>How to share a resource?</p>
+          </AnimOneSideTwo>
+        </div>
+      </AnimOne>
+    </div>
   );
 };
 

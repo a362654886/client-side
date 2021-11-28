@@ -82,6 +82,18 @@ export const AnimOneWhereWatchImg = styled.img`
   margin-right: 16px;
 `;
 
+export const AnimOneIcons = styled.div`
+  height: 24px;
+  display: flex;
+  margin-top: 24px;
+  img {
+    height: 32px;
+    width: 32px;
+    margin-right: 16px;
+    cursor: pointer;
+  }
+`;
+
 export const LikeButton = styled.div`
   margin-top: 33px;
   display: flex;
@@ -116,24 +128,26 @@ export const OnePageStarDiv = styled.div`
 // video
 
 export const VideoDiv = styled.div`
-  width: 840px;
+  max-width: 840px;
   height: 428px;
   margin-bottom: 16px;
   background-color: #f6f6f6;
+  text-align: center;
 `;
 
 export const VideoIframe = styled.iframe`
   width: 560px;
   height: 316px;
-  margin: 24px 140px 24px 140px;
+  margin: 24px auto;
 `;
 
 export const VideoBottom = styled.div`
   display: flex;
+  width: 410px;
+  margin: 0px auto;
 `;
 
 export const TimeText = styled.p`
-  margin-left: 284px;
   color: #4a4a4a;
   font-family: "Arial MT";
   font-size: 14px;

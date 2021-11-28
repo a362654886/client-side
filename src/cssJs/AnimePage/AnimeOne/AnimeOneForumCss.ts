@@ -21,7 +21,7 @@ export const ButtonsFlex = styled.div`
 `;
 
 export const ForumIframe = styled.div`
-  width: 896px;
+  max-width: 896px;
   height: auto;
   padding: 24px 16px;
   border: 1px solid #7f7e82;
@@ -58,7 +58,7 @@ export const ForumText = styled.p`
 `;
 
 export const ForumItemBox = styled.div`
-  width: 864px;
+  width: 100%;
   height: auto;
   padding: 24px 16px;
   border: 1px solid #7f7e82;
@@ -67,4 +67,21 @@ export const ForumItemBox = styled.div`
   button {
     text-align: left;
   }
+`;
+
+export const ForumSecondItemBox = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 24px 16px;
+  border: 1px solid #7f7e82;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  button {
+    text-align: left;
+  }
+`;
+
+export const ForumEditButton = styled.div`
+  margin-left: 16px;
+  margin-top: 5px;
 `;

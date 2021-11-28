@@ -2,14 +2,15 @@ import styled from "styled-components";
 
 export const AnimOne = styled.div`
   margin-top: 32px;
-  width: 1121px;
+  max-width: 1172px;
   height: auto;
   margin: auto;
   display: flex;
 `;
 
 export const AnimOneMain = styled.div`
-  width: 896px;
+  max-width: 896px;
+  margin-right: 32px;
   h6 {
     font-size: 36px;
     margin-bottom: 32px;
@@ -17,7 +18,32 @@ export const AnimOneMain = styled.div`
 `;
 
 export const AnimOneSide = styled.div`
-  width: 250px;
+  margin-top: 80px;
+  padding: 24px 16px;
+  h6 {
+    height: 24px;
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  p {
+    height: 44px;
+    margin-bottom: 16px;
+    color: #4a4a4a;
+    font-size: 14px;
+    cursor: pointer;
+  }
+`;
+
+export const AnimOneSideTwo = styled.div`
+  background-color: #f6f6f6;
+  padding: 23px 16px;
+  p {
+    margin-top: 16px;
+    height: 24px;
+    font-size: 16px;
+    color: #4a4a4a;
+  }
 `;
 
 export const AnimeButtonsDiv = styled.div`

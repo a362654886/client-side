@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ProfileBox = styled.div`
   height: 44px;
-  width: 1121px;
+  max-width: 1121px;
   margin: auto;
   height: 800px;
 `;

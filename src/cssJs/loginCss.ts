@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const LoginBox = styled.div`
   height: 810px;
-  width: 289px;
+  max-width: 289px;
   margin: auto;
   margin-top: 23px;
   position: relative;

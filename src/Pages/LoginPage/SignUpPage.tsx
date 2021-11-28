@@ -119,6 +119,7 @@ const SignUpPage = (): JSX.Element => {
       facebook: "",
       ins: "",
       tel: "",
+      rate: [],
       likeAnime: [],
       avatar: chooseAvatar ? chooseAvatar.imageName : "",
     };
@@ -199,7 +200,7 @@ const SignUpPage = (): JSX.Element => {
           width="120px"
           height="36px"
           textColor="black"
-          backGroundColor="#F6F6F6"
+          backGroundColor="#AAFFC9"
           borderColor="white"
           buttonClick={() => toPage("/mainPage/signUpPage")}
         />

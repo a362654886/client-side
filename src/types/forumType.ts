@@ -6,8 +6,10 @@ export type ForumType = {
   userAvatar: string;
   userName: string;
   anime: string;
-  items?:ForumItem[]
-  showReplay?: boolean
+  edit?: boolean;
+  items?: ForumItem[];
+  showReplay?: boolean;
+  secondItems?: ForumSecondItem[];
 };
 
 export type ForumItem = {
@@ -19,4 +21,20 @@ export type ForumItem = {
   userAvatar: string;
   userName: string;
   anime: string;
+  edit?: boolean;
+  showReplay?: boolean;
+  secondItems?: ForumSecondItem[];
+};
+
+export type ForumSecondItem = {
+  _id: string;
+  forumSecondItemId: string;
+  forumItemId: string;
+  text: string;
+  forumId: string;
+  uploadTime: Date;
+  userAvatar: string;
+  userName: string;
+  anime: string;
+  edit?: boolean;
 };

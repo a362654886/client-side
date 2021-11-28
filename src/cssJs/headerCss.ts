@@ -1,13 +1,20 @@
+import { Button } from "antd";
 import styled from "styled-components";
 
 export const Header = styled.div`
-  height: 96px;
+  height: auto;
   width: 100%;
   background-color: #892e2f;
 `;
 
 export const HeaderContainer = styled.div`
-  width: 1121px;
+  padding-left: 20px;
+  display: flex;
+  margin: auto;
+`;
+
+export const FootContainer = styled.div`
+  padding-left: 20px;
   display: flex;
   margin: auto;
 `;
@@ -19,15 +26,17 @@ export const HeaderTitle = styled.p`
   color: white;
   padding-top: 8px;
   padding-bottom: 8px;
+  p {
+    margin-bottom: 0px;
+  }
 `;
 
 export const HeaderContext = styled.div`
-  margin-left: 40px;
   display: flex;
   height: 96px;
   p {
     line-height: 96px;
-    margin-left: 32px;
+    margin-right: 32px;
     color: #fae7d5;
     font-size: 16px;
     font-family: "Arial";
@@ -39,7 +48,6 @@ export const HeaderContext = styled.div`
 export const LoginImg = styled.img`
   width: 40px;
   height: 40px;
-  margin-left: 135px;
   margin-top: 28px;
 `;
 
@@ -76,4 +84,23 @@ export const LoadingBox = styled.div`
     margin-top: 10vw;
     opacity: 1;
   }
+`;
+
+export const ProfileDiv = styled.div`
+  display: flex;
+`;
+
+export const MenuButton = styled(Button)`
+  margin-top: 32px;
+  margin-left: 50px;
+  background-color: #892e2f;
+  border: 1px solid #892e2f;
+  color: white;
+  font-size: 17px;
+`;
+
+export const AnimeParkImg = styled.img`
+  width: 235.2px;
+  height: 32px;
+  color: white;
 `;

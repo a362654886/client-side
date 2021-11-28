@@ -33,6 +33,7 @@ ReactDOM.render(
         <Route path="/mainPage" component={MainPage} />
         <Route path="/adminPage" component={AdminPage} />
         <Route path="/adminManagement" component={AdminMainPage} />
+        <Route path="/" component={MainPage} />
       </Switch>
     </Router>
   </Provider>,

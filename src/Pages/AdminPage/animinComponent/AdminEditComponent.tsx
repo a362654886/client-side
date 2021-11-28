@@ -89,6 +89,7 @@ const AdminEditComponent = ({ anime }: IProps): JSX.Element => {
       whereToWatch: whereWatchList,
       headImage: uploadImg,
       likes: anime.likes,
+      rate: anime.rate,
     };
     if (title.trim() == "" || uploadImg == "") {
       setErrorText("the header and head image shouldn't be empty");

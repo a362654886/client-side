@@ -35,6 +35,7 @@ export const AnimeButton = ({
         border: border,
         fontWeight: "bold",
         fontSize: " 14px",
+        textAlign: "center",
       }}
       onClick={() => buttonClick(para)}
     >

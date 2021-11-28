@@ -2,8 +2,9 @@ import styled from "styled-components";
 
 export const AnimMainBox = styled.div`
   margin-top: 32px;
-  width: 1121px;
+  max-width: 1141px;
   margin: auto;
+  padding-left: 20px;
 `;
 
 export const AnimTitle = styled.p`
@@ -16,12 +17,10 @@ export const AnimSearchBox = styled.div`
   display: flex;
   Input {
     width: 576px;
-    margin-right: 40px;
   }
 `;
 
 export const AnimeShowBox = styled.div`
-  display: flex;
   margin-top: 96px;
   cursor: pointer;
 `;
@@ -46,6 +45,7 @@ export const AnimeBox = styled.div`
 `;
 
 export const LikeDiv = styled.div`
+  width: 260px;
   height: 80px;
   background-color: #302d46;
   margin-bottom: 40px;
