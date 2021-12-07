@@ -1,17 +1,15 @@
-import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import {
   showCaseAllGet,
+  showCaseAwesomeUpdate,
   showCaseReplyAdd,
   showCaseReplyUpdate,
   showCaseSecondReplyAdd,
   showCaseSecondReplyUpdate,
   showCaseUpdate,
 } from "../../api/showcaseAPI";
-import AnimeButton, { MiddleDiv } from "../../components/Button";
-import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
+import AnimeButton from "../../components/Button";
 import {
   AweSomeDiv,
   EditAndDeleteDiv,
@@ -19,27 +17,22 @@ import {
   ReplyBox,
   ReplyDiv,
   ReplySecondBox,
-  ShowCaseDiv,
   ShowcaseEditDiv,
   ShowCaseIcons,
   ShowcaseImage,
-  ShowcasePostDiv,
-  ShowcaseSearchInputDiv,
   ShowcaseTag,
-  ShowCaseTitle,
-  ShowCaseTitleDiv,
   ShowIframe,
   ShowImg,
   ShowName,
   ShowTime,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import {
-  ShowCaseEnum,
   ShowCaseReply,
   ShowCaseType,
   ShowSecondCaseReply,
 } from "../../types/showCaseType";
 import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.png";
+import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.png";
 import facebook from "../../files/facebook.png";
 import insImage from "../../files/insImage.png";
 import twitter from "../../files/twitterP.png";
@@ -50,9 +43,7 @@ import FullTextEditor from "../../components/FullTextEditor";
 import {
   ForumEditButton,
   ForumImg,
-  ForumItemBox,
   ForumName,
-  ForumSecondItemBox,
   ForumTime,
   TextInput,
 } from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
@@ -62,6 +53,9 @@ import { Avatar, User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";
 import { openNotification } from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
+import { ReactQuillCss } from "../../cssJs/fullTextEditor";
+import { userUpdateShowcases } from "../../api/userApi";
+import { LOGIN_USER_ADD } from "../../redux/loginUser";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -80,14 +74,25 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     [],
   ]);
   const [update, setUpdate] = useState(0);
+  const [awesomeArrState, setAwesomeArrState] = useState<string[]>(
+    loginUser?.likeShowcase ? loginUser?.likeShowcase : []
+  );
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setAllShowCases(showcases);
+    setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
   }, [showcases]);
 
   useEffect(() => {
     //console.log(forums);
   }, [update]);
+
+  useEffect(() => {
+    console.log(loginUser);
+    setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
+  }, []);
 
   const sendNewReply = (e: string, index: number) => {
     const newReplyHtmls = newReplyHtml;
@@ -436,6 +441,116 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     }
   };
 
+  // awesome
+
+  const getAwesomeButton = (showCaseIdAndTitle: string, index: number) => {
+    const r = awesomeArrState.find(
+      (showcase) => showcase == showCaseIdAndTitle
+    );
+    if (r) {
+      return (
+        <img
+          src={showCaseAwesomeClick}
+          onClick={() =>
+            isLogin(() => cancelAwesomeFn(showCaseIdAndTitle, index))
+          }
+        />
+      );
+    } else {
+      return (
+        <img
+          src={showCaseAwesomeUnClick}
+          onClick={() => isLogin(() => awesomeFn(showCaseIdAndTitle, index))}
+        />
+      );
+    }
+  };
+
+  const isLogin = (likeFn: () => Promise<void>) => {
+    if (loginUser) {
+      likeFn();
+    } else {
+      openNotification("error", "please login and then reply");
+    }
+  };
+
+  const awesomeFn = async (showCaseIdAndTitle: string, index: number) => {
+    if (loading == false) {
+      let awesomeArr: string[] = [];
+      if (loginUser?.likeShowcase) {
+        awesomeArr = loginUser?.likeShowcase;
+      }
+      awesomeArr.push(showCaseIdAndTitle);
+
+      //update state
+      updateAllShowcaseAwesome(index, 1, awesomeArr);
+      //post like num
+      setLoading(true);
+      const animeLikeResult = await showCaseAwesomeUpdate(
+        allShowCases[index]._id,
+        allShowCases[index].aweSome
+      );
+      const userLikeResult = await userUpdateShowcases(
+        loginUser?._id as string,
+        awesomeArr
+      );
+      setLoading(false);
+    } else {
+      console.log("please wait some seconds");
+    }
+  };
+
+  const cancelAwesomeFn = async (showCaseIdAndTitle: string, index: number) => {
+    if (loading == false) {
+      console.log("-----");
+      const awesomeArr = awesomeArrState;
+      console.log(awesomeArr);
+      const r = awesomeArr.indexOf(showCaseIdAndTitle);
+      console.log(r);
+      if (r != -1) {
+        awesomeArr.splice(r, 1);
+        console.log(awesomeArr);
+        //update state
+        updateAllShowcaseAwesome(index, -1, awesomeArr);
+        //post like num
+        setLoading(true);
+        const animeLikeResult = await showCaseAwesomeUpdate(
+          allShowCases[index]._id,
+          allShowCases[index].aweSome
+        );
+        const userLikeResult = await userUpdateShowcases(
+          loginUser?._id as string,
+          awesomeArr
+        );
+        setLoading(false);
+      }
+    } else {
+      console.log("please wait some seconds");
+    }
+  };
+
+  const updateAllShowcaseAwesome = (
+    index: number,
+    value: number,
+    awesomeArr: string[]
+  ) => {
+    //update showcase
+    const newAllShowCases = allShowCases;
+    newAllShowCases[index].aweSome = newAllShowCases[index].aweSome + value;
+    setAllShowCases(newAllShowCases);
+
+    //update user
+    const readyUpdateUser: User = loginUser as User;
+    readyUpdateUser.likeShowcase = awesomeArr;
+    setAwesomeArrState(awesomeArr);
+    setUpdate(update + 1);
+
+    dispatch({
+      payload: readyUpdateUser,
+      type: LOGIN_USER_ADD,
+    });
+  };
+
   const getExistShowcases = () =>
     allShowCases.map((showcase, index) => {
       const date = new Date(parseInt(showcase._id));
@@ -470,10 +585,14 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
             </ShowcaseEditDiv>
           ) : (
             <>
-              <div
-                style={{ marginTop: "16px" }}
+              <ReactQuillCss
+                style={{
+                  marginTop: "16px",
+                  marginLeft: "6px",
+                  width: "100%",
+                }}
                 dangerouslySetInnerHTML={{ __html: showcase.text }}
-              ></div>
+              ></ReactQuillCss>
               <div style={{ display: "flex" }}>
                 {showcase.tags.map((tag, index) => {
                   return (
@@ -484,8 +603,9 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 })}
               </div>
               <AweSomeDiv>
-                <img src={showCaseAwesomeUnClick} />
-                <p>{showcase.aweSome}</p>
+                {getAwesomeButton(`${showcase._id}${showcase.title}`, index)}
+                <p>Awesome!</p>
+                <h6>{showcase.aweSome}</h6>
               </AweSomeDiv>
               <ShowCaseIcons>
                 <img
@@ -517,12 +637,15 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
           )}
           <EditAndDeleteDiv>
             <img onClick={() => editShowcase(index)} src={`${editIcon}`} />
+            <p>Edit</p>
             <img
+              style={{ width: "20px" }}
               onClick={() => {
                 console.log("deleteIcon");
               }}
               src={`${deleteIcon}`}
             />
+            <p>Delete</p>
           </EditAndDeleteDiv>
           <ReplyDiv>
             <AnimeButton
@@ -567,18 +690,6 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
               <ForumTime>{`${date.getDate()}-${
                 date.getMonth() + 1
               }-${date.getFullYear()}`}</ForumTime>
-              <ForumEditButton>
-                <AnimeButton
-                  para=""
-                  text={`Edit`}
-                  width="120px"
-                  height="32px"
-                  textColor="black"
-                  backGroundColor="white"
-                  borderColor="black"
-                  buttonClick={() => editShowcaseReply(index, secondIndex)}
-                />
-              </ForumEditButton>
             </div>
             {reply.edit ? (
               <ShowcaseEditDiv>
@@ -601,28 +712,47 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
               </ShowcaseEditDiv>
             ) : (
               <>
-                <div
-                  style={{ marginTop: "16px" }}
+                <ReactQuillCss
+                  style={{
+                    marginTop: "16px",
+                    marginLeft: "6px",
+                    width: "100%",
+                  }}
                   dangerouslySetInnerHTML={{ __html: reply.text }}
-                ></div>
-                <ReplyAddDiv>
-                  <AnimeButton
-                    para=""
-                    text={`Replies(${
-                      reply.secondReplies ? reply.secondReplies.length : 0
-                    })`}
-                    width="71px"
-                    height="22px"
-                    textColor="#4BA3C3"
-                    backGroundColor="white"
-                    borderColor="white"
-                    buttonClick={() => {
-                      openSecondReply(index, secondIndex);
-                    }}
-                  />
-                </ReplyAddDiv>
+                ></ReactQuillCss>
               </>
             )}
+            <EditAndDeleteDiv>
+              <img
+                onClick={() => editShowcaseReply(index, secondIndex)}
+                src={`${editIcon}`}
+              />
+              <p>Edit</p>
+              <img
+                style={{ width: "20px" }}
+                onClick={() => {
+                  console.log("deleteIcon");
+                }}
+                src={`${deleteIcon}`}
+              />
+              <p>Delete</p>
+            </EditAndDeleteDiv>
+            <ReplyAddDiv>
+              <AnimeButton
+                para=""
+                text={`Replies(${
+                  reply.secondReplies ? reply.secondReplies.length : 0
+                })`}
+                width="71px"
+                height="22px"
+                textColor="#4BA3C3"
+                backGroundColor="white"
+                borderColor="white"
+                buttonClick={() => {
+                  openSecondReply(index, secondIndex);
+                }}
+              />
+            </ReplyAddDiv>
             <div
               style={{ display: reply.showReplay == true ? "inline" : "none" }}
             >
@@ -663,20 +793,6 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 <ForumTime>{`${date.getDate()}-${
                   date.getMonth() + 1
                 }-${date.getFullYear()}`}</ForumTime>
-                <ForumEditButton>
-                  <AnimeButton
-                    para=""
-                    text={`Edit`}
-                    width="120px"
-                    height="32px"
-                    textColor="black"
-                    backGroundColor="white"
-                    borderColor="black"
-                    buttonClick={() =>
-                      editShowcaseSecondReply(index, secondIndex, thirdIndex)
-                    }
-                  />
-                </ForumEditButton>
               </div>
               {showcaseSecondReply.edit ? (
                 <ShowcaseEditDiv>
@@ -706,26 +822,47 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 </ShowcaseEditDiv>
               ) : (
                 <>
-                  <div
-                    style={{ marginTop: "16px" }}
+                  <ReactQuillCss
+                    style={{
+                      marginTop: "16px",
+                      marginLeft: "6px",
+                      width: "100%",
+                    }}
                     dangerouslySetInnerHTML={{
                       __html: showcaseSecondReply.text,
                     }}
-                  ></div>
-                  <ReplyAddDiv>
-                    <AnimeButton
-                      para=""
-                      text={`Reply`}
-                      width="45px"
-                      height="22px"
-                      textColor="#4BA3C3"
-                      backGroundColor="white"
-                      borderColor="white"
-                      buttonClick={() => console.log("reply")}
-                    />
-                  </ReplyAddDiv>
+                  ></ReactQuillCss>
                 </>
               )}
+              <EditAndDeleteDiv>
+                <img
+                  onClick={() =>
+                    editShowcaseSecondReply(index, secondIndex, thirdIndex)
+                  }
+                  src={`${editIcon}`}
+                />
+                <p>Edit</p>
+                <img
+                  style={{ width: "20px" }}
+                  onClick={() => {
+                    console.log("deleteIcon");
+                  }}
+                  src={`${deleteIcon}`}
+                />
+                <p>Delete</p>
+              </EditAndDeleteDiv>
+              <ReplyAddDiv>
+                <AnimeButton
+                  para=""
+                  text={`Reply`}
+                  width="45px"
+                  height="22px"
+                  textColor="#4BA3C3"
+                  backGroundColor="white"
+                  borderColor="white"
+                  buttonClick={() => console.log("reply")}
+                />
+              </ReplyAddDiv>
             </ReplySecondBox>
           </>
         );

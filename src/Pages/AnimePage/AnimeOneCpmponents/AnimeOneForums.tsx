@@ -14,6 +14,7 @@ import {
 import { AnimeButton, MiddleDiv } from "../../../components/Button";
 import FullTextEditor from "../../../components/FullTextEditor";
 import {
+  AnimeEditAndDeleteDiv,
   AnimOneForum,
   ForumEditButton,
   ForumIframe,
@@ -22,6 +23,7 @@ import {
   ForumName,
   ForumSecondItemBox,
   ForumTime,
+  ReplyButton,
   TextInput,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import { openNotification } from "../../../helperFns/popUpAlert";
@@ -37,6 +39,10 @@ import { IStoreState } from "../../../types/IStoreState";
 import { Avatar, User } from "../../../types/User";
 import loadingImg from "../../../files/loading.gif";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
+import { ReactQuillCss } from "../../../cssJs/fullTextEditor";
+import { EditAndDeleteDiv } from "../../../cssJs/ShowCasePage/showCaseCss";
+import editIcon from "../../../files/editIcon.png";
+import deleteIcon from "../../../files/deleteIcon.png";
 
 interface IProps {
   anime: Anime | null;
@@ -288,8 +294,8 @@ const AnimeOneForum = ({
     index: number,
     secondIndex: number
   ) => (
-    <div style={{ marginTop: "16px" }}>
-      <TextInput>
+    <div style={{ marginTop: "16px", width: "" }}>
+      <TextInput style={{ marginLeft: "16px", marginRight: "16px" }}>
         <FullTextEditor
           html={
             newSecondItemHtml[index]
@@ -516,18 +522,6 @@ const AnimeOneForum = ({
             <ForumTime>{`${date.getDate()}-${
               date.getMonth() + 1
             }-${date.getFullYear()}`}</ForumTime>
-            <ForumEditButton>
-              <AnimeButton
-                para=""
-                text={`Edit`}
-                width="120px"
-                height="32px"
-                textColor="black"
-                backGroundColor="white"
-                borderColor="black"
-                buttonClick={() => editForum(index)}
-              />
-            </ForumEditButton>
           </div>
           {forum.edit ? (
             <>
@@ -548,22 +542,36 @@ const AnimeOneForum = ({
             </>
           ) : (
             <>
-              <div
-                style={{ marginTop: "16px", marginLeft: "6px" }}
+              <ReactQuillCss
+                style={{ marginTop: "16px", marginLeft: "6px", width: "100%" }}
                 dangerouslySetInnerHTML={{ __html: forum.text }}
-              ></div>
-              <AnimeButton
-                para=""
-                text={`Replies(${forum.items ? forum.items.length : 0})`}
-                width="71px"
-                height="22px"
-                textColor="#4BA3C3"
-                backGroundColor="white"
-                borderColor="white"
-                buttonClick={() => openReply(index)}
-              />
+              ></ReactQuillCss>
             </>
           )}
+          <AnimeEditAndDeleteDiv>
+            <img onClick={() => editForum(index)} src={`${editIcon}`} />
+            <p>Edit</p>
+            <img
+              style={{ width: "20px" }}
+              onClick={() => {
+                console.log("deleteIcon");
+              }}
+              src={`${deleteIcon}`}
+            />
+            <p>Delete</p>
+          </AnimeEditAndDeleteDiv>
+          <ReplyButton>
+            <AnimeButton
+              para=""
+              text={`Replies(${forum.items ? forum.items.length : 0})`}
+              width="71px"
+              height="22px"
+              textColor="#4BA3C3"
+              backGroundColor="white"
+              borderColor="white"
+              buttonClick={() => openReply(index)}
+            />
+          </ReplyButton>
           <div
             style={{ display: forum.showReplay == true ? "inline" : "none" }}
           >
@@ -589,18 +597,6 @@ const AnimeOneForum = ({
               <ForumTime>{`${date.getDate()}-${
                 date.getMonth() + 1
               }-${date.getFullYear()}`}</ForumTime>
-              <ForumEditButton>
-                <AnimeButton
-                  para=""
-                  text={`Edit`}
-                  width="120px"
-                  height="32px"
-                  textColor="black"
-                  backGroundColor="white"
-                  borderColor="black"
-                  buttonClick={() => editForumItem(index, secondIndex)}
-                />
-              </ForumEditButton>
             </div>
             {forum.edit ? (
               <>
@@ -621,24 +617,45 @@ const AnimeOneForum = ({
               </>
             ) : (
               <>
-                <div
-                  style={{ marginTop: "16px" }}
+                <ReactQuillCss
+                  style={{
+                    marginTop: "16px",
+                    marginLeft: "6px",
+                    width: "100%",
+                  }}
                   dangerouslySetInnerHTML={{ __html: forum.text }}
-                ></div>
-                <AnimeButton
-                  para=""
-                  text={`Replies(${
-                    forum.secondItems ? forum.secondItems.length : 0
-                  })`}
-                  width="71px"
-                  height="22px"
-                  textColor="#4BA3C3"
-                  backGroundColor="white"
-                  borderColor="white"
-                  buttonClick={() => openSecondReply(index, secondIndex)}
-                />
+                ></ReactQuillCss>
               </>
             )}
+            <AnimeEditAndDeleteDiv>
+              <img
+                onClick={() => editForumItem(index, secondIndex)}
+                src={`${editIcon}`}
+              />
+              <p>Edit</p>
+              <img
+                style={{ width: "20px" }}
+                onClick={() => {
+                  console.log("deleteIcon");
+                }}
+                src={`${deleteIcon}`}
+              />
+              <p>Delete</p>
+            </AnimeEditAndDeleteDiv>
+            <ReplyButton>
+              <AnimeButton
+                para=""
+                text={`Replies(${
+                  forum.secondItems ? forum.secondItems.length : 0
+                })`}
+                width="71px"
+                height="22px"
+                textColor="#4BA3C3"
+                backGroundColor="white"
+                borderColor="white"
+                buttonClick={() => openSecondReply(index, secondIndex)}
+              />
+            </ReplyButton>
             <div
               style={{ display: forum.showReplay == true ? "inline" : "none" }}
             >
@@ -679,20 +696,6 @@ const AnimeOneForum = ({
                 <ForumTime>{`${date.getDate()}-${
                   date.getMonth() + 1
                 }-${date.getFullYear()}`}</ForumTime>
-                <ForumEditButton>
-                  <AnimeButton
-                    para=""
-                    text={`Edit`}
-                    width="120px"
-                    height="32px"
-                    textColor="black"
-                    backGroundColor="white"
-                    borderColor="black"
-                    buttonClick={() =>
-                      editSecondForumItem(index, secondIndex, thirdIndex)
-                    }
-                  />
-                </ForumEditButton>
               </div>
               {forum.edit ? (
                 <>
@@ -717,10 +720,14 @@ const AnimeOneForum = ({
                 </>
               ) : (
                 <>
-                  <div
-                    style={{ marginTop: "16px" }}
+                  <ReactQuillCss
+                    style={{
+                      marginTop: "16px",
+                      marginLeft: "6px",
+                      width: "100%",
+                    }}
                     dangerouslySetInnerHTML={{ __html: forum.text }}
-                  ></div>
+                  ></ReactQuillCss>
                   <AnimeButton
                     para=""
                     text={`Reply`}
@@ -733,6 +740,23 @@ const AnimeOneForum = ({
                   />
                 </>
               )}
+              <AnimeEditAndDeleteDiv>
+                <img
+                  onClick={() =>
+                    editSecondForumItem(index, secondIndex, thirdIndex)
+                  }
+                  src={`${editIcon}`}
+                />
+                <p>Edit</p>
+                <img
+                  style={{ width: "20px" }}
+                  onClick={() => {
+                    console.log("deleteIcon");
+                  }}
+                  src={`${deleteIcon}`}
+                />
+                <p>Delete</p>
+              </AnimeEditAndDeleteDiv>
             </ForumSecondItemBox>
           </>
         );
@@ -799,20 +823,24 @@ const AnimeOneForum = ({
       {getExistForums()}
       {getLoading()}
       {ifShowAdd ? (
-        <>
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"View More"}
-              width="120px"
-              height="32px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => (toForum ? toForum(3) : {})}
-            />
-          </MiddleDiv>
-        </>
+        count > 0 ? (
+          <>
+            <MiddleDiv>
+              <AnimeButton
+                para=""
+                text={"View More"}
+                width="120px"
+                height="32px"
+                textColor="#F5A623"
+                backGroundColor="#FBFCDB"
+                borderColor="#F5A623"
+                buttonClick={() => (toForum ? toForum(3) : {})}
+              />
+            </MiddleDiv>
+          </>
+        ) : (
+          <></>
+        )
       ) : (
         <>
           {forums.length < count ? (

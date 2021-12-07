@@ -158,20 +158,24 @@ const AnimeOneVideo = ({
       <div style={{ marginTop: "23px" }}>{getExistVideos()}</div>
       {getLoading()}
       {ifShowAdd ? (
-        <>
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"View More"}
-              width="120px"
-              height="32px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => (toVideo ? toVideo(1) : {})}
-            />
-          </MiddleDiv>
-        </>
+        count > 0 ? (
+          <>
+            <MiddleDiv>
+              <AnimeButton
+                para=""
+                text={"View More"}
+                width="120px"
+                height="32px"
+                textColor="#F5A623"
+                backGroundColor="#FBFCDB"
+                borderColor="#F5A623"
+                buttonClick={() => (toVideo ? toVideo(1) : {})}
+              />
+            </MiddleDiv>
+          </>
+        ) : (
+          <></>
+        )
       ) : (
         <>
           {videos.length < count ? (

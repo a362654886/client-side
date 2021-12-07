@@ -188,20 +188,24 @@ const AnimeOneProducts = ({
       {getExistProducts()}
       {getLoading()}
       {ifShowAdd ? (
-        <>
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"View More"}
-              width="120px"
-              height="32px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => (toProduct ? toProduct(2) : {})}
-            />
-          </MiddleDiv>
-        </>
+        count > 0 ? (
+          <>
+            <MiddleDiv>
+              <AnimeButton
+                para=""
+                text={"View More"}
+                width="120px"
+                height="32px"
+                textColor="#F5A623"
+                backGroundColor="#FBFCDB"
+                borderColor="#F5A623"
+                buttonClick={() => (toProduct ? toProduct(2) : {})}
+              />
+            </MiddleDiv>
+          </>
+        ) : (
+          <></>
+        )
       ) : (
         <>
           {products.length < count ? (

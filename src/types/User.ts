@@ -13,6 +13,7 @@ export type User = {
   rate: UserRate[];
   likeAnime: string[];
   avatarImage?: Avatar[];
+  likeShowcase: string[];
 };
 
 export type UserRate = {

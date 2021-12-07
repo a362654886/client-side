@@ -84,6 +84,7 @@ const ProfileContactPage = (): JSX.Element => {
       rate: loginUser ? loginUser.rate : [],
       likeAnime: loginUser?.likeAnime ? loginUser?.likeAnime : [],
       avatarImage: loginUser ? loginUser.avatarImage : [],
+      likeShowcase: loginUser?.likeShowcase ? loginUser?.likeShowcase : [],
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);

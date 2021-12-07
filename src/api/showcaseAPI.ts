@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
 import {
+  ShowCaseEnum,
   ShowCaseReply,
   ShowCaseType,
   ShowSecondCaseReply,
@@ -48,13 +49,15 @@ export const showCaseSecondReplyAdd = async (
 };
 
 export const showCaseAllGet = async (
+  type: ShowCaseEnum,
   page: number,
   pageSize: number
 ): Promise<{
   result: ShowCaseType[];
   count: number;
 } | null> => {
-  const endpoint = basicURL + `showCasesGet?page=${page}&pageSize=${pageSize}`;
+  const endpoint =
+    basicURL + `showCasesGet?type=${type}&page=${page}&pageSize=${pageSize}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;
@@ -99,6 +102,20 @@ export const showCaseSecondReplyUpdate = async (showcaseBody: {
 }): Promise<number | null> => {
   const endpoint = basicURL + "showCaseSecondReplyUpdate";
   return Axios.put(endpoint, { showCaseSecondReply: showcaseBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const showCaseAwesomeUpdate = async (
+  _id: string,
+  awesome: number
+): Promise<number | null> => {
+  const endpoint = basicURL + "showcaseUpdateAwesome";
+  return Axios.put(endpoint, { id: _id, awesome: awesome })
     .then((response) => {
       return response.status;
     })

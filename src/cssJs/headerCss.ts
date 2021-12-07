@@ -26,6 +26,7 @@ export const HeaderTitle = styled.p`
   color: white;
   padding-top: 8px;
   padding-bottom: 8px;
+  margin-bottom: 0px;
   p {
     margin-bottom: 0px;
   }

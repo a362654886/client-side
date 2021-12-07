@@ -122,6 +122,7 @@ const SignUpPage = (): JSX.Element => {
       rate: [],
       likeAnime: [],
       avatar: chooseAvatar ? chooseAvatar.imageName : "",
+      likeShowcase: [],
     };
     const r = await userAdd(user);
     if (r) {

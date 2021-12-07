@@ -4,6 +4,7 @@ import { AuthUser } from "../redux/auth";
 import { LoadingAction } from "../redux/loading";
 import { LoginUser } from "../redux/loginUser";
 import { NewAction } from "../redux/newBody";
+import { ShowcaseAction } from "../redux/showcaseManga";
 import { User } from "./User";
 
 export type middleStoreType = MiddlewareAPI<
@@ -19,6 +20,7 @@ export type actionBody =
   | LoginUser
   | AnimeAction
   | NewAction
-  | LoadingAction;
+  | LoadingAction
+  | ShowcaseAction;
 
 export type nextAction = (action: actionBody) => void;

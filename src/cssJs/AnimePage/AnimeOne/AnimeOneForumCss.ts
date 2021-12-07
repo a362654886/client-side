@@ -61,7 +61,6 @@ export const ForumItemBox = styled.div`
   width: 100%;
   height: auto;
   padding: 24px 16px;
-  border: 1px solid #7f7e82;
   margin-bottom: 16px;
   margin-top: 16px;
   button {
@@ -73,7 +72,6 @@ export const ForumSecondItemBox = styled.div`
   width: 100%;
   height: auto;
   padding: 24px 16px;
-  border: 1px solid #7f7e82;
   margin-bottom: 16px;
   margin-top: 16px;
   button {
@@ -84,4 +82,25 @@ export const ForumSecondItemBox = styled.div`
 export const ForumEditButton = styled.div`
   margin-left: 16px;
   margin-top: 5px;
+`;
+
+export const ReplyButton = styled.div`
+  button {
+    margin-top: 33px;
+  }
+`;
+
+export const AnimeEditAndDeleteDiv = styled.div`
+  display: flex;
+  margin-top: 32px;
+  margin-left: 8px;
+  img {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+  }
+  p {
+    margin-left: 8px;
+    margin-right: 32px;
+  }
 `;

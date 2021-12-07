@@ -118,7 +118,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
     if (loading == false) {
       const likesArr = loginUser?.likeAnime as string[];
       const index = loginUser?.likeAnime.indexOf(chooseAnime?._id as string);
-      if (index != undefined) {
+      if (index != undefined && index != -1) {
         likesArr.splice(index, 1);
       }
 

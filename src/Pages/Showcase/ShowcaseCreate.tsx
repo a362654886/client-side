@@ -60,10 +60,10 @@ const ShowcaseCreate = (): JSX.Element => {
     switch (showCaseType) {
       case ShowCaseEnum.Collections:
         return "Collections";
-      case ShowCaseEnum.Drawings:
-        return "Drawings";
-      case ShowCaseEnum.Comics:
-        return "Series";
+      case ShowCaseEnum.Illustrations:
+        return "Illustrations";
+      case ShowCaseEnum.Manga:
+        return "Manga";
     }
   };
 
@@ -87,7 +87,6 @@ const ShowcaseCreate = (): JSX.Element => {
   };
 
   const showCaseCreate = async () => {
-    console.log(tags);
     const id = new Date().valueOf().toString();
     const showCase: ShowCaseType = {
       _id: id,
@@ -142,7 +141,7 @@ const ShowcaseCreate = (): JSX.Element => {
       <ShowCaseTitleDiv>
         <ShowCaseTitle>{getHeader()}</ShowCaseTitle>
       </ShowCaseTitleDiv>
-      {showCaseType == ShowCaseEnum.Comics ? (
+      {showCaseType == ShowCaseEnum.Manga ? (
         <>
           <TitleInput
             placeholder="Titles"
@@ -181,12 +180,16 @@ const ShowcaseCreate = (): JSX.Element => {
         setImg={(value: ImageBody) => setNewImage(value)}
       />
       <ShowcaseTextInput>
-        <FullTextEditor
-          html={html}
-          setFullText={(e) => {
-            setHtml(e);
-          }}
-        />
+        {showCaseType == ShowCaseEnum.Manga ? (
+          <></>
+        ) : (
+          <FullTextEditor
+            html={html}
+            setFullText={(e) => {
+              setHtml(e);
+            }}
+          />
+        )}
         <br />
         <TagSelectDiv>
           <p>Tags:</p>

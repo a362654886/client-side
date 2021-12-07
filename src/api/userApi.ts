@@ -66,3 +66,17 @@ export const userUpdateLike = async (
       return null;
     });
 };
+
+export const userUpdateShowcases = async (
+  userId: string,
+  likeArr: string[]
+): Promise<number | null> => {
+  const endpoint = basicURL + "userUpdateShowcases";
+  return Axios.put(endpoint, { id: userId, likeShowcase: likeArr })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};

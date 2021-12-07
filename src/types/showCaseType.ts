@@ -44,6 +44,6 @@ export type ShowSecondCaseReply = {
 
 export enum ShowCaseEnum {
   Collections = "collections",
-  Drawings = "Drawings",
-  Comics = "Comics",
+  Illustrations = "Illustrations",
+  Manga = "Manga",
 }

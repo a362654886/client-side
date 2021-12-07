@@ -62,6 +62,13 @@ export const ShowcaseRadioDiv = styled.div`
   }
 `;
 
+export const ShowcaseSearch = styled.div`
+  img {
+    height: 40px;
+    width: 40px;
+  }
+`;
+
 //showcase body
 
 export const ShowcaseSearchInputDiv = styled.div`
@@ -129,6 +136,7 @@ export const ShowcaseTag = styled.div`
     padding: 2px 9px;
     font-weight: normal;
     margin-bottom: 0px;
+    margin-right: 16px;
   }
 `;
 
@@ -201,10 +209,15 @@ export const AweSomeDiv = styled.div`
   margin-top: 32px;
   display: flex;
   img {
-    width: 100px;
+    width: 32px;
     height: 32px;
   }
   p {
+    margin-left: 4px;
+    line-height: 32px;
+  }
+  h6 {
+    margin-left: 8px;
     margin-top: 5px;
     margin-bottom: 0px;
   }
@@ -227,9 +240,12 @@ export const EditAndDeleteDiv = styled.div`
   margin-top: 32px;
   img {
     height: 24px;
-    width: 53px;
-    margin-right: 32px;
+    width: 24px;
     cursor: pointer;
+  }
+  p {
+    margin-left: 8px;
+    margin-right: 32px;
   }
 `;
 
@@ -246,7 +262,6 @@ export const ReplyBox = styled.div`
   width: 794px;
   height: auto;
   padding: 24px 16px;
-  border: 1px solid #7f7e82;
   margin-bottom: 16px;
   margin-top: 16px;
   button {
@@ -258,7 +273,6 @@ export const ReplySecondBox = styled.div`
   width: 760px;
   height: auto;
   padding: 24px 16px;
-  border: 1px solid #7f7e82;
   margin-bottom: 16px;
   margin-top: 16px;
   button {
@@ -267,6 +281,7 @@ export const ReplySecondBox = styled.div`
 `;
 
 export const ReplyAddDiv = styled.div`
+  margin-top: 16px;
   button {
     margin-left: 0px;
     padding-left: 0px;
@@ -288,4 +303,107 @@ export const ShowcaseEditDiv = styled.div`
 
 export const ShowcaseImage = styled.img`
   width: 794px;
+`;
+
+//showcase manga
+
+export const ShowcaseMangaHeader = styled.div`
+  display: flex;
+  p {
+    font-size: 14px;
+    line-height: 40px;
+    margin-right: 8px;
+  }
+`;
+
+export const ShowMangaIframe = styled.div`
+  max-width: 896px;
+  height: auto;
+  padding: 24px 16px;
+  border: 1px solid #7f7e82;
+  margin-bottom: 16px;
+  button {
+    margin-left: 16px;
+  }
+  h2 {
+    margin-top: 16px;
+  }
+`;
+
+export const ShowMangaIframeSource = styled.p`
+  margin-top: 16px;
+  font-size: 14px;
+  color: #302d46;
+  font-weight: bold;
+`;
+
+export const ShowMangaMiddleButton = styled.div`
+  width: 240px;
+  margin: 0 auto;
+`;
+
+//showcase manga one
+
+export const ShowMangaIframeOne = styled.div`
+  max-width: 896px;
+  height: auto;
+  margin-bottom: 16px;
+  button {
+    margin-left: 16px;
+  }
+  h2 {
+    margin-top: 16px;
+  }
+`;
+
+export const ShowMangaIframeEpisodesButtons = styled.div`
+  display: flex;
+`;
+
+export const ShowMangaButtons = styled.div`
+  display: flex;
+  margin: 24px 28px;
+  Button {
+  }
+`;
+
+export const EpisodesText = styled.h3`
+  color: #302d46;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: bold;
+  margin-top: 44px;
+`;
+
+export const EpisodesAddButton = styled.div`
+  display: flex;
+  height: 32px;
+  width: 80px;
+  cursor: pointer;
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    margin-top: 4px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 32px;
+  }
+`;
+
+export const EpisodesGeneralButton = styled.div`
+  display: flex;
+  height: 32px;
+  width: 80px;
+  cursor: pointer;
+  border: 1px solid black;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  text-align: center;
+  p {
+    font-size: 14px;
+    line-height: 32px;
+    margin: 0 auto;
+  }
 `;

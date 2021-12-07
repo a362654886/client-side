@@ -175,6 +175,7 @@ const ProfileAccountPage = (): JSX.Element => {
       likeAnime: loginUser?.likeAnime ? loginUser?.likeAnime : [],
       avatar: chooseAvatar,
       avatarImage: newArr,
+      likeShowcase: loginUser?.likeShowcase ? loginUser?.likeShowcase : [],
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);

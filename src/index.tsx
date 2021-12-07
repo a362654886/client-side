@@ -14,6 +14,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
 import AdminPage from "./Pages/AdminPage/AdminPage";
 import AdminMainPage from "./Pages/AdminPage/AdminMainPage";
+import EpisodeShow from "./Pages/Showcase/EpisodeShow";
 
 const persistConfig = {
   key: "root",
@@ -31,6 +32,7 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route path="/mainPage" component={MainPage} />
+        <Route path="/episodeShow" component={EpisodeShow} />
         <Route path="/adminPage" component={AdminPage} />
         <Route path="/adminManagement" component={AdminMainPage} />
         <Route path="/" component={MainPage} />
