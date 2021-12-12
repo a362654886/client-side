@@ -6,13 +6,11 @@ import {
   ShowcaseImage,
   ShowcaseMangaHeader,
   ShowcaseTag,
-  ShowIframe,
   ShowImg,
   ShowMangaIframe,
   ShowMangaIframeSource,
   ShowMangaMiddleButton,
   ShowName,
-  ShowTime,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import { ShowCaseType } from "../../types/showCaseType";
 import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.png";
@@ -21,9 +19,9 @@ import { User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";
 import { openNotification } from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdateShowcases } from "../../api/userApi";
+import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
-import AnimeButton, { MiddleDiv } from "../../components/Button";
+import AnimeButton from "../../components/Button";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -111,6 +109,7 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
         loginUser?._id as string,
         awesomeArr
       );
+      await userUpdateAwesome(loginUser?._id as string, true);
       setLoading(false);
     } else {
       console.log("please wait some seconds");
@@ -119,11 +118,8 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
 
   const cancelAwesomeFn = async (showCaseIdAndTitle: string, index: number) => {
     if (loading == false) {
-      console.log("-----");
       const awesomeArr = awesomeArrState;
-      console.log(awesomeArr);
       const r = awesomeArr.indexOf(showCaseIdAndTitle);
-      console.log(r);
       if (r != -1) {
         awesomeArr.splice(r, 1);
         console.log(awesomeArr);
@@ -139,6 +135,7 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
           loginUser?._id as string,
           awesomeArr
         );
+        await userUpdateAwesome(loginUser?._id as string, false);
         setLoading(false);
       }
     } else {

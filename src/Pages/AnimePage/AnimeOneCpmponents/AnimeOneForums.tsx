@@ -4,9 +4,12 @@ import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   forumAdd,
+  forumDelete,
   forumItemAdd,
+  forumItemDelete,
   forumItemUpdate,
   forumsAllGet,
+  forumSecondDelete,
   forumSecondItemAdd,
   forumSecondUpdate,
   forumUpdate,
@@ -40,7 +43,6 @@ import { Avatar, User } from "../../../types/User";
 import loadingImg from "../../../files/loading.gif";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ReactQuillCss } from "../../../cssJs/fullTextEditor";
-import { EditAndDeleteDiv } from "../../../cssJs/ShowCasePage/showCaseCss";
 import editIcon from "../../../files/editIcon.png";
 import deleteIcon from "../../../files/deleteIcon.png";
 
@@ -119,8 +121,8 @@ const AnimeOneForum = ({
     });
     if (loginUser) {
       const forum: ForumType = {
-        _id: `${loginUser?._id}${new Date().toTimeString()}`,
-        forumId: `${loginUser?._id}${new Date().toTimeString()}`,
+        _id: `${loginUser?._id}${new Date().valueOf()}`,
+        forumId: `${loginUser?._id}${new Date().valueOf()}`,
         text: html,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
@@ -141,17 +143,28 @@ const AnimeOneForum = ({
     });
   };
 
-  const submitNewForumItem = async (forum: ForumType, index: number) => {
+  const submitNewForumItem = async (index: number) => {
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
     if (loginUser) {
+      const lastId = forums[index].items?.length;
       const forumItem: ForumItem = {
-        _id: `${forum._id}${forum.items ? forum.items.length + 1 : 1}`,
-        forumItemId: `${forum._id}${forum.items ? forum.items.length + 1 : 1}`,
+        _id: `${
+          forums[index].items
+            ? (forums[index].items as ForumItem[])[lastId ? lastId - 1 : 0]
+                ._id + 1
+            : 1
+        }`,
+        forumItemId: `${
+          forums[index].items
+            ? (forums[index].items as ForumItem[])[lastId ? lastId - 1 : 0]
+                ._id + 1
+            : 1
+        }`,
         text: newItemHtml[index],
-        forumId: forum._id,
+        forumId: forums[index]._id,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
         userName: loginUser.name,
@@ -171,7 +184,6 @@ const AnimeOneForum = ({
   };
 
   const submitNewSecondForumItem = async (
-    forum: ForumItem,
     index: number,
     secondIndex: number
   ) => {
@@ -180,16 +192,37 @@ const AnimeOneForum = ({
       type: LOADING_OPEN,
     });
     if (loginUser) {
+      const lastId = (
+        (forums[index].items as ForumItem[])[secondIndex]
+          .secondItems as ForumSecondItem[]
+      ).length;
+      console.log(lastId);
+
+      const secondItems = (forums[index].items as ForumItem[])[secondIndex]
+        .secondItems;
+      console.log(secondItems);
       const secondForumItem: ForumSecondItem = {
-        _id: `${forum._id}${
-          forum.secondItems ? forum.secondItems.length + 1 : 1
+        _id: `${
+          forums[index].items
+            ? secondItems
+              ? secondItems.length > 0
+                ? secondItems[lastId ? lastId - 1 : 0]._id + 1
+                : 1
+              : 1
+            : 1
         }`,
-        forumSecondItemId: `${forum._id}${
-          forum.secondItems ? forum.secondItems.length + 1 : 1
+        forumSecondItemId: `${
+          forums[index].items
+            ? secondItems
+              ? secondItems.length > 0
+                ? secondItems[lastId ? lastId - 1 : 0]._id + 1
+                : 1
+              : 1
+            : 1
         }`,
-        forumItemId: forum.forumItemId,
+        forumItemId: (forums[index].items as ForumItem[])[secondIndex]._id,
         text: newSecondItemHtml[index][secondIndex],
-        forumId: forum.forumId,
+        forumId: forums[index]._id,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
         userName: loginUser.name,
@@ -210,8 +243,14 @@ const AnimeOneForum = ({
   //add to state
   const addForumItemToForum = (forumItem: ForumItem) => {
     const index = forums.findIndex((forum) => forum._id == forumItem.forumId);
-    forums[index].items?.push(forumItem);
+    if (forums[index].items != undefined) {
+      (forums[index].items as ForumItem[]).push(forumItem);
+    } else {
+      forums[index].items = [];
+      (forums[index].items as ForumItem[]).push(forumItem);
+    }
     setForums(forums);
+    setUpdate(update + 1);
   };
 
   const addForumSecondItemToForum = (
@@ -222,10 +261,16 @@ const AnimeOneForum = ({
     const newForums = forums;
     const items = newForums[index].items;
     if (items) {
-      items[secondIndex].secondItems?.push(forumItem);
+      if (items[secondIndex].secondItems != undefined) {
+        items[secondIndex].secondItems?.push(forumItem);
+      } else {
+        items[secondIndex].secondItems = [];
+        items[secondIndex].secondItems?.push(forumItem);
+      }
     }
     newForums[index].items = items;
     setForums(newForums);
+    setUpdate(update + 1);
   };
 
   const sendNewItem = (e: string, index: number) => {
@@ -241,7 +286,7 @@ const AnimeOneForum = ({
   };
 
   //get html element
-  const getAddItemBox = (forum: ForumType, index: number) => (
+  const getAddItemBox = (index: number) => (
     <div style={{ marginTop: "16px" }}>
       <TextInput>
         <FullTextEditor
@@ -259,7 +304,7 @@ const AnimeOneForum = ({
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="#FFC300"
-          buttonClick={() => submitNewForumItem(forum, index)}
+          buttonClick={() => submitNewForumItem(index)}
         />
       </TextInput>
     </div>
@@ -289,11 +334,7 @@ const AnimeOneForum = ({
     </div>
   );
 
-  const getAddSecondItemBox = (
-    forum: ForumItem,
-    index: number,
-    secondIndex: number
-  ) => (
+  const getAddSecondItemBox = (index: number, secondIndex: number) => (
     <div style={{ marginTop: "16px", width: "" }}>
       <TextInput style={{ marginLeft: "16px", marginRight: "16px" }}>
         <FullTextEditor
@@ -318,9 +359,7 @@ const AnimeOneForum = ({
             textColor="white"
             backGroundColor="#FFC300"
             borderColor="#FFC300"
-            buttonClick={() =>
-              submitNewSecondForumItem(forum, index, secondIndex)
-            }
+            buttonClick={() => submitNewSecondForumItem(index, secondIndex)}
           />
         </div>
       </TextInput>
@@ -509,6 +548,79 @@ const AnimeOneForum = ({
     }
   };
 
+  //delete functions
+
+  const deleteForum = async (index: number) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const newForums = forums;
+    const id = forums[index]._id;
+    const r = await forumDelete(id);
+    const deleteIndex = newForums.findIndex((x) => x.forumId == id);
+    newForums.splice(deleteIndex, 1);
+    setForums(newForums);
+    setUpdate(update + 1);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
+  const deleteForumItem = async (index: number, secondIndex: number) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const newForums = forums;
+    const id = (forums[index].items as ForumItem[])[secondIndex]._id;
+    const r = await forumItemDelete(id);
+    const deleteIndex = (newForums[index].items as ForumItem[])
+      .map((x) => x.forumItemId)
+      .indexOf(id);
+    (newForums[index].items as ForumItem[]).splice(deleteIndex, 1);
+    setForums(newForums);
+    setUpdate(update + 1);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
+  const deleteSecondItem = async (
+    index: number,
+    secondIndex: number,
+    thirdIndex: number
+  ) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const newForums = forums;
+    const id = (
+      (newForums[index].items as ForumItem[])[secondIndex]
+        .secondItems as ForumSecondItem[]
+    )[thirdIndex]._id;
+    const r = await forumSecondDelete(id);
+    const deleteIndex = (
+      (newForums[index].items as ForumItem[])[secondIndex]
+        .secondItems as ForumSecondItem[]
+    )
+      .map((x) => x.forumSecondItemId)
+      .indexOf(id);
+    (
+      (newForums[index].items as ForumItem[])[secondIndex]
+        .secondItems as ForumSecondItem[]
+    ).splice(deleteIndex, 1);
+    setForums(newForums);
+    setUpdate(update + 1);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
   // html functions
 
   const getExistForums = () =>
@@ -549,16 +661,18 @@ const AnimeOneForum = ({
             </>
           )}
           <AnimeEditAndDeleteDiv>
-            <img onClick={() => editForum(index)} src={`${editIcon}`} />
-            <p>Edit</p>
-            <img
-              style={{ width: "20px" }}
+            <div onClick={() => editForum(index)}>
+              <img src={`${editIcon}`} />
+              <p>Edit</p>
+            </div>
+            <div
               onClick={() => {
-                console.log("deleteIcon");
+                deleteForum(index);
               }}
-              src={`${deleteIcon}`}
-            />
-            <p>Delete</p>
+            >
+              <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+              <p>Delete</p>
+            </div>
           </AnimeEditAndDeleteDiv>
           <ReplyButton>
             <AnimeButton
@@ -575,7 +689,7 @@ const AnimeOneForum = ({
           <div
             style={{ display: forum.showReplay == true ? "inline" : "none" }}
           >
-            {getAddItemBox(forum, index)}
+            {getAddItemBox(index)}
             {forum.items ? getForumItems(forum.items, date, index) : <></>}
           </div>
         </ForumIframe>
@@ -628,19 +742,14 @@ const AnimeOneForum = ({
               </>
             )}
             <AnimeEditAndDeleteDiv>
-              <img
-                onClick={() => editForumItem(index, secondIndex)}
-                src={`${editIcon}`}
-              />
-              <p>Edit</p>
-              <img
-                style={{ width: "20px" }}
-                onClick={() => {
-                  console.log("deleteIcon");
-                }}
-                src={`${deleteIcon}`}
-              />
-              <p>Delete</p>
+              <div onClick={() => editForumItem(index, secondIndex)}>
+                <img src={`${editIcon}`} />
+                <p>Edit</p>
+              </div>
+              <div onClick={() => deleteForumItem(index, secondIndex)}>
+                <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                <p>Delete</p>
+              </div>
             </AnimeEditAndDeleteDiv>
             <ReplyButton>
               <AnimeButton
@@ -659,7 +768,7 @@ const AnimeOneForum = ({
             <div
               style={{ display: forum.showReplay == true ? "inline" : "none" }}
             >
-              {getAddSecondItemBox(forum, index, secondIndex)}
+              {getAddSecondItemBox(index, secondIndex)}
               {forum.showReplay ? (
                 <p>
                   {getSecondForumItems(
@@ -741,21 +850,22 @@ const AnimeOneForum = ({
                 </>
               )}
               <AnimeEditAndDeleteDiv>
-                <img
+                <div
                   onClick={() =>
                     editSecondForumItem(index, secondIndex, thirdIndex)
                   }
-                  src={`${editIcon}`}
-                />
-                <p>Edit</p>
-                <img
-                  style={{ width: "20px" }}
+                >
+                  <img src={`${editIcon}`} />
+                  <p>Edit</p>
+                </div>
+                <div
                   onClick={() => {
-                    console.log("deleteIcon");
+                    deleteSecondItem(index, secondIndex, thirdIndex);
                   }}
-                  src={`${deleteIcon}`}
-                />
-                <p>Delete</p>
+                >
+                  <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                  <p>Delete</p>
+                </div>
               </AnimeEditAndDeleteDiv>
             </ForumSecondItemBox>
           </>

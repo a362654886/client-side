@@ -51,13 +51,32 @@ export const showCaseSecondReplyAdd = async (
 export const showCaseAllGet = async (
   type: ShowCaseEnum,
   page: number,
-  pageSize: number
+  pageSize: number,
+  userId: string
 ): Promise<{
   result: ShowCaseType[];
   count: number;
 } | null> => {
   const endpoint =
-    basicURL + `showCasesGet?type=${type}&page=${page}&pageSize=${pageSize}`;
+    basicURL +
+    `showCasesGet?type=${type}&page=${page}&pageSize=${pageSize}&userId=${userId}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const showCaseAllGetByArr = async (
+  id: string,
+  page: number,
+  pageSize: number
+): Promise<ShowCaseType[] | null> => {
+  const endpoint =
+    basicURL +
+    `showCasesGetByArr?userId=${id}&page=${page}&pageSize=${pageSize}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

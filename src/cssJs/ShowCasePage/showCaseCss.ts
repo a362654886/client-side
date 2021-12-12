@@ -128,6 +128,13 @@ export const ShowImg = styled.img`
   height: 40px;
 `;
 
+export const ShowcaseReply = styled.div`
+  margin-top: 16px;
+  margin-left: 6px;
+  width: 100%;
+  height: auto;
+`;
+
 export const ShowcaseTag = styled.div`
   margin-top: 16px;
   p {
@@ -405,5 +412,92 @@ export const EpisodesGeneralButton = styled.div`
     font-size: 14px;
     line-height: 32px;
     margin: 0 auto;
+  }
+`;
+
+export const EpisodesEditAndDelete = styled.div`
+  margin-top: 32px;
+  height: 140px;
+  border-bottom: 1px solid #aaffc9;
+  div {
+    display: flex;
+    margin-bottom: 32px;
+  }
+  img {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+  }
+  h6 {
+    font-weight: bold;
+    font-size: 16px;
+    margin-left: 16px;
+  }
+`;
+
+export const EpisodesComments = styled.div`
+  margin-top: 32px;
+  margin-bottom: 24px;
+  display: flex;
+  cursor: pointer;
+  h6 {
+    font-weight: bold;
+    font-size: 14px;
+    color: #4ba3c3;
+    line-height: 20px;
+  }
+  img {
+    margin-left: 8px;
+  }
+`;
+
+//showcase side
+
+export const ShowcaseSideDiv = styled.div`
+  width: 276px;
+  margin-left: 86px;
+  background-color: #424242;
+`;
+
+export const ShowcaseSideDivHeader = styled.div`
+  width: 276px;
+  height: auto;
+  padding-top: 19px;
+  padding-bottom: 19px;
+  div {
+    display: flex;
+    margin-left: 16px;
+  }
+  img {
+    height: 32px;
+    width: 32px;
+  }
+  h2 {
+    font-size: 24px;
+    color: #f5a623;
+    font-weight: bold;
+    line-height: 32px;
+    margin-left: 8px;
+  }
+`;
+
+export const ShowcaseSideUser = styled.div`
+  display: flex;
+  margin-top: 16px;
+  height: 40px;
+  img {
+    height: 40px;
+    width: 40px;
+  }
+  h6 {
+    line-height: 40px;
+    color: white;
+    font-weight: bold;
+    margin-left: 16px;
+  }
+  p {
+    margin-left: 14px;
+    color: #ffdf00;
+    line-height: 40px;
   }
 `;

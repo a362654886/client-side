@@ -4,6 +4,7 @@ import { ForumItem, ForumSecondItem, ForumType } from "../types/forumType";
 
 const basicURL = backEndLink;
 
+//forum
 export const forumAdd = async (
   forumBody: ForumType
 ): Promise<number | null> => {
@@ -31,6 +32,19 @@ export const forumUpdate = async (forumBody: {
       return null;
     });
 };
+
+export const forumDelete = async (forumId: string): Promise<number | null> => {
+  const endpoint = basicURL + `forumDelete?forumId=${forumId}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+//forum item
 
 export const forumItemAdd = async (
   forumItemBody: ForumItem
@@ -60,6 +74,21 @@ export const forumItemUpdate = async (forumBody: {
     });
 };
 
+export const forumItemDelete = async (
+  forumId: string
+): Promise<number | null> => {
+  const endpoint = basicURL + `forumItemDelete?forumItemId=${forumId}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+//forum second item
+
 export const forumSecondItemAdd = async (
   forumSecondItemBody: ForumSecondItem
 ): Promise<number | null> => {
@@ -81,6 +110,19 @@ export const forumSecondUpdate = async (forumBody: {
 }): Promise<number | null> => {
   const endpoint = basicURL + "forumSecondItemUpdate";
   return Axios.put(endpoint, { forum: forumBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const forumSecondDelete = async (
+  forumId: string
+): Promise<number | null> => {
+  const endpoint = basicURL + `forumSecondItemDelete?forumSecondItemId=${forumId}`;
+  return Axios.delete(endpoint)
     .then((response) => {
       return response.status;
     })

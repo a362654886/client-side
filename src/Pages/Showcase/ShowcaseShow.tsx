@@ -21,6 +21,7 @@ import searchImg from "../../files/search.png";
 import ShowcaseManga from "./ShowcaseMaga";
 import { useDispatch } from "react-redux";
 import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
+import ShowcaseSide from "./ShowcaseSide";
 
 const ShowcaseShow = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -33,7 +34,9 @@ const ShowcaseShow = (): JSX.Element => {
   const [count, setCount] = useState<number>(0);
   const [chooseButton, setChooseButton] = useState<number>(0);
   const [showCaseType, setShowCaseType] = useState<ShowCaseEnum>(
-    history.location.state as ShowCaseEnum
+    history.location.state
+      ? (history.location.state as ShowCaseEnum)
+      : ShowCaseEnum.Collections
   );
 
   const pageSize = 1;
@@ -216,7 +219,7 @@ const ShowcaseShow = (): JSX.Element => {
 
   const searchType = async (type: ShowCaseEnum) => {
     setTypeLoading(true);
-    const showcaseResult = await showCaseAllGet(type, pageNum, pageSize);
+    const showcaseResult = await showCaseAllGet(type, pageNum, pageSize, "");
     if (showcaseResult) {
       //setAllShowCases(allShowCases.concat(showcaseResult.result));
       setAllShowCases(showcaseResult.result);
@@ -230,7 +233,8 @@ const ShowcaseShow = (): JSX.Element => {
     const showcaseResult = await showCaseAllGet(
       showCaseType,
       pageNum,
-      pageSize
+      pageSize,
+      ""
     );
     if (showcaseResult) {
       setAllShowCases(allShowCases.concat(showcaseResult.result));
@@ -322,7 +326,9 @@ const ShowcaseShow = (): JSX.Element => {
           {getHeader()}
           {getShocaseForums()}
         </ShowCaseDiv>
-        <div className="col-xl-3 col-md-3 col-sm-3 col-3">side</div>
+        <div className="col-xl-3 col-md-3 col-sm-3 col-3">
+          <ShowcaseSide />
+        </div>
       </div>
     </>
   );

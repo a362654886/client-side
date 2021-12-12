@@ -8,7 +8,7 @@ export const AnimOneForum = styled.div`
 export const TextInput = styled.div`
   .ant-input-textarea,
   .ant-input {
-    min-height: 300px !important;
+    min-height: 112px !important;
   }
 `;
 
@@ -97,10 +97,13 @@ export const AnimeEditAndDeleteDiv = styled.div`
   img {
     height: 24px;
     width: 24px;
-    cursor: pointer;
   }
   p {
     margin-left: 8px;
     margin-right: 32px;
+  }
+  div {
+    display: flex;
+    cursor: pointer;
   }
 `;

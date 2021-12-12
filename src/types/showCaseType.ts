@@ -7,6 +7,7 @@ export type ShowCaseType = {
   type: ShowCaseEnum;
   userAvatar: string;
   userName: string;
+  userId: string;
   tags: TagType[];
   text: string;
   source: string;

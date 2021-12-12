@@ -21,7 +21,7 @@ export const AnimSearchBox = styled.div`
 `;
 
 export const AnimeShowBox = styled.div`
-  margin-top: 96px;
+  margin-top: 31px;
   cursor: pointer;
 `;
 

@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 export const ProfileBox = styled.div`
-  height: 44px;
+  height: auto;
   max-width: 1121px;
   margin: auto;
-  height: 800px;
 `;
 
 export const ProfileDiv = styled.div`
@@ -69,5 +68,15 @@ export const ButtonsDiv = styled.div`
 `;
 
 export const ProfileChildDiv = styled.div`
-  margin-top: 38px;
+  //margin-top: 38px;
+`;
+export const LineDiv = styled.div`
+  height: 31px;
+  width: 70%;
+  margin: 0 auto;
+  border-bottom: 1px solid #aaffc9;
+`;
+
+export const ProfileCollectionDiv = styled.div`
+  margin-top: 32px;
 `;

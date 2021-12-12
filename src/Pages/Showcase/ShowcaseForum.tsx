@@ -20,6 +20,7 @@ import {
   ShowcaseEditDiv,
   ShowCaseIcons,
   ShowcaseImage,
+  ShowcaseReply,
   ShowcaseTag,
   ShowIframe,
   ShowImg,
@@ -54,8 +55,9 @@ import { IStoreState } from "../../types/IStoreState";
 import { openNotification } from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactQuillCss } from "../../cssJs/fullTextEditor";
-import { userUpdateShowcases } from "../../api/userApi";
+import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
+import TextArea from "antd/lib/input/TextArea";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -206,11 +208,9 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
   const getAddReplyBox = (showcase: ShowCaseType, index: number) => (
     <div style={{ marginTop: "16px" }}>
       <TextInput>
-        <FullTextEditor
-          html={newReplyHtml[index]}
-          setFullText={(e) => {
-            sendNewReply(e, index);
-          }}
+        <TextArea
+          value={newReplyHtml[index]}
+          onChange={(e) => sendNewReply(e.target.value, index)}
         />
         <br />
         <ReplyAddDiv>
@@ -236,17 +236,17 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
   ) => (
     <div style={{ marginTop: "16px" }}>
       <TextInput>
-        <FullTextEditor
-          html={
+        <TextArea
+          value={
             newSecondReplyHtml[index]
               ? newSecondReplyHtml[index][secondIndex]
                 ? newSecondReplyHtml[index][secondIndex]
                 : ""
               : ""
           }
-          setFullText={(e) => {
-            sendNewSecondReply(e, index, secondIndex);
-          }}
+          onChange={(e) =>
+            sendNewSecondReply(e.target.value, index, secondIndex)
+          }
         />
         <br />
         <ReplyAddDiv>
@@ -494,6 +494,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
         loginUser?._id as string,
         awesomeArr
       );
+      await userUpdateAwesome(loginUser?._id as string, true);
       setLoading(false);
     } else {
       console.log("please wait some seconds");
@@ -502,11 +503,8 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
 
   const cancelAwesomeFn = async (showCaseIdAndTitle: string, index: number) => {
     if (loading == false) {
-      console.log("-----");
       const awesomeArr = awesomeArrState;
-      console.log(awesomeArr);
       const r = awesomeArr.indexOf(showCaseIdAndTitle);
-      console.log(r);
       if (r != -1) {
         awesomeArr.splice(r, 1);
         console.log(awesomeArr);
@@ -522,6 +520,8 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
           loginUser?._id as string,
           awesomeArr
         );
+
+        await userUpdateAwesome(loginUser?._id as string, false);
         setLoading(false);
       }
     } else {
@@ -693,10 +693,10 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
             </div>
             {reply.edit ? (
               <ShowcaseEditDiv>
-                <FullTextEditor
-                  html={reply.text}
-                  setFullText={(e) =>
-                    editShowcaseReplyText(index, secondIndex, e)
+                <TextArea
+                  value={reply.text}
+                  onChange={(e) =>
+                    editShowcaseReplyText(index, secondIndex, e.target.value)
                   }
                 />
                 <AnimeButton
@@ -712,14 +712,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
               </ShowcaseEditDiv>
             ) : (
               <>
-                <ReactQuillCss
-                  style={{
-                    marginTop: "16px",
-                    marginLeft: "6px",
-                    width: "100%",
-                  }}
-                  dangerouslySetInnerHTML={{ __html: reply.text }}
-                ></ReactQuillCss>
+                <ShowcaseReply>{reply.text}</ShowcaseReply>
               </>
             )}
             <EditAndDeleteDiv>
@@ -796,14 +789,14 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
               </div>
               {showcaseSecondReply.edit ? (
                 <ShowcaseEditDiv>
-                  <FullTextEditor
-                    html={showcaseSecondReply.text}
-                    setFullText={(e) =>
+                  <TextArea
+                    value={showcaseSecondReply.text}
+                    onChange={(e) =>
                       editShowcaseSecondReplyText(
                         index,
                         secondIndex,
                         thirdIndex,
-                        e
+                        e.target.value
                       )
                     }
                   />
@@ -822,16 +815,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 </ShowcaseEditDiv>
               ) : (
                 <>
-                  <ReactQuillCss
-                    style={{
-                      marginTop: "16px",
-                      marginLeft: "6px",
-                      width: "100%",
-                    }}
-                    dangerouslySetInnerHTML={{
-                      __html: showcaseSecondReply.text,
-                    }}
-                  ></ReactQuillCss>
+                  <ShowcaseReply>{showcaseSecondReply.text}</ShowcaseReply>
                 </>
               )}
               <EditAndDeleteDiv>

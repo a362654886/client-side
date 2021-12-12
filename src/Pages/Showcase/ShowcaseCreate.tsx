@@ -99,6 +99,7 @@ const ShowcaseCreate = (): JSX.Element => {
           : avatar
         : avatar,
       userName: loginUser ? loginUser.name : "",
+      userId: loginUser ? loginUser._id : "",
       tags: tags.map((tag, index) => {
         return {
           _id: id + index,

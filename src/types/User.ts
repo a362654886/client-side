@@ -14,6 +14,8 @@ export type User = {
   likeAnime: string[];
   avatarImage?: Avatar[];
   likeShowcase: string[];
+  followManga: string[];
+  awesomeNum: number;
 };
 
 export type UserRate = {

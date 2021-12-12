@@ -123,6 +123,8 @@ const SignUpPage = (): JSX.Element => {
       likeAnime: [],
       avatar: chooseAvatar ? chooseAvatar.imageName : "",
       likeShowcase: [],
+      followManga: [],
+      awesomeNum: 0,
     };
     const r = await userAdd(user);
     if (r) {

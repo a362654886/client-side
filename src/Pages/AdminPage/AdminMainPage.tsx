@@ -36,7 +36,7 @@ const AdminMainPage = (): JSX.Element => {
     if (loginUser && history.location.pathname == "/adminManagement") {
       toPage("/adminManagement/News");
     }
-  }, []);
+  }, [loginUser]);
 
   const [menuNum, setMenu] = useState<number>(0);
 

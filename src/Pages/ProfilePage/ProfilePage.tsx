@@ -6,6 +6,7 @@ import AnimeButton from "../../components/Button";
 import {
   ButtonsDiv,
   InfoDiv,
+  LineDiv,
   MessageDiv,
   NamePic,
   NameText,
@@ -25,11 +26,6 @@ const ProfilePage = (): JSX.Element => {
 
   const buttonsColor = [
     {
-      text: "Likes",
-      color: "#4BA3C3",
-      backColor: "white",
-    },
-    {
       text: "Showcase",
       color: "#4BA3C3",
       backColor: "white",
@@ -41,6 +37,11 @@ const ProfilePage = (): JSX.Element => {
     },
     {
       text: "Mall",
+      color: "#4BA3C3",
+      backColor: "white",
+    },
+    {
+      text: "Likes",
       color: "#4BA3C3",
       backColor: "white",
     },
@@ -73,8 +74,8 @@ const ProfilePage = (): JSX.Element => {
               width="120px"
               height="32px"
               textColor="black"
-              backGroundColor="#F6F6F6 "
-              borderColor="white"
+              backGroundColor="#AAFFC9 "
+              borderColor="#AAFFC9"
               buttonClick={() => changeButton(index)}
             />
           );
@@ -99,16 +100,16 @@ const ProfilePage = (): JSX.Element => {
   const getProfileDiv = () => {
     switch (chooseButton) {
       case 0:
-        return <ProfileLikesPage />;
-        break;
-      case 1:
         return <ProfileShowcasePage />;
         break;
-      case 2:
+      case 1:
         return <ProfileMarketplacePage />;
         break;
-      case 3:
+      case 2:
         return <ProfileMallPage />;
+        break;
+      case 3:
+        return <ProfileLikesPage />;
         break;
       default:
         return <></>;
@@ -168,6 +169,7 @@ const ProfilePage = (): JSX.Element => {
         <p>{(loginUser as User).location}</p>
       </InfoDiv>
       <ButtonsDiv>{getButtons()}</ButtonsDiv>
+      <LineDiv></LineDiv>
       <ProfileChildDiv>{getProfileDiv()}</ProfileChildDiv>
     </ProfileBox>
   );

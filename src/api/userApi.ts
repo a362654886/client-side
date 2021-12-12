@@ -2,6 +2,7 @@ import { User } from "../types/User";
 import Axios from "axios";
 import { setToken } from "../helperFns/tokenFn";
 import { backEndLink } from "../globalValues";
+import { Anime } from "../types/Amine";
 
 const basicURL = backEndLink;
 
@@ -19,6 +20,21 @@ export const userAuth = async (
         setToken(response.data.token);
       }
       const user = response.data?.user;
+      return user;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const userAwesomeGet = async (): Promise<User[] | null> => {
+  const endpoint = basicURL + "usersGetByAwesome";
+  return Axios.get(endpoint)
+    .then((response) => {
+      if (response.data.user != null) {
+        setToken(response.data.token);
+      }
+      const user = response.data;
       return user;
     })
     .catch(() => {
@@ -67,6 +83,34 @@ export const userUpdateLike = async (
     });
 };
 
+export const userUpdateFollow = async (
+  userId: string,
+  followArr: string[]
+): Promise<number | null> => {
+  const endpoint = basicURL + "userUpdateFollows";
+  return Axios.put(endpoint, { id: userId, follows: followArr })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const userUpdateAwesome = async (
+  userId: string,
+  add: boolean
+): Promise<number | null> => {
+  const endpoint = basicURL + "userUpdateAwesome";
+  return Axios.put(endpoint, { _id: userId, add: add })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const userUpdateShowcases = async (
   userId: string,
   likeArr: string[]
@@ -75,6 +119,25 @@ export const userUpdateShowcases = async (
   return Axios.put(endpoint, { id: userId, likeShowcase: likeArr })
     .then((response) => {
       return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+//user get likes/showcase/marketplace/mall
+
+export const userGetUserLikes = (
+  userId: string,
+  page: number,
+  pageSize: number
+): Promise<Anime[] | null> => {
+  const endpoint =
+    basicURL +
+    `animeAllGetByUserLike?id=${userId}&page=${page}&pageSize=${pageSize}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
     })
     .catch(() => {
       return null;
