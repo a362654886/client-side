@@ -71,7 +71,9 @@ const AnimeOneVideoAdd = (): JSX.Element => {
         type: videoType ? VideoType.Link : VideoType.Embed,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: loginUser.name,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
       };
       await videoAdd(video);
     } else {

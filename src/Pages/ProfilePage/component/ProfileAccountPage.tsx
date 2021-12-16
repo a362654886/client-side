@@ -23,7 +23,7 @@ import {
 } from "../../../cssJs/ProfilePage/ProfileAccountCss";
 import { LOGIN_USER_ADD } from "../../../redux/loginUser";
 import { IStoreState } from "../../../types/IStoreState";
-import { Avatar, Gender, User } from "../../../types/User";
+import { Avatar, User } from "../../../types/User";
 
 const ProfileAccountPage = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -34,7 +34,8 @@ const ProfileAccountPage = (): JSX.Element => {
 
   const [password, setUserPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [chooseAvatar, setChooseAvatarName] = useState<string>("");
   const [ifLoading, setLoading] = useState<boolean>(false);
   const [ifAvatarLoading, setAvatarLoading] = useState<boolean>(false);
@@ -49,7 +50,8 @@ const ProfileAccountPage = (): JSX.Element => {
     })();
     setUserPassword(loginUser ? loginUser.password : "");
     setConfirmPassword("");
-    setName(loginUser ? loginUser.name : "");
+    setFirstName(loginUser ? loginUser.firstName : "");
+    setLastName(loginUser ? loginUser.lastName : "");
     setChooseAvatarName(loginUser ? loginUser.avatar : "");
   }, [loginUser]);
 
@@ -72,8 +74,11 @@ const ProfileAccountPage = (): JSX.Element => {
       case "confirm password":
         setConfirmPassword((e.target as HTMLInputElement).value);
         break;
-      case name:
-        setName((e.target as HTMLInputElement).value);
+      case firstName:
+        setFirstName((e.target as HTMLInputElement).value);
+        break;
+      case lastName:
+        setLastName((e.target as HTMLInputElement).value);
         break;
     }
   };
@@ -164,8 +169,9 @@ const ProfileAccountPage = (): JSX.Element => {
       _id: loginUser ? loginUser._id : "",
       userEmail: loginUser ? loginUser.userEmail : "",
       password: password,
-      name: name,
-      gender: loginUser ? loginUser.gender : Gender.male,
+      firstName: firstName,
+      lastName: lastName,
+      country: loginUser ? loginUser.country : "",
       birthday: loginUser ? loginUser.birthday : new Date(),
       location: loginUser ? loginUser.location : "",
       facebook: loginUser ? loginUser.facebook : "",
@@ -213,8 +219,12 @@ const ProfileAccountPage = (): JSX.Element => {
             <Input placeholder={"confirm password"} onChange={onChange}></Input>
           </ConfirmPasswordInput>
           <PasswordInput>
-            <p>Name:</p>
-            <Input placeholder={name} onChange={onChange}></Input>
+            <p>First Name:</p>
+            <Input placeholder={firstName} onChange={onChange}></Input>
+          </PasswordInput>
+          <PasswordInput>
+            <p>Last Name:</p>
+            <Input placeholder={lastName} onChange={onChange}></Input>
           </PasswordInput>
           <AvatarBox>{getAvatarBox()}</AvatarBox>
           <SubmitButtonDiv>

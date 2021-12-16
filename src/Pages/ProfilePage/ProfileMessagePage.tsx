@@ -27,7 +27,9 @@ const ProfileMessagePage = (): JSX.Element => {
           src={((loginUser as User).avatarImage as Avatar[])[0].imageUrl}
         />
         <NameText onClick={() => toPage("/mainPage/profilePage")}>
-          {(loginUser as User).name}
+          {`${(loginUser as User).firstName}.${(loginUser as User).lastName
+            .substring(0, 1)
+            .toUpperCase()}`}
         </NameText>
         <AnimeButton
           para=""

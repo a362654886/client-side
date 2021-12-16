@@ -53,14 +53,16 @@ const AnimeOneProductAdd = (): JSX.Element => {
     });
     if (loginUser) {
       const product: Product = {
-        _id: `${loginUser?._id}${link}`,
+        _id: `${loginUser?._id}${new Date().valueOf()}`,
         userId: loginUser?._id as string,
         anime: chooseAnime?._id as string,
         link: link,
         productImg: uploadImg,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: loginUser.name,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
       };
       await productAdd(product);
     } else {

@@ -106,7 +106,9 @@ const MainPage = (): JSX.Element => {
             }
           />
           <LoginBox onClick={() => toProfile("/mainPage/profilePage")}>
-            <p>{loginUser.name}</p>
+            <p>{`${loginUser.firstName}.${loginUser.lastName
+              .substring(0, 1)
+              .toUpperCase()}`}</p>
           </LoginBox>
         </>
       );

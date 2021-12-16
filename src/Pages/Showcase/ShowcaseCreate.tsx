@@ -98,7 +98,11 @@ const ShowcaseCreate = (): JSX.Element => {
           ? loginUser.avatarImage[0].imageUrl
           : avatar
         : avatar,
-      userName: loginUser ? loginUser.name : "",
+      userName: loginUser
+        ? `${loginUser.firstName}.${loginUser.lastName
+            .substring(0, 1)
+            .toUpperCase()}`
+        : "",
       userId: loginUser ? loginUser._id : "",
       tags: tags.map((tag, index) => {
         return {

@@ -1,6 +1,13 @@
+import { notification } from "antd";
+import { RcFile } from "antd/lib/upload";
 import * as React from "react";
 import { ChangeEvent } from "react";
 import styled from "styled-components";
+import {
+  NotificationColor,
+  notificationFn,
+  NotificationTitle,
+} from "../../functions/publichFunctions";
 import { ImageBody } from "../../types/BasicType";
 
 type ImageCheck = {
@@ -24,17 +31,44 @@ interface IProps {
   setImg: (value: ImageBody) => void;
 }
 
-const ImgUploadDiv = ({ setImg}: IProps): JSX.Element => {
+const fileCheck = (file: File | undefined | null) => {
+  if (file === undefined || file === null) {
+    console.log("file dont exist!");
+    return false;
+  }
+  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  if (!isJpgOrPng) {
+    notificationFn(
+      "please upload jpeg or png format image.",
+      NotificationColor.Error,
+      NotificationTitle.Error
+    );
+    return false;
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    notificationFn(
+      "Image must smaller than 2MB!",
+      NotificationColor.Error,
+      NotificationTitle.Error
+    );
+    return false;
+  }
+  return true;
+};
+
+const ImgUploadDiv = ({ setImg }: IProps): JSX.Element => {
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     let resultImg: ImageBody = {
       height: 0,
       width: 0,
       imgBase64: "",
-      imgName:""
+      imgName: "",
     };
     const files: FileList | null = (e.target as HTMLInputElement).files;
-    if (files) {
+    const checkResult = fileCheck(files ? files[0] : null);
+    if (files && checkResult) {
       await getBase64file(files[0]).then((result: ImageBody) => {
         resultImg = result;
       });
@@ -53,14 +87,12 @@ const ImgUploadDiv = ({ setImg}: IProps): JSX.Element => {
           height: 0,
           width: 0,
           imgBase64: "",
-          imgName: file.name
+          imgName: file.name,
         };
-        await getWidthAndHeight(image).then(
-          (result: ImageCheck) => {
-            returnImg.height = result.height;
-            returnImg.width = result.width;
-          }
-        );
+        await getWidthAndHeight(image).then((result: ImageCheck) => {
+          returnImg.height = result.height;
+          returnImg.width = result.width;
+        });
         returnImg.imgBase64 = reader.result as string;
         resolve(returnImg);
       };
@@ -68,18 +100,14 @@ const ImgUploadDiv = ({ setImg}: IProps): JSX.Element => {
   };
 
   const getWidthAndHeight = (imageObj: HTMLImageElement) => {
-    return new Promise(
-      (resolve: (value: ImageCheck) => void) => {
-        imageObj.onload = () => {
-          resolve({ width: imageObj.width, height: imageObj.height });
-        };
-      }
-    );
+    return new Promise((resolve: (value: ImageCheck) => void) => {
+      imageObj.onload = () => {
+        resolve({ width: imageObj.width, height: imageObj.height });
+      };
+    });
   };
 
-  return (
-      <Upload type="file" onChange={(e) => handleImageChange(e)} />
-  );
+  return <Upload type="file" onChange={(e) => handleImageChange(e)} />;
 };
 
 export default ImgUploadDiv;

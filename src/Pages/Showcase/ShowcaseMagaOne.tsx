@@ -482,7 +482,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
         text: newSecondReplyHtml[secondIndex],
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: loginUser.name,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
       };
       const r = await showCaseSecondReplyAdd(secondShowcase);
       if (r && r < 300) {
@@ -645,7 +647,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
         text: newReplyHtml,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: loginUser.name,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
       };
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {

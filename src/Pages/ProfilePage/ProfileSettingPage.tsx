@@ -47,7 +47,7 @@ const ProfileSettingPage = (): JSX.Element => {
   const changeButton = (index: number) => {
     setChooseButton(index);
     setAccount(!account);
-  }
+  };
 
   const getButtons = () => {
     return buttonsColor.map(
@@ -91,7 +91,7 @@ const ProfileSettingPage = (): JSX.Element => {
   };
 
   const getPart = () =>
-    account ? <ProfileContactPage />:<ProfileAccountPage /> ;
+    account ? <ProfileContactPage /> : <ProfileAccountPage />;
 
   return (
     <ProfileBox>
@@ -104,7 +104,9 @@ const ProfileSettingPage = (): JSX.Element => {
           }
         />
         <NameText onClick={() => toPage("/mainPage/profilePage")}>
-          {(loginUser as User).name}
+          {`${(loginUser as User).firstName}.${(loginUser as User).lastName
+            .substring(0, 1)
+            .toUpperCase()}`}
         </NameText>
         <AnimeButton
           para=""

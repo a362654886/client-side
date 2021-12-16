@@ -106,7 +106,7 @@ export const ConfirmInput = styled.div`
   }
 `;
 
-export const NameInput = styled.div`
+export const FirstNameInput = styled.div`
   margin-top: 297px;
   position: absolute;
   display: flex;
@@ -125,8 +125,46 @@ export const NameInput = styled.div`
   }
 `;
 
-export const AvatarInput = styled.div`
+export const LastNameInput = styled.div`
   margin-top: 355px;
+  position: absolute;
+  display: flex;
+  p {
+    width: 43px;
+    height: 22px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #302d46;
+    margin-top: 5px;
+  }
+  Input {
+    margin-left: 49px;
+    width: 197px;
+    height: 32px;
+  }
+`;
+
+export const CountryInput = styled.div`
+  margin-top: 413px;
+  position: absolute;
+  display: flex;
+  p {
+    width: 43px;
+    height: 22px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #302d46;
+    margin-top: 5px;
+  }
+  Input {
+    margin-left: 49px;
+    width: 197px;
+    height: 32px;
+  }
+`;
+
+export const AvatarInput = styled.div`
+  margin-top: 470px;
   position: absolute;
   display: flex;
   p {

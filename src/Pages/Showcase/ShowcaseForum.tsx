@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
-  showCaseAllGet,
   showCaseAwesomeUpdate,
   showCaseReplyAdd,
   showCaseReplyUpdate,
@@ -132,7 +131,9 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
         text: newReplyHtml[index],
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: loginUser.name,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
       };
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
@@ -166,7 +167,9 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
         text: newSecondReplyHtml[index][secondIndex],
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: loginUser.name,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
       };
       const r = await showCaseSecondReplyAdd(secondShowcase);
       if (r && r < 300) {

@@ -19,7 +19,7 @@ import {
 } from "../../../cssJs/ProfilePage/ProfileContactCss";
 import { LOGIN_USER_ADD } from "../../../redux/loginUser";
 import { IStoreState } from "../../../types/IStoreState";
-import { Gender, User } from "../../../types/User";
+import { User } from "../../../types/User";
 import facebookPng from "./../../../files/facebook.png";
 import insPng from "./../../../files/ins.png";
 
@@ -73,8 +73,9 @@ const ProfileContactPage = (): JSX.Element => {
       _id: email,
       userEmail: email,
       password: loginUser ? loginUser.password : "",
-      name: loginUser ? loginUser.name : "",
-      gender: loginUser ? loginUser.gender : Gender.male,
+      firstName: loginUser ? loginUser.firstName : "",
+      lastName: loginUser ? loginUser.lastName : "",
+      country: loginUser ? loginUser.country : "",
       birthday: loginUser ? loginUser.birthday : new Date(),
       location: location,
       facebook: facebook,

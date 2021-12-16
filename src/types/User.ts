@@ -2,8 +2,9 @@ export type User = {
   _id: string;
   userEmail: string;
   password: string;
-  name: string;
-  gender: Gender;
+  firstName: string;
+  lastName: string;
+  country: string;
   birthday: Date;
   location: string;
   facebook: string;
@@ -22,11 +23,6 @@ export type UserRate = {
   animeId: string;
   rate: number;
 };
-
-export enum Gender {
-  male = "male",
-  female = "female",
-}
 
 export type Avatar = {
   _id: string;

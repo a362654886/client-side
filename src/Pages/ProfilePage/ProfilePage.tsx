@@ -122,7 +122,11 @@ const ProfilePage = (): JSX.Element => {
         <NamePic
           src={((loginUser as User).avatarImage as Avatar[])[0].imageUrl}
         />
-        <NameText>{(loginUser as User).name}</NameText>
+        <NameText>{`${(loginUser as User).firstName}.${(
+          loginUser as User
+        ).lastName
+          .substring(0, 1)
+          .toUpperCase()}`}</NameText>
         <AnimeButton
           para=""
           text="Settings"

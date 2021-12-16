@@ -12,21 +12,28 @@ import {
   AvatarImg,
   AvatarInput,
   ConfirmInput,
+  CountryInput,
   EmailInput,
+  FirstNameInput,
+  LastNameInput,
   LoginButton,
   LoginTitle,
-  NameInput,
   PasswordInput,
   SignUpBox,
   SignUpButton,
   SubmitClickButton,
 } from "../../cssJs/loginCss";
-import { Avatar, Gender, User } from "../../types/User";
+import { Avatar, User } from "../../types/User";
 import { userAdd } from "../../api/userApi";
 import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { useDispatch } from "react-redux";
+import {
+  NotificationColor,
+  notificationFn,
+  NotificationTitle,
+} from "../../functions/publichFunctions";
 
 const SignUpPage = (): JSX.Element => {
   const history = useHistory();
@@ -36,7 +43,9 @@ const SignUpPage = (): JSX.Element => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [errorText, setErrorText] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
   const [avatars, setAvatars] = useState<Avatar[] | null>(null);
   const [avatarArr, setAvatarArr] = useState<Avatar[][] | null>(null);
   const [chooseAvatar, setChooseAvatarIndex] = useState<Avatar | null>(null);
@@ -81,8 +90,14 @@ const SignUpPage = (): JSX.Element => {
       case "confirm":
         setConfirmPassword((e.target as HTMLInputElement).value);
         break;
-      case "name":
-        setName((e.target as HTMLInputElement).value);
+      case "first name":
+        setFirstName((e.target as HTMLInputElement).value);
+        break;
+      case "last name":
+        setLastName((e.target as HTMLInputElement).value);
+        break;
+      case "country":
+        setCountry((e.target as HTMLInputElement).value);
         break;
     }
   };
@@ -94,26 +109,52 @@ const SignUpPage = (): JSX.Element => {
       password.trim() == "" ||
       confirmPassword.trim() == ""
     ) {
-      setErrorText("confirm password isn't equal password, please check");
+      notificationFn(
+        "confirm password isn't equal password, please check",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
       setLoadingAlert(true);
       return;
     }
     if (email.trim() == "") {
-      setErrorText("please input email");
+      notificationFn(
+        "please input email",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
       setLoadingAlert(true);
       return;
     }
-    if (name.trim() == "") {
-      setErrorText("please input name");
+    if (firstName.trim() == "") {
+      notificationFn(
+        "please input first name",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
       setLoadingAlert(true);
       return;
     }
+    if (lastName.trim() == "") {
+      notificationFn(
+        "please input first name",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
+      setLoadingAlert(true);
+      return;
+    }
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     const user: User = {
       _id: email,
       userEmail: email,
       password: password,
-      name: name,
-      gender: Gender.male,
+      firstName: firstName,
+      lastName: lastName,
+      country: country,
       birthday: new Date(),
       location: "",
       facebook: "",
@@ -127,6 +168,10 @@ const SignUpPage = (): JSX.Element => {
       awesomeNum: 0,
     };
     const r = await userAdd(user);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
     if (r) {
       toPage("/mainPage/login");
     }
@@ -232,10 +277,18 @@ const SignUpPage = (): JSX.Element => {
         <p>Confirm:</p>
         <Input placeholder={"confirm"} onChange={onChange}></Input>
       </ConfirmInput>
-      <NameInput>
+      <FirstNameInput>
         <p>Name:</p>
-        <Input placeholder={"name"} onChange={onChange}></Input>
-      </NameInput>
+        <Input placeholder={"first name"} onChange={onChange}></Input>
+      </FirstNameInput>
+      <LastNameInput>
+        <p></p>
+        <Input placeholder={"last name"} onChange={onChange}></Input>
+      </LastNameInput>
+      <CountryInput>
+        <p>Country:</p>
+        <Input placeholder={"country"} onChange={onChange}></Input>
+      </CountryInput>
       <AvatarInput>
         <p>Avatar:</p>
         <AvatarBox1>{getAvatarDiv(avatarArr ? avatarArr[0] : null)}</AvatarBox1>

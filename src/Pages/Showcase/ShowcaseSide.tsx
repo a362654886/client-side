@@ -43,7 +43,9 @@ const ShowcaseSide = (): JSX.Element => {
               <img
                 src={`https://animeimagebucket.s3.amazonaws.com/${user.avatar}`}
               />
-              <h6>{user.name}</h6>
+              <h6>{`${user.firstName}.${user.lastName
+                .substring(0, 1)
+                .toUpperCase()}`}</h6>
               <p>{user.awesomeNum}</p>
             </ShowcaseSideUser>
           );

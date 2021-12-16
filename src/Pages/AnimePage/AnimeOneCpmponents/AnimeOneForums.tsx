@@ -126,12 +126,14 @@ const AnimeOneForum = ({
         text: html,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: loginUser.name,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
         anime: anime?._id as string,
       };
       const r = await forumAdd(forum);
       if (r && r < 300) {
-        forums.push(forum);
+        forums.unshift(forum);
         setForums(forums);
       }
     } else {
@@ -149,30 +151,31 @@ const AnimeOneForum = ({
       type: LOADING_OPEN,
     });
     if (loginUser) {
-      const lastId = forums[index].items?.length;
+      console.log(index);
       const forumItem: ForumItem = {
         _id: `${
           forums[index].items
-            ? (forums[index].items as ForumItem[])[lastId ? lastId - 1 : 0]
-                ._id + 1
-            : 1
+            ? (forums[index].items as ForumItem[])[0]._id + 1
+            : forums[index]._id + 1
         }`,
         forumItemId: `${
           forums[index].items
-            ? (forums[index].items as ForumItem[])[lastId ? lastId - 1 : 0]
-                ._id + 1
-            : 1
+            ? (forums[index].items as ForumItem[])[0]._id + 1
+            : forums[index]._id + 1
         }`,
         text: newItemHtml[index],
         forumId: forums[index]._id,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: loginUser.name,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
         anime: anime?._id as string,
       };
       const r = await forumItemAdd(forumItem);
       if (r && r < 300) {
         addForumItemToForum(forumItem);
+        setNewItemHtml([]);
       }
     } else {
       openNotification("error", "please login and then reply");
@@ -192,21 +195,14 @@ const AnimeOneForum = ({
       type: LOADING_OPEN,
     });
     if (loginUser) {
-      const lastId = (
-        (forums[index].items as ForumItem[])[secondIndex]
-          .secondItems as ForumSecondItem[]
-      ).length;
-      console.log(lastId);
-
       const secondItems = (forums[index].items as ForumItem[])[secondIndex]
         .secondItems;
-      console.log(secondItems);
       const secondForumItem: ForumSecondItem = {
         _id: `${
           forums[index].items
             ? secondItems
               ? secondItems.length > 0
-                ? secondItems[lastId ? lastId - 1 : 0]._id + 1
+                ? secondItems[0]._id + 1
                 : 1
               : 1
             : 1
@@ -215,7 +211,7 @@ const AnimeOneForum = ({
           forums[index].items
             ? secondItems
               ? secondItems.length > 0
-                ? secondItems[lastId ? lastId - 1 : 0]._id + 1
+                ? secondItems[0]._id + 1
                 : 1
               : 1
             : 1
@@ -225,12 +221,15 @@ const AnimeOneForum = ({
         forumId: forums[index]._id,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: loginUser.name,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
         anime: anime?._id as string,
       };
       const r = await forumSecondItemAdd(secondForumItem);
       if (r && r < 300) {
         addForumSecondItemToForum(secondForumItem, index, secondIndex);
+        setNewSecondItemHtml([]);
       }
     } else {
       openNotification("error", "please login and then reply");
@@ -244,10 +243,10 @@ const AnimeOneForum = ({
   const addForumItemToForum = (forumItem: ForumItem) => {
     const index = forums.findIndex((forum) => forum._id == forumItem.forumId);
     if (forums[index].items != undefined) {
-      (forums[index].items as ForumItem[]).push(forumItem);
+      (forums[index].items as ForumItem[]).unshift(forumItem);
     } else {
       forums[index].items = [];
-      (forums[index].items as ForumItem[]).push(forumItem);
+      (forums[index].items as ForumItem[]).unshift(forumItem);
     }
     setForums(forums);
     setUpdate(update + 1);
@@ -262,10 +261,10 @@ const AnimeOneForum = ({
     const items = newForums[index].items;
     if (items) {
       if (items[secondIndex].secondItems != undefined) {
-        items[secondIndex].secondItems?.push(forumItem);
+        items[secondIndex].secondItems?.unshift(forumItem);
       } else {
         items[secondIndex].secondItems = [];
-        items[secondIndex].secondItems?.push(forumItem);
+        items[secondIndex].secondItems?.unshift(forumItem);
       }
     }
     newForums[index].items = items;
@@ -690,18 +689,15 @@ const AnimeOneForum = ({
             style={{ display: forum.showReplay == true ? "inline" : "none" }}
           >
             {getAddItemBox(index)}
-            {forum.items ? getForumItems(forum.items, date, index) : <></>}
+            {forum.items ? getForumItems(forum.items, index) : <></>}
           </div>
         </ForumIframe>
       );
     });
 
-  const getForumItems = (
-    forumItems: ForumItem[],
-    date: Date,
-    index: number
-  ) => {
+  const getForumItems = (forumItems: ForumItem[], index: number) => {
     return forumItems.map((forum, secondIndex) => {
+      const date = new Date(forum.uploadTime);
       return (
         <>
           <ForumItemBox key={secondIndex}>
@@ -771,12 +767,7 @@ const AnimeOneForum = ({
               {getAddSecondItemBox(index, secondIndex)}
               {forum.showReplay ? (
                 <p>
-                  {getSecondForumItems(
-                    forum.secondItems,
-                    date,
-                    index,
-                    secondIndex
-                  )}
+                  {getSecondForumItems(forum.secondItems, index, secondIndex)}
                 </p>
               ) : (
                 <></>
@@ -790,12 +781,12 @@ const AnimeOneForum = ({
 
   const getSecondForumItems = (
     forumItems: ForumSecondItem[] | undefined,
-    date: Date,
     index: number,
     secondIndex: number
   ) => {
     return forumItems ? (
       forumItems.map((forum, thirdIndex) => {
+        const date = new Date(forum.uploadTime);
         return (
           <>
             <ForumSecondItemBox key={thirdIndex}>
