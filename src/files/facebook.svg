@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon-Facebook</title>
+    <g id="Icon-Facebook" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" stroke="#302D46" fill="#FFFFFF" cx="12" cy="12" r="11.5"></circle>
+        <path d="M10.25,9.33333333 L8,9.33333333 L8,12 L10.25,12 L10.25,20 L14,20 L14,12 L16.7315,12 L17,9.33333333 L14,9.33333333 L14,8.222 C14,7.58533333 14.144,7.33333333 14.83625,7.33333333 L17,7.33333333 L17,4 L14.144,4 C11.447,4 10.25,5.05533333 10.25,7.07666667 L10.25,9.33333333 Z" id="Facebook" fill="#302D46" fill-rule="nonzero"></path>
+    </g>
+</svg>

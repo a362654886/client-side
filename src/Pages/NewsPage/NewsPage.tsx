@@ -21,7 +21,7 @@ const NewsPage = (): JSX.Element => {
 
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState<number>(1);
-  const [count, setCount] = useState<number>(0);
+  //const [count, setCount] = useState<number>(0);
   const [allNews, setAllNews] = useState<NewType[]>([]);
   const pageSize = 1;
 
@@ -36,7 +36,7 @@ const NewsPage = (): JSX.Element => {
     const animeResult = await newAllGet("", page, pageSize);
     if (animeResult) {
       setAllNews(allNews.concat(animeResult.result));
-      setCount(animeResult.count);
+      //setCount(animeResult.count);
     }
     setLoading(false);
   };

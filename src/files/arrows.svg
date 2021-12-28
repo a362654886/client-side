@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon-Arrows</title>
+    <g id="Icon-Arrows" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Background" fill="#4BA3C3" cx="10" cy="10" r="10"></circle>
+        <path d="M6.89249274,3 L9.83244489,6.00315552 L8.08271142,5.97261381 L7.88697784,17.1861834 L5.55399988,17.1454612 L5.74973347,5.93189153 L4,5.90134982 L6.89249274,3 Z M14.0107767,3.00023447 L14.0107767,14.2155122 L15.7607767,14.2155122 L12.9193601,17.1669011 L9.9274434,14.2155122 L11.6774434,14.2155122 L11.6774434,3.00023447 L14.0107767,3.00023447 Z" id="Shape" fill="#FFFFFF"></path>
+    </g>
+</svg>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon-Edit</title>
+    <g id="Icon-Edit" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Background" fill="#302D46" cx="12" cy="12" r="12"></circle>
+        <path d="M17.355625,11.201875 L9.454375,19.10125 L5,20 L5.89875,15.545 L13.799375,7.645 L17.355625,11.201875 L17.355625,11.201875 Z M18.239375,10.318125 L20,8.555625 L16.443125,5 L14.683125,6.760625 L18.239375,10.318125 L18.239375,10.318125 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+    </g>
+</svg>

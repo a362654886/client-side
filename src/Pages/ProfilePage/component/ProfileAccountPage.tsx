@@ -163,6 +163,7 @@ const ProfileAccountPage = (): JSX.Element => {
   };
 
   const updateUser = async () => {
+    console.log(`${confirmPassword} need to be checked`);
     const avatar = avatars?.find((avatar) => avatar.imageName == chooseAvatar);
     const newArr = new Array(avatar as Avatar);
     const readyUpdateUser: User = {

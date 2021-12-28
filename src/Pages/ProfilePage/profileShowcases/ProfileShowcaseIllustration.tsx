@@ -1,7 +1,5 @@
-import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { showCaseAllGet } from "../../../api/showcaseAPI";
 import AnimeButton, { MiddleDiv } from "../../../components/Button";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
@@ -16,8 +14,6 @@ const ProfileShowcaseIllustration = (): JSX.Element => {
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
   );
-
-  const history = useHistory();
 
   const [loading, setLoading] = useState(false);
   const [typeLoading, setTypeLoading] = useState(false);

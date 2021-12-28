@@ -17,8 +17,8 @@ import {
 } from "../../cssJs/AnimePage/AnimeShowCss";
 import { ANIME_ADD } from "../../redux/anime";
 import { Anime, RateBody } from "../../types/Amine";
-import starBorder from "../../files/Star-border.png";
-import starFill from "../../files/Star-filled.png";
+import starBorder from "../../files/Star-border.svg";
+import starFill from "../../files/Star-filled.svg";
 import loadingImg from "../../files/loading.gif";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
 
@@ -31,7 +31,6 @@ const AnimeShowPage = (): JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(0);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
-  const [animeArr, setAnimeArr] = useState<Anime[][] | null>(null);
   const pageSize = 4;
 
   useEffect(() => {

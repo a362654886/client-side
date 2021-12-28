@@ -24,6 +24,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 // store type??
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 const store: any = createStore(persistedReducer, applyMiddleware(thunk));
 persistStore(store);
 

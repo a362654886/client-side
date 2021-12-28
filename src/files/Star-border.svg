@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon-Star-Hollow</title>
+    <g id="Icon-Star-Hollow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Shape" fill="#FFDF00" fill-rule="nonzero" points="12 0 8.332 7.95724174 0 9.16744064 6.064 15.2951897 4.584 24 12 19.828967 19.416 23.9989486 17.936 15.2941383 24 9.16744064 15.668 7.95829317"></polygon>
+        <polygon id="Shape" fill="#FFFFFF" fill-rule="nonzero" points="12.5 5 14.792212 9.97281487 20 10.7284928 16.2097513 14.5584997 17.1344895 19.9989677 12.5 17.3933242 7.86551047 20 8.79024869 14.559532 5 10.7295251 10.207788 9.97281487 12.5 5"></polygon>
+    </g>
+</svg>

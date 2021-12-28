@@ -1,6 +1,7 @@
 import { actionBody } from "../../types/MiddleWareType";
 
 interface SimpleKeyValueObject {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 

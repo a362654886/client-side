@@ -35,3 +35,16 @@ export const productAllGet = async (
       return null;
     });
 };
+
+export const productDelete = async (
+  productId: string
+): Promise<number | null> => {
+  const endpoint = basicURL + `productDelete?productId=${productId}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};

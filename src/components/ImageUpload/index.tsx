@@ -1,4 +1,4 @@
-import { Upload } from "antd";
+import { Spin, Upload } from "antd";
 import { RcFile, UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
 import * as React from "react";
@@ -64,7 +64,6 @@ const ImageUpload = ({
   const handleChange = async (info: UploadChangeParam<UploadFile<RcFile>>) => {
     if (info.file.status === "uploading") {
       setLoading(true);
-      return;
     }
     let resultImg: ImageBody = {
       height: 0,
@@ -73,6 +72,7 @@ const ImageUpload = ({
       imgName: "",
     };
     const checkResult = fileCheck(info.file.originFileObj);
+    console.log(checkResult);
     if (checkResult) {
       await getBase64file(info.file.originFileObj as RcFile).then(
         (result: ImageBody) => {
@@ -80,8 +80,8 @@ const ImageUpload = ({
         }
       );
       setImg(resultImg);
-      setLoading(false);
     }
+    setLoading(false);
   };
   const getBase64file = (file: RcFile) => {
     return new Promise((resolve: (value: ImageBody) => void) => {
@@ -128,23 +128,27 @@ const ImageUpload = ({
         textAlign: "center",
       }}
     >
-      <Upload
-        style={{
-          width: width,
-        }}
-        showUploadList={false}
-        onChange={(e) => handleChange(e)}
-      >
-        <p
+      {loading ? (
+        <Spin />
+      ) : (
+        <Upload
           style={{
-            color: textColor,
-            lineHeight: height,
             width: width,
           }}
+          showUploadList={false}
+          onChange={(e) => handleChange(e)}
         >
-          {text}
-        </p>
-      </Upload>
+          <p
+            style={{
+              color: textColor,
+              lineHeight: height,
+              width: width,
+            }}
+          >
+            {text}
+          </p>
+        </Upload>
+      )}
     </UploadButtons>
   );
 };

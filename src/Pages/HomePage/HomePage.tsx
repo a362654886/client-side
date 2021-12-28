@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { animeAllGet } from "../../api/animeAPI";
 import { newAllGet } from "../../api/newsAPI";
 import { AnimeButton } from "../../components/Button";
@@ -22,14 +21,13 @@ import {
   LoadingImgDiv,
 } from "../../cssJs/homePageCss";
 import mainPagePic from "../../files/mainPagePic.jpg";
-import starBorder from "../../files/Star-border.png";
-import starFill from "../../files/Star-filled.png";
+import starBorder from "../../files/Star-border.svg";
+import starFill from "../../files/Star-filled.svg";
 import { Anime } from "../../types/Amine";
 import { NewType } from "../../types/NewsType";
 import loadingImg from "../../files/loading.gif";
 
 const HomePage = (): JSX.Element => {
-  const dispatch = useDispatch();
 
   const [allNews, setAllNews] = useState<NewType[]>([]);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);

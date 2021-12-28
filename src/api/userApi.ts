@@ -1,4 +1,4 @@
-import { User } from "../types/User";
+import { User, UserRate } from "../types/User";
 import Axios from "axios";
 import { setToken } from "../helperFns/tokenFn";
 import { backEndLink } from "../globalValues";
@@ -103,6 +103,25 @@ export const userUpdateAwesome = async (
 ): Promise<number | null> => {
   const endpoint = basicURL + "userUpdateAwesome";
   return Axios.put(endpoint, { _id: userId, add: add })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const userUpdateRate = async (
+  id: string,
+  rate: UserRate[]
+): Promise<number | null> => {
+  const endpoint = basicURL + "userUpdateRate";
+  return Axios.put(endpoint, {
+    userBody: {
+      userEmail: id,
+      userRate: rate,
+    },
+  })
     .then((response) => {
       return response.status;
     })

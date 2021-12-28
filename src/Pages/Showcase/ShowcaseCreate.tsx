@@ -1,12 +1,11 @@
-import { Button, Input, Radio, RadioChangeEvent, Select, Space } from "antd";
+import { Button, Input, Radio, RadioChangeEvent, Space } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showCaseAdd } from "../../api/showcaseAPI";
 import AnimeButton from "../../components/Button";
 import FullTextEditor from "../../components/FullTextEditor";
 import ImageUpload, { ImageBody } from "../../components/ImageUpload";
-import { TextInput } from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import {
   CancelButton,
   DescriptionInput,
@@ -24,9 +23,15 @@ import { IStoreState } from "../../types/IStoreState";
 import { ShowCaseEnum, ShowCaseType } from "../../types/showCaseType";
 import { User } from "../../types/User";
 import avatar from "../../files/avatar.png";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { SelectValue } from "antd/lib/select";
-import { openNotification } from "../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
+import { LoadingType } from "../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 
 const ShowcaseCreate = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -34,13 +39,13 @@ const ShowcaseCreate = (): JSX.Element => {
   );
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [imgArr, setImgArr] = useState<ImageBody[]>([]);
   const [html, setHtml] = useState<string>("");
   const [showCaseType, setShowCaseType] = useState<ShowCaseEnum>(
     ShowCaseEnum.Collections
   );
-  const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [tagAdd, setTagAdd] = useState<boolean>(true);
   const [sourceType, setSourceType] = useState<string>("origin");
@@ -49,6 +54,7 @@ const ShowcaseCreate = (): JSX.Element => {
   const [description, setDescription] = useState<string>("");
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     setShowCaseType((history.location.state as any).type);
   }, []);
 
@@ -116,13 +122,24 @@ const ShowcaseCreate = (): JSX.Element => {
       description: description,
       aweSome: 0,
     };
-    setLoading(true);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     if (tagAdd) {
       const r = await showCaseAdd(showCase);
+      console.log(r);
     } else {
-      openNotification("fail", "please add # before tag");
+      openNotification(
+        "please add # before tag",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
     }
-    setLoading(false);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const addTag = (e: SelectValue) => {

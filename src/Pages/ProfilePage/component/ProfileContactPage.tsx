@@ -20,8 +20,8 @@ import {
 import { LOGIN_USER_ADD } from "../../../redux/loginUser";
 import { IStoreState } from "../../../types/IStoreState";
 import { User } from "../../../types/User";
-import facebookPng from "./../../../files/facebook.png";
-import insPng from "./../../../files/ins.png";
+import facebookPng from "./../../../files/facebook.svg";
+import insPng from "./../../../files/insImage.svg";
 
 const ProfileContactPage = (): JSX.Element => {
   const loginUser: User | null = useSelector(

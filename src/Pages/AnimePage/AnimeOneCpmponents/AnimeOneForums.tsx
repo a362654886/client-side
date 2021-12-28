@@ -19,7 +19,6 @@ import FullTextEditor from "../../../components/FullTextEditor";
 import {
   AnimeEditAndDeleteDiv,
   AnimOneForum,
-  ForumEditButton,
   ForumIframe,
   ForumImg,
   ForumItemBox,
@@ -29,7 +28,11 @@ import {
   ReplyButton,
   TextInput,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
-import { openNotification } from "../../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../../helperFns/popUpAlert";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
 import { LoadingType } from "../../../types/EnumTypes";
@@ -43,8 +46,8 @@ import { Avatar, User } from "../../../types/User";
 import loadingImg from "../../../files/loading.gif";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ReactQuillCss } from "../../../cssJs/fullTextEditor";
-import editIcon from "../../../files/editIcon.png";
-import deleteIcon from "../../../files/deleteIcon.png";
+import editIcon from "../../../files/editIcon.svg";
+import deleteIcon from "../../../files/deleteIcon.svg";
 
 interface IProps {
   anime: Anime | null;
@@ -115,6 +118,7 @@ const AnimeOneForum = ({
   };
   //post functions
   const submitNewForum = async () => {
+    console.log("sdsds");
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
@@ -125,19 +129,25 @@ const AnimeOneForum = ({
         forumId: `${loginUser?._id}${new Date().valueOf()}`,
         text: html,
         uploadTime: new Date(),
+        userId: loginUser?._id,
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
         anime: anime?._id as string,
       };
+      console.log(forum);
       const r = await forumAdd(forum);
       if (r && r < 300) {
         forums.unshift(forum);
         setForums(forums);
       }
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -151,21 +161,23 @@ const AnimeOneForum = ({
       type: LOADING_OPEN,
     });
     if (loginUser) {
-      console.log(index);
+      console.log(forums[index]);
+      const length = forums[index].items ? forums[index].items?.length : 0;
       const forumItem: ForumItem = {
         _id: `${
-          forums[index].items
-            ? (forums[index].items as ForumItem[])[0]._id + 1
-            : forums[index]._id + 1
+          length && length > 0
+            ? (forums[index].items as ForumItem[])[0]._id + new Date().valueOf()
+            : forums[index]._id + new Date().valueOf()
         }`,
         forumItemId: `${
-          forums[index].items
-            ? (forums[index].items as ForumItem[])[0]._id + 1
-            : forums[index]._id + 1
+          length && length > 0
+            ? (forums[index].items as ForumItem[])[0]._id + new Date().valueOf()
+            : forums[index]._id + new Date().valueOf()
         }`,
         text: newItemHtml[index],
         forumId: forums[index]._id,
         uploadTime: new Date(),
+        userId: loginUser?._id,
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
@@ -178,7 +190,11 @@ const AnimeOneForum = ({
         setNewItemHtml([]);
       }
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -197,29 +213,32 @@ const AnimeOneForum = ({
     if (loginUser) {
       const secondItems = (forums[index].items as ForumItem[])[secondIndex]
         .secondItems;
+      const iniId = (forums[index].items as ForumItem[])[secondIndex]
+        .forumItemId;
       const secondForumItem: ForumSecondItem = {
         _id: `${
           forums[index].items
             ? secondItems
               ? secondItems.length > 0
-                ? secondItems[0]._id + 1
-                : 1
-              : 1
-            : 1
+                ? secondItems[0]._id + new Date().valueOf()
+                : iniId + new Date().valueOf()
+              : iniId + new Date().valueOf()
+            : iniId + new Date().valueOf()
         }`,
         forumSecondItemId: `${
           forums[index].items
             ? secondItems
               ? secondItems.length > 0
-                ? secondItems[0]._id + 1
-                : 1
-              : 1
-            : 1
+                ? secondItems[0]._id + new Date().valueOf()
+                : iniId + new Date().valueOf()
+              : iniId + new Date().valueOf()
+            : iniId + new Date().valueOf()
         }`,
         forumItemId: (forums[index].items as ForumItem[])[secondIndex]._id,
         text: newSecondItemHtml[index][secondIndex],
         forumId: forums[index]._id,
         uploadTime: new Date(),
+        userId: loginUser?._id,
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
@@ -232,7 +251,11 @@ const AnimeOneForum = ({
         setNewSecondItemHtml([]);
       }
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -398,11 +421,19 @@ const AnimeOneForum = ({
     setUpdate(update + 1);
   };
 
-  const replyItem = (name: string) => {
+  /*const replyItem = (name: string) => {
+    console.log(name)
     //setNewItemHtml(`<p>reply @${name}</p><p><br></p><p><br></p>`);
-  };
+  };*/
 
-  const replySecondItem = (name: string) => {
+  const replySecondItem = (
+    name: string,
+    index: number,
+    secondIndex: number
+  ) => {
+    newSecondItemHtml[index][secondIndex] = `@${name} `;
+    setNewSecondItemHtml(newSecondItemHtml);
+    setUpdate(update + 1);
     //setNewSecondItemHtml(`<p>reply @${name}</p><p><br></p><p><br></p>`);
   };
 
@@ -557,6 +588,7 @@ const AnimeOneForum = ({
     const newForums = forums;
     const id = forums[index]._id;
     const r = await forumDelete(id);
+    console.log(r);
     const deleteIndex = newForums.findIndex((x) => x.forumId == id);
     newForums.splice(deleteIndex, 1);
     setForums(newForums);
@@ -575,6 +607,7 @@ const AnimeOneForum = ({
     const newForums = forums;
     const id = (forums[index].items as ForumItem[])[secondIndex]._id;
     const r = await forumItemDelete(id);
+    console.log(r);
     const deleteIndex = (newForums[index].items as ForumItem[])
       .map((x) => x.forumItemId)
       .indexOf(id);
@@ -602,6 +635,7 @@ const AnimeOneForum = ({
         .secondItems as ForumSecondItem[]
     )[thirdIndex]._id;
     const r = await forumSecondDelete(id);
+    console.log(r);
     const deleteIndex = (
       (newForums[index].items as ForumItem[])[secondIndex]
         .secondItems as ForumSecondItem[]
@@ -836,7 +870,9 @@ const AnimeOneForum = ({
                     textColor="#4BA3C3"
                     backGroundColor="white"
                     borderColor="white"
-                    buttonClick={() => replySecondItem(forum.userName)}
+                    buttonClick={() =>
+                      replySecondItem(forum.userName, index, secondIndex)
+                    }
                   />
                 </>
               )}

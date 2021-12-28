@@ -101,6 +101,20 @@ export const showCaseUpdate = async (showcaseBody: {
     });
 };
 
+export const showCaseDescriptionUpdate = async (showcaseBody: {
+  _id: string;
+  description: string;
+}): Promise<number | null> => {
+  const endpoint = basicURL + "showCaseUpdate";
+  return Axios.put(endpoint, { showCase: showcaseBody })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const showCaseReplyUpdate = async (showcaseBody: {
   _id: string;
   text: string;

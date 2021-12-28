@@ -1,4 +1,3 @@
-import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -7,7 +6,6 @@ import AnimeButton, { MiddleDiv } from "../../../components/Button";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ShowCaseEnum, ShowCaseType } from "../../../types/showCaseType";
 import loadingImg from "../../../files/loading.gif";
-import ShowcaseForum from "../../Showcase/ShowcaseForum";
 import { User } from "../../../types/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";

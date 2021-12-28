@@ -14,8 +14,8 @@ import { ANIME_ADD } from "../../../redux/anime";
 import { Anime, RateBody } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
 import { User } from "../../../types/User";
-import starBorder from "../../../files/Star-border.png";
-import starFill from "../../../files/Star-filled.png";
+import starBorder from "../../../files/Star-border.svg";
+import starFill from "../../../files/Star-filled.svg";
 import loadingImg from "../../../files/loading.gif";
 
 const ProfileLikesPage = (): JSX.Element => {
@@ -26,9 +26,9 @@ const ProfileLikesPage = (): JSX.Element => {
     (state: IStoreState) => state.loginUserState
   );
 
-  const [count, setCounts] = useState<number>(
+  /*const [count, setCounts] = useState<number>(
     loginUser ? loginUser.likeAnime.length : 0
-  );
+  );*/
   const [allAnime, setAllAnime] = useState<Anime[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 

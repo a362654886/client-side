@@ -33,3 +33,14 @@ export const videosAllGet = async (
       return null;
     });
 };
+
+export const videoDelete = async (videoId: string): Promise<number | null> => {
+  const endpoint = basicURL + `videoDelete?videoId=${videoId}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};

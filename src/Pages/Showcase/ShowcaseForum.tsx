@@ -31,17 +31,17 @@ import {
   ShowCaseType,
   ShowSecondCaseReply,
 } from "../../types/showCaseType";
-import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.png";
-import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.png";
-import facebook from "../../files/facebook.png";
-import insImage from "../../files/insImage.png";
-import twitter from "../../files/twitterP.png";
-import copy from "../../files/copy.png";
-import editIcon from "../../files/editIcon.png";
-import deleteIcon from "../../files/deleteIcon.png";
+import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.svg";
+import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
+import facebook from "../../files/facebook.svg";
+import insImage from "../../files/insImage.svg";
+import twitter from "../../files/twitterP.svg";
+import copy from "../../files/copy.svg";
+import editIcon from "../../files/editIcon.svg";
+import deleteIcon from "../../files/deleteIcon.svg";
 import FullTextEditor from "../../components/FullTextEditor";
 import {
-  ForumEditButton,
+  AnimeEditAndDeleteDiv,
   ForumImg,
   ForumName,
   ForumTime,
@@ -51,7 +51,11 @@ import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { Avatar, User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";
-import { openNotification } from "../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactQuillCss } from "../../cssJs/fullTextEditor";
 import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
@@ -84,6 +88,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
   useEffect(() => {
     setAllShowCases(showcases);
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
+    console.log(allShowCases)
   }, [showcases]);
 
   useEffect(() => {
@@ -99,6 +104,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     const newReplyHtmls = newReplyHtml;
     newReplyHtmls[index] = e;
     setNewReplyHtml(newReplyHtmls);
+    setUpdate(update + 1);
   };
 
   const sendNewSecondReply = (
@@ -109,6 +115,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     const newSecondReplyHtmls = newSecondReplyHtml;
     newSecondReplyHtmls[index][secondIndex] = e;
     setNewSecondReplyHtml(newSecondReplyHtmls);
+    setUpdate(update + 1);
   };
   //
   const submitNewShowcaseReply = async (
@@ -122,14 +129,19 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     if (loginUser) {
       const showcaseReply: ShowCaseReply = {
         _id: `${showcase._id}${
-          showcase.replies ? showcase.replies.length + 1 : 1
+          showcase.replies
+            ? showcase.replies.length + new Date().valueOf()
+            : new Date().valueOf()
         }`,
         replyId: `${showcase._id}${
-          showcase.replies ? showcase.replies.length + 1 : 1
+          showcase.replies
+            ? showcase.replies.length + new Date().valueOf()
+            : new Date().valueOf()
         }`,
         showCaseId: showcase._id,
         text: newReplyHtml[index],
         uploadTime: new Date(),
+        userId: loginUser._id,
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
@@ -138,9 +150,14 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
         addShowcaseToState(showcaseReply);
+        setNewReplyHtml([]);
       }
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -160,13 +177,16 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     if (loginUser) {
       const secondShowcase: ShowSecondCaseReply = {
         _id: `${showcase._id}${
-          showcase.secondReplies ? showcase.secondReplies.length + 1 : 1
+          showcase.secondReplies
+            ? showcase.secondReplies.length + new Date().valueOf()
+            : new Date().valueOf()
         }`,
         replyId: showcase.replyId,
         showCaseId: showcase.showCaseId,
         text: newSecondReplyHtml[index][secondIndex],
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
+        userId: loginUser._id,
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
@@ -174,9 +194,14 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
       const r = await showCaseSecondReplyAdd(secondShowcase);
       if (r && r < 300) {
         addSecondShowcaseToState(secondShowcase, index, secondIndex);
+        setNewSecondReplyHtml([[]]);
       }
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -473,7 +498,11 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     if (loginUser) {
       likeFn();
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
   };
 
@@ -493,10 +522,12 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
         allShowCases[index]._id,
         allShowCases[index].aweSome
       );
+      console.log(animeLikeResult);
       const userLikeResult = await userUpdateShowcases(
         loginUser?._id as string,
         awesomeArr
       );
+      console.log(userLikeResult);
       await userUpdateAwesome(loginUser?._id as string, true);
       setLoading(false);
     } else {
@@ -519,11 +550,12 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
           allShowCases[index]._id,
           allShowCases[index].aweSome
         );
+        console.log(animeLikeResult);
         const userLikeResult = await userUpdateShowcases(
           loginUser?._id as string,
           awesomeArr
         );
-
+        console.log(userLikeResult);
         await userUpdateAwesome(loginUser?._id as string, false);
         setLoading(false);
       }
@@ -638,18 +670,20 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
               </ShowCaseIcons>
             </>
           )}
-          <EditAndDeleteDiv>
-            <img onClick={() => editShowcase(index)} src={`${editIcon}`} />
-            <p>Edit</p>
-            <img
-              style={{ width: "20px" }}
-              onClick={() => {
-                console.log("deleteIcon");
-              }}
-              src={`${deleteIcon}`}
-            />
-            <p>Delete</p>
-          </EditAndDeleteDiv>
+          <AnimeEditAndDeleteDiv>
+            <div onClick={() => editShowcase(index)}>
+              <img src={`${editIcon}`} />
+              <p>Edit</p>
+              <img
+                style={{ width: "20px" }}
+                onClick={() => {
+                  console.log("deleteIcon");
+                }}
+                src={`${deleteIcon}`}
+              />
+              <p>Delete</p>
+            </div>
+          </AnimeEditAndDeleteDiv>
           <ReplyDiv>
             <AnimeButton
               para=""
@@ -718,21 +752,20 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 <ShowcaseReply>{reply.text}</ShowcaseReply>
               </>
             )}
-            <EditAndDeleteDiv>
-              <img
-                onClick={() => editShowcaseReply(index, secondIndex)}
-                src={`${editIcon}`}
-              />
-              <p>Edit</p>
-              <img
-                style={{ width: "20px" }}
-                onClick={() => {
-                  console.log("deleteIcon");
-                }}
-                src={`${deleteIcon}`}
-              />
-              <p>Delete</p>
-            </EditAndDeleteDiv>
+            <AnimeEditAndDeleteDiv>
+              <div onClick={() => editShowcaseReply(index, secondIndex)}>
+                <img src={`${editIcon}`} />
+                <p>Edit</p>
+                <img
+                  style={{ width: "20px" }}
+                  onClick={() => {
+                    console.log("deleteIcon");
+                  }}
+                  src={`${deleteIcon}`}
+                />
+                <p>Delete</p>
+              </div>
+            </AnimeEditAndDeleteDiv>
             <ReplyAddDiv>
               <AnimeButton
                 para=""
@@ -821,23 +854,24 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                   <ShowcaseReply>{showcaseSecondReply.text}</ShowcaseReply>
                 </>
               )}
-              <EditAndDeleteDiv>
-                <img
+              <AnimeEditAndDeleteDiv>
+                <div
                   onClick={() =>
                     editShowcaseSecondReply(index, secondIndex, thirdIndex)
                   }
-                  src={`${editIcon}`}
-                />
-                <p>Edit</p>
-                <img
-                  style={{ width: "20px" }}
-                  onClick={() => {
-                    console.log("deleteIcon");
-                  }}
-                  src={`${deleteIcon}`}
-                />
-                <p>Delete</p>
-              </EditAndDeleteDiv>
+                >
+                  <img src={`${editIcon}`} />
+                  <p>Edit</p>
+                  <img
+                    style={{ width: "20px" }}
+                    onClick={() => {
+                      console.log("deleteIcon");
+                    }}
+                    src={`${deleteIcon}`}
+                  />
+                  <p>Delete</p>
+                </div>
+              </AnimeEditAndDeleteDiv>
               <ReplyAddDiv>
                 <AnimeButton
                   para=""

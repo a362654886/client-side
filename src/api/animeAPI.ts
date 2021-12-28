@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
-import { Anime } from "../types/Amine";
+import { Anime, RateBody } from "../types/Amine";
 
 const basicURL = backEndLink;
 
@@ -52,6 +52,25 @@ export const animeUpdateLike = async (
 ): Promise<number | null> => {
   const endpoint = basicURL + "animeUpdateLike";
   return Axios.put(endpoint, { id: animeId, like: likes })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const animeUpdateRate = async (
+  animeId: string,
+  rate: RateBody
+): Promise<number | null> => {
+  const endpoint = basicURL + "animeUpdateRate";
+  return Axios.put(endpoint, {
+    updateBody: {
+      animeId: animeId,
+      newRate: rate,
+    },
+  })
     .then((response) => {
       return response.status;
     })

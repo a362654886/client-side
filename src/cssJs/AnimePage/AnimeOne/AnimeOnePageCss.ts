@@ -22,13 +22,12 @@ export const AnimOneHeaderLeft = styled.div`
     height: 77px;
     background-color: #302d46;
     width: 280px;
-    top: 278px;
   }
   p {
     color: white;
     position: absolute;
-    left: 35px;
-    top: 330px;
+    left: 45px;
+    top: 50px;
   }
 `;
 
@@ -79,6 +78,7 @@ export const AnimOneWhereWatchLabel = styled.div`
 export const AnimOneWhereWatchImg = styled.img`
   height: 40px;
   width: 40px;
+  cursor: pointer;
   margin-right: 16px;
 `;
 
@@ -121,8 +121,13 @@ export const OnePageStarDiv = styled.div`
   margin: 0 auto;
   width: 180px;
   position: absolute;
-  padding-left: 34px;
-  padding-top: 5px;
+`;
+
+export const OnePageStarChildDiv = styled.div`
+  padding-left: 40px;
+  img {
+    margin-top: 10px;
+  }
 `;
 
 // video
@@ -136,6 +141,12 @@ export const VideoDiv = styled.div`
 `;
 
 export const VideoIframe = styled.iframe`
+  width: 560px;
+  height: 316px;
+  margin: 24px auto;
+`;
+
+export const VideoIframeDiv = styled.div`
   width: 560px;
   height: 316px;
   margin: 24px auto;

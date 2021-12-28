@@ -1,4 +1,3 @@
-import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -32,12 +31,16 @@ const ProfileShowcaseFollow = (): JSX.Element => {
   useEffect(() => {
     (async function anyNameFunction() {
       await searchType();
+      //need to be checked
+      setCount(100);
     })();
   }, []);
 
   useEffect(() => {
     (async function anyNameFunction() {
       await searchPage();
+      //need to be checked
+      setCount(100);
     })();
   }, [pageNum]);
 

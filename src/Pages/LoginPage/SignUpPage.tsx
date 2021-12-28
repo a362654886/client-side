@@ -29,11 +29,7 @@ import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { useDispatch } from "react-redux";
-import {
-  NotificationColor,
-  notificationFn,
-  NotificationTitle,
-} from "../../functions/publichFunctions";
+import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
 
 const SignUpPage = (): JSX.Element => {
   const history = useHistory();
@@ -109,7 +105,7 @@ const SignUpPage = (): JSX.Element => {
       password.trim() == "" ||
       confirmPassword.trim() == ""
     ) {
-      notificationFn(
+      openNotification(
         "confirm password isn't equal password, please check",
         NotificationColor.Error,
         NotificationTitle.Error
@@ -118,7 +114,7 @@ const SignUpPage = (): JSX.Element => {
       return;
     }
     if (email.trim() == "") {
-      notificationFn(
+      openNotification(
         "please input email",
         NotificationColor.Error,
         NotificationTitle.Error
@@ -127,7 +123,7 @@ const SignUpPage = (): JSX.Element => {
       return;
     }
     if (firstName.trim() == "") {
-      notificationFn(
+      openNotification(
         "please input first name",
         NotificationColor.Error,
         NotificationTitle.Error
@@ -136,7 +132,7 @@ const SignUpPage = (): JSX.Element => {
       return;
     }
     if (lastName.trim() == "") {
-      notificationFn(
+      openNotification(
         "please input first name",
         NotificationColor.Error,
         NotificationTitle.Error

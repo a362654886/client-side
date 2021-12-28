@@ -3,6 +3,7 @@ export type ForumType = {
   forumId: string;
   text: string;
   uploadTime: Date;
+  userId: string;
   userAvatar: string;
   userName: string;
   anime: string;
@@ -18,6 +19,7 @@ export type ForumItem = {
   text: string;
   forumId: string;
   uploadTime: Date;
+  userId: string;
   userAvatar: string;
   userName: string;
   anime: string;
@@ -33,6 +35,7 @@ export type ForumSecondItem = {
   text: string;
   forumId: string;
   uploadTime: Date;
+  userId: string;
   userAvatar: string;
   userName: string;
   anime: string;

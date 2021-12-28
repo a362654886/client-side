@@ -15,7 +15,12 @@ import { IStoreState } from "../../../types/IStoreState";
 import { Avatar, User } from "../../../types/User";
 import { videoAdd } from "../../../api/videoAPI";
 import { Video, VideoType } from "../../../types/VideoType";
-import { openNotification } from "../../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+  popUpAPIResult,
+} from "../../../helperFns/popUpAlert";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 
@@ -37,7 +42,7 @@ const AnimeOneVideoAdd = (): JSX.Element => {
 
   useEffect(() => {
     //
-  }, [videoType]);
+  }, [videoType, link, embed]);
 
   const onChange = (e: React.ChangeEvent<Element>): void => {
     const type = (e.target as HTMLInputElement).placeholder;
@@ -63,7 +68,7 @@ const AnimeOneVideoAdd = (): JSX.Element => {
     });
     if (loginUser) {
       const video: Video = {
-        _id: `${loginUser?._id}${videoType ? link : embed}`,
+        _id: `${loginUser?._id}${new Date().valueOf()}`,
         userId: loginUser?._id as string,
         anime: chooseAnime?._id as string,
         link: videoType ? link : embed,
@@ -75,9 +80,19 @@ const AnimeOneVideoAdd = (): JSX.Element => {
           .substring(0, 1)
           .toUpperCase()}`,
       };
-      await videoAdd(video);
+      popUpAPIResult<Promise<number | null>>(
+        videoAdd(video),
+        "add new video fail"
+      );
+      setLink("");
+      setEmbed("");
+      setTitle("");
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -118,7 +133,7 @@ const AnimeOneVideoAdd = (): JSX.Element => {
           width="120px"
           height="32px"
           textColor="black"
-          backGroundColor={!videoType ? "white" : "#F6F6F6"}
+          backGroundColor={!videoType ? "#AAFFC9" : "white"}
           borderColor="#F6F6F6"
           buttonClick={() => setVideoType(false)}
         />
@@ -128,7 +143,7 @@ const AnimeOneVideoAdd = (): JSX.Element => {
           width="120px"
           height="32px"
           textColor="black"
-          backGroundColor={videoType ? "white" : "#F6F6F6"}
+          backGroundColor={videoType ? "#AAFFC9" : "white"}
           borderColor="#F6F6F6"
           buttonClick={() => setVideoType(true)}
         />

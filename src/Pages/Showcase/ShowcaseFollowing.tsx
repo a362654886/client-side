@@ -6,10 +6,6 @@ import {
   ShowMangaMiddleButton,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import { ShowCaseType } from "../../types/showCaseType";
-import { User } from "../../types/User";
-import { IStoreState } from "../../types/IStoreState";
-import { openNotification } from "../../helperFns/popUpAlert";
-import { useSelector } from "react-redux";
 import AnimeButton from "../../components/Button";
 
 interface IProps {
@@ -18,9 +14,9 @@ interface IProps {
 }
 
 const ShowcaseFollowing = ({ showcases, toMangaOne }: IProps): JSX.Element => {
-  const loginUser: User | null = useSelector(
+  /*const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
-  );
+  );*/
 
   const [allShowCases, setAllShowCases] = useState<ShowCaseType[]>(showcases);
 
@@ -28,17 +24,20 @@ const ShowcaseFollowing = ({ showcases, toMangaOne }: IProps): JSX.Element => {
     setAllShowCases(showcases);
   }, [showcases]);
 
-  const isLogin = (likeFn: () => Promise<void>) => {
+  /*const isLogin = (likeFn: () => Promise<void>) => {
     if (loginUser) {
       likeFn();
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
-  };
+  };*/
 
   const getExistShowcases = () =>
     allShowCases.map((showcase, index) => {
-      const date = new Date(parseInt(showcase._id));
       return (
         <ShowMangaIframe key={index}>
           {showcase.imageArr ? (

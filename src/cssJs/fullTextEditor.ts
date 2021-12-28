@@ -1,4 +1,3 @@
-import ReactQuill from "react-quill";
 import styled from "styled-components";
 
 export const ReactQuillCss = styled.div`

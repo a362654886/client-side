@@ -13,11 +13,11 @@ import {
   ShowName,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import { ShowCaseType } from "../../types/showCaseType";
-import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.png";
-import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.png";
+import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.svg";
+import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import { User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";
-import { openNotification } from "../../helperFns/popUpAlert";
+import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
@@ -85,7 +85,11 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
     if (loginUser) {
       likeFn();
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
   };
 
@@ -131,10 +135,12 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
           allShowCases[index]._id,
           allShowCases[index].aweSome
         );
+        console.log(animeLikeResult)
         const userLikeResult = await userUpdateShowcases(
           loginUser?._id as string,
           awesomeArr
         );
+        console.log(userLikeResult)
         await userUpdateAwesome(loginUser?._id as string, false);
         setLoading(false);
       }
@@ -167,7 +173,6 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
 
   const getExistShowcases = () =>
     allShowCases.map((showcase, index) => {
-      const date = new Date(parseInt(showcase._id));
       return (
         <ShowMangaIframe key={index}>
           {showcase.imageArr ? (

@@ -10,6 +10,7 @@ import {
   AnimOneWhereWatchImg,
   AnimOneWhereWatchLabel,
   LikeButton,
+  OnePageStarChildDiv,
   OnePageStarDiv,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import { Anime, RateBody } from "../../../types/Amine";
@@ -21,24 +22,27 @@ import hidive from "../../../files/Hidive.png";
 import VIZ from "../../../files/VIZ.png";
 import AnimePlant from "../../../files/AnimePlant.png";
 import AnimeButton from "../../../components/Button";
-import starBorder from "../../../files/Star-border.png";
-import starFill from "../../../files/Star-filled.png";
-import facebook from "../../../files/facebook.png";
-import insImage from "../../../files/insImage.png";
-import twitter from "../../../files/twitterP.png";
-import copy from "../../../files/copy.png";
+import starBorder from "../../../files/Star-border.svg";
+import starFill from "../../../files/Star-filled.svg";
+import facebook from "../../../files/facebook.svg";
+import insImage from "../../../files/insImage.svg";
+import twitter from "../../../files/twitterP.svg";
+import copy from "../../../files/copy.svg";
 import AnimeOneForum from "./AnimeOneForums";
 import { AnimeOneTitle } from "../../../cssJs/AnimePage/AnimeOneCss";
 import AnimeOneProducts from "./AnimeOneProducts";
 import AnimeOneVideo from "./AnimeOneVideo";
 import { User } from "../../../types/User";
 import { useEffect, useState } from "react";
-import { animeUpdateLike } from "../../../api/animeAPI";
-import { userUpdateLike } from "../../../api/userApi";
+import { animeUpdateLike, animeUpdateRate } from "../../../api/animeAPI";
+import { userUpdateLike, userUpdateRate } from "../../../api/userApi";
 import { LOGIN_USER_ADD } from "../../../redux/loginUser";
 import { ANIME_ADD } from "../../../redux/anime";
-import { useHistory } from "react-router-dom";
-import { openNotification } from "../../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../../helperFns/popUpAlert";
 
 interface IProps {
   toPage: (page: number) => void;
@@ -46,8 +50,6 @@ interface IProps {
 
 const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const dispatch = useDispatch();
-
-  const history = useHistory();
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -63,10 +65,18 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
     loginUser?.likeAnime ? loginUser?.likeAnime : []
   );
 
+  const [enterRate, setEnterRate] = useState<boolean>(false);
+  const [chooseRate, setChooseRate] = useState<number>(0);
+
   const toOther = (url: string) => window.open(url);
 
   useEffect(() => {
+    console.log(enterRate);
+  }, [enterRate]);
+
+  useEffect(() => {
     //
+    console.log(loginUser);
   }, [loginUser, chooseAnime]);
 
   const likeAnimeFn = async () => {
@@ -84,10 +94,12 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         chooseAnime?._id as string,
         chooseAnime?.likes ? chooseAnime?.likes : 0
       );
+      console.log(animeLikeResult);
       const userLikeResult = await userUpdateLike(
         loginUser?._id as string,
         likesArr
       );
+      console.log(userLikeResult);
       setLoading(false);
     } else {
       console.log("please wait some seconds");
@@ -130,10 +142,12 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         chooseAnime?._id as string,
         chooseAnime?.likes as number
       );
+      console.log(animeLikeResult);
       const userLikeResult = await userUpdateLike(
         loginUser?._id as string,
         likesArr
       );
+      console.log(userLikeResult);
       setLoading(false);
     } else {
       console.log("please wait some seconds");
@@ -198,14 +212,56 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
     if (loginUser) {
       likeFn();
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
+    }
+  };
+
+  const rateAnime = async (n: number) => {
+    //update user rate
+    if (loginUser) {
+      const userRate = loginUser ? loginUser.rate : [];
+      userRate.push({
+        animeId: chooseAnime ? chooseAnime._id : "",
+        rate: n,
+      });
+      const newLoginUser = loginUser;
+      newLoginUser.rate = userRate;
+      dispatch({
+        payload: newLoginUser,
+        type: LOGIN_USER_ADD,
+      });
+      await userUpdateRate(loginUser._id, newLoginUser.rate);
+    }
+    //update anime rate
+    if (chooseAnime) {
+      const animeRate = chooseAnime
+        ? chooseAnime.rate
+        : {
+            ratePeople: 0,
+            totalRate: 0,
+          };
+      const newBody = {
+        ratePeople: animeRate.ratePeople + 1,
+        totalRate: animeRate.totalRate + n,
+      };
+      const newAnime = chooseAnime;
+      newAnime.rate = newBody;
+      dispatch({
+        payload: newAnime,
+        type: ANIME_ADD,
+      });
+      await animeUpdateRate(chooseAnime._id, newAnime.rate);
     }
   };
 
   const getStar = (rate: RateBody | null) => {
     if (rate) {
       const rateNum = rate.totalRate / rate.ratePeople;
-      return [1, 2, 3, 4, 5].map((n, index) => {
+      return [1, 2, 3, 4, 5].map((n) => {
         if (rateNum > n) {
           return (
             <img
@@ -225,6 +281,21 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
     } else {
       return <></>;
     }
+  };
+
+  const getChooseStar = () => {
+    return [1, 2, 3, 4, 5].map((n) => {
+      return (
+        <img
+          key={n}
+          onMouseEnter={() => setChooseRate(n)}
+          onMouseLeave={() => setChooseRate(0)}
+          onClick={() => rateAnime(n)}
+          style={{ width: "32px", height: "32px", marginRight: "8px" }}
+          src={chooseRate >= n ? starFill : starBorder}
+        />
+      );
+    });
   };
 
   const getLikesButton = () => {
@@ -258,15 +329,42 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
     }
   };
 
+  const ifRate = () => {
+    const userRateAnime = loginUser?.rate.map((item) => item.animeId);
+    if (chooseAnime) {
+      const index = userRateAnime?.indexOf(chooseAnime._id);
+      if (index == -1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
   return (
     <AnimOnePage>
       <AnimOneHeader>
         <AnimOneHeaderLeft>
           <img src={chooseAnime?.headImage} />
-          <OnePageStarDiv>
-            {getStar(chooseAnime ? chooseAnime.rate : null)}
+          <OnePageStarDiv
+            onMouseEnter={() => setEnterRate(true)}
+            onMouseLeave={() => setEnterRate(false)}
+          >
+            {!enterRate ? (
+              <OnePageStarChildDiv>
+                {getStar(chooseAnime ? chooseAnime.rate : null)}
+              </OnePageStarChildDiv>
+            ) : ifRate() ? (
+              <OnePageStarChildDiv>{getChooseStar()}</OnePageStarChildDiv>
+            ) : (
+              <OnePageStarChildDiv>
+                {getStar(chooseAnime ? chooseAnime.rate : null)}
+              </OnePageStarChildDiv>
+            )}
+            <p>Give it a rate if you watched it</p>
           </OnePageStarDiv>
-          <p>Give it a rate if you watched it</p>
         </AnimOneHeaderLeft>
         <AnimOneHeaderRight>
           <AnimOneHeaderLabel>

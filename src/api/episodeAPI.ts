@@ -1,7 +1,6 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
 import { EpisodeType } from "../types/EpisodeType";
-import { Video } from "../types/VideoType";
 
 const basicURL = backEndLink;
 
@@ -44,6 +43,21 @@ export const episodeGetById = async (
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const episodeUpdate = async (
+  episode: EpisodeType
+): Promise<number | null> => {
+  const endpoint = basicURL + "episodeUpdate";
+  return Axios.put(endpoint, {
+    episodeBody: episode,
+  })
+    .then((response) => {
+      return response.status;
     })
     .catch(() => {
       return null;

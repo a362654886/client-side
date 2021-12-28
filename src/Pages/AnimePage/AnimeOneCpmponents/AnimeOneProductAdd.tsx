@@ -14,7 +14,11 @@ import {
   AnimOneVideo,
   Subtitle,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
-import { openNotification } from "../../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../../helperFns/popUpAlert";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
 import { ImageBody } from "../../../types/BasicType";
@@ -66,7 +70,11 @@ const AnimeOneProductAdd = (): JSX.Element => {
       };
       await productAdd(product);
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,

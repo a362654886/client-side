@@ -25,6 +25,7 @@ export type ShowCaseReply = {
   showCaseId: string;
   text: string;
   uploadTime: Date;
+  userId: string;
   userAvatar: string;
   userName: string;
   edit?: boolean;
@@ -39,6 +40,7 @@ export type ShowSecondCaseReply = {
   text: string;
   uploadTime: Date;
   userAvatar: string;
+  userId: string;
   userName: string;
   edit?: boolean;
 };

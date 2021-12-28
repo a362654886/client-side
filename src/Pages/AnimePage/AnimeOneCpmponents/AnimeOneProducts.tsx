@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { productAllGet } from "../../../api/productAPI";
+import { productAllGet, productDelete } from "../../../api/productAPI";
 import AnimeButton, { MiddleDiv } from "../../../components/Button";
 import {
   AvatarImg,
@@ -22,6 +21,7 @@ import { Anime } from "../../../types/Amine";
 import { Product } from "../../../types/ProductType";
 import loadingImg from "../../../files/loading.gif";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
+import { popUpAPIResult } from "../../../helperFns/popUpAlert";
 
 interface IProps {
   anime: Anime | null;
@@ -45,6 +45,7 @@ const AnimeOneProducts = ({
   const [pageNum, setPageNum] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
+  const [update, setUpdate] = useState(0);
 
   const pageSize = pageSizeSetting;
 
@@ -56,7 +57,7 @@ const AnimeOneProducts = ({
 
   useEffect(() => {
     getProductArr();
-  }, [products]);
+  }, [products, update]);
 
   const getProducts = async () => {
     setLoading(true);
@@ -90,6 +91,19 @@ const AnimeOneProducts = ({
     setProductArr([arr1, arr2, arr3]);
   };
 
+  const deleteProduct = (productId: string) => {
+    popUpAPIResult<Promise<number | null>>(
+      productDelete(productId),
+      "delete product fail"
+    );
+    const newProducts = products;
+    const index = newProducts.map((product) => product._id).indexOf(productId);
+    newProducts.splice(index, 1);
+    setProducts(newProducts);
+    setCount(count - 1);
+    setUpdate(update + 1);
+  };
+
   const getProductsDiv = (productArr: Product[] | null) => {
     if (productArr) {
       return productArr.map((product: Product, index: number) => {
@@ -111,7 +125,7 @@ const AnimeOneProducts = ({
                 textColor="black"
                 backGroundColor="white"
                 borderColor="#302D46"
-                buttonClick={() => console.log("s")}
+                buttonClick={() => deleteProduct(product._id)}
               />
             </div>
           </ProductBox>

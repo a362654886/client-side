@@ -7,7 +7,6 @@ export const ShowCaseDiv = styled.div`
 `;
 
 export const ShowCaseTitleDiv = styled.div`
-  display: flex;
   margin-top: 24px;
   button {
     margin-top: 15px;
@@ -16,10 +15,12 @@ export const ShowCaseTitleDiv = styled.div`
   }
 `;
 
-export const ShowCaseTitle = styled.p`
+export const ShowCaseTitle = styled.h1`
   font-size: 36px;
   color: #302d46;
   font-weight: bold;
+  line-height: 52px;
+  margin-bottom: 0px;
 `;
 
 export const ShowCaseCreateImage = styled.div`

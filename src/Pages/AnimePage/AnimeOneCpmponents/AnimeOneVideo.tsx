@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { videosAllGet } from "../../../api/videoAPI";
+import { videoDelete, videosAllGet } from "../../../api/videoAPI";
 import AnimeButton, { MiddleDiv } from "../../../components/Button";
 import {
   FromText,
@@ -10,6 +10,7 @@ import {
   VideoBottomImg,
   VideoDiv,
   VideoIframe,
+  VideoIframeDiv,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import {
   AnimOneVideo,
@@ -19,8 +20,8 @@ import { AnimeAddButtonDiv } from "../../../cssJs/AnimePage/AnimeOneCss";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { Anime } from "../../../types/Amine";
 import loadingImg from "../../../files/loading.gif";
-import { Video } from "../../../types/VideoType";
-import { useHistory } from "react-router";
+import { Video, VideoType } from "../../../types/VideoType";
+import { popUpAPIResult } from "../../../helperFns/popUpAlert";
 
 interface IProps {
   anime: Anime | null;
@@ -43,10 +44,13 @@ const AnimeOneVideo = ({
   const [pageNum, setPageNum] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
+  const [update, setUpdate] = useState(0);
 
   const pageSize = pageSizeSetting;
 
-  const history = useHistory();
+  useEffect(() => {
+    console.log(videos);
+  }, [videos, update]);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -68,19 +72,41 @@ const AnimeOneVideo = ({
     setLoading(false);
   };
 
+  const deleteVideo = (videoId: string) => {
+    popUpAPIResult<Promise<number | null>>(
+      videoDelete(videoId),
+      "delete video fail"
+    );
+    const newVideos = videos;
+    const index = newVideos.map((video) => video._id).indexOf(videoId);
+    newVideos.splice(index, 1);
+    setVideos(newVideos);
+    setUpdate(update + 1);
+  };
+
   const getExistVideos = () =>
     videos.map((video, index) => {
       const date = new Date(video.uploadTime);
       return (
         <VideoDiv key={index}>
-          <VideoIframe
-            key={index}
-            src={video.link.replace("watch?v=", "embed/")}
-            frameBorder="0"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            title={video.title}
-          />
+          {video.type == VideoType.Link ? (
+            <VideoIframe
+              key={index}
+              src={
+                video.link.indexOf("facebook") == -1
+                  ? video.link.replace("watch?v=", "embed/")
+                  : video.link
+              }
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title={video.title}
+            />
+          ) : (
+            <VideoIframeDiv
+              dangerouslySetInnerHTML={{ __html: video.link }}
+            ></VideoIframeDiv>
+          )}
           <VideoBottom>
             <TimeText>{`${date.getDay()}-${
               date.getMonth() + 1
@@ -96,9 +122,7 @@ const AnimeOneVideo = ({
               textColor="black"
               backGroundColor="white"
               borderColor="#302D46"
-              buttonClick={() => {
-                console.log("S");
-              }}
+              buttonClick={() => deleteVideo(video._id)}
             />
           </VideoBottom>
         </VideoDiv>

@@ -1,4 +1,3 @@
-import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -8,7 +7,7 @@ import {
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import { userAwesomeGet } from "../../api/userApi";
 import { User } from "../../types/User";
-import showcaseImg from "../../files/showCaseAwesomeClick.png";
+import showcaseImg from "../../files/showCaseAwesomeClick.svg";
 
 const ShowcaseSide = (): JSX.Element => {
   const [users, setUsers] = useState<User[]>([]);

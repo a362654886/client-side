@@ -1,7 +1,6 @@
 import { Checkbox, Input, RadioChangeEvent, Row, Col } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import ImgUploadDiv from "../../../components/conponentDivs/ImgUploadDiv";
 import { AdminAnimeCreateDiv } from "../../../cssJs/AdminPage/adminAdminCreateCss";
 import {
   AdminAiredInput,
@@ -28,7 +27,11 @@ import { useDispatch } from "react-redux";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import ImageUpload from "../../../components/ImageUpload";
-import { openNotification } from "../../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../../helperFns/popUpAlert";
 import AlertBox, { ColorType } from "../../../components/AlertBox";
 
 const CheckboxGroup = Checkbox.Group;
@@ -110,7 +113,11 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
       type: LOADING_CLOSE,
     });
     if (r == 200) {
-      openNotification("success", "create anime success");
+      openNotification(
+        "create anime success",
+        NotificationColor.Success,
+        NotificationTitle.Success
+      );
       editAnime(anime);
     }
   };

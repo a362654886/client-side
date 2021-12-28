@@ -1,13 +1,7 @@
-import { notification } from "antd";
-import { RcFile } from "antd/lib/upload";
 import * as React from "react";
 import { ChangeEvent } from "react";
 import styled from "styled-components";
-import {
-  NotificationColor,
-  notificationFn,
-  NotificationTitle,
-} from "../../functions/publichFunctions";
+import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
 import { ImageBody } from "../../types/BasicType";
 
 type ImageCheck = {
@@ -38,7 +32,7 @@ const fileCheck = (file: File | undefined | null) => {
   }
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
   if (!isJpgOrPng) {
-    notificationFn(
+    openNotification(
       "please upload jpeg or png format image.",
       NotificationColor.Error,
       NotificationTitle.Error
@@ -47,7 +41,7 @@ const fileCheck = (file: File | undefined | null) => {
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    notificationFn(
+    openNotification(
       "Image must smaller than 2MB!",
       NotificationColor.Error,
       NotificationTitle.Error

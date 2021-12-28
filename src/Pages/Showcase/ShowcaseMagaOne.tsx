@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import {
   showCaseAwesomeUpdate,
+  showCaseDescriptionUpdate,
   showCaseReplyAdd,
   showCaseReplyUpdate,
   showCaseSecondReplyAdd,
@@ -39,24 +40,28 @@ import {
   ShowCaseType,
   ShowSecondCaseReply,
 } from "../../types/showCaseType";
-import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.png";
-import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.png";
+import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.svg";
+import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import { Avatar, User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";
-import { openNotification } from "../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdateFollow, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import AnimeButton from "../../components/Button";
-import facebook from "../../files/facebook.png";
-import insImage from "../../files/insImage.png";
-import twitter from "../../files/twitterP.png";
-import copy from "../../files/copy.png";
-import add from "../../files/Add.png";
+import facebook from "../../files/facebook.svg";
+import insImage from "../../files/insImage.svg";
+import twitter from "../../files/twitterP.svg";
+import copy from "../../files/copy.svg";
+import add from "../../files/Add.svg";
 import { useHistory } from "react-router-dom";
 import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
 import { episodeGet } from "../../api/episodeAPI";
-import { Spin } from "antd";
+import { Button, Modal, Spin } from "antd";
 import {
   ForumImg,
   ForumName,
@@ -66,10 +71,11 @@ import {
 import TextArea from "antd/lib/input/TextArea";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
-import editIcon from "../../files/editIcon.png";
-import deleteIcon from "../../files/deleteIcon.png";
-import switchIcon from "../../files/arrows.png";
+import editIcon from "../../files/editIcon.svg";
+import deleteIcon from "../../files/deleteIcon.svg";
+import switchIcon from "../../files/arrows.svg";
 import ShowcaseSide from "./ShowcaseSide";
+import EpisodeEditModal from "./EpisodeEditModal";
 
 const ShowcaseMangaOne = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -99,6 +105,11 @@ const ShowcaseMangaOne = (): JSX.Element => {
   const [episodeNum, setEpisodeNum] = useState(0);
   const [newSecondReplyHtml, setNewSecondReplyHtml] = useState<string[]>([]);
   const [newReplyHtml, setNewReplyHtml] = useState<string>("");
+  const [editShowCaseManga, setEditShowCaseManga] = useState<boolean>(false);
+  const [editEpisode, setEditEpisodesManga] = useState<boolean>(false);
+  const [description, setDescription] = useState<string>(
+    showCase ? (showCase.description ? showCase.description : "") : ""
+  );
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -113,8 +124,6 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
   useEffect(() => {
     //setShowCase(manga);
-    console.log(episodeNum);
-    console.log(new Array(2));
   }, [episodeNum, loading]);
 
   const getEpisode = async () => {
@@ -124,6 +133,18 @@ const ShowcaseMangaOne = (): JSX.Element => {
     episodeResult?.count
       ? setEpisodeNum(episodeResult?.count)
       : setEpisodeNum(0);
+  };
+
+  const saveDescription = async () => {
+    await showCaseDescriptionUpdate({
+      _id: showCase ? (showCase._id ? showCase._id : "") : "",
+      description: showCase
+        ? showCase.description
+          ? showCase.description
+          : ""
+        : "",
+    });
+    setEditShowCaseManga(false);
   };
 
   // awesome
@@ -185,7 +206,11 @@ const ShowcaseMangaOne = (): JSX.Element => {
     if (loginUser) {
       likeFn();
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
   };
 
@@ -210,6 +235,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
         loginUser?._id as string,
         awesomeArr
       );
+      console.log(userLikeResult);
       setLoading(false);
     } else {
       console.log("please wait some seconds");
@@ -231,6 +257,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           showCase ? showCase._id : "",
           showCase ? showCase.aweSome : 0
         );
+        console.log(animeLikeResult);
         const userLikeResult = await userUpdateShowcases(
           loginUser?._id as string,
           awesomeArr
@@ -335,7 +362,18 @@ const ShowcaseMangaOne = (): JSX.Element => {
           <ShowName>{showCase?.userName}</ShowName>
         </ShowcaseMangaHeader>
         <p>Updated to Episode 33</p>
-        <p>{showCase?.description ? showCase.description : ""}</p>
+        {editShowCaseManga ? (
+          <>
+            <TextArea
+              style={{ height: "250px" }}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <Button onClick={() => saveDescription()}>save</Button>
+          </>
+        ) : (
+          <p>{description}</p>
+        )}
         <div style={{ display: "flex" }}>
           {showCase?.tags.map((tag, index) => {
             return (
@@ -481,6 +519,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
         showCaseId: showcase.showCaseId,
         text: newSecondReplyHtml[secondIndex],
         uploadTime: new Date(),
+        userId: loginUser._id,
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
@@ -491,7 +530,11 @@ const ShowcaseMangaOne = (): JSX.Element => {
         addSecondShowcaseToState(secondShowcase, secondIndex);
       }
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -647,6 +690,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
         text: newReplyHtml,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
+        userId: loginUser._id,
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
@@ -656,7 +700,11 @@ const ShowcaseMangaOne = (): JSX.Element => {
         addShowcaseToState(showcaseReply);
       }
     } else {
-      openNotification("error", "please login and then reply");
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -950,9 +998,23 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 src={`${editIcon}`}
               />
               <p>Edit</p>
-              <h6>Cover Info</h6>
+              <h6
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setEditShowCaseManga(!editShowCaseManga);
+                }}
+              >
+                Cover Info
+              </h6>
               <h6>|</h6>
-              <h6>Episodes</h6>
+              <h6
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setEditEpisodesManga(!editEpisode);
+                }}
+              >
+                Episodes
+              </h6>
             </div>
             <div>
               <img
@@ -991,6 +1053,16 @@ const ShowcaseMangaOne = (): JSX.Element => {
             <></>
           )}
         </ShowCaseDiv>
+        <Modal
+          title={"Edit episode "}
+          visible={editEpisode}
+          onOk={() => {
+            console.log("S");
+          }}
+          onCancel={() => setEditEpisodesManga(false)}
+        >
+          <EpisodeEditModal episodeNum={episodeNum+1} />
+        </Modal>
         <div className="col-xl-3 col-md-3 col-sm-3 col-3">
           <ShowcaseSide />
         </div>

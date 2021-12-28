@@ -17,7 +17,7 @@ import {
 import { ShowCaseEnum, ShowCaseType } from "../../types/showCaseType";
 import ShowcaseForum from "./ShowcaseForum";
 import loadingImg from "../../files/loading.gif";
-import searchImg from "../../files/search.png";
+import searchImg from "../../files/search.svg";
 import ShowcaseManga from "./ShowcaseMaga";
 import { useDispatch } from "react-redux";
 import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { LoadingType, LoginType } from "../types/EnumTypes";
+import { LoadingType } from "../types/EnumTypes";
 import { IStoreState } from "../types/IStoreState";
 import avatar from "../files/avatar.png";
 import titleTextWhite from "../files/titleTextWhite.png";
 import MainPageRouter from "../router/MainPageRouter";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { User } from "../types/User";
 import {
   AnimeParkImg,
@@ -30,10 +30,9 @@ import {
   FooterText3,
 } from "../cssJs/footerCss";
 import loadingImg from "../files/loading.gif";
-import { Button, Dropdown, Menu } from "antd";
+import { Dropdown, Menu } from "antd";
 
 const MainPage = (): JSX.Element => {
-  const param = useParams();
 
   const [size, setSize] = useState({
     width: document.documentElement.clientWidth,
@@ -90,9 +89,9 @@ const MainPage = (): JSX.Element => {
     //console.log(size.width);
   }, [size]);
 
-  const authState: LoginType = useSelector(
+  /*const authState: LoginType = useSelector(
     (state: IStoreState) => state.authState
-  );
+  );*/
 
   const toProfile = (url: string) => history.replace(url);
 
@@ -154,7 +153,7 @@ const MainPage = (): JSX.Element => {
             </p>
             <p
               onClick={() => {
-                toProfile("/mainPage/marketplace");
+                toProfile("/mainPage/marketplace/show");
               }}
             >
               Marketplace

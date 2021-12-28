@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="24px" viewBox="0 0 32 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon-Awesome</title>
+    <g id="Icon-Awesome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Background" stroke="#263E7D" stroke-width="2" fill="#FFFFFF" x="1" y="1" width="30" height="22" rx="4"></rect>
+        <path d="M16.5878532,11 C17.073392,11 17.5158476,10.9932424 17.7962239,11.2251968 C17.9785174,11.3760076 18.0053655,11.6504435 18.0053655,12 C18.0053655,12.8183594 17.7132404,14.0989841 17.2396067,15.0594957 C17.0786593,15.3858912 16.9010678,15.6760517 16.6925571,15.8701539 C16.1738618,15.6617084 15.9865583,15.3648248 15.8167884,15.0308216 C15.3315646,14.0761981 15.0204638,12.8107675 15.0204638,12 C15.0204638,11.663826 15.0671502,11.403333 15.2549864,11.2570084 C15.5758649,11.0070436 16.0685084,11 16.5878532,11 Z" id="Oval" stroke="#263E7D" stroke-width="2"></path>
+        <circle id="Oval" fill="#263E7D" cx="8" cy="9" r="2"></circle>
+        <circle id="Oval" fill="#263E7D" cx="24" cy="9" r="2"></circle>
+    </g>
+</svg>
