@@ -1,8 +1,13 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { videoDelete, videosAllGet } from "../../../api/videoAPI";
-import AnimeButton, { MiddleDiv } from "../../../components/Button";
+import AnimeButton, {
+  MiddleDiv,
+  MoreButtonDiv,
+} from "../../../components/Button";
 import {
+  AvatarSettingImg,
+  DeleteDiv,
   FromText,
   TimeText,
   UserNameText,
@@ -16,12 +21,19 @@ import {
   AnimOneVideo,
   Subtitle,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
-import { AnimeAddButtonDiv } from "../../../cssJs/AnimePage/AnimeOneCss";
+import {
+  AnimeAddButtonDiv,
+  AnimeAddButtonLeftDiv,
+  DiscoveryHead,
+} from "../../../cssJs/AnimePage/AnimeOneCss";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { Anime } from "../../../types/Amine";
 import loadingImg from "../../../files/loading.gif";
 import { Video, VideoType } from "../../../types/VideoType";
 import { popUpAPIResult } from "../../../helperFns/popUpAlert";
+import deleteIcon from "../../../files/deleteIcon.svg";
+import avatarSetting from "../../../files/avatarSetting.png";
+import getMoreImg from "../../../files/getMore.png";
 
 interface IProps {
   anime: Anime | null;
@@ -30,6 +42,7 @@ interface IProps {
   ifShowAdd: boolean;
   toAddVideo?: (page: number) => void;
   toVideo?: (num: number) => void;
+  discovery?: boolean;
 }
 
 const AnimeOneVideo = ({
@@ -39,6 +52,7 @@ const AnimeOneVideo = ({
   ifShowAdd,
   toAddVideo,
   toVideo,
+  discovery,
 }: IProps): JSX.Element => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
@@ -89,6 +103,7 @@ const AnimeOneVideo = ({
       const date = new Date(video.uploadTime);
       return (
         <VideoDiv key={index}>
+          {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
           {video.type == VideoType.Link ? (
             <VideoIframe
               key={index}
@@ -108,23 +123,33 @@ const AnimeOneVideo = ({
             ></VideoIframeDiv>
           )}
           <VideoBottom>
-            <TimeText>{`${date.getDay()}-${
+            <TimeText>{`${date.getDate()}-${
               date.getMonth() + 1
             }-${date.getFullYear()}`}</TimeText>
             <FromText>from</FromText>
             <VideoBottomImg src={`${video.userAvatar}`} />
             <UserNameText>{video.userName}</UserNameText>
-            <AnimeButton
-              para=""
-              text={"Delete"}
-              width="120px"
-              height="32px"
-              textColor="black"
-              backGroundColor="white"
-              borderColor="#302D46"
-              buttonClick={() => deleteVideo(video._id)}
-            />
+            <AvatarSettingImg src={`${avatarSetting}`} />
           </VideoBottom>
+          {discovery ? (
+            <></>
+          ) : (
+            <DeleteDiv onClick={() => deleteVideo(video._id)}>
+              <img src={`${deleteIcon}`} />
+              <AnimeButton
+                para=""
+                text={"Delete"}
+                width="47px"
+                height="32px"
+                textColor="black"
+                backGroundColor="#F6F6F6"
+                borderColor="#F6F6F6"
+                buttonClick={() => {
+                  console.log("");
+                }}
+              />
+            </DeleteDiv>
+          )}
         </VideoDiv>
       );
     });
@@ -145,41 +170,52 @@ const AnimeOneVideo = ({
 
   return (
     <AnimOneVideo>
-      <Subtitle style={{ display: ifShowHeader ? "" : "none" }}>
-        You are welcome to add a media source for this Anime work. Embed a code
-        acquired from the source site(Like Youtube), or simply input the title
-        and link address
-      </Subtitle>
-      <MiddleDiv style={{ display: ifShowHeader ? "" : "none" }}>
-        <AnimeButton
-          para=""
-          text={"Add"}
-          width="120px"
-          height="32px"
-          textColor="white"
-          backGroundColor="#FFC300"
-          borderColor="#FFC300"
-          buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
-        />
-      </MiddleDiv>
-      <AnimeAddButtonDiv
-        style={{
-          display: ifShowAdd ? "flex" : "none",
-        }}
-      >
-        <h6>Videos</h6>
-        <AnimeButton
-          para=""
-          text={"Add"}
-          width="120px"
-          height="32px"
-          textColor="white"
-          backGroundColor="#FFC300"
-          borderColor="#FFC300"
-          buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
-        />
-      </AnimeAddButtonDiv>
-      <div style={{ marginTop: "23px" }}>{getExistVideos()}</div>
+      {!ifShowAdd && !ifShowHeader ? (
+        <></>
+      ) : (
+        <>
+          <Subtitle style={{ display: ifShowHeader ? "" : "none" }}>
+            You are welcome to add a media source for this Anime work. Embed a
+            code acquired from the source site(Like Youtube), or simply input
+            the title and link address
+          </Subtitle>
+          {ifShowAdd && ifShowHeader ? (
+            <>
+              <MiddleDiv style={{ display: ifShowHeader ? "" : "none" }}>
+                <AnimeButton
+                  para=""
+                  text={"Add"}
+                  width="120px"
+                  height="32px"
+                  textColor="white"
+                  backGroundColor="#FFC300"
+                  borderColor="#FFC300"
+                  buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
+                />
+              </MiddleDiv>
+            </>
+          ) : (
+            <AnimeAddButtonLeftDiv
+              style={{
+                display: "flex",
+              }}
+            >
+              <h6>Videos</h6>
+              <AnimeButton
+                para=""
+                text={"Add"}
+                width="120px"
+                height="32px"
+                textColor="white"
+                backGroundColor="#FFC300"
+                borderColor="#FFC300"
+                buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
+              />
+            </AnimeAddButtonLeftDiv>
+          )}
+        </>
+      )}
+      <div style={{ marginTop: "16px" }}>{getExistVideos()}</div>
       {getLoading()}
       {ifShowAdd ? (
         count > 0 ? (
@@ -187,7 +223,7 @@ const AnimeOneVideo = ({
             <MiddleDiv>
               <AnimeButton
                 para=""
-                text={"View More"}
+                text={"View All"}
                 width="120px"
                 height="32px"
                 textColor="#F5A623"
@@ -203,18 +239,12 @@ const AnimeOneVideo = ({
       ) : (
         <>
           {videos.length < count ? (
-            <MiddleDiv>
-              <AnimeButton
-                para=""
-                text={"View More"}
-                width="120px"
-                height="32px"
-                textColor="#F5A623"
-                backGroundColor="#FBFCDB"
-                borderColor="#F5A623"
-                buttonClick={() => getMore()}
-              />
-            </MiddleDiv>
+            <MoreButtonDiv onClick={() => getMore()}>
+              <div>
+                <img src={`${getMoreImg}`} />
+                <p>Load More</p>
+              </div>
+            </MoreButtonDiv>
           ) : (
             <></>
           )}

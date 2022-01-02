@@ -1,27 +1,41 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { productAllGet, productDelete } from "../../../api/productAPI";
-import AnimeButton, { MiddleDiv } from "../../../components/Button";
+import AnimeButton, {
+  MiddleDiv,
+  MoreButtonDiv,
+} from "../../../components/Button";
 import {
+  AnimOneProduct,
   AvatarImg,
   AvatarName,
   LinkP,
+  ProductAvatarDiv,
   ProductBox,
   ProductBox1,
   ProductBox2,
   ProductBox3,
+  ProductHeader,
   ProductImgDiv,
+  SubtitleDiv,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneProductCss";
+import avatarSetting from "../../../files/avatarSetting.png";
 import {
-  AnimOneVideo,
-  Subtitle,
-} from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
-import { AnimeAddButtonDiv } from "../../../cssJs/AnimePage/AnimeOneCss";
+  AnimeAddButtonDiv,
+  AnimeAddButtonLeftDiv,
+} from "../../../cssJs/AnimePage/AnimeOneCss";
 import { Anime } from "../../../types/Amine";
 import { Product } from "../../../types/ProductType";
 import loadingImg from "../../../files/loading.gif";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { popUpAPIResult } from "../../../helperFns/popUpAlert";
+import {
+  AvatarSettingImg,
+  DeleteDiv,
+  TimeText,
+} from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
+import deleteIcon from "../../../files/deleteIcon.svg";
+import getMoreImg from "../../../files/getMore.png";
 
 interface IProps {
   anime: Anime | null;
@@ -30,6 +44,7 @@ interface IProps {
   ifShowAdd: boolean;
   toAddProduct?: (page: number) => void;
   toProduct?: (num: number) => void;
+  discovery?: boolean;
 }
 
 const AnimeOneProducts = ({
@@ -39,6 +54,7 @@ const AnimeOneProducts = ({
   ifShowAdd,
   toAddProduct,
   toProduct,
+  discovery,
 }: IProps): JSX.Element => {
   const [productArr, setProductArr] = useState<Product[][] | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
@@ -107,27 +123,43 @@ const AnimeOneProducts = ({
   const getProductsDiv = (productArr: Product[] | null) => {
     if (productArr) {
       return productArr.map((product: Product, index: number) => {
+        const date = new Date(product.uploadTime);
         return (
           <ProductBox key={index}>
             <ProductImgDiv src={product.productImg} />
-            <LinkP>Here to buy</LinkP>
+            <LinkP>{`Here to buy>>`}</LinkP>
             <p>From</p>
-            <AvatarImg>
-              <img src={product.userAvatar} />
-            </AvatarImg>
-            <AvatarName>{product.userName}</AvatarName>
-            <div style={{ textAlign: "center" }}>
-              <AnimeButton
-                para=""
-                text={"Delete"}
-                width="120px"
-                height="32px"
-                textColor="black"
-                backGroundColor="white"
-                borderColor="#302D46"
-                buttonClick={() => deleteProduct(product._id)}
-              />
-            </div>
+            <ProductAvatarDiv>
+              <AvatarImg>
+                <img src={product.userAvatar} />
+              </AvatarImg>
+              <AvatarName>{product.userName}</AvatarName>
+              <AvatarSettingImg src={`${avatarSetting}`} />
+            </ProductAvatarDiv>
+            <TimeText>{`${date.getDate()}-${
+              date.getMonth() + 1
+            }-${date.getFullYear()}`}</TimeText>
+            {discovery ? (
+              <div style={{ textAlign: "center" }}>
+                <DeleteDiv onClick={() => deleteProduct(product._id)}>
+                  <img src={`${deleteIcon}`} />
+                  <AnimeButton
+                    para=""
+                    text={"Delete"}
+                    width="47px"
+                    height="32px"
+                    textColor="black"
+                    backGroundColor="#F6F6F6"
+                    borderColor="#F6F6F6"
+                    buttonClick={() => {
+                      console.log("");
+                    }}
+                  />
+                </DeleteDiv>
+              </div>
+            ) : (
+              <ProductHeader>{product.anime}</ProductHeader>
+            )}
           </ProductBox>
         );
       });
@@ -167,81 +199,93 @@ const AnimeOneProducts = ({
     );
 
   return (
-    <AnimOneVideo>
-      <div
-        style={{
-          marginBottom: "16px",
-        }}
-      >
-        <Subtitle
-          style={{
-            display: ifShowHeader ? "inline" : "none",
-          }}
-        >
-          Post product shopping links here to tell those fans who want it
-        </Subtitle>
-      </div>
-      <AnimeAddButtonDiv
-        style={{
-          marginTop: "16px",
-          display: ifShowAdd == true || ifShowHeader == true ? "flex" : "none",
-        }}
-      >
-        <h6>Products</h6>
-        <AnimeButton
-          para=""
-          text={"Add"}
-          width="120px"
-          height="32px"
-          textColor="white"
-          backGroundColor="#FFC300"
-          borderColor="#FFC300"
-          buttonClick={() => (toAddProduct ? toAddProduct(5) : "")}
-        />
-      </AnimeAddButtonDiv>
-      {getExistProducts()}
-      {getLoading()}
-      {ifShowAdd ? (
-        count > 0 ? (
-          <>
-            <MiddleDiv>
+    <AnimOneProduct>
+      {!ifShowAdd && !ifShowHeader ? (
+        <></>
+      ) : (
+        <>
+          {ifShowAdd && ifShowHeader ? (
+            <>
+              <SubtitleDiv>
+                <p
+                  style={{
+                    display:
+                      ifShowAdd == true || ifShowHeader == true
+                        ? "block"
+                        : "none",
+                  }}
+                >
+                  Post product shopping links here to tell those fans who want
+                  it
+                </p>
+              </SubtitleDiv>
+              <MiddleDiv>
+                <AnimeButton
+                  para=""
+                  text={"Add"}
+                  width="120px"
+                  height="32px"
+                  textColor="white"
+                  backGroundColor="#FFC300"
+                  borderColor="#FFC300"
+                  buttonClick={() => (toAddProduct ? toAddProduct(5) : "")}
+                />
+              </MiddleDiv>
+            </>
+          ) : (
+            <AnimeAddButtonLeftDiv
+              style={{
+                display: "flex",
+              }}
+            >
+              <h6>Products</h6>
               <AnimeButton
                 para=""
-                text={"View More"}
+                text={"Add"}
                 width="120px"
                 height="32px"
-                textColor="#F5A623"
-                backGroundColor="#FBFCDB"
-                borderColor="#F5A623"
-                buttonClick={() => (toProduct ? toProduct(2) : {})}
+                textColor="white"
+                backGroundColor="#FFC300"
+                borderColor="#FFC300"
+                buttonClick={() => (toAddProduct ? toAddProduct(5) : "")}
               />
-            </MiddleDiv>
+            </AnimeAddButtonLeftDiv>
+          )}
+        </>
+      )}
+      {getExistProducts()}
+      {getLoading()}
+      {!ifShowAdd ? (
+        count > 0 ? (
+          <>
+            <MoreButtonDiv onClick={() => getMore()}>
+              <div>
+                <img src={`${getMoreImg}`} />
+                <p>Load More</p>
+              </div>
+            </MoreButtonDiv>
           </>
         ) : (
           <></>
         )
       ) : (
         <>
-          {products.length < count ? (
-            <MiddleDiv>
-              <AnimeButton
-                para=""
-                text={"View More"}
-                width="120px"
-                height="32px"
-                textColor="#F5A623"
-                backGroundColor="#FBFCDB"
-                borderColor="#F5A623"
-                buttonClick={() => getMore()}
-              />
-            </MiddleDiv>
-          ) : (
-            <></>
-          )}
+          <MiddleDiv>
+            <AnimeButton
+              para=""
+              text={"View All"}
+              width="120px"
+              height="32px"
+              textColor="#F5A623"
+              backGroundColor="#FBFCDB"
+              borderColor="#F5A623"
+              buttonClick={() => (toProduct ? toProduct(2) : {})}
+            />
+          </MiddleDiv>
         </>
       )}
       <br />
-    </AnimOneVideo>
+    </AnimOneProduct>
   );
 };
 

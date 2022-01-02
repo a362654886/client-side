@@ -121,7 +121,8 @@ export const forumSecondUpdate = async (forumBody: {
 export const forumSecondDelete = async (
   forumId: string
 ): Promise<number | null> => {
-  const endpoint = basicURL + `forumSecondItemDelete?forumSecondItemId=${forumId}`;
+  const endpoint =
+    basicURL + `forumSecondItemDelete?forumSecondItemId=${forumId}`;
   return Axios.delete(endpoint)
     .then((response) => {
       return response.status;
@@ -141,6 +142,46 @@ export const forumsAllGet = async (
 } | null> => {
   const endpoint =
     basicURL + `forumsGet?animeId=${anime}&page=${page}&pageSize=${pageSize}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const forumItemGetMore = async (
+  forumId: string,
+  page: number,
+  pageSize: number
+): Promise<{
+  result: ForumItem[];
+  count: number;
+} | null> => {
+  const endpoint =
+    basicURL +
+    `forumItemsGet?forumId=${forumId}&page=${page}&pageSize=${pageSize}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const forumSecondGetOneMore = async (
+  forumId: string,
+  page: number,
+  pageSize: number
+): Promise<{
+  result: ForumSecondItem[];
+  count: number;
+} | null> => {
+  const endpoint =
+    basicURL +
+    `forumSecondItemsGet?forumItemId=${forumId}&page=${page}&pageSize=${pageSize}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

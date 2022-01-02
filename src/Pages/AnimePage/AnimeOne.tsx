@@ -123,7 +123,7 @@ const AnimeOne = (): JSX.Element => {
             anime={chooseAnime}
             pageSizeSetting={1}
             ifShowHeader={true}
-            ifShowAdd={false}
+            ifShowAdd={true}
             toAddVideo={(page: number) => changeButton(page)}
             toVideo={(num: number) => setChooseButton(num)}
           />
@@ -134,7 +134,7 @@ const AnimeOne = (): JSX.Element => {
             anime={chooseAnime}
             pageSizeSetting={3}
             ifShowHeader={true}
-            ifShowAdd={false}
+            ifShowAdd={true}
             toAddProduct={(page: number) => changeButton(page)}
           />
         );
@@ -144,7 +144,7 @@ const AnimeOne = (): JSX.Element => {
             anime={chooseAnime}
             pageSizeSetting={3}
             ifShowHeader={true}
-            ifShowAdd={false}
+            ifShowAdd={true}
           />
         );
       case 4:
@@ -160,8 +160,8 @@ const AnimeOne = (): JSX.Element => {
     <div>
       <AnimOne>
         <AnimOneMain className="col-xl-9 col-lg-9 col-md-12 col-sm-12">
-          <h6>Anime</h6>
-          <h6>{chooseAnime?.title}</h6>
+          <h1>Anime</h1>
+          <h1 style={{ marginTop: "0px" }}>{chooseAnime?.title}</h1>
           <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
           <div>{getChildDiv()}</div>
         </AnimOneMain>

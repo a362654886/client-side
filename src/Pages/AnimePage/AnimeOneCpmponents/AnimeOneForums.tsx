@@ -7,21 +7,31 @@ import {
   forumDelete,
   forumItemAdd,
   forumItemDelete,
+  forumItemGetMore,
   forumItemUpdate,
   forumsAllGet,
   forumSecondDelete,
+  forumSecondGetOneMore,
   forumSecondItemAdd,
   forumSecondUpdate,
   forumUpdate,
 } from "../../../api/forumAPI";
-import { AnimeButton, MiddleDiv } from "../../../components/Button";
+import {
+  AnimeButton,
+  MiddleDiv,
+  MoreButtonDiv,
+} from "../../../components/Button";
 import FullTextEditor from "../../../components/FullTextEditor";
 import {
+  AnimAddDiv,
   AnimeEditAndDeleteDiv,
   AnimOneForum,
+  ForumAddNew,
+  ForumAvatarSettingImg,
   ForumIframe,
   ForumImg,
   ForumItemBox,
+  ForumMoreButtonDiv,
   ForumName,
   ForumSecondItemBox,
   ForumTime,
@@ -48,6 +58,11 @@ import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ReactQuillCss } from "../../../cssJs/fullTextEditor";
 import editIcon from "../../../files/editIcon.svg";
 import deleteIcon from "../../../files/deleteIcon.svg";
+import avatarSetting from "../../../files/avatarSetting.png";
+import arrows from "../../../files/arrows.svg";
+import forumMore from "../../../files/forumMore.png";
+import getMoreImg from "../../../files/getMore.png";
+import { Spin } from "antd";
 
 interface IProps {
   anime: Anime | null;
@@ -79,6 +94,8 @@ const AnimeOneForum = ({
   const [update, setUpdate] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
+  const [itemLoading, setItemLoading] = useState<boolean>(false);
+  const [secondItemLoading, setSecondItemLoading] = useState<boolean>(false);
 
   const pageSize = pageSizeSetting;
 
@@ -116,9 +133,77 @@ const AnimeOneForum = ({
     }
     setLoading(false);
   };
+
+  const getMoreItem = async (forumId: string, page: number | undefined) => {
+    if (page) {
+      setItemLoading(true);
+      const forumResult = await forumItemGetMore(forumId, page + 1, pageSize);
+
+      //set
+      const newForums = forums;
+      const index = newForums.findIndex((item) => item._id == forumId);
+      if (newForums[index].items && forumResult) {
+        newForums[index].items = (newForums[index].items as ForumItem[]).concat(
+          forumResult.result
+        );
+        newForums[index].page = page + 1;
+        newForums[index].fullItems =
+          forumResult.count <= (newForums[index].items as ForumItem[]).length
+            ? true
+            : false;
+        setForums(newForums);
+        setUpdate(update + 1);
+      }
+      setItemLoading(false);
+    }
+  };
+
+  const getMoreSecondItem = async (
+    forumId: string,
+    forumItemId: string,
+    page: number | undefined
+  ) => {
+    if (page && forumItemId) {
+      setSecondItemLoading(true);
+      const forumResult = await forumSecondGetOneMore(
+        forumItemId,
+        page + 1,
+        pageSize
+      );
+
+      //set
+      const newForums = forums;
+      const index = newForums.findIndex((item) => item._id == forumId);
+      const secondIndex = (
+        newForums[index].items as ForumSecondItem[]
+      ).findIndex((item) => item._id == forumItemId);
+      if (
+        newForums[index].items &&
+        (newForums[index].items as ForumItem[])[secondIndex].secondItems &&
+        forumResult
+      ) {
+        (newForums[index].items as ForumItem[])[secondIndex].secondItems = (
+          (newForums[index].items as ForumItem[])[secondIndex]
+            .secondItems as ForumSecondItem[]
+        ).concat(forumResult.result);
+        (newForums[index].items as ForumItem[])[secondIndex].page = page + 1;
+        (newForums[index].items as ForumItem[])[secondIndex].fullItems =
+          forumResult.count <=
+          (
+            (newForums[index].items as ForumItem[])[secondIndex]
+              .secondItems as ForumSecondItem[]
+          ).length
+            ? true
+            : false;
+        setForums(newForums);
+        setUpdate(update + 1);
+      }
+      setSecondItemLoading(false);
+    }
+  };
+
   //post functions
   const submitNewForum = async () => {
-    console.log("sdsds");
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
@@ -136,7 +221,6 @@ const AnimeOneForum = ({
           .toUpperCase()}`,
         anime: anime?._id as string,
       };
-      console.log(forum);
       const r = await forumAdd(forum);
       if (r && r < 300) {
         forums.unshift(forum);
@@ -333,7 +417,7 @@ const AnimeOneForum = ({
   );
 
   const getAddBox = () => (
-    <div style={{ marginBottom: "16px" }}>
+    <ForumAddNew>
       <TextInput style={{ display: showPost ? "inline" : "none" }}>
         <FullTextEditor
           html={html}
@@ -341,7 +425,6 @@ const AnimeOneForum = ({
             setHtml(e);
           }}
         />
-        <br />
         <AnimeButton
           para=""
           text={"Post"}
@@ -353,12 +436,12 @@ const AnimeOneForum = ({
           buttonClick={() => submitNewForum()}
         />
       </TextInput>
-    </div>
+    </ForumAddNew>
   );
 
   const getAddSecondItemBox = (index: number, secondIndex: number) => (
     <div style={{ marginTop: "16px", width: "" }}>
-      <TextInput style={{ marginLeft: "16px", marginRight: "16px" }}>
+      <TextInput style={{}}>
         <FullTextEditor
           html={
             newSecondItemHtml[index]
@@ -429,10 +512,21 @@ const AnimeOneForum = ({
   const replySecondItem = (
     name: string,
     index: number,
-    secondIndex: number
+    secondIndex: number,
+    thirdIndex: number
   ) => {
     newSecondItemHtml[index][secondIndex] = `@${name} `;
     setNewSecondItemHtml(newSecondItemHtml);
+
+    const newForums = forums;
+    (
+      (newForums[index].items as ForumItem[])[secondIndex]
+        .secondItems as ForumSecondItem[]
+    )[thirdIndex].reply = !(
+      (newForums[index].items as ForumItem[])[secondIndex]
+        .secondItems as ForumSecondItem[]
+    )[thirdIndex].reply;
+
     setUpdate(update + 1);
     //setNewSecondItemHtml(`<p>reply @${name}</p><p><br></p><p><br></p>`);
   };
@@ -661,9 +755,10 @@ const AnimeOneForum = ({
       const date = new Date(forum.uploadTime);
       return (
         <ForumIframe key={index}>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", height: "72px" }}>
             <ForumImg src={`${forum.userAvatar}`} />
             <ForumName>{forum.userName}</ForumName>
+            <ForumAvatarSettingImg src={`${avatarSetting}`} />
             <ForumTime>{`${date.getDate()}-${
               date.getMonth() + 1
             }-${date.getFullYear()}`}</ForumTime>
@@ -684,46 +779,75 @@ const AnimeOneForum = ({
                 borderColor="black"
                 buttonClick={() => updateForum(index)}
               />
+              <AnimeButton
+                para=""
+                text={`Cancel`}
+                width="120px"
+                height="32px"
+                textColor="black"
+                backGroundColor="white"
+                borderColor="black"
+                buttonClick={() => editForum(index)}
+              />
             </>
           ) : (
             <>
               <ReactQuillCss
-                style={{ marginTop: "16px", marginLeft: "6px", width: "100%" }}
+                style={{ width: "100%" }}
                 dangerouslySetInnerHTML={{ __html: forum.text }}
               ></ReactQuillCss>
             </>
           )}
-          <AnimeEditAndDeleteDiv>
-            <div onClick={() => editForum(index)}>
-              <img src={`${editIcon}`} />
-              <p>Edit</p>
-            </div>
-            <div
-              onClick={() => {
-                deleteForum(index);
-              }}
-            >
-              <img style={{ width: "20px" }} src={`${deleteIcon}`} />
-              <p>Delete</p>
-            </div>
-          </AnimeEditAndDeleteDiv>
-          <ReplyButton>
+          {forums[index].userId == loginUser?._id && forum.edit == false ? (
+            <AnimeEditAndDeleteDiv>
+              <div onClick={() => editForum(index)}>
+                <img src={`${editIcon}`} />
+                <p>Edit</p>
+              </div>
+              <div
+                onClick={() => {
+                  deleteForum(index);
+                }}
+              >
+                <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                <p>Delete</p>
+              </div>
+            </AnimeEditAndDeleteDiv>
+          ) : (
+            <></>
+          )}
+          <ReplyButton onClick={() => openReply(index)}>
             <AnimeButton
               para=""
               text={`Replies(${forum.items ? forum.items.length : 0})`}
-              width="71px"
-              height="22px"
+              width="81px"
+              height="32px"
               textColor="#4BA3C3"
               backGroundColor="white"
               borderColor="white"
-              buttonClick={() => openReply(index)}
+              buttonClick={() => console.log()}
             />
+            <img src={`${arrows}`} />
           </ReplyButton>
           <div
             style={{ display: forum.showReplay == true ? "inline" : "none" }}
           >
             {getAddItemBox(index)}
             {forum.items ? getForumItems(forum.items, index) : <></>}
+            {forum.fullItems != true ? (
+              itemLoading ? (
+                <Spin />
+              ) : (
+                <ForumMoreButtonDiv
+                  onClick={() => getMoreItem(forum._id, forum.page)}
+                >
+                  <img src={forumMore} />
+                  <p>More</p>
+                </ForumMoreButtonDiv>
+              )
+            ) : (
+              <></>
+            )}
           </div>
         </ForumIframe>
       );
@@ -738,74 +862,115 @@ const AnimeOneForum = ({
             <div style={{ display: "flex" }}>
               <ForumImg src={`${forum.userAvatar}`} />
               <ForumName>{forum.userName}</ForumName>
+              <ForumAvatarSettingImg src={`${avatarSetting}`} />
               <ForumTime>{`${date.getDate()}-${
                 date.getMonth() + 1
               }-${date.getFullYear()}`}</ForumTime>
             </div>
-            {forum.edit ? (
-              <>
-                <FullTextEditor
-                  html={forum.text}
-                  setFullText={(e) => editForumItemText(index, secondIndex, e)}
-                />
-                <AnimeButton
-                  para=""
-                  text={`Save`}
-                  width="120px"
-                  height="32px"
-                  textColor="black"
-                  backGroundColor="white"
-                  borderColor="black"
-                  buttonClick={() => updateForumItem(index, secondIndex)}
-                />
-              </>
-            ) : (
-              <>
-                <ReactQuillCss
-                  style={{
-                    marginTop: "16px",
-                    marginLeft: "6px",
-                    width: "100%",
-                  }}
-                  dangerouslySetInnerHTML={{ __html: forum.text }}
-                ></ReactQuillCss>
-              </>
-            )}
-            <AnimeEditAndDeleteDiv>
-              <div onClick={() => editForumItem(index, secondIndex)}>
-                <img src={`${editIcon}`} />
-                <p>Edit</p>
-              </div>
-              <div onClick={() => deleteForumItem(index, secondIndex)}>
-                <img style={{ width: "20px" }} src={`${deleteIcon}`} />
-                <p>Delete</p>
-              </div>
-            </AnimeEditAndDeleteDiv>
-            <ReplyButton>
-              <AnimeButton
-                para=""
-                text={`Replies(${
-                  forum.secondItems ? forum.secondItems.length : 0
-                })`}
-                width="71px"
-                height="22px"
-                textColor="#4BA3C3"
-                backGroundColor="white"
-                borderColor="white"
-                buttonClick={() => openSecondReply(index, secondIndex)}
-              />
-            </ReplyButton>
-            <div
-              style={{ display: forum.showReplay == true ? "inline" : "none" }}
-            >
-              {getAddSecondItemBox(index, secondIndex)}
-              {forum.showReplay ? (
-                <p>
-                  {getSecondForumItems(forum.secondItems, index, secondIndex)}
-                </p>
+            <div style={{ marginLeft: "40px" }}>
+              {forum.edit ? (
+                <>
+                  <FullTextEditor
+                    html={forum.text}
+                    setFullText={(e) =>
+                      editForumItemText(index, secondIndex, e)
+                    }
+                  />
+                  <AnimeButton
+                    para=""
+                    text={`Save`}
+                    width="120px"
+                    height="32px"
+                    textColor="black"
+                    backGroundColor="white"
+                    borderColor="black"
+                    buttonClick={() => updateForumItem(index, secondIndex)}
+                  />
+                  <AnimeButton
+                    para=""
+                    text={`Cancel`}
+                    width="120px"
+                    height="32px"
+                    textColor="black"
+                    backGroundColor="white"
+                    borderColor="black"
+                    buttonClick={() => editForumItem(index, secondIndex)}
+                  />
+                </>
+              ) : (
+                <>
+                  <ReactQuillCss
+                    style={{
+                      width: "100%",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: forum.text }}
+                  ></ReactQuillCss>
+                </>
+              )}
+              {(forums[index].items as ForumItem[])[secondIndex].userId ==
+                loginUser?._id && forum.edit == false ? (
+                <AnimeEditAndDeleteDiv>
+                  <div onClick={() => editForumItem(index, secondIndex)}>
+                    <img src={`${editIcon}`} />
+                    <p>Edit</p>
+                  </div>
+                  <div onClick={() => deleteForumItem(index, secondIndex)}>
+                    <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                    <p>Delete</p>
+                  </div>
+                </AnimeEditAndDeleteDiv>
               ) : (
                 <></>
               )}
+              <ReplyButton onClick={() => openSecondReply(index, secondIndex)}>
+                <AnimeButton
+                  para=""
+                  text={`Replies(${
+                    forum.secondItems ? forum.secondItems.length : 0
+                  })`}
+                  width="81px"
+                  height="32px"
+                  textColor="#4BA3C3"
+                  backGroundColor="white"
+                  borderColor="white"
+                  buttonClick={() => console.log()}
+                />
+                <img src={`${arrows}`} />
+              </ReplyButton>
+              <div
+                style={{
+                  display: forum.showReplay == true ? "inline" : "none",
+                }}
+              >
+                {getAddSecondItemBox(index, secondIndex)}
+                {forum.showReplay ? (
+                  <p>
+                    {getSecondForumItems(forum.secondItems, index, secondIndex)}
+                  </p>
+                ) : (
+                  <></>
+                )}
+                {forum.fullItems != true ? (
+                  secondItemLoading ? (
+                    <Spin />
+                  ) : (
+                    <ForumMoreButtonDiv
+                      onClick={() =>
+                        getMoreSecondItem(
+                          forum.forumId,
+                          forum.forumItemId,
+                          forum.page
+                        )
+                      }
+                    >
+                      <img src={forumMore} />
+                      <p>More</p>
+                    </ForumMoreButtonDiv>
+                  )
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
           </ForumItemBox>
         </>
@@ -827,73 +992,131 @@ const AnimeOneForum = ({
               <div style={{ display: "flex" }}>
                 <ForumImg src={`${forum.userAvatar}`} />
                 <ForumName>{forum.userName}</ForumName>
+                <ForumAvatarSettingImg src={`${avatarSetting}`} />
                 <ForumTime>{`${date.getDate()}-${
                   date.getMonth() + 1
                 }-${date.getFullYear()}`}</ForumTime>
               </div>
-              {forum.edit ? (
-                <>
-                  <FullTextEditor
-                    html={forum.text}
-                    setFullText={(e) =>
-                      editForumSecondItemText(index, secondIndex, thirdIndex, e)
-                    }
-                  />
-                  <AnimeButton
-                    para=""
-                    text={`Save`}
-                    width="120px"
-                    height="32px"
-                    textColor="black"
-                    backGroundColor="white"
-                    borderColor="black"
-                    buttonClick={() =>
-                      updateForumSecondItem(index, secondIndex, thirdIndex)
-                    }
-                  />
-                </>
-              ) : (
-                <>
-                  <ReactQuillCss
-                    style={{
-                      marginTop: "16px",
-                      marginLeft: "6px",
-                      width: "100%",
-                    }}
-                    dangerouslySetInnerHTML={{ __html: forum.text }}
-                  ></ReactQuillCss>
+              <div style={{ marginLeft: "40px" }}>
+                {forum.edit ? (
+                  <>
+                    <FullTextEditor
+                      html={forum.text}
+                      setFullText={(e) =>
+                        editForumSecondItemText(
+                          index,
+                          secondIndex,
+                          thirdIndex,
+                          e
+                        )
+                      }
+                    />
+                    <AnimeButton
+                      para=""
+                      text={`Save`}
+                      width="120px"
+                      height="32px"
+                      textColor="black"
+                      backGroundColor="white"
+                      borderColor="black"
+                      buttonClick={() =>
+                        updateForumSecondItem(index, secondIndex, thirdIndex)
+                      }
+                    />
+                    <AnimeButton
+                      para=""
+                      text={`Cancel`}
+                      width="120px"
+                      height="32px"
+                      textColor="black"
+                      backGroundColor="white"
+                      borderColor="black"
+                      buttonClick={() =>
+                        editSecondForumItem(index, secondIndex, thirdIndex)
+                      }
+                    />
+                  </>
+                ) : (
+                  <>
+                    <ReactQuillCss
+                      style={{
+                        width: "100%",
+                      }}
+                      dangerouslySetInnerHTML={{ __html: forum.text }}
+                    ></ReactQuillCss>
+                    <AnimeEditAndDeleteDiv>
+                      <div
+                        onClick={() =>
+                          editSecondForumItem(index, secondIndex, thirdIndex)
+                        }
+                      >
+                        <img src={`${editIcon}`} />
+                        <p>Edit</p>
+                      </div>
+                      <div
+                        onClick={() => {
+                          deleteSecondItem(index, secondIndex, thirdIndex);
+                        }}
+                      >
+                        <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                        <p>Delete</p>
+                      </div>
+                    </AnimeEditAndDeleteDiv>
+                  </>
+                )}
+                <ReplyButton>
                   <AnimeButton
                     para=""
                     text={`Reply`}
-                    width="71px"
-                    height="22px"
+                    width="50px"
+                    height="32px"
                     textColor="#4BA3C3"
                     backGroundColor="white"
                     borderColor="white"
                     buttonClick={() =>
-                      replySecondItem(forum.userName, index, secondIndex)
+                      replySecondItem(
+                        forum.userName,
+                        index,
+                        secondIndex,
+                        thirdIndex
+                      )
                     }
                   />
-                </>
-              )}
-              <AnimeEditAndDeleteDiv>
-                <div
-                  onClick={() =>
-                    editSecondForumItem(index, secondIndex, thirdIndex)
-                  }
-                >
-                  <img src={`${editIcon}`} />
-                  <p>Edit</p>
-                </div>
-                <div
-                  onClick={() => {
-                    deleteSecondItem(index, secondIndex, thirdIndex);
-                  }}
-                >
-                  <img style={{ width: "20px" }} src={`${deleteIcon}`} />
-                  <p>Delete</p>
-                </div>
-              </AnimeEditAndDeleteDiv>
+                </ReplyButton>
+                {forum.reply ? (
+                  <>
+                    <FullTextEditor
+                      html={
+                        newSecondItemHtml[index]
+                          ? newSecondItemHtml[index][secondIndex]
+                            ? newSecondItemHtml[index][secondIndex]
+                            : ""
+                          : ""
+                      }
+                      setFullText={(e) => {
+                        sendNewSecondItem(e, index, secondIndex);
+                      }}
+                    />
+                    <br />
+                    <div>
+                      <AnimeButton
+                        para=""
+                        text={"Post"}
+                        width="100%"
+                        height="32px"
+                        textColor="white"
+                        backGroundColor="#FFC300"
+                        borderColor="#FFC300"
+                        buttonClick={() =>
+                          submitNewSecondForumItem(index, secondIndex)
+                        }
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
             </ForumSecondItemBox>
           </>
         );
@@ -919,30 +1142,9 @@ const AnimeOneForum = ({
 
   return (
     <AnimOneForum>
-      <div
+      <AnimAddDiv
         style={{
-          marginBottom: "16px",
-          display: ifShowHeader ? "inline" : "none",
-        }}
-      >
-        <div>
-          <AnimeButton
-            para=""
-            text={showPost ? "Hide" : "Add"}
-            width="120px"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() => setShowPost(!showPost)}
-          />
-        </div>
-      </div>
-      <div
-        style={{
-          textAlign: "left",
-          marginBottom: "16px",
-          display: ifShowAdd ? "inline" : "none",
+          display: ifShowHeader || ifShowAdd ? "inline" : "none",
         }}
       >
         <AnimeButton
@@ -955,7 +1157,7 @@ const AnimeOneForum = ({
           borderColor="#FFC300"
           buttonClick={() => setShowPost(!showPost)}
         />
-      </div>
+      </AnimAddDiv>
       {getAddBox()}
       {getExistForums()}
       {getLoading()}
@@ -965,7 +1167,7 @@ const AnimeOneForum = ({
             <MiddleDiv>
               <AnimeButton
                 para=""
-                text={"View More"}
+                text={"View All"}
                 width="120px"
                 height="32px"
                 textColor="#F5A623"
@@ -981,18 +1183,12 @@ const AnimeOneForum = ({
       ) : (
         <>
           {forums.length < count ? (
-            <MiddleDiv>
-              <AnimeButton
-                para=""
-                text={"View More"}
-                width="120px"
-                height="32px"
-                textColor="#F5A623"
-                backGroundColor="#FBFCDB"
-                borderColor="#F5A623"
-                buttonClick={() => getMore()}
-              />
-            </MiddleDiv>
+            <MoreButtonDiv onClick={() => getMore()}>
+              <div>
+                <img src={`${getMoreImg}`} />
+                <p>Load More</p>
+              </div>
+            </MoreButtonDiv>
           ) : (
             <></>
           )}

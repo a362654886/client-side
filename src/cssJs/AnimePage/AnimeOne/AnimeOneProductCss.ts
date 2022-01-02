@@ -1,19 +1,49 @@
 import styled from "styled-components";
 
+export const AnimOneProduct = styled.div`
+  margin-top: 8px;
+  height: auto;
+  width: 100%;
+`;
+
+export const SubtitleDiv = styled.div`
+  width: 100%;
+  height: 48px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #4a4a4a;
+  font-weight: 400;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background-color: #c1eeff;
+  p {
+    padding: 8px 21px;
+    margin-bottom: 0px;
+    height: 32px;
+    line-height: 32px;
+    color: black;
+  }
+`;
+
 export const ProductImg = styled.div`
-  display: flex;
-  margin-top: 32px;
+  text-align: center;
+  width: 100%;
   h6 {
-    margin-top: 100px;
-    width: 105px;
+    text-align: left;
+    width: 100%;
     color: #302d46;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: 48px;
   }
   img {
-    margin-left: 40px;
     width: 240px;
     height: 240px;
+    margin: 0px auto;
   }
   input {
     margin-left: 40px;
@@ -22,25 +52,35 @@ export const ProductImg = styled.div`
 `;
 
 export const UploadButton = styled.div`
-  margin-left: 205px;
+  text-align: center;
   margin-top: 16px;
 `;
 
 export const ProductInput = styled.div`
-  display: flex;
   margin-top: 32px;
   margin-bottom: 28px;
   h6 {
-    width: 105px;
+    text-align: left;
+    width: 100%;
     color: #302d46;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    margin-bottom: 0px;
-    line-height: 32px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: 48px;
   }
   input {
-    margin-left: 40px;
-    width: 516px;
+    width: 90%;
+  }
+`;
+
+export const ProductCancelButton = styled.div`
+  width: 100%;
+  text-align: center;
+  button {
+    margin: 16px auto;
   }
 `;
 
@@ -60,12 +100,22 @@ export const ProductBox3 = styled.div`
 `;
 
 export const ProductBox = styled.div`
-  height: 458px !important;
+  height: 492px !important;
   margin-bottom: 24px;
   background-color: #f6f6f6;
   p {
     text-align: center;
+    margin-bottom: 0px;
   }
+`;
+
+export const ProductHeader = styled.p`
+  margin-bottom: 0px;
+  height: 64px;
+  line-height: 32px;
+  font-size: 14px;
+  color: #4a4a4a;
+  text-align: left;
 `;
 
 export const ProductImgDiv = styled.img`
@@ -75,20 +125,35 @@ export const ProductImgDiv = styled.img`
 
 export const LinkP = styled.p`
   color: #4ba3c3;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  width: 112px;
+  margin: 16px auto;
+  margin-bottom: 0px;
+  height: 32px;
   font-weight: bold;
+  font-size: 16px;
+  line-height: 32px;
   cursor: pointer;
+`;
+
+export const ProductAvatarDiv = styled.div`
+  height: 72x;
+  width: 171px;
+  margin: 0 auto;
+  display: flex;
 `;
 
 export const AvatarImg = styled.div`
   height: 40px;
   width: 40px;
-  margin: 0 auto;
-  margin-bottom: 8px;
+  margin-top: 16px;
 `;
 
 export const AvatarName = styled.p`
   color: #302d46;
   font-weight: bold;
+  margin-top: 20px;
+  line-height: 32px;
+  margin-left: 4px;
+  width: 87px;
+  text-align: left !important;
 `;

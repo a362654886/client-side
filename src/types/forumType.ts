@@ -11,6 +11,8 @@ export type ForumType = {
   items?: ForumItem[];
   showReplay?: boolean;
   secondItems?: ForumSecondItem[];
+  page?: number;
+  fullItems?: boolean;
 };
 
 export type ForumItem = {
@@ -26,6 +28,8 @@ export type ForumItem = {
   edit?: boolean;
   showReplay?: boolean;
   secondItems?: ForumSecondItem[];
+  page?: number;
+  fullItems?: boolean;
 };
 
 export type ForumSecondItem = {
@@ -40,4 +44,5 @@ export type ForumSecondItem = {
   userName: string;
   anime: string;
   edit?: boolean;
+  reply?: boolean;
 };

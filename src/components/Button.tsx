@@ -34,7 +34,7 @@ export const AnimeButton = ({
         borderRadius: "4px",
         border: border,
         fontWeight: "bold",
-        fontSize: " 14px",
+        fontSize: " 16px",
         textAlign: "center",
       }}
       onClick={() => buttonClick(para)}
@@ -49,4 +49,27 @@ export default AnimeButton;
 export const MiddleDiv = styled.div`
   width: 120px;
   margin: 0 auto;
+`;
+
+export const MoreButtonDiv = styled.div`
+  width: 100%;
+  height: 64px;
+  cursor: pointer;
+  div {
+    display: flex;
+    margin: 0 auto;
+    width: 120px;
+    img {
+      width: 32px;
+      height: 32px;
+      margin-top: 16px;
+    }
+    p {
+      height: 32px;
+      font-family: "Arial MT";
+      margin-left: 8px;
+      margin-top: 16px;
+      line-height: 32px;
+    }
+  }
 `;

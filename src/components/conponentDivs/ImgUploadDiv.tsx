@@ -10,7 +10,7 @@ type ImageCheck = {
 };
 
 export const Upload = styled.input`
-  width: 300px;
+  width: 180px;
   height: 40px;
   line-height: 32px;
   background-color: white;

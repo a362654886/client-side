@@ -21,6 +21,13 @@ P {
   src: url("./fontFamily/Baloo-Regular.ttf");
 }
 
+@font-face {
+  font-family: "Arial MT";
+  src: url("./fontFamily/ARI.ttf");
+}
+
+
+
 .ant-alert-with-description.ant-alert-no-icon {
   padding: 5px !important;
 }

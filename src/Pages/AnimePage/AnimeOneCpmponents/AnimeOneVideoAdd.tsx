@@ -7,8 +7,11 @@ import AnimeButton from "../../../components/Button";
 import {
   AnimOneVideo,
   Subtitle,
+  VideoAddButtonsDiv,
   VideoButtonsDiv,
+  VideoCancelButton,
   VideoInput,
+  VideoPostButton,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
 import { Anime } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
@@ -23,6 +26,8 @@ import {
 } from "../../../helperFns/popUpAlert";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
+import stateAvailable from "../../../files/stateAvailable.png";
+import stateSoldOut from "../../../files/stateSoldOut.png";
 
 const AnimeOneVideoAdd = (): JSX.Element => {
   const chooseAnime: Anime | null = useSelector(
@@ -125,41 +130,59 @@ const AnimeOneVideoAdd = (): JSX.Element => {
         acquired from the source site(Like Youtube), or simply input the title
         and link address
       </Subtitle>
-      {getBody()}
       <VideoButtonsDiv>
-        <AnimeButton
-          para=""
-          text={"<>Embed"}
-          width="120px"
-          height="32px"
-          textColor="black"
-          backGroundColor={!videoType ? "#AAFFC9" : "white"}
-          borderColor="#F6F6F6"
-          buttonClick={() => setVideoType(false)}
-        />
-        <AnimeButton
-          para=""
-          text={"+Link"}
-          width="120px"
-          height="32px"
-          textColor="black"
-          backGroundColor={videoType ? "#AAFFC9" : "white"}
-          borderColor="#F6F6F6"
-          buttonClick={() => setVideoType(true)}
-        />
+        <VideoAddButtonsDiv onClick={() => setVideoType(true)}>
+          <img src={`${stateAvailable}`} />
+          <AnimeButton
+            para=""
+            text={"+Link"}
+            width="47px"
+            height="32px"
+            textColor="black"
+            backGroundColor={"white"}
+            borderColor="white"
+            buttonClick={() => console.log()}
+          />
+        </VideoAddButtonsDiv>
+        <VideoAddButtonsDiv onClick={() => setVideoType(false)}>
+          <img src={`${stateSoldOut}`} />
+          <AnimeButton
+            para=""
+            text={"<>Embed"}
+            width="47px"
+            height="32px"
+            textColor="black"
+            backGroundColor={"white"}
+            borderColor="white"
+            buttonClick={() => console.log()}
+          />
+        </VideoAddButtonsDiv>
       </VideoButtonsDiv>
-      <>
+      {getBody()}
+      <VideoPostButton>
         <AnimeButton
           para=""
           text={"Post"}
-          width="830px"
+          width="100%"
           height="36px"
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="#FFC300"
           buttonClick={() => submit()}
         />
-      </>
+      </VideoPostButton>
+      <VideoCancelButton>
+        <AnimeButton
+          para=""
+          text={"Cancel"}
+          width="120px"
+          height="32px"
+          textColor="black"
+          backGroundColor="white"
+          borderColor="#302D46"
+          buttonClick={() => console.log("cancel")}
+        />
+      </VideoCancelButton>
     </AnimOneVideo>
   );
 };

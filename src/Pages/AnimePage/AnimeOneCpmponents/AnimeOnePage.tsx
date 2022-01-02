@@ -265,14 +265,14 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         if (rateNum > n) {
           return (
             <img
-              style={{ width: "32px", height: "32px", marginRight: "8px" }}
+              style={{ width: "24px", height: "24px", marginRight: "16px" }}
               src={starFill}
             />
           );
         } else {
           return (
             <img
-              style={{ width: "32px", height: "32px", marginRight: "8px" }}
+              style={{ width: "24px", height: "24px", marginRight: "16px" }}
               src={starBorder}
             />
           );

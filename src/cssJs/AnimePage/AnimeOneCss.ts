@@ -11,9 +11,14 @@ export const AnimOne = styled.div`
 export const AnimOneMain = styled.div`
   max-width: 896px;
   margin-right: 32px;
-  h6 {
+  h1 {
     font-size: 36px;
-    margin-bottom: 32px;
+    margin-top: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 0px;
+    font-weight: bold;
+    line-height: 52px;
   }
 `;
 
@@ -47,8 +52,10 @@ export const AnimOneSideTwo = styled.div`
 `;
 
 export const AnimeButtonsDiv = styled.div`
-  margin-bottom: 38px;
+  height: 64px;
   display: flex;
+  padding-top: 16px;
+  padding-bottom: 16px;
   button {
     margin-right: 32px;
   }
@@ -63,7 +70,7 @@ export const AnimeOneTitle = styled.h3`
 
 export const AnimeAddButtonDiv = styled.div`
   button {
-    margin-left: 16px;
+    margin: 0 auto;
   }
   h6 {
     font-size: 16px;
@@ -72,5 +79,30 @@ export const AnimeAddButtonDiv = styled.div`
     line-height: 36px;
     margin-bottom: 0px;
     height: 36px;
+    margin-right: 16px;
   }
+`;
+
+export const AnimeAddButtonLeftDiv = styled.div`
+  button {
+    text-align: left;
+  }
+  h6 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #302d46;
+    line-height: 36px;
+    margin-bottom: 0px;
+    height: 36px;
+    margin-right: 16px;
+  }
+`;
+
+export const DiscoveryHead = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+  color: #302d46;
+  line-height: 32px;
+  margin-bottom: 0px;
+  padding-top: 16px;
 `;

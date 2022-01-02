@@ -1,14 +1,12 @@
-import { Button, Input } from "antd";
+import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import ImageUpload, { ImageBody } from "../../components/ImageUpload";
+import { ImageBody } from "../../components/ImageUpload";
 import {
   MarketBody,
   MarketBodyDiv,
   MarketDescription,
   MarketImgDiv,
-  MarketImgLimitDiv,
-  MarketInputDiv,
   MarketItemImg,
   MarketItemName,
   MarketItemTime,
@@ -17,31 +15,17 @@ import {
   MarketSaveButton,
   MarketShowOneTitle,
   MarketText,
-  MarketUploadImage,
   PriceInput,
-  PublishButtonsDiv,
-  StateDiv,
   WishBids,
   WishBidsContext,
 } from "../../cssJs/MarketPage/MarketPlaceCss";
-import lodash from "lodash";
-import add from "../../files/Add.svg";
-import stateAvailable from "../../files/stateAvailable.png";
-import marketCreateImg from "../../files/marketCreateImg.png";
-import AnimeButton, { MiddleDiv } from "../../components/Button";
+import AnimeButton from "../../components/Button";
 import { MarketType } from "../../types/MarketType";
 import { User } from "../../types/User";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { IStoreState } from "../../types/IStoreState";
-import { LoadingType } from "../../types/EnumTypes";
-import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
-import { marketAdd, marketGet } from "../../api/marketAPI";
+import { marketGet } from "../../api/marketAPI";
 import { useHistory } from "react-router-dom";
-import {
-  ForumImg,
-  ForumName,
-  ForumTime,
-} from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 
 const MarketplaceShowOne = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -49,8 +33,6 @@ const MarketplaceShowOne = (): JSX.Element => {
   );
 
   const history = useHistory();
-
-  const dispatch = useDispatch();
 
   const [title, setTitle] = useState<string>("");
   const [price, setPrice] = useState<number>(0);

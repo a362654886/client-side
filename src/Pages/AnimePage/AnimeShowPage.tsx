@@ -10,7 +10,10 @@ import {
   AnimeShowBox,
   AnimMainBox,
   AnimSearchBox,
+  AnimSearchImg,
+  AnimTapButton,
   AnimTitle,
+  AnimTwoButtons,
   CenterDiv,
   LikeDiv,
   StarDiv,
@@ -20,6 +23,9 @@ import { Anime, RateBody } from "../../types/Amine";
 import starBorder from "../../files/Star-border.svg";
 import starFill from "../../files/Star-filled.svg";
 import loadingImg from "../../files/loading.gif";
+import searchImg from "../../files/search.svg";
+import newIcon from "../../files/newIcon.png";
+import hotIcon from "../../files/hotIcon.png";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
 
 const AnimeShowPage = (): JSX.Element => {
@@ -31,6 +37,7 @@ const AnimeShowPage = (): JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(0);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
+  const [ifNew, setIfNew] = useState<boolean>(true);
   const pageSize = 4;
 
   useEffect(() => {
@@ -75,11 +82,31 @@ const AnimeShowPage = (): JSX.Element => {
     return [1, 2, 3, 4, 5].map((n, index) => {
       if (rateNum > n) {
         return (
-          <img key={index} style={{ marginRight: "8px" }} src={starFill} />
+          <img
+            key={index}
+            style={{
+              width: "24px",
+              height: "24px",
+              marginRight: "6.4px",
+              marginLeft: "6.4px",
+              marginTop: "8px",
+            }}
+            src={starFill}
+          />
         );
       } else {
         return (
-          <img key={index} style={{ marginRight: "8px" }} src={starBorder} />
+          <img
+            key={index}
+            style={{
+              width: "24px",
+              height: "24px",
+              marginRight: "6.4px",
+              marginLeft: "6.4px",
+              marginTop: "8px",
+            }}
+            src={starBorder}
+          />
         );
       }
     });
@@ -91,6 +118,7 @@ const AnimeShowPage = (): JSX.Element => {
         return (
           <div
             className="col-xl-3 col-md-4 col-sm-6"
+            style={{ marginBottom: "24px" }}
             key={index}
             onClick={() => chooseAnime(anime)}
           >
@@ -129,24 +157,29 @@ const AnimeShowPage = (): JSX.Element => {
   return (
     <AnimMainBox>
       <AnimTitle>Anime</AnimTitle>
+      <AnimTwoButtons>
+        <AnimTapButton
+          style={{ backgroundColor: `${ifNew ? "#FFC300" : "white"}` }}
+          onClick={() => setIfNew(true)}
+        >
+          <img src={`${newIcon}`} />
+          <p>New</p>
+        </AnimTapButton>
+        <AnimTapButton
+          style={{ backgroundColor: `${ifNew ? "white" : "#FFC300"}` }}
+          onClick={() => setIfNew(false)}
+        >
+          <img src={`${hotIcon}`} />
+          <p>Hot</p>
+        </AnimTapButton>
+      </AnimTwoButtons>
       <AnimSearchBox className="row">
         <Input
           className="col-xl-10 col-md-10 col-sm-10 col-10"
-          placeholder={"searchValue"}
+          placeholder={"DECA-DENCE"}
           onChange={onChange}
         ></Input>
-        <div className="col-xl-2 col-md-2 col-sm-3 col-3">
-          <AnimeButton
-            para=""
-            text="Search"
-            width="120px"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="white"
-            buttonClick={() => search()}
-          />
-        </div>
+        <AnimSearchImg src={`${searchImg}`} onClick={() => search()} />
       </AnimSearchBox>
       <AnimeShowBox className="row">{getExistAnime()}</AnimeShowBox>
       {getLoading()}

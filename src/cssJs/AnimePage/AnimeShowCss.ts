@@ -7,56 +7,94 @@ export const AnimMainBox = styled.div`
   padding-left: 20px;
 `;
 
-export const AnimTitle = styled.p`
+export const AnimTitle = styled.h1`
   font-size: 36px;
   color: #302d46;
   font-weight: bold;
+  line-height: 52px;
+  margin-top: 8px;
+  margin-bottom: 0px;
+`;
+
+export const AnimTwoButtons = styled.div`
+  height: 64px;
+  display: flex;
+`;
+
+export const AnimTapButton = styled.div`
+  margin-top: 16px;
+  display: flex;
+  margin-right: 32px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  img {
+    height: 32px;
+    width: 32px;
+  }
+  p {
+    margin-left: 4px;
+    font-weight: bold;
+    line-height: 32px;
+    font-size: 16px;
+  }
 `;
 
 export const AnimSearchBox = styled.div`
   display: flex;
+  height: 72px;
+  width: 60%;
+  padding-left: 18px;
   Input {
     width: 576px;
+    height: 40px;
+    margin-top: 16px;
+    margin-bottom: 16px;
   }
 `;
 
+export const AnimSearchImg = styled.img`
+  height: 40px;
+  width: 40px;
+  margin-top: 16px;
+  cursor: pointer;
+`;
+
 export const AnimeShowBox = styled.div`
-  margin-top: 31px;
+  margin-top: 24px;
   cursor: pointer;
 `;
 
 export const AnimeBox = styled.div`
-  width: 260px;
-  height: 305px;
+  width: 264px;
+  height: 344px;
   margin-right: 19px;
   img {
-    width: 260px;
-    height: 260px;
+    width: 264px;
+    height: 264px;
   }
   h6 {
-    height: 55px;
-    padding: 8px 16px;
+    height: 80px;
+    padding: 8px;
     background-color: #f6f6f6;
     color: #4a4a4a;
     font-weight: 400;
     font-size: 16px;
-    margin-bottom: 0px;
+    line-height: 32px;
+    font-family: "Arial MT";
   }
 `;
 
 export const LikeDiv = styled.div`
   width: 260px;
-  height: 80px;
+  height: 96px;
   background-color: #302d46;
-  margin-bottom: 40px;
-  margin-right: 19px;
   text-align: center;
-  padding-top: 8px;
   p {
     color: white;
-    padding-bottom: 14px;
     margin-bottom: 0px;
-    padding-top: 8px;
+    line-height: 32px;
+    font-family: "Arial MT";
+    font-size: 16px;
   }
 `;
 
@@ -67,8 +105,9 @@ export const CenterDiv = styled.div`
 
 export const StarDiv = styled.div`
   display: flex;
-  height: 36px;
+  height: 52px;
   background-color: #302d46;
   margin: 0 auto;
-  width: 212px;
+  width: 184px;
+  padding-top: 12px;
 `;

@@ -9,11 +9,10 @@ import {
   ProductImg,
   ProductInput,
   UploadButton,
+  SubtitleDiv,
+  ProductCancelButton,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneProductCss";
-import {
-  AnimOneVideo,
-  Subtitle,
-} from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
+import { AnimOneVideo } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
 import {
   NotificationColor,
   NotificationTitle,
@@ -84,9 +83,9 @@ const AnimeOneProductAdd = (): JSX.Element => {
 
   return (
     <AnimOneVideo>
-      <Subtitle>
-        Post product shopping links here to tell those fans who want it
-      </Subtitle>
+      <SubtitleDiv>
+        <p>Post product shopping links here to tell those fans who want it</p>
+      </SubtitleDiv>
       <ProductImg>
         <h6>Product Picture</h6>
         <img src={`${uploadImg}`} />
@@ -108,6 +107,18 @@ const AnimeOneProductAdd = (): JSX.Element => {
         borderColor="white"
         buttonClick={() => post()}
       />
+      <ProductCancelButton>
+        <AnimeButton
+          para=""
+          text={"Cancel"}
+          width="120px"
+          height="32px"
+          textColor="black"
+          backGroundColor="white"
+          borderColor="#302D46"
+          buttonClick={() => console.log("cancel")}
+        />
+      </ProductCancelButton>
       <div style={{ minHeight: "32px" }}></div>
     </AnimOneVideo>
   );

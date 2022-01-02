@@ -6,7 +6,8 @@ export const AnimOnePage = styled.div`
 
 export const AnimOneHeader = styled.div`
   display: flex;
-  height: 370px;
+  height: 432px;
+  margin-bottom: 16px;
 `;
 
 export const AnimOneHeaderLeft = styled.div`
@@ -19,7 +20,7 @@ export const AnimOneHeaderLeft = styled.div`
   }
   div {
     position: absolute;
-    height: 77px;
+    height: 88px;
     background-color: #302d46;
     width: 280px;
   }
@@ -28,6 +29,8 @@ export const AnimOneHeaderLeft = styled.div`
     position: absolute;
     left: 45px;
     top: 50px;
+    line-height: 32px;
+    font-family: "Arial MT";
   }
 `;
 
@@ -40,21 +43,23 @@ export const AnimOneHeaderRight = styled.div`
 export const AnimOneHeaderLabel = styled.div`
   display: flex;
   width: 100%;
-  height: auto;
+  height: 48px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   h6 {
     color: #302d46;
     height: 24px;
     font-size: 16px !important;
     margin-right: 24px;
     font-weight: bold;
-    line-height: 24px;
+    line-height: 32px;
   }
   p {
     font-size: 16px;
     height: 100%;
     color: #4a4a4a;
     margin-bottom: 0;
-    line-height: 24px;
+    line-height: 32px;
     width: 520px;
     word-wrap: break-word;
     word-break: break-all;
@@ -116,15 +121,17 @@ export const VideoButton = styled.div`
 
 export const OnePageStarDiv = styled.div`
   display: flex;
-  height: 36px;
+  height: 88px;
   background-color: #302d46;
   margin: 0 auto;
   width: 180px;
   position: absolute;
+  margin-top: 16px;
 `;
 
 export const OnePageStarChildDiv = styled.div`
-  padding-left: 40px;
+  padding-left: 46px;
+  margin-top: 8px;
   img {
     margin-top: 10px;
   }
@@ -133,61 +140,96 @@ export const OnePageStarChildDiv = styled.div`
 // video
 
 export const VideoDiv = styled.div`
-  max-width: 840px;
-  height: 428px;
-  margin-bottom: 16px;
+  width: 100%;
+  height: 784px;
+  margin-bottom: 24px;
   background-color: #f6f6f6;
   text-align: center;
 `;
 
 export const VideoIframe = styled.iframe`
-  width: 560px;
-  height: 316px;
-  margin: 24px auto;
+  width: 100%;
+  height: 600px;
+  padding-top: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
 `;
 
 export const VideoIframeDiv = styled.div`
-  width: 560px;
-  height: 316px;
-  margin: 24px auto;
+  width: 100%;
+  height: 600px;
+  padding-top: 24px;
+  margin-left: 16px;
+  margin-right: 16px;
 `;
 
 export const VideoBottom = styled.div`
   display: flex;
-  width: 410px;
-  margin: 0px auto;
+  width: 303px;
+  margin: 8px auto;
+  height: 72px;
+`;
+
+export const AvatarSettingImg = styled.img`
+  height: 24px;
+  width: 24px;
+  margin-top: 24px;
+  cursor: pointer;
 `;
 
 export const TimeText = styled.p`
   color: #4a4a4a;
   font-family: "Arial MT";
   font-size: 14px;
-  margin-right: 32px;
-  line-height: 22px;
-  margin-top: 9px;
+  line-height: 32px;
+  width: 72px;
+  margin: 0px auto;
+  margin-top: 20px;
 `;
 
 export const FromText = styled.p`
   color: #4a4a4a;
   font-family: "Arial MT";
   font-size: 14px;
-  line-height: 22px;
-  margin-top: 9px;
+  line-height: 32px;
+  width: 28px;
+  margin-top: 20px;
+  margin-left: 16px;
+  margin-bottom: 0px;
 `;
 
 export const VideoBottomImg = styled.img`
   width: 40px;
   height: 40px;
   margin-left: 16px;
+  margin-top: 16px;
 `;
 
 export const UserNameText = styled.p`
   color: #4a4a4a;
   font-family: "Arial MT";
   font-size: 14px;
-  line-height: 22px;
-  margin-top: 9px;
+  line-height: 32px;
+  margin-top: 20px;
   font-weight: bold;
-  margin-left: 16px;
-  margin-right: 32px;
+  margin-left: 4px;
+  width: 87px;
+  text-align: left;
+`;
+
+export const DeleteDiv = styled.div`
+  width: 79px;
+  height: 64px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  margin: 16px auto;
+  display: flex;
+  img {
+    width: 24px;
+    height: 24px;
+    margin-top: 20px;
+  }
+  button {
+    margin-top: 16px;
+  }
 `;

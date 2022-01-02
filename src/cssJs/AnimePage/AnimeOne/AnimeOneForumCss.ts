@@ -1,14 +1,27 @@
 import styled from "styled-components";
 
 export const AnimOneForum = styled.div`
-  margin-top: 32px;
   height: auto;
+`;
+
+export const AnimAddDiv = styled.div`
+  button {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
 `;
 
 export const TextInput = styled.div`
   .ant-input-textarea,
   .ant-input {
-    min-height: 112px !important;
+    min-height: 84px !important;
+  }
+`;
+
+export const ForumAddNew = styled.div`
+  margin: 8px 16px;
+  button {
+    margin-top: 8px;
   }
 `;
 
@@ -23,7 +36,7 @@ export const ButtonsFlex = styled.div`
 export const ForumIframe = styled.div`
   max-width: 896px;
   height: auto;
-  padding: 24px 16px;
+  padding: 16px;
   border: 1px solid #7f7e82;
   margin-bottom: 16px;
 `;
@@ -31,22 +44,33 @@ export const ForumIframe = styled.div`
 export const ForumImg = styled.img`
   width: 40px;
   height: 40px;
+  margin-top: 16px;
 `;
 
 export const ForumName = styled.p`
   color: #302d46;
   font-weight: bold;
-  line-height: 40px;
+  line-height: 32px;
   margin-left: 8px;
   font-size: 14px;
+  width: 84px;
+  margin-top: 20px;
+`;
+
+export const ForumAvatarSettingImg = styled.img`
+  height: 24px;
+  width: 24px;
+  margin-top: 24px;
+  cursor: pointer;
 `;
 
 export const ForumTime = styled.p`
   color: #302d46;
-  line-height: 40px;
+  line-height: 32px;
   margin-left: 8px;
-  font-size: 12px;
+  font-size: 14px;
   color: #4a4a4a;
+  margin-top: 20px;
 `;
 
 export const ForumText = styled.p`
@@ -60,9 +84,7 @@ export const ForumText = styled.p`
 export const ForumItemBox = styled.div`
   width: 100%;
   height: auto;
-  padding: 24px 16px;
-  margin-bottom: 16px;
-  margin-top: 16px;
+  padding: 0px;
   button {
     text-align: left;
   }
@@ -71,9 +93,8 @@ export const ForumItemBox = styled.div`
 export const ForumSecondItemBox = styled.div`
   width: 100%;
   height: auto;
-  padding: 24px 16px;
-  margin-bottom: 16px;
-  margin-top: 16px;
+  padding: 0px;
+  margin: 0px;
   button {
     text-align: left;
   }
@@ -85,25 +106,58 @@ export const ForumEditButton = styled.div`
 `;
 
 export const ReplyButton = styled.div`
+  height: 48px;
+  display: flex;
+  text-align: left;
+  cursor: pointer;
   button {
-    margin-top: 33px;
+    margin-top: 8px;
+    padding: 0px;
+  }
+  img {
+    margin-top: 12px;
+    height: 24px;
+    weight: 24px;
   }
 `;
 
 export const AnimeEditAndDeleteDiv = styled.div`
   display: flex;
-  margin-top: 32px;
-  margin-left: 8px;
+  margin-top: 0px;
+  margin-left: 0px;
+  height: 64px;
   img {
+    margin-top: 4px;
     height: 24px;
     width: 24px;
   }
   p {
     margin-left: 8px;
     margin-right: 32px;
+    line-height: 32px;
   }
   div {
+    padding-top: 16px;
+    padding-bottom: 16px;
     display: flex;
     cursor: pointer;
+  }
+`;
+
+export const ForumMoreButtonDiv = styled.div`
+  width: 100%;
+  display: flex;
+  height: 32px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background-color: #e2f6fe;
+  cursor: pointer;
+  img {
+    height: 24px;
+    width: 24px;
+    margin: 4px;
+  }
+  p {
+    line-height: 32px;
   }
 `;
