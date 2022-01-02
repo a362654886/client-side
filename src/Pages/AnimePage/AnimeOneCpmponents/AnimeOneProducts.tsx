@@ -255,19 +255,14 @@ const AnimeOneProducts = ({
       )}
       {getExistProducts()}
       {getLoading()}
-      {!ifShowAdd ? (
-        count > 0 ? (
-          <>
-            <MoreButtonDiv onClick={() => getMore()}>
-              <div>
-                <img src={`${getMoreImg}`} />
-                <p>Load More</p>
-              </div>
-            </MoreButtonDiv>
-          </>
-        ) : (
-          <></>
-        )
+      {(ifShowAdd && ifShowHeader && count > 0) ||
+      (!ifShowAdd && !ifShowHeader) ? (
+        <MoreButtonDiv onClick={() => getMore()}>
+          <div>
+            <img src={`${getMoreImg}`} />
+            <p>Load More</p>
+          </div>
+        </MoreButtonDiv>
       ) : (
         <>
           <MiddleDiv>

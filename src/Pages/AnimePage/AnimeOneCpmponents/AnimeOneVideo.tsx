@@ -217,26 +217,8 @@ const AnimeOneVideo = ({
       )}
       <div style={{ marginTop: "16px" }}>{getExistVideos()}</div>
       {getLoading()}
-      {ifShowAdd ? (
-        count > 0 ? (
-          <>
-            <MiddleDiv>
-              <AnimeButton
-                para=""
-                text={"View All"}
-                width="120px"
-                height="32px"
-                textColor="#F5A623"
-                backGroundColor="#FBFCDB"
-                borderColor="#F5A623"
-                buttonClick={() => (toVideo ? toVideo(1) : {})}
-              />
-            </MiddleDiv>
-          </>
-        ) : (
-          <></>
-        )
-      ) : (
+      {(ifShowAdd && ifShowHeader && count > 0) ||
+      (!ifShowAdd && !ifShowHeader) ? (
         <>
           {videos.length < count ? (
             <MoreButtonDiv onClick={() => getMore()}>
@@ -248,6 +230,21 @@ const AnimeOneVideo = ({
           ) : (
             <></>
           )}
+        </>
+      ) : (
+        <>
+          <MiddleDiv>
+            <AnimeButton
+              para=""
+              text={"View All"}
+              width="120px"
+              height="32px"
+              textColor="#F5A623"
+              backGroundColor="#FBFCDB"
+              borderColor="#F5A623"
+              buttonClick={() => (toVideo ? toVideo(1) : {})}
+            />
+          </MiddleDiv>
         </>
       )}
       <br />

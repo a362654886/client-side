@@ -71,12 +71,11 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const toOther = (url: string) => window.open(url);
 
   useEffect(() => {
-    console.log(enterRate);
+    //console.log(enterRate);
   }, [enterRate]);
 
   useEffect(() => {
     //
-    console.log(loginUser);
   }, [loginUser, chooseAnime]);
 
   const likeAnimeFn = async () => {
@@ -94,12 +93,10 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         chooseAnime?._id as string,
         chooseAnime?.likes ? chooseAnime?.likes : 0
       );
-      console.log(animeLikeResult);
       const userLikeResult = await userUpdateLike(
         loginUser?._id as string,
         likesArr
       );
-      console.log(userLikeResult);
       setLoading(false);
     } else {
       console.log("please wait some seconds");
@@ -147,7 +144,6 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         loginUser?._id as string,
         likesArr
       );
-      console.log(userLikeResult);
       setLoading(false);
     } else {
       console.log("please wait some seconds");
@@ -431,7 +427,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
       <AnimeOneTitle>Forum</AnimeOneTitle>
       <AnimeOneForum
         anime={chooseAnime}
-        pageSizeSetting={1}
+        pageSizeSetting={3}
         ifShowHeader={false}
         ifShowAdd={true}
         toForum={(num: number) => toPage(num)}

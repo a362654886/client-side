@@ -1161,26 +1161,8 @@ const AnimeOneForum = ({
       {getAddBox()}
       {getExistForums()}
       {getLoading()}
-      {ifShowAdd ? (
-        count > 0 ? (
-          <>
-            <MiddleDiv>
-              <AnimeButton
-                para=""
-                text={"View All"}
-                width="120px"
-                height="32px"
-                textColor="#F5A623"
-                backGroundColor="#FBFCDB"
-                borderColor="#F5A623"
-                buttonClick={() => (toForum ? toForum(3) : {})}
-              />
-            </MiddleDiv>
-          </>
-        ) : (
-          <></>
-        )
-      ) : (
+      {(ifShowAdd && ifShowHeader && count > 0) ||
+      (!ifShowAdd && !ifShowHeader) ? (
         <>
           {forums.length < count ? (
             <MoreButtonDiv onClick={() => getMore()}>
@@ -1192,6 +1174,21 @@ const AnimeOneForum = ({
           ) : (
             <></>
           )}
+        </>
+      ) : (
+        <>
+          <MiddleDiv>
+            <AnimeButton
+              para=""
+              text={"View All"}
+              width="120px"
+              height="32px"
+              textColor="#F5A623"
+              backGroundColor="#FBFCDB"
+              borderColor="#F5A623"
+              buttonClick={() => (toForum ? toForum(3) : {})}
+            />
+          </MiddleDiv>
         </>
       )}
     </AnimOneForum>
