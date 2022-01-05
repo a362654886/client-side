@@ -4,7 +4,7 @@ export const LoginBox = styled.div`
   height: 810px;
   max-width: 289px;
   margin: auto;
-  margin-top: 23px;
+  margin-top: 8px;
   position: relative;
 `;
 
@@ -17,70 +17,84 @@ export const LoginTitle = styled.p`
   margin-bottom: 0;
 `;
 
-export const SignUpButton = styled.div`
+export const SignUpButtons = styled.div`
+  display: flex;
+  height: 64px;
   button {
     margin-left: 18px;
-    margin-top: 45px;
-    position: absolute;
+    margin-top: 16px;
   }
 `;
 
 export const LoginButton = styled.div`
   button {
     margin-left: 166px;
-    margin-top: 45px;
+    margin-top: 16px;
     position: absolute;
   }
 `;
 
 export const EmailInput = styled.div`
-  margin-top: 127px;
-  position: absolute;
-  display: flex;
-  p {
-    width: 43px;
-    height: 22px;
-    font-size: 14px;
+  height: 112px;
+  h3 {
+    height: 45px;
+    font-size: 16px;
     font-weight: bold;
     color: #302d46;
-    margin-top: 5px;
+    margin-top: 16px;
+    margin-bottom: 0px;
   }
   Input {
-    margin-left: 49px;
-    width: 197px;
-    height: 32px;
+    margin-top: 0px;
+    width: 100%;
+    height: 38px;
   }
 `;
 
 export const PasswordInput = styled.div`
-  margin-top: 177px;
-  position: absolute;
-  display: flex;
-  p {
-    width: 71px;
-    height: 22px;
-    font-size: 14px;
+  height: 112px;
+  h3 {
+    height: 45px;
+    font-size: 16px;
     font-weight: bold;
     color: #302d46;
-    margin-top: 5px;
+    margin-top: 16px;
+    margin-bottom: 0px;
   }
   Input {
-    margin-left: 21px;
-    width: 197px;
-    height: 32px;
+    margin-top: 0px;
+    width: 100%;
+    height: 28px;
+  }
+`;
+
+export const NameInput = styled.div`
+  height: 158px;
+  h3 {
+    height: 45px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #302d46;
+    margin-top: 16px;
+    margin-bottom: 0px;
+  }
+  Input {
+    margin-top: 8px;
+    width: 100%;
+    height: 38px;
   }
 `;
 
 export const LoginClickButton = styled.div`
   margin-left: 92px;
-  margin-top: 270px;
+  margin-top: 16px;
   position: absolute;
 `;
 
 // signup
 
 export const SignUpBox = styled.div`
-  height: 810px;
+  height: 1354px;
   width: 289px;
   margin: auto;
   margin-top: 23px;
@@ -146,7 +160,6 @@ export const LastNameInput = styled.div`
 
 export const CountryInput = styled.div`
   margin-top: 413px;
-  position: absolute;
   display: flex;
   p {
     width: 43px;
@@ -164,9 +177,9 @@ export const CountryInput = styled.div`
 `;
 
 export const AvatarInput = styled.div`
-  margin-top: 470px;
-  position: absolute;
+  margin-top: 8px;
   display: flex;
+  height: 178px;
   p {
     width: 48px;
     height: 22px;
@@ -179,8 +192,7 @@ export const AvatarInput = styled.div`
 
 export const SubmitClickButton = styled.div`
   margin-left: 92px;
-  margin-top: 613px;
-  position: absolute;
+  margin-top: 16px;
 `;
 
 export const AvatarBox1 = styled.div`

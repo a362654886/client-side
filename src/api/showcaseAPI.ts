@@ -69,6 +69,46 @@ export const showCaseAllGet = async (
     });
 };
 
+export const showCaseReplyGet = async (
+  showCaseId: string,
+  page: number,
+  pageSize: number
+): Promise<{
+  result: ShowCaseReply[];
+  count: number;
+} | null> => {
+  const endpoint =
+    basicURL +
+    `showcaseOneGet?showCaseId=${showCaseId}&page=${page}&pageSize=${pageSize}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const showCaseSecondReplyGet = async (
+  replyId: string,
+  page: number,
+  pageSize: number
+): Promise<{
+  result: ShowSecondCaseReply[];
+  count: number;
+} | null> => {
+  const endpoint =
+    basicURL +
+    `showcaseSecondsGet?replyId=${replyId}&page=${page}&pageSize=${pageSize}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const showCaseAllGetByArr = async (
   id: string,
   page: number,

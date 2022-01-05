@@ -18,9 +18,10 @@ import {
   LastNameInput,
   LoginButton,
   LoginTitle,
+  NameInput,
   PasswordInput,
   SignUpBox,
-  SignUpButton,
+  SignUpButtons,
   SubmitClickButton,
 } from "../../cssJs/loginCss";
 import { Avatar, User } from "../../types/User";
@@ -29,7 +30,11 @@ import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { useDispatch } from "react-redux";
-import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 
 const SignUpPage = (): JSX.Element => {
   const history = useHistory();
@@ -231,13 +236,12 @@ const SignUpPage = (): JSX.Element => {
 
   return (
     <SignUpBox>
-      <LoginTitle>Welcome to ANIMEPARK</LoginTitle>
       <AlertBox
         text={errorText}
         color={ColorType.ERROR}
         show={ifLoadingAlert}
       />
-      <SignUpButton>
+      <SignUpButtons>
         <AnimeButton
           para=""
           text="Sign Up"
@@ -248,8 +252,6 @@ const SignUpPage = (): JSX.Element => {
           borderColor="white"
           buttonClick={() => toPage("/mainPage/signUpPage")}
         />
-      </SignUpButton>
-      <LoginButton>
         <AnimeButton
           para=""
           text="Log in"
@@ -260,31 +262,34 @@ const SignUpPage = (): JSX.Element => {
           borderColor="#4BA3C3"
           buttonClick={() => toPage("/mainPage/login")}
         />
-      </LoginButton>
+      </SignUpButtons>
       <EmailInput>
-        <p>Email:</p>
+        <h3>Account Email:</h3>
         <Input placeholder={"email"} onChange={onChange}></Input>
       </EmailInput>
       <PasswordInput>
-        <p>Password:</p>
-        <Input placeholder={"password"} onChange={onChange}></Input>
+        <h3>Password:</h3>
+        <Input.Password
+          placeholder={"password"}
+          onChange={onChange}
+        ></Input.Password>
       </PasswordInput>
-      <ConfirmInput>
-        <p>Confirm:</p>
-        <Input placeholder={"confirm"} onChange={onChange}></Input>
-      </ConfirmInput>
-      <FirstNameInput>
-        <p>Name:</p>
+      <PasswordInput>
+        <h3>Please Confirm the Password:</h3>
+        <Input.Password
+          placeholder={"confirm"}
+          onChange={onChange}
+        ></Input.Password>
+      </PasswordInput>
+      <NameInput>
+        <h3>Name:</h3>
         <Input placeholder={"first name"} onChange={onChange}></Input>
-      </FirstNameInput>
-      <LastNameInput>
-        <p></p>
         <Input placeholder={"last name"} onChange={onChange}></Input>
-      </LastNameInput>
-      <CountryInput>
-        <p>Country:</p>
+      </NameInput>
+      <EmailInput>
+        <h3>Country:</h3>
         <Input placeholder={"country"} onChange={onChange}></Input>
-      </CountryInput>
+      </EmailInput>
       <AvatarInput>
         <p>Avatar:</p>
         <AvatarBox1>{getAvatarDiv(avatarArr ? avatarArr[0] : null)}</AvatarBox1>

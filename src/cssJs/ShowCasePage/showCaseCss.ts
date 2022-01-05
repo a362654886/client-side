@@ -7,7 +7,8 @@ export const ShowCaseDiv = styled.div`
 `;
 
 export const ShowCaseTitleDiv = styled.div`
-  margin-top: 24px;
+  margin-top: 8px;
+  height: 68px;
   button {
     margin-top: 15px;
     height: 36px;
@@ -74,7 +75,7 @@ export const ShowcaseSearch = styled.div`
 
 export const ShowcaseSearchInputDiv = styled.div`
   display: flex;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   input {
     height: 40px;
     width: 576px;
@@ -88,17 +89,53 @@ export const ShowcaseSearchInputDiv = styled.div`
 export const ShowName = styled.p`
   color: #302d46;
   font-weight: bold;
-  line-height: 40px;
+  line-height: 32px;
   margin-left: 8px;
-  font-size: 14px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  height: 32px;
+  font-size: 16px;
+  width: 47px;
+`;
+
+export const ShowcaseSettingImg = styled.img`
+  height: 24px;
+  width: 24px;
+  margin-top: 8px;
+  margin-left: 16px;
+  cursor: pointer;
 `;
 
 export const ShowTime = styled.p`
   color: #302d46;
   line-height: 40px;
   margin-left: 8px;
-  font-size: 12px;
+  font-size: 14px;
   color: #4a4a4a;
+  font-family: "Arial MT";
+`;
+
+export const ShowcaseSource = styled.div`
+  height: 56px;
+  width: 214px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  p {
+    background-color: #fae7d5;
+    height: 40px;
+    padding: 4px;
+    margin-bottom: 0px;
+    line-height: 32px;
+    font-size: 16px;
+    font-family: "Arial MT";
+  }
+`;
+
+export const ShowcaseTaDiv = styled.div`
+  height: 56px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  display: flex;
 `;
 
 export const ShowItemBox = styled.div`
@@ -116,12 +153,20 @@ export const ShowItemBox = styled.div`
 export const ShowIframe = styled.div`
   max-width: 896px;
   height: auto;
-  padding: 24px 16px;
+  padding: 16px;
   border: 1px solid #7f7e82;
   margin-bottom: 16px;
   button {
     margin-left: 16px;
   }
+`;
+
+export const ShowAvatarDiv = styled.div`
+  display: flex;
+  height: 72px;
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
 `;
 
 export const ShowImg = styled.img`
@@ -130,35 +175,45 @@ export const ShowImg = styled.img`
 `;
 
 export const ShowcaseReply = styled.div`
-  margin-top: 16px;
-  margin-left: 6px;
   width: 100%;
   height: auto;
 `;
 
 export const ShowcaseTag = styled.div`
-  margin-top: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   p {
     background-color: #c1eeff;
-    width: auto;
-    padding: 2px 9px;
-    font-weight: normal;
+    height: 40px;
+    padding: 4px 8px;
     margin-bottom: 0px;
-    margin-right: 16px;
+    line-height: 32px;
+    font-size: 16px;
+    font-family: "Arial MT";
   }
 `;
 
 export const ShowcasePostDiv = styled.div`
-  height: 120px;
+  width: 100%;
+  height: 128px;
+  margin-top: 16px;
+  margin-bottom: 16px;
   p {
-    padding-left: 5%;
-    padding-top: 7px;
     background-color: #c1eeff;
-    height: 36px;
+    height: 48px;
+    padding: 8px 21px;
+    line-height: 32px;
+    margin-bottom: 0px;
   }
   button {
-    margin: auto;
+    margin: 0px auto;
+    margin-top: 24px;
   }
+`;
+
+export const ShowcaseMiddleDivPost = styled.div`
+  width: 200px;
+  margin: 0 auto;
 `;
 
 export const TagSelectDiv = styled.div`
@@ -214,15 +269,22 @@ export const AweSomeImg = styled.img`
 `;
 
 export const AweSomeDiv = styled.div`
-  margin-top: 32px;
   display: flex;
+  height: 64px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  cursor: pointer;
   img {
-    width: 32px;
+    width: 40px;
     height: 32px;
   }
   p {
     margin-left: 4px;
     line-height: 32px;
+    margin-bottom: 0px;
+    line-height: 32px;
+    font-size: 16px;
+    font-family: "Arial MT";
   }
   h6 {
     margin-left: 8px;
@@ -232,14 +294,40 @@ export const AweSomeDiv = styled.div`
 `;
 
 export const ShowCaseIcons = styled.div`
-  height: 32px;
+  height: 64px;
   display: flex;
-  margin-top: 32px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  img {
+    height: 32px;
+    width: 32px;
+    margin-right: 16px;
+    cursor: pointer;
+  }
+`;
+
+export const ShowcaseEditAndDeleteDiv = styled.div`
+  display: flex;
+  height: 64px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  cursor: pointer;
+  div {
+    display: flex;
+  }
   img {
     height: 24px;
     width: 24px;
-    margin-right: 16px;
     cursor: pointer;
+    margin-top: 4px;
+  }
+  p {
+    margin-left: 8px;
+    margin-right: 32px;
+    margin-bottom: 0px;
+    line-height: 32px;
+    font-size: 16px;
+    font-family: "Arial MT";
   }
 `;
 
@@ -257,21 +345,45 @@ export const EditAndDeleteDiv = styled.div`
   }
 `;
 
+export const ShowcaseMoreButtonDiv = styled.div`
+  width: 100%;
+  display: flex;
+  height: 32px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background-color: #e2f6fe;
+  cursor: pointer;
+  img {
+    height: 24px;
+    width: 24px;
+    margin: 4px;
+  }
+  p {
+    line-height: 32px;
+  }
+`;
+
 export const ReplyDiv = styled.div`
   display: flex;
-  margin-top: 32px;
-  margin-bottom: 25px;
+  height: 32px;
+  text-align: left;
+  margin-top: 8px;
+  cursor: pointer;
   button {
     margin-left: 0px;
+    padding: 0px;
+  }
+  img {
+    margin-top: 4px;
+    height: 24px;
+    weight: 24px;
   }
 `;
 
 export const ReplyBox = styled.div`
   width: 794px;
   height: auto;
-  padding: 24px 16px;
-  margin-bottom: 16px;
-  margin-top: 16px;
+  padding: 8px 0px;
   button {
     text-align: left;
   }
@@ -280,16 +392,14 @@ export const ReplyBox = styled.div`
 export const ReplySecondBox = styled.div`
   width: 760px;
   height: auto;
-  padding: 24px 16px;
-  margin-bottom: 16px;
-  margin-top: 16px;
+  padding: 8px 0px;
   button {
     text-align: left;
   }
 `;
 
 export const ReplyAddDiv = styled.div`
-  margin-top: 16px;
+  margin-top: 8px;
   button {
     margin-left: 0px;
     padding-left: 0px;
@@ -456,7 +566,9 @@ export const EpisodesComments = styled.div`
 
 export const ShowcaseSideDiv = styled.div`
   width: 276px;
+  height: 648px;
   margin-left: 86px;
+  margin-top: 8px;
   background-color: #424242;
 `;
 

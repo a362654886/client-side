@@ -8,11 +8,9 @@ import AnimeButton from "../../components/Button";
 import {
   EmailInput,
   LoginBox,
-  LoginButton,
   LoginClickButton,
-  LoginTitle,
   PasswordInput,
-  SignUpButton,
+  SignUpButtons,
 } from "../../cssJs/loginCss";
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
@@ -78,13 +76,12 @@ const LoginPage = (): JSX.Element => {
 
   return (
     <LoginBox>
-      <LoginTitle>Welcome to ANIMEPARK</LoginTitle>
       <AlertBox
         text="wrong email or password"
         color={ColorType.ERROR}
         show={ifLoadingAlert}
       />
-      <SignUpButton>
+      <SignUpButtons>
         <AnimeButton
           para=""
           text="Sign Up"
@@ -95,8 +92,6 @@ const LoginPage = (): JSX.Element => {
           borderColor="#4BA3C3"
           buttonClick={() => toPage("/mainPage/signUpPage")}
         />
-      </SignUpButton>
-      <LoginButton>
         <AnimeButton
           para=""
           text="Log in"
@@ -107,15 +102,15 @@ const LoginPage = (): JSX.Element => {
           borderColor="white"
           buttonClick={() => toPage("/mainPage/login")}
         />
-      </LoginButton>
+      </SignUpButtons>
       <EmailInput>
-        <p>Email:</p>
+        <h3>Account Email:</h3>
         <Input placeholder={"email"} onChange={onChange}></Input>
       </EmailInput>
-      <PasswordInput>
-        <p>Password:</p>
+      <EmailInput>
+        <h3>Password:</h3>
         <Input placeholder={"password"} onChange={onChange}></Input>
-      </PasswordInput>
+      </EmailInput>
       <LoginClickButton>
         <AnimeButton
           para=""

@@ -3,23 +3,30 @@ import { useEffect, useState } from "react";
 import {
   showCaseAwesomeUpdate,
   showCaseReplyAdd,
+  showCaseReplyGet,
   showCaseReplyUpdate,
   showCaseSecondReplyAdd,
+  showCaseSecondReplyGet,
   showCaseSecondReplyUpdate,
   showCaseUpdate,
 } from "../../api/showcaseAPI";
 import AnimeButton from "../../components/Button";
 import {
   AweSomeDiv,
-  EditAndDeleteDiv,
   ReplyAddDiv,
   ReplyBox,
   ReplyDiv,
   ReplySecondBox,
+  ShowAvatarDiv,
+  ShowcaseEditAndDeleteDiv,
   ShowcaseEditDiv,
   ShowCaseIcons,
   ShowcaseImage,
+  ShowcaseMoreButtonDiv,
   ShowcaseReply,
+  ShowcaseSettingImg,
+  ShowcaseSource,
+  ShowcaseTaDiv,
   ShowcaseTag,
   ShowIframe,
   ShowImg,
@@ -41,7 +48,6 @@ import editIcon from "../../files/editIcon.svg";
 import deleteIcon from "../../files/deleteIcon.svg";
 import FullTextEditor from "../../components/FullTextEditor";
 import {
-  AnimeEditAndDeleteDiv,
   ForumImg,
   ForumName,
   ForumTime,
@@ -61,6 +67,10 @@ import { ReactQuillCss } from "../../cssJs/fullTextEditor";
 import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import TextArea from "antd/lib/input/TextArea";
+import { Spin } from "antd";
+import avatarSetting from "../../files/avatarSetting.png";
+import arrows from "../../files/arrows.svg";
+import forumMore from "../../files/forumMore.png";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -84,11 +94,14 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
   );
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [itemLoading, setItemLoading] = useState<boolean>(false);
+  const [secondItemLoading, setSecondItemLoading] = useState<boolean>(false);
+
+  const pageSize = 1;
 
   useEffect(() => {
     setAllShowCases(showcases);
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
-    console.log(allShowCases)
   }, [showcases]);
 
   useEffect(() => {
@@ -105,6 +118,85 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     newReplyHtmls[index] = e;
     setNewReplyHtml(newReplyHtmls);
     setUpdate(update + 1);
+  };
+
+  const getMoreItem = async (showCaseId: string, page: number | undefined) => {
+    if (page) {
+      setItemLoading(true);
+      const showcaseResult = await showCaseReplyGet(
+        showCaseId,
+        page + 1,
+        pageSize
+      );
+
+      //set
+      const newShowcases = allShowCases;
+      const index = newShowcases.findIndex((item) => item._id == showCaseId);
+      if (newShowcases[index].replies && showcaseResult) {
+        newShowcases[index].replies = (
+          newShowcases[index].replies as ShowCaseReply[]
+        ).concat(showcaseResult.result);
+        newShowcases[index].page = page + 1;
+        newShowcases[index].fullItems =
+          showcaseResult.count <=
+          (newShowcases[index].replies as ShowCaseReply[]).length
+            ? true
+            : false;
+        setAllShowCases(newShowcases);
+        setUpdate(update + 1);
+      }
+      setItemLoading(false);
+    }
+  };
+
+  const getMoreSecondItem = async (
+    showcaseId: string,
+    replyId: string,
+    page: number | undefined
+  ) => {
+    if (page && showcaseId) {
+      setSecondItemLoading(true);
+      const showcaseResult = await showCaseSecondReplyGet(
+        replyId,
+        page + 1,
+        pageSize
+      );
+
+      //set
+      const newShowcases = allShowCases;
+      const index = newShowcases.findIndex((item) => item._id == showcaseId);
+      const secondIndex = (
+        newShowcases[index].replies as ShowCaseReply[]
+      ).findIndex((item) => item._id == replyId);
+      if (
+        newShowcases[index].replies &&
+        (newShowcases[index].replies as ShowCaseReply[])[secondIndex]
+          .secondReplies &&
+        showcaseResult
+      ) {
+        (newShowcases[index].replies as ShowCaseReply[])[
+          secondIndex
+        ].secondReplies = (
+          (newShowcases[index].replies as ShowCaseReply[])[secondIndex]
+            .secondReplies as ShowSecondCaseReply[]
+        ).concat(showcaseResult.result);
+        (newShowcases[index].replies as ShowCaseReply[])[secondIndex].page =
+          page + 1;
+        (newShowcases[index].replies as ShowCaseReply[])[
+          secondIndex
+        ].fullItems =
+          showcaseResult.count <=
+          (
+            (newShowcases[index].replies as ShowCaseReply[])[secondIndex]
+              .secondReplies as ShowSecondCaseReply[]
+          ).length
+            ? true
+            : false;
+        setAllShowCases(newShowcases);
+        setUpdate(update + 1);
+      }
+      setSecondItemLoading(false);
+    }
   };
 
   const sendNewSecondReply = (
@@ -550,7 +642,6 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
           allShowCases[index]._id,
           allShowCases[index].aweSome
         );
-        console.log(animeLikeResult);
         const userLikeResult = await userUpdateShowcases(
           loginUser?._id as string,
           awesomeArr
@@ -591,13 +682,14 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
       const date = new Date(parseInt(showcase._id));
       return (
         <ShowIframe key={index}>
-          <div style={{ display: "flex" }}>
+          <ShowAvatarDiv>
             <ShowImg src={`${showcase.userAvatar}`} />
             <ShowName>{showcase.userName}</ShowName>
+            <ShowcaseSettingImg src={`${avatarSetting}`} />
             <ShowTime>{`${date.getDate()}-${
               date.getMonth() + 1
             }-${date.getFullYear()}`}</ShowTime>
-          </div>
+          </ShowAvatarDiv>
           {showcase.imageArr.map((image: string, index: number) => {
             return <ShowcaseImage key={index} src={image} />;
           })}
@@ -617,18 +709,30 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 borderColor="black"
                 buttonClick={() => updateShowcase(index)}
               />
+              <AnimeButton
+                para=""
+                text={`Cancel`}
+                width="120px"
+                height="32px"
+                textColor="black"
+                backGroundColor="white"
+                borderColor="black"
+                buttonClick={() => editShowcase(index)}
+              />
             </ShowcaseEditDiv>
           ) : (
             <>
               <ReactQuillCss
                 style={{
                   marginTop: "16px",
-                  marginLeft: "6px",
                   width: "100%",
                 }}
                 dangerouslySetInnerHTML={{ __html: showcase.text }}
               ></ReactQuillCss>
-              <div style={{ display: "flex" }}>
+              <ShowcaseSource>
+                <p>{`Source: Original from ${showcase.source}`}</p>
+              </ShowcaseSource>
+              <ShowcaseTaDiv>
                 {showcase.tags.map((tag, index) => {
                   return (
                     <ShowcaseTag key={index}>
@@ -636,7 +740,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                     </ShowcaseTag>
                   );
                 })}
-              </div>
+              </ShowcaseTaDiv>
               <AweSomeDiv>
                 {getAwesomeButton(`${showcase._id}${showcase.title}`, index)}
                 <p>Awesome!</p>
@@ -670,33 +774,51 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
               </ShowCaseIcons>
             </>
           )}
-          <AnimeEditAndDeleteDiv>
-            <div onClick={() => editShowcase(index)}>
-              <img src={`${editIcon}`} />
-              <p>Edit</p>
-              <img
-                style={{ width: "20px" }}
-                onClick={() => {
-                  console.log("deleteIcon");
-                }}
-                src={`${deleteIcon}`}
-              />
-              <p>Delete</p>
-            </div>
-          </AnimeEditAndDeleteDiv>
-          <ReplyDiv>
+          {loginUser?._id == showcase.userId ? (
+            <ShowcaseEditAndDeleteDiv>
+              {!showcase.edit ? (
+                <div>
+                  <img
+                    src={`${editIcon}`}
+                    onClick={() => editShowcase(index)}
+                  />
+                  <p onClick={() => editShowcase(index)}>Edit</p>
+                  <img
+                    onClick={() => {
+                      console.log("deleteIcon");
+                    }}
+                    src={`${deleteIcon}`}
+                  />
+                  <p
+                    onClick={() => {
+                      console.log("deleteIcon");
+                    }}
+                  >
+                    Delete
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
+            </ShowcaseEditAndDeleteDiv>
+          ) : (
+            <></>
+          )}
+
+          <ReplyDiv onClick={() => openReply(index)}>
             <AnimeButton
               para=""
               text={`Replies(${
                 showcase.replies ? showcase.replies.length : 0
               })`}
-              width="71px"
+              width="81px"
               height="22px"
               textColor="#4BA3C3"
               backGroundColor="white"
               borderColor="white"
-              buttonClick={() => openReply(index)}
+              buttonClick={() => console.log("")}
             />
+            <img src={`${arrows}`} />
           </ReplyDiv>
           <div
             style={{ display: showcase.showReplay == true ? "inline" : "none" }}
@@ -704,6 +826,20 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
             {getAddReplyBox(showcase, index)}
             {showcase.replies ? (
               getShowcaseReplies(showcase.replies, date, index)
+            ) : (
+              <></>
+            )}
+            {showcase.fullItems != true ? (
+              itemLoading ? (
+                <Spin />
+              ) : (
+                <ShowcaseMoreButtonDiv
+                  onClick={() => getMoreItem(showcase._id, showcase.page)}
+                >
+                  <img src={forumMore} />
+                  <p>More</p>
+                </ShowcaseMoreButtonDiv>
+              )
             ) : (
               <></>
             )}
@@ -728,76 +864,115 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 date.getMonth() + 1
               }-${date.getFullYear()}`}</ForumTime>
             </div>
-            {reply.edit ? (
-              <ShowcaseEditDiv>
-                <TextArea
-                  value={reply.text}
-                  onChange={(e) =>
-                    editShowcaseReplyText(index, secondIndex, e.target.value)
-                  }
-                />
-                <AnimeButton
-                  para=""
-                  text={`Save`}
-                  width="120px"
-                  height="32px"
-                  textColor="black"
-                  backGroundColor="white"
-                  borderColor="black"
-                  buttonClick={() => updateShowcaseReply(index, secondIndex)}
-                />
-              </ShowcaseEditDiv>
-            ) : (
-              <>
-                <ShowcaseReply>{reply.text}</ShowcaseReply>
-              </>
-            )}
-            <AnimeEditAndDeleteDiv>
-              <div onClick={() => editShowcaseReply(index, secondIndex)}>
-                <img src={`${editIcon}`} />
-                <p>Edit</p>
-                <img
-                  style={{ width: "20px" }}
-                  onClick={() => {
-                    console.log("deleteIcon");
-                  }}
-                  src={`${deleteIcon}`}
-                />
-                <p>Delete</p>
-              </div>
-            </AnimeEditAndDeleteDiv>
-            <ReplyAddDiv>
-              <AnimeButton
-                para=""
-                text={`Replies(${
-                  reply.secondReplies ? reply.secondReplies.length : 0
-                })`}
-                width="71px"
-                height="22px"
-                textColor="#4BA3C3"
-                backGroundColor="white"
-                borderColor="white"
-                buttonClick={() => {
-                  openSecondReply(index, secondIndex);
-                }}
-              />
-            </ReplyAddDiv>
-            <div
-              style={{ display: reply.showReplay == true ? "inline" : "none" }}
-            >
-              {getAddSecondReplyBox(reply, index, secondIndex)}
-              {reply.showReplay ? (
+            <div style={{ marginLeft: "40px" }}>
+              {reply.edit ? (
+                <ShowcaseEditDiv>
+                  <TextArea
+                    value={reply.text}
+                    onChange={(e) =>
+                      editShowcaseReplyText(index, secondIndex, e.target.value)
+                    }
+                  />
+                  <AnimeButton
+                    para=""
+                    text={`Save`}
+                    width="120px"
+                    height="32px"
+                    textColor="black"
+                    backGroundColor="white"
+                    borderColor="black"
+                    buttonClick={() => updateShowcaseReply(index, secondIndex)}
+                  />
+                  <AnimeButton
+                    para=""
+                    text={`Cancel`}
+                    width="120px"
+                    height="32px"
+                    textColor="black"
+                    backGroundColor="white"
+                    borderColor="black"
+                    buttonClick={() => editShowcaseReply(index, secondIndex)}
+                  />
+                </ShowcaseEditDiv>
+              ) : (
                 <>
-                  {getSecondReplyItems(
-                    reply.secondReplies,
-                    date,
-                    index,
-                    secondIndex
-                  )}
+                  <ShowcaseReply>{reply.text}</ShowcaseReply>
                 </>
+              )}
+              {!reply.edit ? (
+                <ShowcaseEditAndDeleteDiv>
+                  <div onClick={() => editShowcaseReply(index, secondIndex)}>
+                    <img src={`${editIcon}`} />
+                    <p>Edit</p>
+                    <img
+                      style={{ width: "20px" }}
+                      onClick={() => {
+                        console.log("deleteIcon");
+                      }}
+                      src={`${deleteIcon}`}
+                    />
+                    <p>Delete</p>
+                  </div>
+                </ShowcaseEditAndDeleteDiv>
               ) : (
                 <></>
               )}
+              <ReplyDiv>
+                <AnimeButton
+                  para=""
+                  text={`Replies(${
+                    reply.secondReplies ? reply.secondReplies.length : 0
+                  })`}
+                  width="81px"
+                  height="22px"
+                  textColor="#4BA3C3"
+                  backGroundColor="white"
+                  borderColor="white"
+                  buttonClick={() => {
+                    openSecondReply(index, secondIndex);
+                  }}
+                />
+                <img src={`${arrows}`} />
+              </ReplyDiv>
+              <div
+                style={{
+                  display: reply.showReplay == true ? "inline" : "none",
+                }}
+              >
+                {getAddSecondReplyBox(reply, index, secondIndex)}
+                {reply.showReplay ? (
+                  <>
+                    {getSecondReplyItems(
+                      reply.secondReplies,
+                      date,
+                      index,
+                      secondIndex
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+                {reply.fullItems != true ? (
+                  secondItemLoading ? (
+                    <Spin />
+                  ) : (
+                    <ShowcaseMoreButtonDiv
+                      onClick={() =>
+                        getMoreSecondItem(
+                          reply.showCaseId,
+                          reply.replyId,
+                          reply.page
+                        )
+                      }
+                    >
+                      <img src={forumMore} />
+                      <p>More</p>
+                    </ShowcaseMoreButtonDiv>
+                  )
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
           </ReplyBox>
         </>
@@ -823,67 +998,69 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                   date.getMonth() + 1
                 }-${date.getFullYear()}`}</ForumTime>
               </div>
-              {showcaseSecondReply.edit ? (
-                <ShowcaseEditDiv>
-                  <TextArea
-                    value={showcaseSecondReply.text}
-                    onChange={(e) =>
-                      editShowcaseSecondReplyText(
-                        index,
-                        secondIndex,
-                        thirdIndex,
-                        e.target.value
-                      )
+              <div style={{ marginLeft: "40px" }}>
+                {showcaseSecondReply.edit ? (
+                  <ShowcaseEditDiv>
+                    <TextArea
+                      value={showcaseSecondReply.text}
+                      onChange={(e) =>
+                        editShowcaseSecondReplyText(
+                          index,
+                          secondIndex,
+                          thirdIndex,
+                          e.target.value
+                        )
+                      }
+                    />
+                    <AnimeButton
+                      para=""
+                      text={`Save`}
+                      width="120px"
+                      height="32px"
+                      textColor="black"
+                      backGroundColor="white"
+                      borderColor="black"
+                      buttonClick={() =>
+                        updateShowcaseSecondItem(index, secondIndex, thirdIndex)
+                      }
+                    />
+                  </ShowcaseEditDiv>
+                ) : (
+                  <>
+                    <ShowcaseReply>{showcaseSecondReply.text}</ShowcaseReply>
+                  </>
+                )}
+                <ShowcaseEditAndDeleteDiv>
+                  <div
+                    onClick={() =>
+                      editShowcaseSecondReply(index, secondIndex, thirdIndex)
                     }
-                  />
+                  >
+                    <img src={`${editIcon}`} />
+                    <p>Edit</p>
+                    <img
+                      style={{ width: "20px" }}
+                      onClick={() => {
+                        console.log("deleteIcon");
+                      }}
+                      src={`${deleteIcon}`}
+                    />
+                    <p>Delete</p>
+                  </div>
+                </ShowcaseEditAndDeleteDiv>
+                <ReplyAddDiv>
                   <AnimeButton
                     para=""
-                    text={`Save`}
-                    width="120px"
-                    height="32px"
-                    textColor="black"
+                    text={`Reply`}
+                    width="45px"
+                    height="22px"
+                    textColor="#4BA3C3"
                     backGroundColor="white"
-                    borderColor="black"
-                    buttonClick={() =>
-                      updateShowcaseSecondItem(index, secondIndex, thirdIndex)
-                    }
+                    borderColor="white"
+                    buttonClick={() => console.log("reply")}
                   />
-                </ShowcaseEditDiv>
-              ) : (
-                <>
-                  <ShowcaseReply>{showcaseSecondReply.text}</ShowcaseReply>
-                </>
-              )}
-              <AnimeEditAndDeleteDiv>
-                <div
-                  onClick={() =>
-                    editShowcaseSecondReply(index, secondIndex, thirdIndex)
-                  }
-                >
-                  <img src={`${editIcon}`} />
-                  <p>Edit</p>
-                  <img
-                    style={{ width: "20px" }}
-                    onClick={() => {
-                      console.log("deleteIcon");
-                    }}
-                    src={`${deleteIcon}`}
-                  />
-                  <p>Delete</p>
-                </div>
-              </AnimeEditAndDeleteDiv>
-              <ReplyAddDiv>
-                <AnimeButton
-                  para=""
-                  text={`Reply`}
-                  width="45px"
-                  height="22px"
-                  textColor="#4BA3C3"
-                  backGroundColor="white"
-                  borderColor="white"
-                  buttonClick={() => console.log("reply")}
-                />
-              </ReplyAddDiv>
+                </ReplyAddDiv>
+              </div>
             </ReplySecondBox>
           </>
         );

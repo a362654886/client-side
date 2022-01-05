@@ -257,12 +257,18 @@ const AnimeOneProducts = ({
       {getLoading()}
       {(ifShowAdd && ifShowHeader && count > 0) ||
       (!ifShowAdd && !ifShowHeader) ? (
-        <MoreButtonDiv onClick={() => getMore()}>
-          <div>
-            <img src={`${getMoreImg}`} />
-            <p>Load More</p>
-          </div>
-        </MoreButtonDiv>
+        <>
+          {products?.length < count ? (
+            <MoreButtonDiv onClick={() => getMore()}>
+              <div>
+                <img src={`${getMoreImg}`} />
+                <p>Load More</p>
+              </div>
+            </MoreButtonDiv>
+          ) : (
+            <></>
+          )}
+        </>
       ) : (
         <>
           <MiddleDiv>

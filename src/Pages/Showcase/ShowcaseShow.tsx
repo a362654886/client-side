@@ -3,11 +3,12 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { showCaseAllGet } from "../../api/showcaseAPI";
-import AnimeButton, { MiddleDiv } from "../../components/Button";
+import AnimeButton, { MiddleDiv, MoreButtonDiv } from "../../components/Button";
 import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
 import {
   ShowCaseDiv,
+  ShowcaseMiddleDivPost,
   ShowcasePostDiv,
   ShowcaseSearch,
   ShowcaseSearchInputDiv,
@@ -22,6 +23,13 @@ import ShowcaseManga from "./ShowcaseMaga";
 import { useDispatch } from "react-redux";
 import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
 import ShowcaseSide from "./ShowcaseSide";
+import {
+  AnimTapButton,
+  AnimTwoButtons,
+} from "../../cssJs/AnimePage/AnimeShowCss";
+import newIcon from "../../files/newIcon.png";
+import hotIcon from "../../files/hotIcon.png";
+import getMoreImg from "../../files/getMore.png";
 
 const ShowcaseShow = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -38,6 +46,7 @@ const ShowcaseShow = (): JSX.Element => {
       ? (history.location.state as ShowCaseEnum)
       : ShowCaseEnum.Collections
   );
+  const [ifNew, setIfNew] = useState<boolean>(true);
 
   const pageSize = 1;
 
@@ -134,11 +143,11 @@ const ShowcaseShow = (): JSX.Element => {
               The “Collections” is a place for you to share and enjoy anime
               accessories.
             </p>
-            <MiddleDiv>
+            <ShowcaseMiddleDivPost>
               <AnimeButton
                 para=""
                 text={"Post"}
-                width="120px"
+                width="200px"
                 height="36px"
                 textColor="white"
                 backGroundColor="#FFC300"
@@ -150,7 +159,7 @@ const ShowcaseShow = (): JSX.Element => {
                   });
                 }}
               />
-            </MiddleDiv>
+            </ShowcaseMiddleDivPost>
           </ShowcasePostDiv>
         );
       case ShowCaseEnum.Illustrations:
@@ -266,7 +275,7 @@ const ShowcaseShow = (): JSX.Element => {
     history.replace("/mainPage/showcase/Manga");
   };
 
-  const getShocaseForums = () => {
+  const getShowcaseForums = () => {
     return (
       <>
         <ShowcaseSearchInputDiv>
@@ -278,6 +287,22 @@ const ShowcaseShow = (): JSX.Element => {
             />
           </ShowcaseSearch>
         </ShowcaseSearchInputDiv>
+        <AnimTwoButtons>
+          <AnimTapButton
+            style={{ backgroundColor: `${ifNew ? "#FFC300" : "white"}` }}
+            onClick={() => setIfNew(true)}
+          >
+            <img src={`${newIcon}`} />
+            <p>New</p>
+          </AnimTapButton>
+          <AnimTapButton
+            style={{ backgroundColor: `${ifNew ? "white" : "#FFC300"}` }}
+            onClick={() => setIfNew(false)}
+          >
+            <img src={`${hotIcon}`} />
+            <p>Hot</p>
+          </AnimTapButton>
+        </AnimTwoButtons>
         {typeLoading ? (
           <LoadingImgDiv>
             <img src={`${loadingImg}`} />
@@ -296,18 +321,12 @@ const ShowcaseShow = (): JSX.Element => {
         )}
         {getLoading()}
         {allShowCases.length < count ? (
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"View More"}
-              width="120px"
-              height="32px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => getMore()}
-            />
-          </MiddleDiv>
+          <MoreButtonDiv onClick={() => getMore()}>
+            <div>
+              <img src={`${getMoreImg}`} />
+              <p>Load More</p>
+            </div>
+          </MoreButtonDiv>
         ) : (
           <></>
         )}
@@ -317,14 +336,14 @@ const ShowcaseShow = (): JSX.Element => {
 
   return (
     <>
-      <ShowCaseTitleDiv>
-        <ShowCaseTitle>Showcase</ShowCaseTitle>
-      </ShowCaseTitleDiv>
       <div style={{ display: "flex" }}>
         <ShowCaseDiv className="col-xl-9 col-md-9 col-sm-9 col-9">
+          <ShowCaseTitleDiv>
+            <ShowCaseTitle>Showcase</ShowCaseTitle>
+          </ShowCaseTitleDiv>
           <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
           {getHeader()}
-          {getShocaseForums()}
+          {getShowcaseForums()}
         </ShowCaseDiv>
         <div className="col-xl-3 col-md-3 col-sm-3 col-3">
           <ShowcaseSide />
