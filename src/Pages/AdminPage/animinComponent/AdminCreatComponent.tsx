@@ -85,7 +85,7 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
 
   const submit = async () => {
     const anime: Anime = {
-      _id: title,
+      _id: new Date().valueOf().toString(),
       title: title,
       aired: `${airedStart} - ${airedEnd}`,
       producers: producers,

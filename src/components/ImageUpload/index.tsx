@@ -4,7 +4,8 @@ import { UploadFile } from "antd/lib/upload/interface";
 import * as React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { UploadButtons } from "./style";
+import { ImageAddButtonDiv, UploadButtons } from "./style";
+import add from "../../files/Add.svg";
 
 type ImageCheck = {
   width: number;
@@ -30,6 +31,7 @@ interface IProps {
   textColor: string;
   backGroundColor: string;
   border: string;
+  imageAdd?: boolean;
 }
 
 const ImageUpload = ({
@@ -40,6 +42,7 @@ const ImageUpload = ({
   textColor,
   backGroundColor,
   border,
+  imageAdd,
 }: IProps): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -114,23 +117,9 @@ const ImageUpload = ({
     });
   };
 
-  return (
-    <UploadButtons
-      style={{
-        width: width,
-        height: height,
-        color: textColor,
-        backgroundColor: backGroundColor,
-        borderRadius: "4px",
-        border: border,
-        fontWeight: "bold",
-        fontSize: " 14px",
-        textAlign: "center",
-      }}
-    >
-      {loading ? (
-        <Spin />
-      ) : (
+  const getBody = () => {
+    if (imageAdd == undefined || imageAdd == true) {
+      return (
         <Upload
           style={{
             width: width,
@@ -148,7 +137,40 @@ const ImageUpload = ({
             {text}
           </p>
         </Upload>
-      )}
+      );
+    } else {
+      return (
+        <Upload
+          style={{
+            width: width,
+          }}
+          showUploadList={false}
+          onChange={(e) => handleChange(e)}
+        >
+          <ImageAddButtonDiv>
+            <img src={add} />
+            <p>Image</p>
+          </ImageAddButtonDiv>
+        </Upload>
+      );
+    }
+  };
+
+  return (
+    <UploadButtons
+      style={{
+        width: width,
+        height: height,
+        color: textColor,
+        backgroundColor: backGroundColor,
+        borderRadius: imageAdd && imageAdd == true ? "4px" : "20px",
+        border: border,
+        fontWeight: "bold",
+        fontSize: " 14px",
+        textAlign: "center",
+      }}
+    >
+      {loading ? <Spin /> : getBody()}
     </UploadButtons>
   );
 };

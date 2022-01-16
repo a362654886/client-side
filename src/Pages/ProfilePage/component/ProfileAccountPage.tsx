@@ -184,6 +184,7 @@ const ProfileAccountPage = (): JSX.Element => {
       avatarImage: newArr,
       likeShowcase: loginUser?.likeShowcase ? loginUser?.likeShowcase : [],
       followManga: loginUser?.followManga ? loginUser?.followManga : [],
+      followUsers:loginUser?.followUsers ? loginUser?.followUsers : [],
       awesomeNum: loginUser?.awesomeNum ? loginUser?.awesomeNum : 0,
     };
     setLoading(true);

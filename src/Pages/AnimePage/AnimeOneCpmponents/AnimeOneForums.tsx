@@ -18,7 +18,7 @@ import {
 } from "../../../api/forumAPI";
 import {
   AnimeButton,
-  MiddleDiv,
+  MiddleBiggerDiv,
   MoreButtonDiv,
 } from "../../../components/Button";
 import FullTextEditor from "../../../components/FullTextEditor";
@@ -27,7 +27,6 @@ import {
   AnimeEditAndDeleteDiv,
   AnimOneForum,
   ForumAddNew,
-  ForumAvatarSettingImg,
   ForumIframe,
   ForumImg,
   ForumItemBox,
@@ -58,11 +57,13 @@ import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ReactQuillCss } from "../../../cssJs/fullTextEditor";
 import editIcon from "../../../files/editIcon.svg";
 import deleteIcon from "../../../files/deleteIcon.svg";
-import avatarSetting from "../../../files/avatarSetting.png";
 import arrows from "../../../files/arrows.svg";
 import forumMore from "../../../files/forumMore.png";
 import getMoreImg from "../../../files/getMore.png";
 import { Spin } from "antd";
+import { MoreRight } from "../../../cssJs/basicCss";
+import moreRightImg from "../../../files/moreRightArrow.png";
+import SettingImg from "../../../components/SettingImg";
 
 interface IProps {
   anime: Anime | null;
@@ -758,7 +759,12 @@ const AnimeOneForum = ({
           <div style={{ display: "flex", height: "72px" }}>
             <ForumImg src={`${forum.userAvatar}`} />
             <ForumName>{forum.userName}</ForumName>
-            <ForumAvatarSettingImg src={`${avatarSetting}`} />
+            <SettingImg
+              userId={forum.userId}
+              userName={forum.userName}
+              userImg={forum.userAvatar}
+              marginTop="24px"
+            />
             <ForumTime>{`${date.getDate()}-${
               date.getMonth() + 1
             }-${date.getFullYear()}`}</ForumTime>
@@ -862,7 +868,12 @@ const AnimeOneForum = ({
             <div style={{ display: "flex" }}>
               <ForumImg src={`${forum.userAvatar}`} />
               <ForumName>{forum.userName}</ForumName>
-              <ForumAvatarSettingImg src={`${avatarSetting}`} />
+              <SettingImg
+                userId={forum.userId}
+                userName={forum.userName}
+                userImg={forum.userAvatar}
+                marginTop="24px"
+              />
               <ForumTime>{`${date.getDate()}-${
                 date.getMonth() + 1
               }-${date.getFullYear()}`}</ForumTime>
@@ -992,7 +1003,12 @@ const AnimeOneForum = ({
               <div style={{ display: "flex" }}>
                 <ForumImg src={`${forum.userAvatar}`} />
                 <ForumName>{forum.userName}</ForumName>
-                <ForumAvatarSettingImg src={`${avatarSetting}`} />
+                <SettingImg
+                  userId={forum.userId}
+                  userName={forum.userName}
+                  userImg={forum.userAvatar}
+                  marginTop="24px"
+                />
                 <ForumTime>{`${date.getDate()}-${
                   date.getMonth() + 1
                 }-${date.getFullYear()}`}</ForumTime>
@@ -1177,18 +1193,12 @@ const AnimeOneForum = ({
         </>
       ) : (
         <>
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"View All"}
-              width="120px"
-              height="32px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => (toForum ? toForum(3) : {})}
-            />
-          </MiddleDiv>
+          <MiddleBiggerDiv>
+            <MoreRight onClick={() => (toForum ? toForum(3) : {})}>
+              <img src={moreRightImg} />
+              <p>More</p>
+            </MoreRight>
+          </MiddleBiggerDiv>
         </>
       )}
     </AnimOneForum>

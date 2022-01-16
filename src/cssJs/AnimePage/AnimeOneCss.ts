@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import styled from "styled-components";
 
 export const AnimOne = styled.div`
@@ -23,19 +24,23 @@ export const AnimOneMain = styled.div`
 `;
 
 export const AnimOneSide = styled.div`
-  margin-top: 80px;
-  padding: 24px 16px;
-  h6 {
-    height: 24px;
-    line-height: 24px;
+  padding: 16px;
+  h3 {
+    height: 48px;
+    line-height: 32px;
     font-size: 16px;
     font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 8px;
   }
   p {
-    height: 44px;
-    margin-bottom: 16px;
+    height: 64px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     color: #4a4a4a;
-    font-size: 14px;
+    font-size: 16px;
+    font-family: "Arial MT";
+    line-height: 32px;
     cursor: pointer;
   }
 `;
@@ -80,6 +85,29 @@ export const AnimeAddButtonDiv = styled.div`
     margin-bottom: 0px;
     height: 36px;
     margin-right: 16px;
+  }
+`;
+
+export const AnimeLikeButton = styled(Button)`
+  height: 32px;
+  width: 120px;
+  display: flex;
+  background-color: #892e2f;
+  padding: 0px;
+  :hover {
+    background-color: #892e2f;
+  }
+  img {
+    height: 24px;
+    width: 24px;
+    margin-top: 4px;
+    margin-left: 18px;
+    margin-right: 10px;
+  }
+  p {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
   }
 `;
 

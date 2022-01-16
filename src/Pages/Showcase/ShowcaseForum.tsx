@@ -20,11 +20,9 @@ import {
   ShowAvatarDiv,
   ShowcaseEditAndDeleteDiv,
   ShowcaseEditDiv,
-  ShowCaseIcons,
   ShowcaseImage,
   ShowcaseMoreButtonDiv,
   ShowcaseReply,
-  ShowcaseSettingImg,
   ShowcaseSource,
   ShowcaseTaDiv,
   ShowcaseTag,
@@ -40,10 +38,6 @@ import {
 } from "../../types/showCaseType";
 import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.svg";
 import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
-import facebook from "../../files/facebook.svg";
-import insImage from "../../files/insImage.svg";
-import twitter from "../../files/twitterP.svg";
-import copy from "../../files/copy.svg";
 import editIcon from "../../files/editIcon.svg";
 import deleteIcon from "../../files/deleteIcon.svg";
 import FullTextEditor from "../../components/FullTextEditor";
@@ -68,9 +62,10 @@ import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import TextArea from "antd/lib/input/TextArea";
 import { Spin } from "antd";
-import avatarSetting from "../../files/avatarSetting.png";
 import arrows from "../../files/arrows.svg";
 import forumMore from "../../files/forumMore.png";
+import ShareDiv from "../../components/ShareDiv";
+import SettingImg from "../../components/SettingImg";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -97,7 +92,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
   const [itemLoading, setItemLoading] = useState<boolean>(false);
   const [secondItemLoading, setSecondItemLoading] = useState<boolean>(false);
 
-  const pageSize = 1;
+  const pageSize = 3;
 
   useEffect(() => {
     setAllShowCases(showcases);
@@ -647,6 +642,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
           awesomeArr
         );
         console.log(userLikeResult);
+        console.log(animeLikeResult);
         await userUpdateAwesome(loginUser?._id as string, false);
         setLoading(false);
       }
@@ -685,7 +681,12 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
           <ShowAvatarDiv>
             <ShowImg src={`${showcase.userAvatar}`} />
             <ShowName>{showcase.userName}</ShowName>
-            <ShowcaseSettingImg src={`${avatarSetting}`} />
+            <SettingImg
+              userId={showcase.userId}
+              userName={showcase.userName}
+              userImg={showcase.userAvatar}
+              marginTop="8px"
+            />
             <ShowTime>{`${date.getDate()}-${
               date.getMonth() + 1
             }-${date.getFullYear()}`}</ShowTime>
@@ -730,7 +731,8 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 dangerouslySetInnerHTML={{ __html: showcase.text }}
               ></ReactQuillCss>
               <ShowcaseSource>
-                <p>{`Source: Original from ${showcase.source}`}</p>
+                <p>{`Source: Original from`}</p>
+                <p>{showcase.source}</p>
               </ShowcaseSource>
               <ShowcaseTaDiv>
                 {showcase.tags.map((tag, index) => {
@@ -746,32 +748,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 <p>Awesome!</p>
                 <h6>{showcase.aweSome}</h6>
               </AweSomeDiv>
-              <ShowCaseIcons>
-                <img
-                  onClick={() => {
-                    console.log("facebook");
-                  }}
-                  src={`${facebook}`}
-                />
-                <img
-                  onClick={() => {
-                    console.log("insImage");
-                  }}
-                  src={`${insImage}`}
-                />
-                <img
-                  onClick={() => {
-                    console.log("twitter");
-                  }}
-                  src={`${twitter}`}
-                />
-                <img
-                  onClick={() => {
-                    console.log("copy");
-                  }}
-                  src={`${copy}`}
-                />
-              </ShowCaseIcons>
+              <ShareDiv />
             </>
           )}
           {loginUser?._id == showcase.userId ? (

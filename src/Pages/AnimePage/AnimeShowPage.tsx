@@ -33,22 +33,30 @@ const AnimeShowPage = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const [searchValue, setSearchValue] = useState<string>("");
+  const [iniLoading, setIniLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(0);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
   const [ifNew, setIfNew] = useState<boolean>(true);
+  const [sortType, setSortType] = useState<string>("new");
   const pageSize = 4;
 
   useEffect(() => {
-    (async function anyNameFunction() {
-      await search();
-    })();
+    if (page > 1) {
+      (async function anyNameFunction() {
+        await searchMore();
+      })();
+    }
   }, [page]);
 
   useEffect(() => {
     // getAnimeArr();
   }, [allAnime]);
+
+  useEffect(() => {
+    ifNew ? setSortType("new") : setSortType("hot");
+  }, [ifNew]);
 
   const onChange = (e: React.ChangeEvent<Element>): void => {
     const type = (e.target as HTMLInputElement).placeholder;
@@ -59,9 +67,24 @@ const AnimeShowPage = (): JSX.Element => {
     }
   };
 
-  const search = async () => {
+  const search = async (type: string, page: number) => {
+    setIniLoading(true);
+    const animeResult = await animeAllGet(searchValue, type, page, pageSize);
+    if (animeResult) {
+      setAllAnime(animeResult.result);
+      setCount(animeResult.count);
+    }
+    setIniLoading(false);
+  };
+
+  const searchMore = async () => {
     setLoading(true);
-    const animeResult = await animeAllGet(searchValue, page, pageSize);
+    const animeResult = await animeAllGet(
+      searchValue,
+      sortType,
+      page,
+      pageSize
+    );
     if (animeResult) {
       setAllAnime(allAnime.concat(animeResult.result));
       setCount(animeResult.count);
@@ -160,14 +183,22 @@ const AnimeShowPage = (): JSX.Element => {
       <AnimTwoButtons>
         <AnimTapButton
           style={{ backgroundColor: `${ifNew ? "#FFC300" : "white"}` }}
-          onClick={() => setIfNew(true)}
+          onClick={() => {
+            setIfNew(true);
+            setPage(1);
+            search("new", 1);
+          }}
         >
           <img src={`${newIcon}`} />
           <p>New</p>
         </AnimTapButton>
         <AnimTapButton
           style={{ backgroundColor: `${ifNew ? "white" : "#FFC300"}` }}
-          onClick={() => setIfNew(false)}
+          onClick={() => {
+            setIfNew(false);
+            setPage(1);
+            search("hot", 1);
+          }}
         >
           <img src={`${hotIcon}`} />
           <p>Hot</p>
@@ -179,9 +210,18 @@ const AnimeShowPage = (): JSX.Element => {
           placeholder={"DECA-DENCE"}
           onChange={onChange}
         ></Input>
-        <AnimSearchImg src={`${searchImg}`} onClick={() => search()} />
+        <AnimSearchImg
+          src={`${searchImg}`}
+          onClick={() => search(sortType, page)}
+        />
       </AnimSearchBox>
-      <AnimeShowBox className="row">{getExistAnime()}</AnimeShowBox>
+      {!iniLoading ? (
+        <AnimeShowBox className="row">{getExistAnime()}</AnimeShowBox>
+      ) : (
+        <LoadingImgDiv>
+          <img src={`${loadingImg}`} />
+        </LoadingImgDiv>
+      )}
       {getLoading()}
       <CenterDiv>
         {allAnime.length < count ? (

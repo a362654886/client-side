@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 export const UploadButtons = styled.div`
   display: flex;
-  margin-top: 20px;
+  margin: 20px auto;
+  border-radius: 20px;
   span {
     width: 100%;
   }
@@ -41,4 +42,18 @@ export const BrandingSettingHeader = styled.p`
   color: #555f61;
   text-transform: uppercase;
   display: block;
+`;
+
+export const ImageAddButtonDiv = styled.div`
+  display: flex;
+  margin: 0px auto;
+  margin-top: 100px;
+  img {
+    height: 32px;
+    weight: 32px;
+    margin-right: 8px;
+  }
+  p {
+    margin-top: 4px;
+  }
 `;

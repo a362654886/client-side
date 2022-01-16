@@ -1,20 +1,38 @@
+import { userUpdateFollowUsers, userUpdateLike } from "../../api/userApi";
 import {
   actionBody,
   middleStoreType,
   nextAction,
 } from "../../types/MiddleWareType";
-import { LOGIN_USER_ADD } from "../loginUser";
+import { ANIME_UPDATE_LIKE } from "../anime";
+import { LOGIN_USER_UPDATE_FOLLOW, LOGIN_USER_UPDATE_LIKE } from "../loginUser";
 
 export const loginUserMiddleware =
   (store: middleStoreType) =>
   (next: nextAction) =>
   async (action: actionBody): Promise<void> => {
     next(action);
-    if (action.type == LOGIN_USER_ADD) {
-      /*store.dispatch({
-        payload: action.payload.admin,
-        type: ADMINISTER_STATE,
-      })*/
-      //connection(action.payload.userEmail, store);
+    if (action.type == LOGIN_USER_UPDATE_FOLLOW) {
+      const loginUser = store.getState().loginUserState;
+      if (loginUser) {
+        await userUpdateFollowUsers(
+          loginUser._id,
+          loginUser.followUsers,
+          action.payload
+        );
+      }
+    }
+
+    if (action.type == LOGIN_USER_UPDATE_LIKE) {
+      const loginUser = store.getState().loginUserState;
+      if (loginUser) {
+        await userUpdateLike(loginUser._id, loginUser.likeAnime);
+        const likeArr = loginUser.likeAnime;
+        const exist = likeArr.indexOf(action.payload);
+        store.dispatch({
+          payload: exist == -1 ? -1 : 1,
+          type: ANIME_UPDATE_LIKE,
+        });
+      }
     }
   };

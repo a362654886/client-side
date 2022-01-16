@@ -11,13 +11,7 @@ import {
   AvatarChooseImg,
   AvatarImg,
   AvatarInput,
-  ConfirmInput,
-  CountryInput,
   EmailInput,
-  FirstNameInput,
-  LastNameInput,
-  LoginButton,
-  LoginTitle,
   NameInput,
   PasswordInput,
   SignUpBox,
@@ -166,6 +160,7 @@ const SignUpPage = (): JSX.Element => {
       avatar: chooseAvatar ? chooseAvatar.imageName : "",
       likeShowcase: [],
       followManga: [],
+      followUsers: [],
       awesomeNum: 0,
     };
     const r = await userAdd(user);

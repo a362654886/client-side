@@ -48,7 +48,7 @@ const ShowcaseShow = (): JSX.Element => {
   );
   const [ifNew, setIfNew] = useState<boolean>(true);
 
-  const pageSize = 1;
+  const pageSize = 3;
 
   const buttonsColor = [
     {
@@ -70,7 +70,6 @@ const ShowcaseShow = (): JSX.Element => {
 
   useEffect(() => {
     const showcaseType = history.location.state;
-    console.log(showcaseType);
     if (showcaseType == "Illustrations") {
       changeButton(1);
     }

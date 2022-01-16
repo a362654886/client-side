@@ -10,6 +10,7 @@ import {
   CancelButton,
   DescriptionInput,
   ShowCaseCreateImage,
+  ShowCaseCreateImageHeader,
   ShowcaseRadioDiv,
   ShowcaseTextInput,
   ShowCaseTitle,
@@ -24,7 +25,6 @@ import { ShowCaseEnum, ShowCaseType } from "../../types/showCaseType";
 import { User } from "../../types/User";
 import avatar from "../../files/avatar.png";
 import { useHistory } from "react-router-dom";
-import { SelectValue } from "antd/lib/select";
 import {
   NotificationColor,
   NotificationTitle,
@@ -47,7 +47,6 @@ const ShowcaseCreate = (): JSX.Element => {
     ShowCaseEnum.Collections
   );
   const [tags, setTags] = useState<string[]>([]);
-  const [tagAdd, setTagAdd] = useState<boolean>(true);
   const [sourceType, setSourceType] = useState<string>("origin");
   const [sourceValue, setSourceValue] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -69,7 +68,7 @@ const ShowcaseCreate = (): JSX.Element => {
       case ShowCaseEnum.Illustrations:
         return "Illustrations";
       case ShowCaseEnum.Manga:
-        return "Manga";
+        return "Series";
     }
   };
 
@@ -83,6 +82,12 @@ const ShowcaseCreate = (): JSX.Element => {
       newArr.push(imageBody);
       setImgArr(newArr);
     }
+  };
+
+  const replaceNewImage = (imageBody: ImageBody) => {
+    const newArr = [];
+    newArr.push(imageBody);
+    setImgArr(newArr);
   };
 
   const deleteImg = (index: number) => {
@@ -126,7 +131,7 @@ const ShowcaseCreate = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (tagAdd) {
+    if (TagCheck(tags)) {
       const r = await showCaseAdd(showCase);
       console.log(r);
     } else {
@@ -142,21 +147,77 @@ const ShowcaseCreate = (): JSX.Element => {
     });
   };
 
-  const addTag = (e: SelectValue) => {
-    (e as string[]).forEach((tag: string) => {
+  const TagCheck = (tags: string[]) => {
+    let r = true;
+    (tags as string[]).forEach((tag: string) => {
       if (tag.indexOf("#") == -1) {
-        setTagAdd(false);
+        r = false;
       }
     });
-    console.log(e);
-    if (tagAdd) {
-      setTags(e as string[]);
-    } else {
-      console.log("please add # before tag");
-    }
+    return r;
   };
 
   const onSourceChange = (e: RadioChangeEvent) => setSourceType(e.target.value);
+
+  const getImageUpload = () => {
+    if (showCaseType !== ShowCaseEnum.Manga) {
+      return (
+        <>
+          {imgArr.map((image, index) => {
+            return (
+              <ShowCaseCreateImage
+                key={index}
+                style={{ height: `${image.height + 48}px` }}
+              >
+                <div>
+                  <img src={image.imgBase64} style={{ maxWidth: "1170px" }} />
+                </div>
+                <div>
+                  <Button onClick={() => deleteImg(index)}>Delete</Button>
+                </div>
+              </ShowCaseCreateImage>
+            );
+          })}
+          <ImageUpload
+            width={"240px"}
+            height={"240px"}
+            textColor={"black"}
+            backGroundColor={"#F6F6F6"}
+            border={"1px solid #F6F6F6"}
+            text={""}
+            setImg={(value: ImageBody) => setNewImage(value)}
+            imageAdd={false}
+          />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <ShowCaseCreateImage
+            style={{
+              height: `${imgArr.length > 0 ? imgArr[0].height : 0 + 48}px`,
+            }}
+          >
+            <div>
+              <img
+                src={imgArr.length > 0 ? imgArr[0].imgBase64 : ""}
+                style={{ maxWidth: "1170px" }}
+              />
+            </div>
+          </ShowCaseCreateImage>
+          <ImageUpload
+            width={"240px"}
+            height={"32px"}
+            textColor={"black"}
+            backGroundColor={"#F6F6F6"}
+            border={"1px solid #F6F6F6"}
+            text={"Change the Cover Image"}
+            setImg={(value: ImageBody) => replaceNewImage(value)}
+          />
+        </>
+      );
+    }
+  };
 
   return (
     <>
@@ -165,70 +226,58 @@ const ShowcaseCreate = (): JSX.Element => {
       </ShowCaseTitleDiv>
       {showCaseType == ShowCaseEnum.Manga ? (
         <>
+          <ShowCaseCreateImageHeader>Title</ShowCaseCreateImageHeader>
           <TitleInput
-            placeholder="Titles"
+            placeholder="Title"
             onChange={(e) => setTitle(e.target.value)}
           />
+          <ShowCaseCreateImageHeader>Write a caption</ShowCaseCreateImageHeader>
           <DescriptionInput
-            placeholder="Descriptions"
+            placeholder=""
             onChange={(e) => setDescription(e.target.value)}
           />
         </>
       ) : (
         <></>
       )}
-      {imgArr.map((image, index) => {
-        return (
-          <ShowCaseCreateImage
-            key={index}
-            style={{ height: `${image.height + 48}px` }}
-          >
-            <div>
-              <img src={image.imgBase64} style={{ maxWidth: "1170px" }} />
-            </div>
-            <div>
-              <Button onClick={() => deleteImg(index)}>Delete</Button>
-            </div>
-          </ShowCaseCreateImage>
-        );
-      })}
-      <ImageUpload
-        width={"100%"}
-        height={"36px"}
-        textColor={"#F5A623"}
-        backGroundColor={"#FBFCDB"}
-        border={"1px solid #F5A623"}
-        text={"Change Cover Image"}
-        setImg={(value: ImageBody) => setNewImage(value)}
-      />
+      <ShowCaseCreateImageHeader>
+        {showCaseType == ShowCaseEnum.Manga ? "Cover Image" : "Images"}
+      </ShowCaseCreateImageHeader>
+      {getImageUpload()}
       <ShowcaseTextInput>
         {showCaseType == ShowCaseEnum.Manga ? (
           <></>
         ) : (
-          <FullTextEditor
-            html={html}
-            setFullText={(e) => {
-              setHtml(e);
-            }}
-          />
+          <>
+            <ShowCaseCreateImageHeader>
+              Write a caption
+            </ShowCaseCreateImageHeader>
+            <FullTextEditor
+              html={html}
+              setFullText={(e) => {
+                setHtml(e);
+              }}
+            />
+          </>
         )}
         <br />
         <TagSelectDiv>
-          <p>Tags:</p>
+          <ShowCaseCreateImageHeader>Tags</ShowCaseCreateImageHeader>
           <TagSelect
             mode="tags"
-            placeholder=""
+            placeholder="#"
             defaultValue={tags}
-            onChange={(e) => addTag(e)}
+            onChange={(e) => setTags(e as string[])}
             dropdownStyle={{ display: "none" }}
           ></TagSelect>
         </TagSelectDiv>
+        <ShowCaseCreateImageHeader>Copyright Notice</ShowCaseCreateImageHeader>
         <ShowcaseRadioDiv>
           <Radio.Group onChange={onSourceChange} value={sourceType}>
             <Space direction="vertical">
-              <Radio value="origin">It is my original work</Radio>
+              <Radio value="origin">I am the Author.</Radio>
               <TagRadioInput value="source">
-                <p>Source: </p>
+                <p>I am Not the Author. This is from</p>
                 <Input
                   placeholder={"Authors and/or Publishers"}
                   onChange={(e) => {

@@ -36,19 +36,23 @@ export const ShowCaseCreateImage = styled.div`
   }
 `;
 
+export const ShowCaseCreateImageHeader = styled.h3`
+  font-family: "Arial";
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 32px;
+`;
+
 export const ShowcaseTextInput = styled.div`
   .ant-input-textarea,
   .ant-input {
   }
-  margin-top: 32px;
   margin-bottom: 32px;
 `;
 
 export const ShowcaseRadioDiv = styled.div`
   text-align: left;
-  height: 22px;
-  margin-bottom: 32px;
-  padding-left: 51px;
+  height: 140px;
   label {
     font-weight: bold;
     margin-right: 24px;
@@ -61,6 +65,20 @@ export const ShowcaseRadioDiv = styled.div`
   }
   span {
     font-weight: normal;
+  }
+  .ant-space-item {
+    margin-bottom: 0px !important;
+    height: 45px;
+    span {
+      margin-top: 8px;
+      line-height: 32px;
+      font-size: 16px;
+      font-family: "Arial MT";
+    }
+  }
+  .ant-radio-inner {
+    width: 16px;
+    height: 16px;
   }
 `;
 
@@ -93,6 +111,7 @@ export const ShowName = styled.p`
   margin-left: 8px;
   margin-top: 4px;
   margin-bottom: 4px;
+  margin-right: 16px;
   height: 32px;
   font-size: 16px;
   width: 47px;
@@ -117,9 +136,9 @@ export const ShowTime = styled.p`
 
 export const ShowcaseSource = styled.div`
   height: 56px;
-  width: 214px;
   padding-top: 8px;
   padding-bottom: 8px;
+  display: flex;
   p {
     background-color: #fae7d5;
     height: 40px;
@@ -182,6 +201,7 @@ export const ShowcaseReply = styled.div`
 export const ShowcaseTag = styled.div`
   margin-top: 8px;
   margin-bottom: 8px;
+  margin-right: 16px;
   p {
     background-color: #c1eeff;
     height: 40px;
@@ -217,23 +237,31 @@ export const ShowcaseMiddleDivPost = styled.div`
 `;
 
 export const TagSelectDiv = styled.div`
-  display: flex;
   p {
     height: 32px;
     margin-right: 14px;
     font-weight: bold;
     line-height: 32px;
   }
+  margin-bottom: 16px;
 `;
 
 export const TagSelect = styled(Select)`
   width: 80%;
+  .ant-select-selection-overflow {
+    height: 32px;
+  }
+  .ant-select-selection-item {
+    background-color: #c1eeff;
+    height: 32px;
+    line-height: 32px;
+    margin: 0px;
+  }
 `;
 
 export const TagRadioInput = styled(Radio)`
   width: 20px;
   span {
-    display: flex;
     p {
       height: 30px;
       line-height: 30px;
@@ -242,7 +270,7 @@ export const TagRadioInput = styled(Radio)`
       margin-left: 16px;
       height: 30px;
       min-height: 30px;
-      width: 420px;
+      width: 820px;
       z-index: 1000;
     }
   }
@@ -260,6 +288,7 @@ export const TitleInput = styled(Input)`
 
 export const DescriptionInput = styled(Input)`
   height: 96px;
+  margin-bottom: 16px;
 `;
 
 export const AweSomeImg = styled.img`
@@ -427,11 +456,23 @@ export const ShowcaseImage = styled.img`
 
 export const ShowcaseMangaHeader = styled.div`
   display: flex;
-  p {
-    font-size: 14px;
-    line-height: 40px;
-    margin-right: 8px;
-  }
+`;
+
+export const ShowcaseMangaHeaderTitle = styled.h2`
+  font-family: "Arial";
+  line-height: 40px;
+  font-size: 24px;
+  margin-top: 8px;
+  margin-bottom: 0px;
+  font-weight: bold;
+`;
+
+export const ShowcaseMangaHeaderP = styled.p`
+  width: 100px;
+  font-family: "Arial MT";
+  line-height: 32px;
+  font-size: 16px;
+  margin-top: 20px;
 `;
 
 export const ShowMangaIframe = styled.div`
@@ -443,21 +484,22 @@ export const ShowMangaIframe = styled.div`
   button {
     margin-left: 16px;
   }
-  h2 {
-    margin-top: 16px;
-  }
 `;
 
 export const ShowMangaIframeSource = styled.p`
-  margin-top: 16px;
-  font-size: 14px;
+  font-family: "Arial MT";
+  font-size: 16px;
+  line-height: 32px;
   color: #302d46;
-  font-weight: bold;
+  margin-bottom: 0px;
 `;
 
 export const ShowMangaMiddleButton = styled.div`
   width: 240px;
   margin: 0 auto;
+  button {
+    margin-left: 0px;
+  }
 `;
 
 //showcase manga one
@@ -469,9 +511,6 @@ export const ShowMangaIframeOne = styled.div`
   button {
     margin-left: 16px;
   }
-  h2 {
-    margin-top: 16px;
-  }
 `;
 
 export const ShowMangaIframeEpisodesButtons = styled.div`
@@ -480,7 +519,7 @@ export const ShowMangaIframeEpisodesButtons = styled.div`
 
 export const ShowMangaButtons = styled.div`
   display: flex;
-  margin: 24px 28px;
+  margin: 12px 24px;
   Button {
   }
 `;
@@ -488,9 +527,15 @@ export const ShowMangaButtons = styled.div`
 export const EpisodesText = styled.h3`
   color: #302d46;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 32px;
   font-weight: bold;
-  margin-top: 44px;
+  padding-top: 8px;
+  height: 48px;
+  padding-bottom: 8px;
+  margin-bottom: 0px;
+  img {
+    margin-right: 4px;
+  }
 `;
 
 export const EpisodesAddButton = styled.div`
@@ -520,30 +565,68 @@ export const EpisodesGeneralButton = styled.div`
   margin-bottom: 16px;
   text-align: center;
   p {
-    font-size: 14px;
+    font-family:"Arial MT"
+    font-size: 16px;
     line-height: 32px;
     margin: 0 auto;
   }
 `;
 
-export const EpisodesEditAndDelete = styled.div`
-  margin-top: 32px;
-  height: 140px;
-  border-bottom: 1px solid #aaffc9;
-  div {
-    display: flex;
-    margin-bottom: 32px;
-  }
+export const EpisodesEditDiv = styled.div`
+  height: 64px;
+  padding-top:16px;
+  padding-bottom:16px;
+  display:flex;
+  cursor: pointer;
   img {
     height: 24px;
     width: 24px;
     margin-right: 8px;
+    margin-top:4px;
   }
   h6 {
-    font-weight: bold;
+    font-family:"Arial MT"
     font-size: 16px;
+    line-height: 32px;
+    margin: 0px;
     margin-left: 16px;
+    font-weight: bold;
   }
+  p{
+    font-family:"Arial MT"
+    font-size: 16px;
+    line-height: 32px;
+    margin: 0px;
+  }
+`;
+
+export const EpisodesDeleteDiv = styled.div`
+  height: 64px;
+  padding-top:16px;
+  padding-bottom:16px;
+  display:flex;
+  cursor: pointer;
+  img {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+    margin-top:4px;
+  }
+  h6 {
+    font-family:"Arial MT"
+    font-size: 16px;
+    line-height: 32px;
+    margin: 0px;
+    margin-left: 16px;
+    font-weight: bold;
+  }
+  p{
+    font-family:"Arial MT"
+    font-size: 16px;
+    line-height: 32px;
+    margin: 0px;
+  }
+  border-bottom: 1px solid #aaffc9;
 `;
 
 export const EpisodesComments = styled.div`

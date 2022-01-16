@@ -49,6 +49,7 @@ export const EpisodeImages = styled.div`
 export const EpisodeShowPageDiv = styled.div`
   width: 840px;
   margin: 0 auto;
+  overflow: scroll;
   img {
     width: 840px;
     margin-top: 8px;
@@ -62,6 +63,21 @@ export const EpisodeShowDiv = styled.div`
 `;
 
 export const EpisodeShowHeader = styled.div`
+  width: 80%;
+  height: 48px;
+  margin-left: 10%;
+  display: flex;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    #959595 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  position: fixed;
+`;
+
+export const EpisodeShowFooter = styled.div`
+  top: calc(100vh - 48px);
   width: 80%;
   height: 48px;
   margin-left: 10%;
@@ -105,6 +121,36 @@ export const EpisodeShowHeaderRight = styled.p`
   cursor: pointer;
 `;
 
+export const EpisodeShowFooterLeft = styled.p`
+  font-size: 20px;
+  line-height: 48px;
+  color: #4ba3c3;
+  text-align: center;
+  margin-bottom: 0px;
+  width: 33%;
+  cursor: pointer;
+`;
+
+export const EpisodeShowFooterMiddle = styled.p`
+  font-size: 20px;
+  line-height: 48px;
+  color: white;
+  text-align: center;
+  margin-bottom: 0px;
+  width: 33%;
+  cursor: pointer;
+`;
+
+export const EpisodeShowFooterRight = styled.p`
+  font-size: 20px;
+  line-height: 48px;
+  color: #4ba3c3;
+  text-align: center;
+  margin-bottom: 0px;
+  width: 33%;
+  cursor: pointer;
+`;
+
 export const EpisodeDrawer = styled(Drawer)`
   .ant-drawer-wrapper-body,
   .ant-drawer-header {
@@ -122,4 +168,31 @@ export const EpisodeChapter = styled.h3`
   font-size: 16px;
   margin-bottom: 24px;
   cursor: pointer;
+`;
+
+//modal
+
+export const EpisodeModalDiv = styled.div`
+  display: inline;
+`;
+
+export const EpisodeSelectDiv = styled.div`
+  width: 128px;
+`;
+
+export const EpisodeButtonDiv = styled.div`
+  height: 64px;
+  padding-top: 16px;
+  width: 100%;
+  display: flex;
+  button {
+    border: 1px solid white;
+    padding: 0px;
+    margin-right: 32px;
+  }
+  img {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+  }
 `;

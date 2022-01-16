@@ -87,6 +87,7 @@ const ProfileContactPage = (): JSX.Element => {
       avatarImage: loginUser ? loginUser.avatarImage : [],
       likeShowcase: loginUser?.likeShowcase ? loginUser?.likeShowcase : [],
       followManga: loginUser?.followManga ? loginUser?.followManga : [],
+      followUsers:loginUser?.followUsers ? loginUser?.followUsers : [],
       awesomeNum: loginUser?.awesomeNum ? loginUser?.awesomeNum : 0,
     };
     setLoading(true);

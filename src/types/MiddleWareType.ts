@@ -5,6 +5,7 @@ import { LoadingAction } from "../redux/loading";
 import { LoginUser } from "../redux/loginUser";
 import { NewAction } from "../redux/newBody";
 import { ShowcaseAction } from "../redux/showcaseManga";
+import { Anime } from "./Amine";
 import { User } from "./User";
 
 export type middleStoreType = MiddlewareAPI<
@@ -12,6 +13,7 @@ export type middleStoreType = MiddlewareAPI<
   { readonly [$CombinedState]?: undefined } & {
     authState: string;
     loginUserState: User | null;
+    animeState: Anime | null;
   }
 > & { dispatch: unknown };
 

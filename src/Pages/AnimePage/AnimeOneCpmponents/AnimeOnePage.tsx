@@ -5,7 +5,6 @@ import {
   AnimOneHeaderLabel,
   AnimOneHeaderLeft,
   AnimOneHeaderRight,
-  AnimOneIcons,
   AnimOnePage,
   AnimOneWhereWatchImg,
   AnimOneWhereWatchLabel,
@@ -21,28 +20,32 @@ import tubi from "../../../files/Tubi.png";
 import hidive from "../../../files/Hidive.png";
 import VIZ from "../../../files/VIZ.png";
 import AnimePlant from "../../../files/AnimePlant.png";
-import AnimeButton from "../../../components/Button";
 import starBorder from "../../../files/Star-border.svg";
 import starFill from "../../../files/Star-filled.svg";
-import facebook from "../../../files/facebook.svg";
-import insImage from "../../../files/insImage.svg";
-import twitter from "../../../files/twitterP.svg";
-import copy from "../../../files/copy.svg";
+import likePng from "../../../files/like.png";
+import unLikePng from "../../../files/unLike.png";
 import AnimeOneForum from "./AnimeOneForums";
-import { AnimeOneTitle } from "../../../cssJs/AnimePage/AnimeOneCss";
+import {
+  AnimeLikeButton,
+  AnimeOneTitle,
+} from "../../../cssJs/AnimePage/AnimeOneCss";
 import AnimeOneProducts from "./AnimeOneProducts";
 import AnimeOneVideo from "./AnimeOneVideo";
 import { User } from "../../../types/User";
 import { useEffect, useState } from "react";
-import { animeUpdateLike, animeUpdateRate } from "../../../api/animeAPI";
-import { userUpdateLike, userUpdateRate } from "../../../api/userApi";
-import { LOGIN_USER_ADD } from "../../../redux/loginUser";
+import { animeUpdateRate } from "../../../api/animeAPI";
+import { userUpdateRate } from "../../../api/userApi";
+import {
+  LOGIN_USER_ADD,
+  LOGIN_USER_UPDATE_LIKE,
+} from "../../../redux/loginUser";
 import { ANIME_ADD } from "../../../redux/anime";
 import {
   NotificationColor,
   NotificationTitle,
   openNotification,
 } from "../../../helperFns/popUpAlert";
+import ShareDiv from "../../../components/ShareDiv";
 
 interface IProps {
   toPage: (page: number) => void;
@@ -51,18 +54,12 @@ interface IProps {
 const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState<boolean>(false);
-
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
   );
 
   const chooseAnime: Anime | null = useSelector(
     (state: IStoreState) => state.animeState
-  );
-
-  const [likeAnime, setLikeAnime] = useState<string[]>(
-    loginUser?.likeAnime ? loginUser?.likeAnime : []
   );
 
   const [enterRate, setEnterRate] = useState<boolean>(false);
@@ -78,76 +75,11 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
     //
   }, [loginUser, chooseAnime]);
 
-  const likeAnimeFn = async () => {
-    if (loading == false) {
-      let likesArr: string[] = [];
-      if (loginUser?.likeAnime) {
-        likesArr = loginUser?.likeAnime;
-      }
-      likesArr.push(chooseAnime?._id as string);
-
-      changeLikeUi(likesArr, 1);
-      //post like num
-      setLoading(true);
-      const animeLikeResult = await animeUpdateLike(
-        chooseAnime?._id as string,
-        chooseAnime?.likes ? chooseAnime?.likes : 0
-      );
-      const userLikeResult = await userUpdateLike(
-        loginUser?._id as string,
-        likesArr
-      );
-      setLoading(false);
-    } else {
-      console.log("please wait some seconds");
-    }
-  };
-
-  const changeLikeUi = (likesArr: string[], num: number) => {
-    setLikeAnime(likesArr);
-
-    const readyUpdateUser: User = loginUser as User;
-    readyUpdateUser.likeAnime = likesArr;
-
+  const likeAnimeFn = () => {
     dispatch({
-      payload: readyUpdateUser,
-      type: LOGIN_USER_ADD,
+      payload: chooseAnime?._id as string,
+      type: LOGIN_USER_UPDATE_LIKE,
     });
-
-    const readyUpdateAnime: Anime = chooseAnime as Anime;
-    readyUpdateAnime.likes = readyUpdateAnime.likes + num;
-
-    dispatch({
-      payload: readyUpdateAnime,
-      type: ANIME_ADD,
-    });
-  };
-
-  const unlikeAnimeFn = async () => {
-    if (loading == false) {
-      const likesArr = loginUser?.likeAnime as string[];
-      const index = loginUser?.likeAnime.indexOf(chooseAnime?._id as string);
-      if (index != undefined && index != -1) {
-        likesArr.splice(index, 1);
-      }
-
-      changeLikeUi(likesArr, -1);
-      //post like num
-      setLoading(true);
-      //post like num
-      const animeLikeResult = await animeUpdateLike(
-        chooseAnime?._id as string,
-        chooseAnime?.likes as number
-      );
-      console.log(animeLikeResult);
-      const userLikeResult = await userUpdateLike(
-        loginUser?._id as string,
-        likesArr
-      );
-      setLoading(false);
-    } else {
-      console.log("please wait some seconds");
-    }
   };
 
   const getWhereToWatch = () =>
@@ -204,7 +136,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
       }
     });
 
-  const isLogin = (likeFn: () => Promise<void>) => {
+  const isLogin = (likeFn: () => Promise<void> | void) => {
     if (loginUser) {
       likeFn();
     } else {
@@ -295,34 +227,15 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   };
 
   const getLikesButton = () => {
-    const index = likeAnime.find((anime) => anime == chooseAnime?._id);
-    if (index) {
-      return (
-        <AnimeButton
-          para=""
-          text={"Like it"}
-          width="120px"
-          height="32px"
-          textColor="white"
-          backGroundColor="#892E2F "
-          borderColor="#892E2F"
-          buttonClick={() => isLogin(() => unlikeAnimeFn())}
-        />
-      );
-    } else {
-      return (
-        <AnimeButton
-          para=""
-          text={"Like it"}
-          width="120px"
-          height="32px"
-          textColor="black"
-          backGroundColor="white"
-          borderColor="#892E2F"
-          buttonClick={() => isLogin(() => likeAnimeFn())}
-        />
-      );
-    }
+    const index = loginUser?.likeAnime.find(
+      (anime) => anime == chooseAnime?._id
+    );
+    return (
+      <AnimeLikeButton onClick={() => isLogin(() => likeAnimeFn())}>
+        {index ? <img src={likePng} /> : <img src={unLikePng} />}
+        <p>Like It</p>
+      </AnimeLikeButton>
+    );
   };
 
   const ifRate = () => {
@@ -380,32 +293,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
             {getWhereToWatch()}
           </AnimOneWhereWatchLabel>
           <LikeButton>{getLikesButton()}</LikeButton>
-          <AnimOneIcons>
-            <img
-              onClick={() => {
-                console.log("facebook");
-              }}
-              src={`${facebook}`}
-            />
-            <img
-              onClick={() => {
-                console.log("insImage");
-              }}
-              src={`${insImage}`}
-            />
-            <img
-              onClick={() => {
-                console.log("twitter");
-              }}
-              src={`${twitter}`}
-            />
-            <img
-              onClick={() => {
-                console.log("copy");
-              }}
-              src={`${copy}`}
-            />
-          </AnimOneIcons>
+          <ShareDiv />
         </AnimOneHeaderRight>
       </AnimOneHeader>
       <AnimeOneVideo

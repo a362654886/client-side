@@ -17,6 +17,7 @@ export const animeAdd = async (anime: Anime): Promise<number | null> => {
 
 export const animeAllGet = async (
   value: string,
+  sortType: string,
   page: number,
   pageSize: number
 ): Promise<{
@@ -25,7 +26,7 @@ export const animeAllGet = async (
 } | null> => {
   const endpoint =
     basicURL +
-    `animeAllGet?searchValue=${value}&page=${page}&pageSize=${pageSize}`;
+    `animeAllGet?searchValue=${value}&sortType=${sortType}&page=${page}&pageSize=${pageSize}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

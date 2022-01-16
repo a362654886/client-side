@@ -16,6 +16,7 @@ export type User = {
   avatarImage?: Avatar[];
   likeShowcase: string[];
   followManga: string[];
+  followUsers: string[];
   awesomeNum: number;
 };
 

@@ -53,7 +53,12 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    const animeResult = await animeAllGet(searchValue, page, pageSize);
+    const animeResult = await animeAllGet(
+      searchValue,
+      "general",
+      page,
+      pageSize
+    );
     if (animeResult) {
       setAllAnime(animeResult.result);
       setCount(Math.ceil(animeResult.count / pageSize));

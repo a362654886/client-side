@@ -1,5 +1,6 @@
 import { createReducer } from "./reducers/reducerFn";
 import { Anime } from "../types/Amine";
+import { cloneDeep } from "lodash";
 
 //actions
 
@@ -9,7 +10,10 @@ export type ANIME_NONE = typeof ANIME_NONE;
 export const ANIME_ADD = "ANIME_ADD";
 export type ANIME_ADD = typeof ANIME_ADD;
 
-export type animeType = ANIME_ADD | ANIME_NONE;
+export const ANIME_UPDATE_LIKE = "ANIME_UPDATE_LIKE";
+export type ANIME_UPDATE_LIKE = typeof ANIME_UPDATE_LIKE;
+
+export type animeType = ANIME_ADD | ANIME_NONE | ANIME_UPDATE_LIKE;
 
 //action type
 export interface AnimeNoneAction {
@@ -21,7 +25,13 @@ export interface AnimeAddAction {
   payload: Anime;
   type: typeof ANIME_ADD;
 }
-export type AnimeAction = AnimeNoneAction | AnimeAddAction;
+
+export interface AnimeUpdateAction {
+  payload: number;
+  type: typeof ANIME_UPDATE_LIKE;
+}
+
+export type AnimeAction = AnimeNoneAction | AnimeAddAction | AnimeUpdateAction;
 
 //action creators
 export const actions = {
@@ -33,12 +43,23 @@ export const actions = {
     payload,
     type: ANIME_ADD,
   }),
+  AnimeUpdateAction: (payload: number): AnimeUpdateAction => ({
+    payload,
+    type: ANIME_UPDATE_LIKE,
+  }),
 };
 
 //reducer
 const handlers = {
   ANIME_NONE: (state: Anime | null, action: AnimeNoneAction) => action.payload,
-  ANIME_ADD: (state: Anime | null, action: AnimeAddAction) => action.payload
+  ANIME_ADD: (state: Anime | null, action: AnimeAddAction) => action.payload,
+  ANIME_UPDATE_LIKE: (state: Anime | null, action: AnimeUpdateAction) => {
+    const anime = cloneDeep(state);
+    if (anime) {
+      anime.likes = anime.likes + action.payload;
+    }
+    return anime;
+  },
 };
 
 export const animeState = (

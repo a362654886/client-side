@@ -8,6 +8,10 @@ import {
   EpisodeChapter,
   EpisodeDrawer,
   EpisodeShowDiv,
+  EpisodeShowFooter,
+  EpisodeShowFooterLeft,
+  EpisodeShowFooterMiddle,
+  EpisodeShowFooterRight,
   EpisodeShowHeader,
   EpisodeShowHeaderLeft,
   EpisodeShowHeaderMiddle,
@@ -19,6 +23,11 @@ import { LoadingType } from "../../types/EnumTypes";
 import { EpisodeType } from "../../types/EpisodeType";
 import { IStoreState } from "../../types/IStoreState";
 import loadingImg from "../../files/loading.gif";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 
 const EpisodeShow = (): JSX.Element => {
   const history = useHistory();
@@ -33,6 +42,7 @@ const EpisodeShow = (): JSX.Element => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [count, setCount] = useState(0);
   const [update, setUpdate] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
     const id = history.location.state;
@@ -56,7 +66,7 @@ const EpisodeShow = (): JSX.Element => {
   }, [episodeId]);
 
   useEffect(() => {
-    console.log(loading);
+    //
   }, [episode, update, loading]);
 
   const getEpisode = async () => {
@@ -88,6 +98,7 @@ const EpisodeShow = (): JSX.Element => {
     const episodeResult = await episodeGetById(`${id}Episode${episode}`);
     if (episodeResult) {
       setEpisode(episodeResult.episodes);
+      setEpisodeId(episodeResult.episodes._id);
       setCount(episodeResult.count);
       setUpdate(update + 1);
     }
@@ -98,7 +109,7 @@ const EpisodeShow = (): JSX.Element => {
   };
 
   const getChapters = () =>
-    Array.from({ length: count + 1 }, (v, k) => k).map((n, index) => {
+    Array.from({ length: count }, (v, k) => k).map((n, index) => {
       return (
         <EpisodeChapter key={index} onClick={() => toChapter(index + 1)}>
           {`Episode ${index + 1}`}
@@ -106,8 +117,86 @@ const EpisodeShow = (): JSX.Element => {
       );
     });
 
+  const calculateHeight = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+    const totalH =
+      document.body.scrollHeight || document.documentElement.scrollHeight;
+    const clientH = window.innerHeight || document.documentElement.clientHeight;
+    const vaildH = totalH - clientH;
+    const scrollH =
+      document.body.scrollTop || document.documentElement.scrollTop;
+    const result = ((scrollH / vaildH) * 100).toFixed(2);
+    const totalPages = episode?.imageArr.length;
+    const position = (parseFloat(result) * (totalPages ? totalPages : 0)) / 100;
+    setScrollPosition(parseInt(position.toString()));
+  };
+
+  const prePage = async () => {
+    const index = episodeId.indexOf("e");
+    const number = episodeId.slice(index + 1, episodeId.length);
+    const episodeString = episodeId.slice(0, index + 1);
+    if (parseInt(number) > 1) {
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
+      const episodeResult = await episodeGetById(
+        `${episodeString}${parseInt(number) - 1}`
+      );
+      if (episodeResult) {
+        setEpisode(episodeResult.episodes);
+        setEpisodeId(episodeResult.episodes._id);
+        setCount(episodeResult.count);
+        setUpdate(update + 1);
+      }
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
+    } else {
+      openNotification(
+        "this is the first page",
+        NotificationColor.Info,
+        NotificationTitle.Info
+      );
+    }
+  };
+
+  const nextPage = async () => {
+    const index = episodeId.indexOf("e");
+    const number = episodeId.slice(index + 1, episodeId.length);
+    const episodeString = episodeId.slice(0, index + 1);
+    if (parseInt(number) < count) {
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
+      const episodeResult = await episodeGetById(
+        `${episodeString}${parseInt(number) + 1}`
+      );
+      if (episodeResult) {
+        setEpisode(episodeResult.episodes);
+        setEpisodeId(episodeResult.episodes._id);
+        setCount(episodeResult.count);
+        setUpdate(update + 1);
+      }
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
+    } else {
+      openNotification(
+        "This is the end",
+        NotificationColor.Info,
+        NotificationTitle.Info
+      );
+    }
+  };
+
   return (
-    <>
+    <div
+      onWheel={(e) => calculateHeight(e)}
+      onMouseEnter={(e) => calculateHeight(e)}
+    >
       <LoadingBox>
         <div className={loading == LoadingType.OPEN ? "mask" : "noMask"}>
           <img src={`${loadingImg}`} />
@@ -125,7 +214,20 @@ const EpisodeShow = (): JSX.Element => {
             Episodes
           </EpisodeShowHeaderRight>
         </EpisodeShowHeader>
-        <EpisodeShowPageDiv>{getImages()}</EpisodeShowPageDiv>
+        <EpisodeShowPageDiv style={{ overflow: "scroll" }}>
+          {getImages()}
+        </EpisodeShowPageDiv>
+        <EpisodeShowFooter>
+          <EpisodeShowFooterLeft onClick={() => prePage()}>
+            PRE
+          </EpisodeShowFooterLeft>
+          <EpisodeShowFooterMiddle>
+            {`${scrollPosition}/${episode?.imageArr.length}`}
+          </EpisodeShowFooterMiddle>
+          <EpisodeShowFooterRight onClick={() => nextPage()}>
+            NEXT
+          </EpisodeShowFooterRight>
+        </EpisodeShowFooter>
         <EpisodeDrawer
           title="Episode"
           placement="right"
@@ -137,7 +239,7 @@ const EpisodeShow = (): JSX.Element => {
           {getChapters()}
         </EpisodeDrawer>
       </EpisodeShowDiv>
-    </>
+    </div>
   );
 };
 

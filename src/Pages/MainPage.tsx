@@ -135,7 +135,7 @@ const MainPage = (): JSX.Element => {
                 toProfile("/mainPage/discovery");
               }}
             >
-              Discovery
+              Explore
             </p>
             <p
               onClick={() => {

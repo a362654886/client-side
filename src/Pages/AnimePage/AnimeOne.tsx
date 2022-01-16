@@ -10,6 +10,7 @@ import {
   AnimOneSide,
   AnimOneSideTwo,
 } from "../../cssJs/AnimePage/AnimeOneCss";
+import { MoreRight } from "../../cssJs/basicCss";
 import { Anime } from "../../types/Amine";
 import { IStoreState } from "../../types/IStoreState";
 import { NewType } from "../../types/NewsType";
@@ -19,6 +20,7 @@ import AnimeOneProductAdd from "./AnimeOneCpmponents/AnimeOneProductAdd";
 import AnimeOneProducts from "./AnimeOneCpmponents/AnimeOneProducts";
 import AnimeOneVideo from "./AnimeOneCpmponents/AnimeOneVideo";
 import AnimeOneVideoAdd from "./AnimeOneCpmponents/AnimeOneVideoAdd";
+import moreRightImg from "../../files/moreRightArrow.png";
 
 const AnimeOne = (): JSX.Element => {
   const chooseAnime: Anime | null = useSelector(
@@ -158,8 +160,8 @@ const AnimeOne = (): JSX.Element => {
 
   return (
     <div>
-      <AnimOne>
-        <AnimOneMain className="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+      <AnimOne className="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+        <AnimOneMain>
           <h1>Anime</h1>
           <h1 style={{ marginTop: "0px" }}>{chooseAnime?.title}</h1>
           <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
@@ -173,7 +175,7 @@ const AnimeOne = (): JSX.Element => {
           }}
         >
           <AnimOneSide>
-            <h6>News</h6>
+            <h6 style={{ fontWeight: "bold" }}>News</h6>
             {allNews.map((news, index) => {
               return (
                 <p key={index}>
@@ -183,16 +185,25 @@ const AnimeOne = (): JSX.Element => {
                 </p>
               );
             })}
-            <AnimeButton
-              para=""
-              text={"More"}
-              width="120px"
-              height="36px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => console.log("more")}
-            />
+            <MoreRight
+              onClick={() => {
+                console.log("more");
+              }}
+            >
+              <img src={moreRightImg} />
+              <p
+                style={{
+                  height: "32px",
+                  lineHeight: "32px;",
+                  color: "#302d46;",
+                  fontWeight: "bold",
+                  marginTop: "0px",
+                  marginBottom: "0px",
+                }}
+              >
+                More
+              </p>
+            </MoreRight>
           </AnimOneSide>
           <AnimOneSideTwo>
             <h6>FQA</h6>

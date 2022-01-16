@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { productAllGet, productDelete } from "../../../api/productAPI";
 import AnimeButton, {
+  MiddleBiggerDiv,
   MiddleDiv,
   MoreButtonDiv,
 } from "../../../components/Button";
@@ -19,23 +20,21 @@ import {
   ProductImgDiv,
   SubtitleDiv,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneProductCss";
-import avatarSetting from "../../../files/avatarSetting.png";
-import {
-  AnimeAddButtonDiv,
-  AnimeAddButtonLeftDiv,
-} from "../../../cssJs/AnimePage/AnimeOneCss";
+import { AnimeAddButtonLeftDiv } from "../../../cssJs/AnimePage/AnimeOneCss";
 import { Anime } from "../../../types/Amine";
 import { Product } from "../../../types/ProductType";
 import loadingImg from "../../../files/loading.gif";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { popUpAPIResult } from "../../../helperFns/popUpAlert";
 import {
-  AvatarSettingImg,
   DeleteDiv,
   TimeText,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import deleteIcon from "../../../files/deleteIcon.svg";
 import getMoreImg from "../../../files/getMore.png";
+import moreRightImg from "../../../files/moreRightArrow.png";
+import { MoreRight } from "../../../cssJs/basicCss";
+import SettingImg from "../../../components/SettingImg";
 
 interface IProps {
   anime: Anime | null;
@@ -127,14 +126,23 @@ const AnimeOneProducts = ({
         return (
           <ProductBox key={index}>
             <ProductImgDiv src={product.productImg} />
-            <LinkP>{`Here to buy>>`}</LinkP>
+            <LinkP
+              onClick={() => {
+                window.open(product.link, "_blank");
+              }}
+            >{`Here to buy>>`}</LinkP>
             <p>From</p>
             <ProductAvatarDiv>
               <AvatarImg>
                 <img src={product.userAvatar} />
               </AvatarImg>
               <AvatarName>{product.userName}</AvatarName>
-              <AvatarSettingImg src={`${avatarSetting}`} />
+              <SettingImg
+                userId={product.userId}
+                userName={product.userName}
+                userImg={product.userAvatar}
+                marginTop="24px"
+              />
             </ProductAvatarDiv>
             <TimeText>{`${date.getDate()}-${
               date.getMonth() + 1
@@ -271,18 +279,12 @@ const AnimeOneProducts = ({
         </>
       ) : (
         <>
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"View All"}
-              width="120px"
-              height="32px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => (toProduct ? toProduct(2) : {})}
-            />
-          </MiddleDiv>
+          <MiddleBiggerDiv>
+            <MoreRight onClick={() => (toProduct ? toProduct(2) : {})}>
+              <img src={moreRightImg} />
+              <p>More</p>
+            </MoreRight>
+          </MiddleBiggerDiv>
         </>
       )}
       <br />

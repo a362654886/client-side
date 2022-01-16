@@ -97,6 +97,25 @@ export const userUpdateFollow = async (
     });
 };
 
+export const userUpdateFollowUsers = async (
+  userId: string,
+  followUserArr: string[],
+  followById: string
+): Promise<number | null> => {
+  const endpoint = basicURL + "userUpdateFollowUsers";
+  return Axios.put(endpoint, {
+    id: userId,
+    userFollow: followUserArr,
+    followById: followById,
+  })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const userUpdateAwesome = async (
   userId: string,
   add: boolean

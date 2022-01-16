@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const AnimOneForum = styled.div`
   height: auto;
+  width: 896px;
 `;
 
 export const AnimAddDiv = styled.div`

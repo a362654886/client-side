@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { showCaseAwesomeUpdate } from "../../api/showcaseAPI";
 import {
   AweSomeDiv,
+  ShowAvatarDiv,
   ShowcaseImage,
   ShowcaseMangaHeader,
+  ShowcaseMangaHeaderP,
+  ShowcaseMangaHeaderTitle,
   ShowcaseTag,
   ShowImg,
   ShowMangaIframe,
@@ -17,11 +20,16 @@ import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.svg";
 import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import { User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";
-import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import AnimeButton from "../../components/Button";
+import SettingImg from "../../components/SettingImg";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -113,6 +121,8 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
         loginUser?._id as string,
         awesomeArr
       );
+      console.log(animeLikeResult)
+      console.log(userLikeResult)
       await userUpdateAwesome(loginUser?._id as string, true);
       setLoading(false);
     } else {
@@ -135,12 +145,12 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
           allShowCases[index]._id,
           allShowCases[index].aweSome
         );
-        console.log(animeLikeResult)
         const userLikeResult = await userUpdateShowcases(
           loginUser?._id as string,
           awesomeArr
         );
-        console.log(userLikeResult)
+        console.log(animeLikeResult)
+        console.log(userLikeResult);
         await userUpdateAwesome(loginUser?._id as string, false);
         setLoading(false);
       }
@@ -180,14 +190,24 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
           ) : (
             <></>
           )}
-          <h2>{showcase.title ? showcase.title : ""}</h2>
+          <ShowcaseMangaHeaderTitle>
+            {showcase.title ? showcase.title : ""}
+          </ShowcaseMangaHeaderTitle>
           <ShowMangaIframeSource>
             {showcase.source ? showcase.source : ""}
           </ShowMangaIframeSource>
           <ShowcaseMangaHeader>
-            <p>shared by </p>
-            <ShowImg src={`${showcase.userAvatar}`} />
-            <ShowName>{showcase.userName}</ShowName>
+            <ShowcaseMangaHeaderP>shared by </ShowcaseMangaHeaderP>
+            <ShowAvatarDiv>
+              <ShowImg src={`${showcase.userAvatar}`} />
+              <ShowName>{showcase.userName}</ShowName>
+              <SettingImg
+                userId={showcase.userId}
+                userName={showcase.userName}
+                userImg={showcase.userAvatar}
+                marginTop="8px"
+              />
+            </ShowAvatarDiv>
           </ShowcaseMangaHeader>
           <p>Updated to Episode 33</p>
           <p>{showcase.description ? showcase.description : ""}</p>
@@ -211,9 +231,9 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
               text={"Read"}
               width="240px"
               height="32px"
-              textColor="#892E2F"
-              backGroundColor="#FAE7D5"
-              borderColor="#FAE7D5"
+              textColor="white"
+              backGroundColor="#892E2F"
+              borderColor="#892E2F"
               buttonClick={() => toMangaOne(index)}
             />
           </ShowMangaMiddleButton>

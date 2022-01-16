@@ -2,11 +2,11 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { videoDelete, videosAllGet } from "../../../api/videoAPI";
 import AnimeButton, {
+  MiddleBiggerDiv,
   MiddleDiv,
   MoreButtonDiv,
 } from "../../../components/Button";
 import {
-  AvatarSettingImg,
   DeleteDiv,
   FromText,
   TimeText,
@@ -22,7 +22,6 @@ import {
   Subtitle,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
 import {
-  AnimeAddButtonDiv,
   AnimeAddButtonLeftDiv,
   DiscoveryHead,
 } from "../../../cssJs/AnimePage/AnimeOneCss";
@@ -32,8 +31,10 @@ import loadingImg from "../../../files/loading.gif";
 import { Video, VideoType } from "../../../types/VideoType";
 import { popUpAPIResult } from "../../../helperFns/popUpAlert";
 import deleteIcon from "../../../files/deleteIcon.svg";
-import avatarSetting from "../../../files/avatarSetting.png";
 import getMoreImg from "../../../files/getMore.png";
+import moreRightImg from "../../../files/moreRightArrow.png";
+import { MoreRight } from "../../../cssJs/basicCss";
+import SettingImg from "../../../components/SettingImg";
 
 interface IProps {
   anime: Anime | null;
@@ -129,7 +130,12 @@ const AnimeOneVideo = ({
             <FromText>from</FromText>
             <VideoBottomImg src={`${video.userAvatar}`} />
             <UserNameText>{video.userName}</UserNameText>
-            <AvatarSettingImg src={`${avatarSetting}`} />
+            <SettingImg
+              userId={video.userId}
+              userName={video.userName}
+              userImg={video.userAvatar}
+              marginTop="24px"
+            />
           </VideoBottom>
           {discovery ? (
             <></>
@@ -233,18 +239,12 @@ const AnimeOneVideo = ({
         </>
       ) : (
         <>
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"View All"}
-              width="120px"
-              height="32px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => (toVideo ? toVideo(1) : {})}
-            />
-          </MiddleDiv>
+          <MiddleBiggerDiv>
+            <MoreRight onClick={() => (toVideo ? toVideo(1) : {})}>
+              <img src={moreRightImg} />
+              <p>More</p>
+            </MoreRight>
+          </MiddleBiggerDiv>
         </>
       )}
       <br />

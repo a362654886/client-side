@@ -52,7 +52,7 @@ const HomePage = (): JSX.Element => {
 
   const getAnimes = async () => {
     setAnimeLoading(true);
-    const animeResult = await animeAllGet("", 1, 4);
+    const animeResult = await animeAllGet("","general", 1, 4);
     if (animeResult) {
       setAllAnime(animeResult.result);
     }

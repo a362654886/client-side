@@ -15,6 +15,8 @@ import storageSession from "redux-persist/lib/storage/session";
 import AdminPage from "./Pages/AdminPage/AdminPage";
 import AdminMainPage from "./Pages/AdminPage/AdminMainPage";
 import EpisodeShow from "./Pages/Showcase/EpisodeShow";
+import { loginUserMiddleware } from "./redux/middleWares/loginUserMiddleware";
+import { animeMiddleware } from "./redux/middleWares/animeMiddleware";
 
 const persistConfig = {
   key: "root",
@@ -25,7 +27,10 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 
 // store type??
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-const store: any = createStore(persistedReducer, applyMiddleware(thunk));
+const store: any = createStore(
+  persistedReducer,
+  applyMiddleware(thunk, loginUserMiddleware, animeMiddleware)
+);
 persistStore(store);
 
 ReactDOM.render(
