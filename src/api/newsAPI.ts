@@ -25,7 +25,7 @@ export const newAllGet = async (
 } | null> => {
   const endpoint =
     basicURL +
-    `newAllGet?searchValue=${value}&page=${page}&pageSize=${pageSize}`;
+    `newsGet?searchValue=${value}&page=${page}&pageSize=${pageSize}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

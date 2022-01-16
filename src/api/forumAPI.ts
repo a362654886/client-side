@@ -108,7 +108,7 @@ export const forumSecondUpdate = async (forumBody: {
   forumSecondItemId: string;
   text: string;
 }): Promise<number | null> => {
-  const endpoint = basicURL + "forumSecondItemUpdate";
+  const endpoint = basicURL + "fsiUpdate";
   return Axios.put(endpoint, { forum: forumBody })
     .then((response) => {
       return response.status;
