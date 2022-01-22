@@ -66,7 +66,17 @@ const SettingImg = ({
     } else {
       return (
         <SettingPopUpDiv>
-          <p>Follow</p>
+          <p
+            onClick={() => {
+              openNotification(
+                "please login and follow",
+                NotificationColor.Warning,
+                NotificationTitle.Warning
+              );
+            }}
+          >
+            Follow
+          </p>
           <p onClick={() => setMessageVisible(true)}>Message</p>
           <p>Report</p>
         </SettingPopUpDiv>
@@ -101,7 +111,7 @@ const SettingImg = ({
       }
     } else {
       openNotification(
-        "please login and then reply",
+        "please login and then send message",
         NotificationColor.Warning,
         NotificationTitle.Warning
       );

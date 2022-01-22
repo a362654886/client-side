@@ -4,6 +4,7 @@ import { AuthUser } from "../redux/auth";
 import { LoadingAction } from "../redux/loading";
 import { LoginUser } from "../redux/loginUser";
 import { NewAction } from "../redux/newBody";
+import { ProfileUser } from "../redux/profileUser";
 import { ShowcaseAction } from "../redux/showcaseManga";
 import { Anime } from "./Amine";
 import { User } from "./User";
@@ -23,6 +24,7 @@ export type actionBody =
   | AnimeAction
   | NewAction
   | LoadingAction
-  | ShowcaseAction;
+  | ShowcaseAction
+  | ProfileUser;
 
 export type nextAction = (action: actionBody) => void;

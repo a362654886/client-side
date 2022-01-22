@@ -27,6 +27,18 @@ export const userAuth = async (
     });
 };
 
+export const userGet = async (id: string): Promise<User | null> => {
+  const endpoint = basicURL + `userGet?id=${id}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      const user = response.data;
+      return user;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const userAwesomeGet = async (): Promise<User[] | null> => {
   const endpoint = basicURL + "usersGetByAwesome";
   return Axios.get(endpoint)

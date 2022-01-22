@@ -66,6 +66,19 @@ export const LoginBox = styled.div`
   }
 `;
 
+export const LoginOutImg = styled.img`
+  width: 32px;
+  height: 32px;
+  margin-top: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+`;
+
+export const LoginCountry = styled.div`
+  margin-top: 33px;
+  margin-left: 10px;
+`;
+
 export const LoadingBox = styled.div`
   .mask {
     background-color: #e5e7e9;

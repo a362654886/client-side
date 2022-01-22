@@ -66,6 +66,10 @@ import arrows from "../../files/arrows.svg";
 import forumMore from "../../files/forumMore.png";
 import ShareDiv from "../../components/ShareDiv";
 import SettingImg from "../../components/SettingImg";
+import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
+import { _getDate } from "../../helperFns/timeFn";
+import Flag from "react-flagkit";
+import { flagGet } from "../../helperFns/flag";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -233,6 +237,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        userCountry: loginUser.country,
       };
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
@@ -277,6 +282,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        userCountry: loginUser.country,
       };
       const r = await showCaseSecondReplyAdd(secondShowcase);
       if (r && r < 300) {
@@ -679,17 +685,30 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
       return (
         <ShowIframe key={index}>
           <ShowAvatarDiv>
-            <ShowImg src={`${showcase.userAvatar}`} />
-            <ShowName>{showcase.userName}</ShowName>
+            <ProfileWrapperDiv
+              userId={showcase.userId}
+              element={
+                <>
+                  <ShowImg src={`${showcase.userAvatar}`} />
+                  <ShowName>
+                    {showcase.userName}
+                    <Flag
+                      style={{ marginLeft: "5px" }}
+                      country={flagGet(
+                        showcase.userCountry ? showcase.userCountry : ""
+                      )}
+                    />
+                  </ShowName>
+                </>
+              }
+            ></ProfileWrapperDiv>
             <SettingImg
               userId={showcase.userId}
               userName={showcase.userName}
               userImg={showcase.userAvatar}
               marginTop="8px"
             />
-            <ShowTime>{`${date.getDate()}-${
-              date.getMonth() + 1
-            }-${date.getFullYear()}`}</ShowTime>
+            <ShowTime>{_getDate(date)}</ShowTime>
           </ShowAvatarDiv>
           {showcase.imageArr.map((image: string, index: number) => {
             return <ShowcaseImage key={index} src={image} />;
@@ -835,11 +854,24 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
         <>
           <ReplyBox key={secondIndex}>
             <div style={{ display: "flex" }}>
-              <ForumImg src={`${reply.userAvatar}`} />
-              <ForumName>{reply.userName}</ForumName>
-              <ForumTime>{`${date.getDate()}-${
-                date.getMonth() + 1
-              }-${date.getFullYear()}`}</ForumTime>
+              <ProfileWrapperDiv
+                userId={reply.userId}
+                element={
+                  <>
+                    <ForumImg src={`${reply.userAvatar}`} />
+                    <ForumName>
+                      {reply.userName}
+                      <Flag
+                        style={{ marginLeft: "5px" }}
+                        country={flagGet(
+                          reply.userCountry ? reply.userCountry : ""
+                        )}
+                      />
+                    </ForumName>
+                  </>
+                }
+              ></ProfileWrapperDiv>
+              <ForumTime>{_getDate(date)}</ForumTime>
             </div>
             <div style={{ marginLeft: "40px" }}>
               {reply.edit ? (
@@ -894,7 +926,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
               ) : (
                 <></>
               )}
-              <ReplyDiv>
+              <ReplyDiv onClick={() => openSecondReply(index, secondIndex)}>
                 <AnimeButton
                   para=""
                   text={`Replies(${
@@ -906,7 +938,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                   backGroundColor="white"
                   borderColor="white"
                   buttonClick={() => {
-                    openSecondReply(index, secondIndex);
+                    console.log();
                   }}
                 />
                 <img src={`${arrows}`} />
@@ -969,11 +1001,26 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
           <>
             <ReplySecondBox key={thirdIndex}>
               <div style={{ display: "flex" }}>
-                <ForumImg src={`${showcaseSecondReply.userAvatar}`} />
-                <ForumName>{showcaseSecondReply.userName}</ForumName>
-                <ForumTime>{`${date.getDate()}-${
-                  date.getMonth() + 1
-                }-${date.getFullYear()}`}</ForumTime>
+                <ProfileWrapperDiv
+                  userId={showcaseSecondReply.userId}
+                  element={
+                    <>
+                      <ForumImg src={`${showcaseSecondReply.userAvatar}`} />
+                      <ForumName>
+                        {showcaseSecondReply.userName}
+                        <Flag
+                          style={{ marginLeft: "5px" }}
+                          country={flagGet(
+                            showcaseSecondReply.userCountry
+                              ? showcaseSecondReply.userCountry
+                              : ""
+                          )}
+                        />
+                      </ForumName>
+                    </>
+                  }
+                ></ProfileWrapperDiv>
+                <ForumTime>{_getDate(date)}</ForumTime>
               </div>
               <div style={{ marginLeft: "40px" }}>
                 {showcaseSecondReply.edit ? (

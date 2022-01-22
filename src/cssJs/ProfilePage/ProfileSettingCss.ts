@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
 export const SettingButtonsDiv = styled.div`
-  margin-top: 51px;
-  margin-left: 130px;
-  button{
-      margin-right: 23px;
+  display: flex;
+  height: 64px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  button {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 32px;
   }
 `;

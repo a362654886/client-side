@@ -7,6 +7,7 @@ export type ShowCaseType = {
   type: ShowCaseEnum;
   userAvatar: string;
   userName: string;
+  userCountry?: string;
   userId: string;
   tags: TagType[];
   text: string;
@@ -30,6 +31,7 @@ export type ShowCaseReply = {
   userId: string;
   userAvatar: string;
   userName: string;
+  userCountry?: string;
   edit?: boolean;
   showReplay?: boolean;
   secondReplies?: ShowSecondCaseReply[];
@@ -46,6 +48,7 @@ export type ShowSecondCaseReply = {
   userAvatar: string;
   userId: string;
   userName: string;
+  userCountry?: string;
   edit?: boolean;
   page?: number;
   fullItems?: boolean;

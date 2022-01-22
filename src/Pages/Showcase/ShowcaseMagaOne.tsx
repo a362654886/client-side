@@ -67,9 +67,7 @@ import { useHistory } from "react-router-dom";
 import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
 import { episodeGet } from "../../api/episodeAPI";
 import { Button, Modal, Spin } from "antd";
-import {
-  TextInput,
-} from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
+import { TextInput } from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import TextArea from "antd/lib/input/TextArea";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
@@ -80,6 +78,9 @@ import ShowcaseSide from "./ShowcaseSide";
 import EpisodeEditModal from "./EpisodeEditModal";
 import episodes from "../../files/Episodes.png";
 import SettingImg from "../../components/SettingImg";
+import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
+import Flag from "react-flagkit";
+import { flagGet } from "../../helperFns/flag";
 
 const ShowcaseMangaOne = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -367,8 +368,15 @@ const ShowcaseMangaOne = (): JSX.Element => {
         <ShowcaseMangaHeader>
           <ShowcaseMangaHeaderP>shared by </ShowcaseMangaHeaderP>
           <ShowAvatarDiv>
-            <ShowImg src={`${showCase ? showCase.userAvatar : ""}`} />
-            <ShowName>{showCase ? showCase.userName : showCase}</ShowName>
+            <ProfileWrapperDiv
+              userId={showCase ? showCase.userId : ""}
+              element={
+                <>
+                  <ShowImg src={`${showCase ? showCase.userAvatar : ""}`} />
+                  <ShowName>{showCase ? showCase.userName : showCase}</ShowName>
+                </>
+              }
+            ></ProfileWrapperDiv>
             <SettingImg
               userId={showCase ? showCase.userId : ""}
               userName={showCase ? showCase.userName : ""}
@@ -608,8 +616,23 @@ const ShowcaseMangaOne = (): JSX.Element => {
         <>
           <ReplyBox key={secondIndex}>
             <ShowAvatarDiv>
-              <ShowImg src={`${reply.userAvatar}`} />
-              <ShowName>{reply.userName}</ShowName>
+              <ProfileWrapperDiv
+                userId={reply.userId}
+                element={
+                  <>
+                    <ShowImg src={`${reply.userAvatar}`} />
+                    <ShowName>
+                      {reply.userName}
+                      <Flag
+                        style={{ marginLeft: "5px" }}
+                        country={flagGet(
+                          reply.userCountry ? reply.userCountry : ""
+                        )}
+                      />
+                    </ShowName>
+                  </>
+                }
+              ></ProfileWrapperDiv>
               <SettingImg
                 userId={reply.userId}
                 userName={reply.userName}
@@ -740,6 +763,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        userCountry: loginUser.country,
       };
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
@@ -801,8 +825,25 @@ const ShowcaseMangaOne = (): JSX.Element => {
           <>
             <ReplySecondBox key={thirdIndex}>
               <ShowAvatarDiv>
-                <ShowImg src={`${showcaseSecondReply.userAvatar}`} />
-                <ShowName>{showcaseSecondReply.userName}</ShowName>
+                <ProfileWrapperDiv
+                  userId={showcaseSecondReply.userId}
+                  element={
+                    <>
+                      <ShowImg src={`${showcaseSecondReply.userAvatar}`} />
+                      <ShowName>
+                        {showcaseSecondReply.userName}
+                        <Flag
+                          style={{ marginLeft: "5px" }}
+                          country={flagGet(
+                            showcaseSecondReply.userCountry
+                              ? showcaseSecondReply.userCountry
+                              : ""
+                          )}
+                        />
+                      </ShowName>
+                    </>
+                  }
+                ></ProfileWrapperDiv>
                 <SettingImg
                   userId={showcaseSecondReply.userId}
                   userName={showcaseSecondReply.userName}

@@ -8,6 +8,7 @@ export type Video = {
   uploadTime: Date;
   userAvatar: string;
   userName: string;
+  userCountry?: string;
 };
 
 export enum VideoType {

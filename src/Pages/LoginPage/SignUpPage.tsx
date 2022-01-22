@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input, Select } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -29,6 +29,10 @@ import {
   NotificationTitle,
   openNotification,
 } from "../../helperFns/popUpAlert";
+import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
+import Flag from "react-flagkit";
+
+const { Option } = Select;
 
 const SignUpPage = (): JSX.Element => {
   const history = useHistory();
@@ -283,7 +287,21 @@ const SignUpPage = (): JSX.Element => {
       </NameInput>
       <EmailInput>
         <h3>Country:</h3>
-        <Input placeholder={"country"} onChange={onChange}></Input>
+        <Select
+          style={{ width: "100%" }}
+          onSelect={(e) => setCountry(e as string)}
+        >
+          {flagArr.map((value, index) => {
+            return (
+              <Option key={index} value={value}>
+                <div style={{ display: "flex" }}>
+                  <Flag country={flagGet(value)} />
+                  <p style={{ marginLeft: "10px" }}>{flagGetName(value)}</p>
+                </div>
+              </Option>
+            );
+          })}
+        </Select>
       </EmailInput>
       <AvatarInput>
         <p>Avatar:</p>

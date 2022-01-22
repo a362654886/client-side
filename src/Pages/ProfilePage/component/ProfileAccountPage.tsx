@@ -1,6 +1,7 @@
-import { Input } from "antd";
+import { Input, Select } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import Flag from "react-flagkit";
 import { useDispatch, useSelector } from "react-redux";
 import { avatarsGet } from "../../../api/avatarAPI";
 import { userUpdate } from "../../../api/userApi";
@@ -10,6 +11,7 @@ import {
   AvatarBox1,
   AvatarBox2,
   AvatarBox3,
+  AvatarBox4,
   AvatarChooseImg,
   AvatarImg,
 } from "../../../cssJs/loginCss";
@@ -21,9 +23,12 @@ import {
   ProfileAccountHeaderDiv,
   SubmitButtonDiv,
 } from "../../../cssJs/ProfilePage/ProfileAccountCss";
+import { flagArr, flagGet, flagGetName } from "../../../helperFns/flag";
 import { LOGIN_USER_ADD } from "../../../redux/loginUser";
 import { IStoreState } from "../../../types/IStoreState";
 import { Avatar, User } from "../../../types/User";
+
+const { Option } = Select;
 
 const ProfileAccountPage = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -36,6 +41,7 @@ const ProfileAccountPage = (): JSX.Element => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
   const [chooseAvatar, setChooseAvatarName] = useState<string>("");
   const [ifLoading, setLoading] = useState<boolean>(false);
   const [ifAvatarLoading, setAvatarLoading] = useState<boolean>(false);
@@ -52,6 +58,7 @@ const ProfileAccountPage = (): JSX.Element => {
     setConfirmPassword("");
     setFirstName(loginUser ? loginUser.firstName : "");
     setLastName(loginUser ? loginUser.lastName : "");
+    setCountry(loginUser ? loginUser.country : "");
     setChooseAvatarName(loginUser ? loginUser.avatar : "");
   }, [loginUser]);
 
@@ -80,6 +87,9 @@ const ProfileAccountPage = (): JSX.Element => {
       case lastName:
         setLastName((e.target as HTMLInputElement).value);
         break;
+      case country:
+        setCountry((e.target as HTMLInputElement).value);
+        break;
     }
   };
 
@@ -87,18 +97,22 @@ const ProfileAccountPage = (): JSX.Element => {
     const arr1: Avatar[] = [];
     const arr2: Avatar[] = [];
     const arr3: Avatar[] = [];
+    const arr4: Avatar[] = [];
     avatars?.forEach((avatar, index) => {
-      if ((index - 3) % 3 == 0 || index == 0) {
+      if ((index - 4) % 4 == 0 || index == 0) {
         arr1.push(avatar);
       }
-      if ((index - 3) % 3 == 1 || index == 1) {
+      if ((index - 4) % 4 == 1 || index == 1) {
         arr2.push(avatar);
       }
-      if ((index - 3) % 3 == 2 || index == 2) {
+      if ((index - 4) % 4 == 2 || index == 2) {
         arr3.push(avatar);
       }
+      if ((index - 4) % 4 == 3 || index == 3) {
+        arr4.push(avatar);
+      }
     });
-    setAvatarArr([arr1, arr2, arr3]);
+    setAvatarArr([arr1, arr2, arr3, arr4]);
   };
 
   const setChooseAvatar = (avatar: Avatar) =>
@@ -140,14 +154,14 @@ const ProfileAccountPage = (): JSX.Element => {
     if (ifAvatarLoading) {
       return (
         <>
-          <p>Avatar:</p>
+          <h6>Avatar:</h6>
           <LoadingDiv height="150px" width="150px" />
         </>
       );
     } else {
       return (
         <>
-          <p>Avatar:</p>
+          <h6>Avatar:</h6>
           <AvatarBox1>
             {getAvatarDiv(avatarArr ? avatarArr[0] : null)}
           </AvatarBox1>
@@ -157,6 +171,9 @@ const ProfileAccountPage = (): JSX.Element => {
           <AvatarBox3>
             {getAvatarDiv(avatarArr ? avatarArr[2] : null)}
           </AvatarBox3>
+          <AvatarBox4>
+            {getAvatarDiv(avatarArr ? avatarArr[3] : null)}
+          </AvatarBox4>
         </>
       );
     }
@@ -172,7 +189,7 @@ const ProfileAccountPage = (): JSX.Element => {
       password: password,
       firstName: firstName,
       lastName: lastName,
-      country: loginUser ? loginUser.country : "",
+      country: country,
       birthday: loginUser ? loginUser.birthday : new Date(),
       location: loginUser ? loginUser.location : "",
       facebook: loginUser ? loginUser.facebook : "",
@@ -184,7 +201,7 @@ const ProfileAccountPage = (): JSX.Element => {
       avatarImage: newArr,
       likeShowcase: loginUser?.likeShowcase ? loginUser?.likeShowcase : [],
       followManga: loginUser?.followManga ? loginUser?.followManga : [],
-      followUsers:loginUser?.followUsers ? loginUser?.followUsers : [],
+      followUsers: loginUser?.followUsers ? loginUser?.followUsers : [],
       awesomeNum: loginUser?.awesomeNum ? loginUser?.awesomeNum : 0,
     };
     setLoading(true);
@@ -213,20 +230,36 @@ const ProfileAccountPage = (): JSX.Element => {
             <p>{loginUser?.userEmail}</p>
           </ProfileAccountHeaderDiv>
           <PasswordInput>
-            <p>Password:</p>
+            <h6>Password</h6>
             <Input placeholder={password} onChange={onChange}></Input>
           </PasswordInput>
-          <ConfirmPasswordInput>
-            <p></p>
-            <Input placeholder={"confirm password"} onChange={onChange}></Input>
-          </ConfirmPasswordInput>
           <PasswordInput>
-            <p>First Name:</p>
-            <Input placeholder={firstName} onChange={onChange}></Input>
+            <h6>Please Confirm the Password </h6>
+            <Input placeholder={"confirm password"} onChange={onChange}></Input>
           </PasswordInput>
           <PasswordInput>
-            <p>Last Name:</p>
+            <h6>Name</h6>
+            <Input placeholder={firstName} onChange={onChange}></Input>
             <Input placeholder={lastName} onChange={onChange}></Input>
+          </PasswordInput>
+          <PasswordInput>
+            <h6>Country</h6>
+            <Select
+              value={country}
+              style={{ width: "100%" }}
+              onSelect={(e: string) => setCountry(e as string)}
+            >
+              {flagArr.map((value, index) => {
+                return (
+                  <Option key={index} value={value}>
+                    <div style={{ display: "flex" }}>
+                      <Flag country={flagGet(value)} />
+                      <p style={{ marginLeft: "10px" }}>{flagGetName(value)}</p>
+                    </div>
+                  </Option>
+                );
+              })}
+            </Select>
           </PasswordInput>
           <AvatarBox>{getAvatarBox()}</AvatarBox>
           <SubmitButtonDiv>

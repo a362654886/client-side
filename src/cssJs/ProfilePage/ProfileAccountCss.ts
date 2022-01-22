@@ -1,39 +1,44 @@
 import styled from "styled-components";
 
 export const ProfileAccountDiv = styled.div`
-  margin-top: 45px;
-  margin-left: 130px;
   margin-bottom: 134px;
 `;
 
 export const ProfileAccountHeaderDiv = styled.div`
-  display: flex;
   h6 {
+    width: 100%;
+    height: 48px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     font-size: 14px;
     font-weight: bold;
+    line-height: 32px;
+    color: #302d46;
     margin-bottom: 0px;
-    line-height: 22px;
   }
   p {
-    margin-left: 40px;
-    margin-bottom: 0px;
+    width: 201px;
+    height: 32px;
   }
 `;
 
 export const PasswordInput = styled.div`
-  margin-top: 26px;
-  display: flex;
-  p {
-    width: 65px;
-    height: 22px;
+  margin-top: 24px;
+  h6 {
+    width: 100%;
+    height: 48px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     font-size: 14px;
     font-weight: bold;
     line-height: 32px;
+    color: #302d46;
+    margin-bottom: 0px;
   }
   Input {
-    margin-left: 27px;
-    width: 147px;
-    height: 32px;
+    width: 320px;
+    height: 40px;
+    margin-top: 8px;
   }
 `;
 
@@ -57,16 +62,19 @@ export const ConfirmPasswordInput = styled.div`
 export const AvatarBox = styled.div`
   margin-top: 31px;
   height: 230px;
-  p {
-    width: 65px;
-    height: 22px;
+  h6 {
+    width: 100%;
+    height: 48px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     font-size: 14px;
     font-weight: bold;
     line-height: 32px;
+    color: #302d46;
     margin-bottom: 0px;
   }
 `;
 
 export const SubmitButtonDiv = styled.div`
-  margin-left: 147px;
+  margin-left: 100px;
 `;

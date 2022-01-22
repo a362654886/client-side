@@ -64,6 +64,10 @@ import { Spin } from "antd";
 import { MoreRight } from "../../../cssJs/basicCss";
 import moreRightImg from "../../../files/moreRightArrow.png";
 import SettingImg from "../../../components/SettingImg";
+import ProfileWrapperDiv from "../../../components/ProfileWrapperDiv";
+import { _getDate } from "../../../helperFns/timeFn";
+import Flag from "react-flagkit";
+import { flagGet } from "../../../helperFns/flag";
 
 interface IProps {
   anime: Anime | null;
@@ -220,6 +224,7 @@ const AnimeOneForum = ({
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        userCountry: `${loginUser.country}`,
         anime: anime?._id as string,
       };
       const r = await forumAdd(forum);
@@ -267,6 +272,7 @@ const AnimeOneForum = ({
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        userCountry: `${loginUser.country}`,
         anime: anime?._id as string,
       };
       const r = await forumItemAdd(forumItem);
@@ -328,6 +334,7 @@ const AnimeOneForum = ({
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        userCountry: `${loginUser.country}`,
         anime: anime?._id as string,
       };
       const r = await forumSecondItemAdd(secondForumItem);
@@ -757,17 +764,30 @@ const AnimeOneForum = ({
       return (
         <ForumIframe key={index}>
           <div style={{ display: "flex", height: "72px" }}>
-            <ForumImg src={`${forum.userAvatar}`} />
-            <ForumName>{forum.userName}</ForumName>
+            <ProfileWrapperDiv
+              userId={forum.userId}
+              element={
+                <>
+                  <ForumImg src={`${forum.userAvatar}`} />
+                  <ForumName>
+                    {forum.userName}
+                    <Flag
+                      style={{ marginLeft: "5px", marginRight: "10px" }}
+                      country={flagGet(
+                        forum.userCountry ? forum.userCountry : ""
+                      )}
+                    />
+                  </ForumName>
+                </>
+              }
+            ></ProfileWrapperDiv>
             <SettingImg
               userId={forum.userId}
               userName={forum.userName}
               userImg={forum.userAvatar}
               marginTop="24px"
             />
-            <ForumTime>{`${date.getDate()}-${
-              date.getMonth() + 1
-            }-${date.getFullYear()}`}</ForumTime>
+            <ForumTime>{_getDate(date)}</ForumTime>
           </div>
           {forum.edit ? (
             <>
@@ -866,17 +886,30 @@ const AnimeOneForum = ({
         <>
           <ForumItemBox key={secondIndex}>
             <div style={{ display: "flex" }}>
-              <ForumImg src={`${forum.userAvatar}`} />
-              <ForumName>{forum.userName}</ForumName>
+              <ProfileWrapperDiv
+                userId={forum.userId}
+                element={
+                  <>
+                    <ForumImg src={`${forum.userAvatar}`} />
+                    <ForumName>
+                      {forum.userName}
+                      <Flag
+                        style={{ marginLeft: "5px", marginRight: "10px" }}
+                        country={flagGet(
+                          forum.userCountry ? forum.userCountry : ""
+                        )}
+                      />
+                    </ForumName>
+                  </>
+                }
+              ></ProfileWrapperDiv>
               <SettingImg
                 userId={forum.userId}
                 userName={forum.userName}
                 userImg={forum.userAvatar}
                 marginTop="24px"
               />
-              <ForumTime>{`${date.getDate()}-${
-                date.getMonth() + 1
-              }-${date.getFullYear()}`}</ForumTime>
+              <ForumTime>{_getDate(date)}</ForumTime>
             </div>
             <div style={{ marginLeft: "40px" }}>
               {forum.edit ? (
@@ -1001,17 +1034,30 @@ const AnimeOneForum = ({
           <>
             <ForumSecondItemBox key={thirdIndex}>
               <div style={{ display: "flex" }}>
-                <ForumImg src={`${forum.userAvatar}`} />
-                <ForumName>{forum.userName}</ForumName>
+                <ProfileWrapperDiv
+                  userId={forum.userId}
+                  element={
+                    <>
+                      <ForumImg src={`${forum.userAvatar}`} />
+                      <ForumName>
+                        {forum.userName}
+                        <Flag
+                          style={{ marginLeft: "5px", marginRight: "10px" }}
+                          country={flagGet(
+                            forum.userCountry ? forum.userCountry : ""
+                          )}
+                        />
+                      </ForumName>
+                    </>
+                  }
+                ></ProfileWrapperDiv>
                 <SettingImg
                   userId={forum.userId}
                   userName={forum.userName}
                   userImg={forum.userAvatar}
                   marginTop="24px"
                 />
-                <ForumTime>{`${date.getDate()}-${
-                  date.getMonth() + 1
-                }-${date.getFullYear()}`}</ForumTime>
+                <ForumTime>{_getDate(date)}</ForumTime>
               </div>
               <div style={{ marginLeft: "40px" }}>
                 {forum.edit ? (

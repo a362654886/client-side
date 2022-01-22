@@ -6,6 +6,7 @@ export type ForumType = {
   userId: string;
   userAvatar: string;
   userName: string;
+  userCountry?: string;
   anime: string;
   edit?: boolean;
   items?: ForumItem[];
@@ -24,6 +25,7 @@ export type ForumItem = {
   userId: string;
   userAvatar: string;
   userName: string;
+  userCountry?: string;
   anime: string;
   edit?: boolean;
   showReplay?: boolean;
@@ -42,6 +44,7 @@ export type ForumSecondItem = {
   userId: string;
   userAvatar: string;
   userName: string;
+  userCountry?: string;
   anime: string;
   edit?: boolean;
   reply?: boolean;

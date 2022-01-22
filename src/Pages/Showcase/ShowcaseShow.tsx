@@ -81,6 +81,16 @@ const ShowcaseShow = (): JSX.Element => {
     })();
   }, [showCaseType]);
 
+  useEffect(() => {
+    if (pageNum == 1) {
+      (async function anyNameFunction() {
+        await searchType(showCaseType);
+      })();
+    } else {
+      setPageNum(1);
+    }
+  }, [ifNew]);
+
   const changeButton = (index: number) => {
     setChooseButton(index);
     switch (index) {
@@ -227,7 +237,13 @@ const ShowcaseShow = (): JSX.Element => {
 
   const searchType = async (type: ShowCaseEnum) => {
     setTypeLoading(true);
-    const showcaseResult = await showCaseAllGet(type, pageNum, pageSize, "");
+    const showcaseResult = await showCaseAllGet(
+      type,
+      ifNew ? "new" : "hot",
+      pageNum,
+      pageSize,
+      ""
+    );
     if (showcaseResult) {
       //setAllShowCases(allShowCases.concat(showcaseResult.result));
       setAllShowCases(showcaseResult.result);
@@ -240,6 +256,7 @@ const ShowcaseShow = (): JSX.Element => {
     setLoading(true);
     const showcaseResult = await showCaseAllGet(
       showCaseType,
+      ifNew ? "new" : "hot",
       pageNum,
       pageSize,
       ""

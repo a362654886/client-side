@@ -35,6 +35,9 @@ import getMoreImg from "../../../files/getMore.png";
 import moreRightImg from "../../../files/moreRightArrow.png";
 import { MoreRight } from "../../../cssJs/basicCss";
 import SettingImg from "../../../components/SettingImg";
+import ProfileWrapperDiv from "../../../components/ProfileWrapperDiv";
+import Flag from "react-flagkit";
+import { flagGet } from "../../../helperFns/flag";
 
 interface IProps {
   anime: Anime | null;
@@ -133,10 +136,25 @@ const AnimeOneProducts = ({
             >{`Here to buy>>`}</LinkP>
             <p>From</p>
             <ProductAvatarDiv>
-              <AvatarImg>
-                <img src={product.userAvatar} />
-              </AvatarImg>
-              <AvatarName>{product.userName}</AvatarName>
+              <ProfileWrapperDiv
+                userId={product.userId}
+                element={
+                  <>
+                    <AvatarImg>
+                      <img src={product.userAvatar} />
+                    </AvatarImg>
+                    <AvatarName>
+                      {product.userName}
+                      <Flag
+                        style={{ marginLeft: "5px" }}
+                        country={flagGet(
+                          product.userCountry ? product.userCountry : ""
+                        )}
+                      />
+                    </AvatarName>
+                  </>
+                }
+              ></ProfileWrapperDiv>
               <SettingImg
                 userId={product.userId}
                 userName={product.userName}

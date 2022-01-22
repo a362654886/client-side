@@ -50,6 +50,7 @@ export const showCaseSecondReplyAdd = async (
 
 export const showCaseAllGet = async (
   type: ShowCaseEnum,
+  sortType: string,
   page: number,
   pageSize: number,
   userId: string
@@ -59,7 +60,7 @@ export const showCaseAllGet = async (
 } | null> => {
   const endpoint =
     basicURL +
-    `showCasesGet?type=${type}&page=${page}&pageSize=${pageSize}&userId=${userId}`;
+    `showCasesGet?type=${type}&sortType=${sortType}&page=${page}&pageSize=${pageSize}&userId=${userId}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

@@ -24,3 +24,8 @@ export const MoreRight = styled.div`
     margin-bottom: 0px;
   }
 `;
+
+export const ProfileWrapper = styled.div`
+  cursor: pointer;
+  display: flex;
+`;

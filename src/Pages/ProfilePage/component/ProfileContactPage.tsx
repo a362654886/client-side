@@ -22,6 +22,7 @@ import { IStoreState } from "../../../types/IStoreState";
 import { User } from "../../../types/User";
 import facebookPng from "./../../../files/facebook.svg";
 import insPng from "./../../../files/insImage.svg";
+import profileLink from "./../../../files/profileLink.png";
 
 const ProfileContactPage = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -35,6 +36,7 @@ const ProfileContactPage = (): JSX.Element => {
   const [location, setLocation] = useState<string>("");
   const [facebook, setFacebook] = useState<string>("");
   const [ins, setIns] = useState<string>("");
+  const [link, setLink] = useState<string>("");
   const [ifLoading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -87,7 +89,7 @@ const ProfileContactPage = (): JSX.Element => {
       avatarImage: loginUser ? loginUser.avatarImage : [],
       likeShowcase: loginUser?.likeShowcase ? loginUser?.likeShowcase : [],
       followManga: loginUser?.followManga ? loginUser?.followManga : [],
-      followUsers:loginUser?.followUsers ? loginUser?.followUsers : [],
+      followUsers: loginUser?.followUsers ? loginUser?.followUsers : [],
       awesomeNum: loginUser?.awesomeNum ? loginUser?.awesomeNum : 0,
     };
     setLoading(true);
@@ -112,8 +114,8 @@ const ProfileContactPage = (): JSX.Element => {
       return (
         <>
           <ContactEmailInput>
-            <p>Email:</p>
-            <Input placeholder={email} onChange={onChange}></Input>
+            <p>Contact Email:</p>
+            <Input placeholder={email} onChange={onChange} disabled></Input>
           </ContactEmailInput>
           <ContactTelInput>
             <p>Tel:</p>
@@ -124,16 +126,20 @@ const ProfileContactPage = (): JSX.Element => {
             <Input placeholder={location} onChange={onChange}></Input>
           </ContactLocationInput>
           <SocialDiv>
-            <p>Social Pages</p>
+            <p>Pages</p>
             <LogoInput>
-              <PasswordInput>
+              <div>
                 <img src={facebookPng} />
                 <Input placeholder={facebook} onChange={onChange}></Input>
-              </PasswordInput>
-              <PasswordInput>
+              </div>
+              <div>
                 <img src={insPng} />
                 <Input placeholder={ins} onChange={onChange}></Input>
-              </PasswordInput>
+              </div>
+              <div>
+                <img src={profileLink} />
+                <Input placeholder={link} onChange={onChange}></Input>
+              </div>
             </LogoInput>
           </SocialDiv>
           <ContactSubmitButtonDiv>

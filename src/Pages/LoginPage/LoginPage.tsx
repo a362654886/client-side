@@ -17,6 +17,7 @@ import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { LoadingType, LoginType } from "../../types/EnumTypes";
 import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import { PROFILE_USER_UPDATE } from "../../redux/profileUser";
 
 const LoginPage = (): JSX.Element => {
   const history = useHistory();
@@ -49,6 +50,10 @@ const LoginPage = (): JSX.Element => {
       dispatch({
         payload: LoginType.SUCCESS,
         type: AUTH_SUCCESS,
+      });
+      dispatch({
+        payload: user,
+        type: PROFILE_USER_UPDATE,
       });
       dispatch({
         payload: user,

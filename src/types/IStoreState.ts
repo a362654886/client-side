@@ -11,4 +11,5 @@ export interface IStoreState {
   newState: NewType | null;
   loadingState: LoadingType;
   mangaState: ShowCaseType | null;
+  profileUserState: User | null;
 }

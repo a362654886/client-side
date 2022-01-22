@@ -3,14 +3,25 @@ import { useEffect, useState } from "react";
 import {
   ShowcaseSideDiv,
   ShowcaseSideDivHeader,
+  ShowcaseSideName,
+  ShowcaseSideNum,
   ShowcaseSideUser,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import { userAwesomeGet } from "../../api/userApi";
 import { User } from "../../types/User";
-import showcaseImg from "../../files/showCaseAwesomeClick.svg";
+import hotLike from "../../files/hotLike.png";
+import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
+import { AnimOneSide, AnimOneSideTwo } from "../../cssJs/AnimePage/AnimeOneCss";
+import { MoreRight } from "../../cssJs/basicCss";
+import moreRightImg from "../../files/moreRightArrow.png";
+import { newAllGet } from "../../api/newsAPI";
+import { NewType } from "../../types/NewsType";
+import Flag from "react-flagkit";
+import { flagGet } from "../../helperFns/flag";
 
 const ShowcaseSide = (): JSX.Element => {
   const [users, setUsers] = useState<User[]>([]);
+  const [allNews, setAllNews] = useState<NewType[]>([]);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -22,6 +33,19 @@ const ShowcaseSide = (): JSX.Element => {
     console.log(users);
   }, [users]);
 
+  useEffect(() => {
+    (async function anyNameFunction() {
+      await getNews();
+    })();
+  }, []);
+
+  const getNews = async () => {
+    const animeResult = await newAllGet("", 1, 3);
+    if (animeResult) {
+      setAllNews(animeResult.result);
+    }
+  };
+
   const searchAwesome = async () => {
     const showcaseResult = await userAwesomeGet();
     if (showcaseResult) {
@@ -29,28 +53,100 @@ const ShowcaseSide = (): JSX.Element => {
     }
   };
 
+  const formatNum = (num: number) => {
+    if (num > 1000) {
+      return `${(num * 0.01).toFixed(2)}M`;
+    } else {
+      return num;
+    }
+  };
+
   return (
-    <ShowcaseSideDiv>
-      <ShowcaseSideDivHeader>
-        <div>
-          <img src={showcaseImg} />
-          <h2>Awesome Board</h2>
-        </div>
+    <div
+      style={{
+        display:
+          document.documentElement.clientWidth > 1181 ? "inline" : "none",
+      }}
+    >
+      <ShowcaseSideDiv>
+        <ShowcaseSideDivHeader>
+          <div>
+            <h2>Awesome Board</h2>
+            <img src={hotLike} />
+          </div>
+        </ShowcaseSideDivHeader>
         {users.map((user, index) => {
           return (
             <ShowcaseSideUser key={index}>
-              <img
-                src={`https://animeimagebucket.s3.amazonaws.com/${user.avatar}`}
-              />
-              <h6>{`${user.firstName}.${user.lastName
-                .substring(0, 1)
-                .toUpperCase()}`}</h6>
-              <p>{user.awesomeNum}</p>
+              <ProfileWrapperDiv
+                userId={user._id}
+                element={
+                  <>
+                    <img
+                      src={`https://animeimagebucket.s3.amazonaws.com/${user.avatar}`}
+                    />
+                    <ShowcaseSideName>
+                      {`${user.firstName}.${user.lastName
+                        .substring(0, 1)
+                        .toUpperCase()}`}
+                      <Flag
+                        style={{ marginLeft: "5px" }}
+                        country={flagGet(user.country ? user.country : "")}
+                      />
+                    </ShowcaseSideName>
+                  </>
+                }
+              ></ProfileWrapperDiv>
+              <ShowcaseSideNum>{formatNum(user.awesomeNum)}</ShowcaseSideNum>
             </ShowcaseSideUser>
           );
         })}
-      </ShowcaseSideDivHeader>
-    </ShowcaseSideDiv>
+        <div
+          style={{
+            width: "276px",
+            marginTop: "16px",
+          }}
+        >
+          <AnimOneSide>
+            <h6 style={{ fontWeight: "bold" }}>News</h6>
+            {allNews.map((news, index) => {
+              return (
+                <p key={index}>
+                  {news.header.length > 35
+                    ? `${news.header.substring(0, 35)}.....`
+                    : news.header}
+                </p>
+              );
+            })}
+            <MoreRight
+              onClick={() => {
+                console.log("more");
+              }}
+            >
+              <img src={moreRightImg} />
+              <p
+                style={{
+                  height: "32px",
+                  lineHeight: "32px;",
+                  color: "#302d46;",
+                  fontWeight: "bold",
+                  marginTop: "0px",
+                  marginBottom: "0px",
+                }}
+              >
+                More
+              </p>
+            </MoreRight>
+          </AnimOneSide>
+          <AnimOneSideTwo>
+            <h6>FQA</h6>
+            <p>How to gain points?</p>
+            <p>How to redeem a gift product?</p>
+            <p>How to share a resource?</p>
+          </AnimOneSideTwo>
+        </div>
+      </ShowcaseSideDiv>
+    </div>
   );
 };
 

@@ -4,11 +4,14 @@ import AnimeButton from "../../../components/Button";
 import {
   ButtonsDiv,
   ProfileCollectionDiv,
+  ProfileSubDiv,
 } from "../../../cssJs/ProfilePage/ProfileCss";
 import ProfileShowcaseCollections from "../profileShowcases/ProfileShowcaseCollections";
 import ProfileShowcaseFollow from "../profileShowcases/ProfileShowcaseFollow";
 import ProfileShowcaseIllustration from "../profileShowcases/ProfileShowcaseIllustration";
 import ProfileShowcaseManga from "../profileShowcases/ProfileShowcaseManga";
+import stateAvailable from "../../../files/stateAvailable.png";
+import stateSoldOut from "../../../files/stateSoldOut.png";
 
 const ProfileShowcasePage = (): JSX.Element => {
   const buttonsColor = [
@@ -50,29 +53,17 @@ const ProfileShowcasePage = (): JSX.Element => {
       ) => {
         if (index == chooseButton) {
           return (
-            <AnimeButton
-              para=""
-              text={button.text}
-              width="120px"
-              height="32px"
-              textColor="black"
-              backGroundColor="#AAFFC9 "
-              borderColor="#AAFFC9"
-              buttonClick={() => changeButton(index)}
-            />
+            <ProfileSubDiv onClick={() => changeButton(index)}>
+              <img src={stateAvailable} />
+              <h6>{button.text}</h6>
+            </ProfileSubDiv>
           );
         } else {
           return (
-            <AnimeButton
-              para=""
-              text={button.text}
-              width="120px"
-              height="32px"
-              textColor="#4BA3C3"
-              backGroundColor="white "
-              borderColor="#4BA3C3"
-              buttonClick={() => changeButton(index)}
-            />
+            <ProfileSubDiv onClick={() => changeButton(index)}>
+              <img src={stateSoldOut} />
+              <h6>{button.text}</h6>
+            </ProfileSubDiv>
           );
         }
       }

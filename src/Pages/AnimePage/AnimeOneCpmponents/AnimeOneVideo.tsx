@@ -35,6 +35,9 @@ import getMoreImg from "../../../files/getMore.png";
 import moreRightImg from "../../../files/moreRightArrow.png";
 import { MoreRight } from "../../../cssJs/basicCss";
 import SettingImg from "../../../components/SettingImg";
+import ProfileWrapperDiv from "../../../components/ProfileWrapperDiv";
+import Flag from "react-flagkit";
+import { flagGet } from "../../../helperFns/flag";
 
 interface IProps {
   anime: Anime | null;
@@ -80,6 +83,7 @@ const AnimeOneVideo = ({
       pageNum,
       pageSize
     );
+    console.log(videoResult);
     if (videoResult && videos.length < videoResult.count) {
       setVideos(videos.concat(videoResult.result));
       setCount(videoResult.count);
@@ -128,8 +132,23 @@ const AnimeOneVideo = ({
               date.getMonth() + 1
             }-${date.getFullYear()}`}</TimeText>
             <FromText>from</FromText>
-            <VideoBottomImg src={`${video.userAvatar}`} />
-            <UserNameText>{video.userName}</UserNameText>
+            <ProfileWrapperDiv
+              userId={video.userId}
+              element={
+                <>
+                  <VideoBottomImg src={`${video.userAvatar}`} />
+                  <UserNameText>
+                    {video.userName}
+                    <Flag
+                      style={{ marginLeft: "5px" }}
+                      country={flagGet(
+                        video.userCountry ? video.userCountry : ""
+                      )}
+                    />
+                  </UserNameText>
+                </>
+              }
+            ></ProfileWrapperDiv>
             <SettingImg
               userId={video.userId}
               userName={video.userName}

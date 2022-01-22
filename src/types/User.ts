@@ -1,5 +1,6 @@
 export type User = {
   _id: string;
+  sequenceId?: string;
   userEmail: string;
   password: string;
   firstName: string;

@@ -17,7 +17,9 @@ import {
   HeaderTitle,
   LoadingBox,
   LoginBox,
+  LoginCountry,
   LoginImg,
+  LoginOutImg,
   MenuButton,
   ProfileDiv,
 } from "../cssJs/headerCss";
@@ -31,9 +33,11 @@ import {
 } from "../cssJs/footerCss";
 import loadingImg from "../files/loading.gif";
 import { Dropdown, Menu } from "antd";
+import Flag from "react-flagkit";
+import { flagGet } from "../helperFns/flag";
+import logOut from "../files/logOut.png";
 
 const MainPage = (): JSX.Element => {
-
   const [size, setSize] = useState({
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
@@ -64,6 +68,8 @@ const MainPage = (): JSX.Element => {
       history.push({
         pathname: "/mainPage/home",
       });
+    } else {
+      console.log(history.location.pathname);
     }
   }, []);
 
@@ -101,7 +107,9 @@ const MainPage = (): JSX.Element => {
         <>
           <LoginImg
             src={
-              loginUser.avatarImage ? loginUser.avatarImage[0].imageUrl : avatar
+              loginUser && loginUser.avatarImage
+                ? loginUser.avatarImage[0].imageUrl
+                : avatar
             }
           />
           <LoginBox onClick={() => toProfile("/mainPage/profilePage")}>
@@ -109,6 +117,15 @@ const MainPage = (): JSX.Element => {
               .substring(0, 1)
               .toUpperCase()}`}</p>
           </LoginBox>
+          <LoginCountry>
+            <Flag country={flagGet(loginUser ? loginUser.country : "")} />
+          </LoginCountry>
+          <LoginOutImg
+            src={logOut}
+            onClick={() => {
+              console.log("logout");
+            }}
+          />
         </>
       );
     } else {

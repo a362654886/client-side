@@ -7,4 +7,5 @@ export type Product = {
   uploadTime: Date;
   userAvatar: string;
   userName: string;
+  userCountry?: string;
 };

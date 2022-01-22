@@ -1,14 +1,15 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { showCaseAllGet } from "../../../api/showcaseAPI";
-import AnimeButton, { MiddleDiv } from "../../../components/Button";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ShowCaseEnum, ShowCaseType } from "../../../types/showCaseType";
 import loadingImg from "../../../files/loading.gif";
+import getMoreImg from "../../../files/getMore.png";
 import ShowcaseForum from "../../Showcase/ShowcaseForum";
 import { User } from "../../../types/User";
 import { useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
+import { ProfileMiddleDiv } from "../../../cssJs/ProfilePage/ProfileCss";
 
 const ProfileShowcaseCollections = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -43,6 +44,7 @@ const ProfileShowcaseCollections = (): JSX.Element => {
     setTypeLoading(true);
     const showcaseResult = await showCaseAllGet(
       ShowCaseEnum.Collections,
+      "hot",
       pageNum,
       pageSize,
       loginUser ? loginUser._id : ""
@@ -59,6 +61,7 @@ const ProfileShowcaseCollections = (): JSX.Element => {
     setLoading(true);
     const showcaseResult = await showCaseAllGet(
       ShowCaseEnum.Collections,
+      "hot",
       pageNum,
       pageSize,
       loginUser ? loginUser._id : ""
@@ -99,18 +102,12 @@ const ProfileShowcaseCollections = (): JSX.Element => {
         )}
         {getLoading()}
         {allShowCases.length < count ? (
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"View More"}
-              width="120px"
-              height="32px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => getMore()}
-            />
-          </MiddleDiv>
+          <ProfileMiddleDiv onClick={() => getMore()}>
+            <div>
+              <img src={`${getMoreImg}`} />
+              <p>Load More</p>
+            </div>
+          </ProfileMiddleDiv>
         ) : (
           <></>
         )}

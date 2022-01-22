@@ -49,6 +49,9 @@ export const EmailInput = styled.div`
     width: 100%;
     height: 38px;
   }
+  Select {
+    width: 100%;
+  }
 `;
 
 export const PasswordInput = styled.div`
@@ -178,7 +181,6 @@ export const CountryInput = styled.div`
 
 export const AvatarInput = styled.div`
   margin-top: 8px;
-  display: flex;
   height: 178px;
   p {
     width: 48px;
@@ -197,17 +199,22 @@ export const SubmitClickButton = styled.div`
 
 export const AvatarBox1 = styled.div`
   display: inline;
-  margin-left: 85px;
+  margin-left: 32px;
   position: absolute;
 `;
 export const AvatarBox2 = styled.div`
   display: inline;
-  margin-left: 166px;
+  margin-left: 96px;
   position: absolute;
 `;
 export const AvatarBox3 = styled.div`
   display: inline;
-  margin-left: 238px;
+  margin-left: 160px;
+  position: absolute;
+`;
+export const AvatarBox4 = styled.div`
+  display: inline;
+  margin-left: 224px;
   position: absolute;
 `;
 

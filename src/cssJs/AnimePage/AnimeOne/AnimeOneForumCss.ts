@@ -54,7 +54,7 @@ export const ForumName = styled.p`
   line-height: 32px;
   margin-left: 8px;
   font-size: 14px;
-  width: 84px;
+  width: auto;
   margin-top: 20px;
 `;
 

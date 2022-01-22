@@ -114,7 +114,7 @@ export const ShowName = styled.p`
   margin-right: 16px;
   height: 32px;
   font-size: 16px;
-  width: 47px;
+  width: auto;
 `;
 
 export const ShowcaseSettingImg = styled.img`
@@ -650,50 +650,68 @@ export const EpisodesComments = styled.div`
 export const ShowcaseSideDiv = styled.div`
   width: 276px;
   height: 648px;
-  margin-left: 86px;
+  margin-left: 42px;
   margin-top: 8px;
-  background-color: #424242;
 `;
 
 export const ShowcaseSideDivHeader = styled.div`
   width: 276px;
-  height: auto;
-  padding-top: 19px;
-  padding-bottom: 19px;
+  height: 56px;
+  padding: 8px 16px;
+  background-color: #424242;
   div {
     display: flex;
-    margin-left: 16px;
   }
   img {
-    height: 32px;
-    width: 32px;
+    height: 40px;
+    width: 40px;
+    margin-left: 16px;
+    margin-top: 4px;
   }
   h2 {
     font-size: 24px;
-    color: #f5a623;
-    font-weight: bold;
-    line-height: 32px;
-    margin-left: 8px;
+    color: #ffdf00;
+    line-height: 40px;
+    margin-bottom: 0px;
   }
 `;
 
 export const ShowcaseSideUser = styled.div`
   display: flex;
-  margin-top: 16px;
-  height: 40px;
+  padding-top: 16px;
+  height: 73px;
+  width: 276px;
+  position: relative;
   img {
     height: 40px;
     width: 40px;
   }
-  h6 {
-    line-height: 40px;
-    color: white;
-    font-weight: bold;
-    margin-left: 16px;
-  }
   p {
     margin-left: 14px;
-    color: #ffdf00;
     line-height: 40px;
   }
+  border-bottom: 1px solid #e2f6fe;
+`;
+
+export const ShowcaseSideName = styled.h6`
+  line-height: 40px;
+  font-weight: bold;
+  margin-left: 4px;
+  font-size: 16px;
+  img {
+    height: 16px;
+  }
+`;
+
+export const ShowcaseSideNum = styled.p`
+  position: absolute;
+  line-height: 40px;
+  width: 64px;
+  float: right;
+  background-color: #ffdf00;
+  right: 0px;
+  text-align: center;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #ef392a;
 `;

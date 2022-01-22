@@ -30,6 +30,9 @@ import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import AnimeButton from "../../components/Button";
 import SettingImg from "../../components/SettingImg";
+import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
+import Flag from "react-flagkit";
+import { flagGet } from "../../helperFns/flag";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -121,8 +124,8 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
         loginUser?._id as string,
         awesomeArr
       );
-      console.log(animeLikeResult)
-      console.log(userLikeResult)
+      console.log(animeLikeResult);
+      console.log(userLikeResult);
       await userUpdateAwesome(loginUser?._id as string, true);
       setLoading(false);
     } else {
@@ -149,7 +152,7 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
           loginUser?._id as string,
           awesomeArr
         );
-        console.log(animeLikeResult)
+        console.log(animeLikeResult);
         console.log(userLikeResult);
         await userUpdateAwesome(loginUser?._id as string, false);
         setLoading(false);
@@ -199,8 +202,23 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
           <ShowcaseMangaHeader>
             <ShowcaseMangaHeaderP>shared by </ShowcaseMangaHeaderP>
             <ShowAvatarDiv>
-              <ShowImg src={`${showcase.userAvatar}`} />
-              <ShowName>{showcase.userName}</ShowName>
+              <ProfileWrapperDiv
+                userId={showcase.userId}
+                element={
+                  <>
+                    <ShowImg src={`${showcase.userAvatar}`} />
+                    <ShowName>
+                      {showcase.userName}
+                      <Flag
+                        style={{ marginLeft: "5px" }}
+                        country={flagGet(
+                          showcase.userCountry ? showcase.userCountry : ""
+                        )}
+                      />
+                    </ShowName>
+                  </>
+                }
+              ></ProfileWrapperDiv>
               <SettingImg
                 userId={showcase.userId}
                 userName={showcase.userName}

@@ -123,7 +123,7 @@ const AnimeOne = (): JSX.Element => {
         return (
           <AnimeOneVideo
             anime={chooseAnime}
-            pageSizeSetting={1}
+            pageSizeSetting={6}
             ifShowHeader={true}
             ifShowAdd={true}
             toAddVideo={(page: number) => changeButton(page)}
@@ -134,7 +134,7 @@ const AnimeOne = (): JSX.Element => {
         return (
           <AnimeOneProducts
             anime={chooseAnime}
-            pageSizeSetting={3}
+            pageSizeSetting={6}
             ifShowHeader={true}
             ifShowAdd={true}
             toAddProduct={(page: number) => changeButton(page)}
@@ -144,7 +144,7 @@ const AnimeOne = (): JSX.Element => {
         return (
           <AnimeOneForum
             anime={chooseAnime}
-            pageSizeSetting={3}
+            pageSizeSetting={6}
             ifShowHeader={true}
             ifShowAdd={true}
           />

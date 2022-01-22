@@ -40,10 +40,10 @@ const AnimeShowPage = (): JSX.Element => {
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
   const [ifNew, setIfNew] = useState<boolean>(true);
   const [sortType, setSortType] = useState<string>("new");
-  const pageSize = 4;
+  const pageSize = 6;
 
   useEffect(() => {
-    if (page > 1) {
+    if (page >= 1) {
       (async function anyNameFunction() {
         await searchMore();
       })();
@@ -61,7 +61,7 @@ const AnimeShowPage = (): JSX.Element => {
   const onChange = (e: React.ChangeEvent<Element>): void => {
     const type = (e.target as HTMLInputElement).placeholder;
     switch (type) {
-      case "searchValue":
+      case "title":
         setSearchValue((e.target as HTMLInputElement).value);
         break;
     }
@@ -207,7 +207,7 @@ const AnimeShowPage = (): JSX.Element => {
       <AnimSearchBox className="row">
         <Input
           className="col-xl-10 col-md-10 col-sm-10 col-10"
-          placeholder={"DECA-DENCE"}
+          placeholder={"title"}
           onChange={onChange}
         ></Input>
         <AnimSearchImg

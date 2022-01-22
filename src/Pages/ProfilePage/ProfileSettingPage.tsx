@@ -3,17 +3,23 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import AnimeButton from "../../components/Button";
+import SettingImg from "../../components/SettingImg";
 import {
+  NameDiv,
+  NameIdDiv,
   NamePic,
-  NameText,
-  ProfileBox,
+  NameSetting,
   ProfileDiv,
+  ProfileSettingBox,
 } from "../../cssJs/ProfilePage/ProfileCss";
 import { SettingButtonsDiv } from "../../cssJs/ProfilePage/ProfileSettingCss";
 import { IStoreState } from "../../types/IStoreState";
 import { Avatar, User } from "../../types/User";
 import ProfileAccountPage from "./component/ProfileAccountPage";
 import ProfileContactPage from "./component/ProfileContactPage";
+import avatarSetting from "../../files/avatarSetting.png";
+import Flag from "react-flagkit";
+import { flagGet } from "../../helperFns/flag";
 
 const ProfileSettingPage = (): JSX.Element => {
   const history = useHistory();
@@ -25,7 +31,7 @@ const ProfileSettingPage = (): JSX.Element => {
       backColor: "#F6F6F6",
     },
     {
-      text: "Contact",
+      text: "Info",
       color: "black",
       backColor: "white",
     },
@@ -46,7 +52,11 @@ const ProfileSettingPage = (): JSX.Element => {
 
   const changeButton = (index: number) => {
     setChooseButton(index);
-    setAccount(!account);
+    if (index == 0) {
+      setAccount(false);
+    } else {
+      setAccount(true);
+    }
   };
 
   const getButtons = () => {
@@ -67,7 +77,7 @@ const ProfileSettingPage = (): JSX.Element => {
               width="120px"
               height="32px"
               textColor="black"
-              backGroundColor="#F6F6F6 "
+              backGroundColor="#AAFFC9"
               borderColor="white"
               buttonClick={() => changeButton(index)}
             />
@@ -94,44 +104,37 @@ const ProfileSettingPage = (): JSX.Element => {
     account ? <ProfileContactPage /> : <ProfileAccountPage />;
 
   return (
-    <ProfileBox>
+    <ProfileSettingBox>
       <ProfileDiv>
         <NamePic
-          src={
-            (loginUser as User).avatarImage
-              ? ((loginUser as User).avatarImage as Avatar[])[0].imageUrl
-              : ""
-          }
+          src={((loginUser as User).avatarImage as Avatar[])[0].imageUrl}
         />
-        <NameText onClick={() => toPage("/mainPage/profilePage")}>
-          {`${(loginUser as User).firstName}.${(loginUser as User).lastName
-            .substring(0, 1)
-            .toUpperCase()}`}
-        </NameText>
-        <AnimeButton
-          para=""
-          text="Settings"
-          width="120px"
-          height="36px"
-          textColor="#F5A623"
-          backGroundColor="#FCF3CF "
-          borderColor="#F5A623"
-          buttonClick={() => toPage("/mainPage/ProfileSetting")}
-        />
-        <AnimeButton
-          para=""
-          text="Message"
-          width="120px"
-          height="36px"
-          textColor="#F5A623"
-          backGroundColor="#FCF3CF "
-          borderColor="#F5A623"
-          buttonClick={() => toPage("/mainPage/ProfileMessage")}
-        />
+        <NameDiv>
+          <NameSetting>
+            <p>
+              {`${(loginUser as User).firstName}.${(loginUser as User).lastName
+                .substring(0, 1)
+                .toUpperCase()}`}
+              <Flag
+                style={{ marginLeft: "5px" }}
+                country={flagGet(loginUser ? loginUser.country : "")}
+              />
+            </p>
+            <SettingImg
+              userId={(loginUser as User)._id}
+              userName={`${(loginUser as User).firstName}.${
+                (loginUser as User).lastName
+              }`}
+              userImg={avatarSetting}
+              marginTop="4px"
+            />
+          </NameSetting>
+          <NameIdDiv>(ID: 202201)</NameIdDiv>
+        </NameDiv>
       </ProfileDiv>
       <SettingButtonsDiv>{getButtons()}</SettingButtonsDiv>
       {getPart()}
-    </ProfileBox>
+    </ProfileSettingBox>
   );
 };
 

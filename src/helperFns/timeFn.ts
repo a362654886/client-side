@@ -5,6 +5,14 @@ export const getDate = (date: Date): string => {
   return `${month}/${date.getDate()}/${date.getFullYear()}`;
 };
 
+export const _getDate = (date: Date): string => {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${month < 10 ? `0${month}` : month}-${
+    day < 10 ? `0${day}` : day
+  }-${date.getFullYear()}`;
+};
+
 export const getTimeDifference = (time: Date): string => {
   const nowTime = new Date();
   const oldTime = new Date(time);
@@ -37,11 +45,11 @@ export const getDateString = (date: Date): string => {
 
 export const getMonentDate = (date: Date) => {
   if (date) {
-    const newDate = new Date(date)
+    const newDate = new Date(date);
     return moment()
       .set("year", newDate.getFullYear() as number)
-      .set("month", (newDate.getMonth() as number))
-      .set("date", (newDate.getDate() as number));
+      .set("month", newDate.getMonth() as number)
+      .set("date", newDate.getDate() as number);
   } else {
     return moment().set("year", 1900).set("month", 0).set("day", 1);
   }

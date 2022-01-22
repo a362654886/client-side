@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
 import { SHOWCASE_MANGA_ADD } from "../../../redux/showcaseManga";
 import ShowcaseFollowing from "../../Showcase/ShowcaseFollowing";
+import getMoreImg from "../../../files/getMore.png";
+import { ProfileMiddleDiv } from "../../../cssJs/ProfilePage/ProfileCss";
 
 const ProfileShowcaseFollow = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -113,18 +115,12 @@ const ProfileShowcaseFollow = (): JSX.Element => {
         )}
         {getLoading()}
         {allShowCases.length < count ? (
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"View More"}
-              width="120px"
-              height="32px"
-              textColor="#F5A623"
-              backGroundColor="#FBFCDB"
-              borderColor="#F5A623"
-              buttonClick={() => getMore()}
-            />
-          </MiddleDiv>
+          <ProfileMiddleDiv onClick={() => getMore()}>
+            <div>
+              <img src={`${getMoreImg}`} />
+              <p>Load More</p>
+            </div>
+          </ProfileMiddleDiv>
         ) : (
           <></>
         )}
