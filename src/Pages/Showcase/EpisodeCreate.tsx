@@ -103,6 +103,7 @@ const EpisodeCreate = (): JSX.Element => {
           border={"1px solid #F5A623"}
           text={"+ Image"}
           setImg={(value: ImageBody) => setNewImage(value)}
+          margin={"0px"}
         />
         <div style={{ marginTop: "32px", marginBottom: "32px" }}>
           <AnimeButton

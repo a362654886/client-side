@@ -263,6 +263,5 @@ export const flagGetName = (flag: string) => {
 
 export const flagGet = (flag: string) => {
   const index = flag.indexOf(")");
-  console.log(flag.substring(1, index))
   return flag.substring(1, index);
 };

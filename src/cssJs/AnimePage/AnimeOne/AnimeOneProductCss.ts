@@ -113,9 +113,10 @@ export const ProductHeader = styled.p`
   margin-bottom: 0px;
   height: 64px;
   line-height: 32px;
-  font-size: 14px;
+  font-size: 16px;
   color: #4a4a4a;
   text-align: left;
+  font-weight: bold;
 `;
 
 export const ProductImgDiv = styled.img`

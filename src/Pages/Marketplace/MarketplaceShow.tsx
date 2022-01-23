@@ -51,10 +51,8 @@ const MarketplaceShow = (): JSX.Element => {
   };
 
   const getMarketDiv = (marketArr: MarketType[] | null) => {
-    console.log(marketArr);
     if (marketArr) {
       return marketArr.map((market: MarketType, index: number) => {
-        console.log(market);
         return (
           <div
             className="col-xl-3 col-md-4 col-sm-6"

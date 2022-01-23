@@ -187,6 +187,7 @@ const ShowcaseCreate = (): JSX.Element => {
             text={""}
             setImg={(value: ImageBody) => setNewImage(value)}
             imageAdd={false}
+            margin={"20px auto"}
           />
         </>
       );
@@ -213,6 +214,7 @@ const ShowcaseCreate = (): JSX.Element => {
             border={"1px solid #F6F6F6"}
             text={"Change the Cover Image"}
             setImg={(value: ImageBody) => replaceNewImage(value)}
+            margin={"20px auto"}
           />
         </>
       );

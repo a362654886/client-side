@@ -5,7 +5,9 @@ export type MarketType = {
   title: string;
   price: number;
   description: string;
-  state: boolean;
+  state: string;
+  country: string;
+  location: string;
   priceHistory?: MarketPriceType[];
   userAvatar?: string;
   userName?: string;

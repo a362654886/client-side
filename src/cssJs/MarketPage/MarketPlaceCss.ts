@@ -109,9 +109,36 @@ export const MarketInputDiv = styled.div`
     height: 32px;
     font-weight: bold;
   }
+  p {
+    margin-top: 0px;
+  }
+
   input,
+  .ant-input-number {
+    height: 40px;
+  }
+
+  .ant-input-number {
+    width: 320px;
+  }
+
   textarea {
     margin-top: 8px;
+  }
+  margin-bottom: 8px;
+`;
+
+export const MarketLocationInputDiv = styled.div`
+  h6 {
+    height: 32px;
+    font-weight: bold;
+  }
+  p {
+    margin-top: 0px;
+  }
+
+  input {
+    width: 320px;
   }
   margin-bottom: 8px;
 `;
@@ -131,7 +158,7 @@ export const StateDiv = styled.div`
 `;
 
 export const PublishButtonsDiv = styled.div`
-  height: 24px;
+  height: 110px;
   margin-top: 24px;
   button {
     margin-top: 16px;

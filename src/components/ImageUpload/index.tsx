@@ -2,7 +2,7 @@ import { Spin, Upload } from "antd";
 import { RcFile, UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ImageAddButtonDiv, UploadButtons } from "./style";
 import add from "../../files/Add.svg";
@@ -32,6 +32,7 @@ interface IProps {
   backGroundColor: string;
   border: string;
   imageAdd?: boolean;
+  margin: string;
 }
 
 const ImageUpload = ({
@@ -43,8 +44,13 @@ const ImageUpload = ({
   backGroundColor,
   border,
   imageAdd,
+  margin,
 }: IProps): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(margin);
+  }, []);
 
   const fileCheck = (file: RcFile | undefined) => {
     if (file === undefined) {
@@ -168,6 +174,7 @@ const ImageUpload = ({
         fontWeight: "bold",
         fontSize: " 14px",
         textAlign: "center",
+        margin: margin,
       }}
     >
       {loading ? <Spin /> : getBody()}

@@ -149,6 +149,7 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
           border={"1px solid #D1D2D3"}
           text={"Upload"}
           setImg={(value: ImageBody) => setImg(value)}
+          margin={"0px"}
         />
       </UploadImageButton>
       <AdminAiredInput>

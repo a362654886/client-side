@@ -38,7 +38,7 @@ const MarketplaceShowOne = (): JSX.Element => {
   const [price, setPrice] = useState<number>(0);
   const [description, setDescription] = useState<string>("");
   const [imgArr, setImgArr] = useState<(string | ImageBody)[]>([]);
-  const [state, setState] = useState<boolean>(false);
+  const [state, setState] = useState<string>("");
   const [marketState, setMarketState] = useState<MarketType | null>(null);
 
   useEffect(() => {

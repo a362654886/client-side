@@ -576,7 +576,7 @@ export const EpisodesEditDiv = styled.div`
   height: 64px;
   padding-top:16px;
   padding-bottom:16px;
-  display:flex;
+  display: flex;
   cursor: pointer;
   img {
     height: 24px;

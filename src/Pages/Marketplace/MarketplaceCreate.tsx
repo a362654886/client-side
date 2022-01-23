@@ -1,4 +1,4 @@
-import { Button, Input } from "antd";
+import { Button, Input, InputNumber, Radio, Select, Space } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import ImageUpload, { ImageBody } from "../../components/ImageUpload";
@@ -7,6 +7,7 @@ import {
   MarketImgDiv,
   MarketImgLimitDiv,
   MarketInputDiv,
+  MarketLocationInputDiv,
   MarketPlaceTitle,
   MarketPlaceTitleDiv,
   MarketUploadImage,
@@ -26,6 +27,10 @@ import { IStoreState } from "../../types/IStoreState";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { marketAdd } from "../../api/marketAPI";
+import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
+import Flag from "react-flagkit";
+
+const { Option } = Select;
 
 const MarketplaceCreate = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -37,8 +42,10 @@ const MarketplaceCreate = (): JSX.Element => {
   const [title, setTitle] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
   const [imgArr, setImgArr] = useState<(string | ImageBody)[]>(["add"]);
-  const [state, setState] = useState<boolean>(false);
+  const [state, setState] = useState<string>("available");
 
   useEffect(() => {
     console.log(imgArr);
@@ -88,6 +95,8 @@ const MarketplaceCreate = (): JSX.Element => {
       price: parseFloat(price),
       description: description,
       state: state,
+      country: country,
+      location: city,
     };
     dispatch({
       payload: LoadingType.OPEN,
@@ -142,6 +151,7 @@ const MarketplaceCreate = (): JSX.Element => {
                       backGroundColor={"#F6F6F6"}
                       border={"1px solid #F6F6F6"}
                       text={"Image"}
+                      margin={"15px 0px 0px 0px"}
                       setImg={(value: ImageBody) => setNewImage(value)}
                     />
                   </div>
@@ -183,7 +193,7 @@ const MarketplaceCreate = (): JSX.Element => {
           </MarketInputDiv>
           <MarketInputDiv>
             <h6>Price</h6>
-            <Input value={price} onChange={(e) => setPrice(e.target.value)} />
+            <InputNumber value={price} onChange={(e) => setPrice(e)} /> $ (NZD)
           </MarketInputDiv>
           <MarketInputDiv>
             <h6>Write a Description</h6>
@@ -193,50 +203,71 @@ const MarketplaceCreate = (): JSX.Element => {
               onChange={(e) => setDescription(e.target.value)}
             />
           </MarketInputDiv>
-          <MarketInputDiv
-            style={{ cursor: "pointer" }}
-            onClick={() => setState(!state)}
+          <MarketLocationInputDiv>
+            <h6>Location</h6>
+            <Input
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </MarketLocationInputDiv>
+          <Select
+            style={{ width: "320px" }}
+            onSelect={(e) => setCountry(e as string)}
           >
+            {flagArr.map((value, index) => {
+              return (
+                <Option key={index} value={value}>
+                  <div style={{ display: "flex" }}>
+                    <Flag country={flagGet(value)} />
+                    <p style={{ marginLeft: "10px", marginTop: "-3px" }}>
+                      {flagGetName(value)}
+                    </p>
+                  </div>
+                </Option>
+              );
+            })}
+          </Select>
+          <MarketInputDiv>
             <h6>State</h6>
-            <StateDiv>
-              {state ? (
-                <div>
-                  <img src={stateAvailable} />
-                  <p>Available</p>
-                </div>
-              ) : (
-                <div>
-                  <img src={stateSoldOut} />
-                  <p>Sold Out</p>
-                </div>
-              )}
-            </StateDiv>
+            <Radio.Group
+              onChange={(e) => setState(e.target.value)}
+              value={state}
+            >
+              <Space direction="vertical">
+                <Radio value={"available"}>Available</Radio>
+                <Radio value={"soldOut"}>
+                  Sold Out (Please back edit to this state when you sell out
+                  your item.)
+                </Radio>
+              </Space>
+            </Radio.Group>
           </MarketInputDiv>
-        </MarketBodyDiv>
-        <PublishButtonsDiv>
-          <AnimeButton
-            para=""
-            text={"Publish"}
-            width="100%"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() => marketCreate()}
-          />
-          <MiddleDiv>
+          <PublishButtonsDiv>
             <AnimeButton
               para=""
-              text={"Cancel"}
-              width="120px"
+              text={"Publish"}
+              width="100%"
               height="32px"
-              textColor="black"
-              backGroundColor="white"
-              borderColor="#302D46"
-              buttonClick={() => console.log("cancel")}
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() => marketCreate()}
             />
-          </MiddleDiv>
-        </PublishButtonsDiv>
+            <MiddleDiv>
+              <AnimeButton
+                para=""
+                text={"Cancel"}
+                width="120px"
+                height="32px"
+                textColor="black"
+                backGroundColor="white"
+                borderColor="#302D46"
+                buttonClick={() => console.log("cancel")}
+              />
+            </MiddleDiv>
+          </PublishButtonsDiv>
+        </MarketBodyDiv>
       </div>
       <div className="col-xl-3 col-md-3 col-sm-3 col-3">side</div>
     </>

@@ -65,11 +65,11 @@ export const AnimeShowBox = styled.div`
 `;
 
 export const AnimeBox = styled.div`
-  width: 264px;
+  width: 260px;
   height: 344px;
   margin-right: 19px;
   img {
-    width: 264px;
+    width: 260px;
     height: 264px;
   }
   h6 {
@@ -101,6 +101,7 @@ export const LikeDiv = styled.div`
 export const CenterDiv = styled.div`
   text-align: center;
   margin-bottom: 40px;
+  margin-top: 40px;
 `;
 
 export const StarDiv = styled.div`
