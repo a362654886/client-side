@@ -50,6 +50,7 @@ export const MarketSearchInputDiv = styled.div`
 
 export const MarketBodyDiv = styled.div`
   height: auto;
+  width: 100%;
   p {
     font-size: 16px;
     margin-bottom: 0px;
@@ -68,9 +69,26 @@ export const MarketBodyDiv = styled.div`
 
 export const MarketBorder = styled.div`
   height: 68px;
-  width: 100%;
-  background-color: #f6f6f6;
+  display: flex;
   margin-top: 32px;
+  div {
+    width: 96px;
+    margin-right: 32px;
+    display: flex;
+    cursor: pointer;
+  }
+  p {
+    font-size: 16px;
+    line-height: 16px;
+    line-height: 32px;
+    font-weight: bold;
+    margin-top: 0px;
+  }
+  img {
+    width: 32px;
+    height: 32px;
+    margin-right: 4px;
+  }
 `;
 
 export const MarketUploadImage = styled.div`
@@ -197,6 +215,142 @@ export const MarketBox = styled.div`
   }
 `;
 
+export const MarketSortByDiv = styled.div`
+  width: 320px;
+  height: 528px;
+  border: 10px solid #a0a0a0;
+  padding: 0px 16px;
+  input {
+    height: 40px;
+    width: 200px;
+  }
+  p {
+    height: 32px;
+    margin-bottom: 0px;
+  }
+`;
+
+export const MarketSortLocation = styled.h3`
+  height: 40px;
+  padding: 8px 0px;
+  line-height: 32px;
+  font-size: 16px;
+  color: #302d46;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  font-weight: bold;
+`;
+
+export const MarketSortPrice = styled.h3`
+  height: 40px;
+  padding: 8px 0px;
+  line-height: 32px;
+  font-size: 16px;
+  color: #302d46;
+  margin-top: 32px;
+  margin-bottom: 16px;
+  font-weight: bold;
+`;
+
+export const MarketFilterDiv = styled.div`
+  width: 320px;
+  height: 200px;
+  border: 10px solid #a0a0a0;
+`;
+
+export const MarketFilterCloseImg = styled.img`
+  float: right;
+  height: 32px;
+  weight: 24px;
+  padding: 4px 8px;
+  cursor: pointer;
+`;
+
+export const MarketSortByCloseImg = styled.img`
+  float: right;
+  height: 32px;
+  weight: 24px;
+  padding-top: 8px;
+  cursor: pointer;
+`;
+
+export const MarketFilterLatest = styled.p`
+  height: 48px;
+  padding: 16px 8px;
+  margin-top: 32px;
+  margin-bottom: 0px;
+  :hover {
+    background-color: #ecf9fe;
+  }
+  img {
+    float: right;
+  }
+`;
+
+export const MarketFilterPriceLatest = styled.p`
+  height: 48px;
+  padding: 16px 8px;
+  margin-bottom: 0px;
+  :hover {
+    background-color: #ecf9fe;
+  }
+  img {
+    float: right;
+  }
+`;
+
+export const MarketFilterPriceHighest = styled.p`
+  height: 48px;
+  padding: 16px 8px;
+  margin-bottom: 0px;
+  :hover {
+    background-color: #ecf9fe;
+  }
+  img {
+    float: right;
+  }
+`;
+
+export const StringBar = styled.div`
+  margin-top: 8px;
+  height: 48px;
+  background-color: #aaffc9;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  p {
+    padding: 8px 0px;
+    padding-left: 16px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 16px;
+    font-family: "Arial MT";
+    margin-top: 0px;
+  }
+`;
+
+export const StringClear = styled.div`
+  display: flex;
+  float: right;
+  position: absolute;
+  right: 16px;
+  img {
+    height: 24px;
+    weight: 24px;
+    margin-bottom: 0px;
+    margin-top: 8px;
+  }
+  p {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding: 4px;
+  }
+`;
+
+export const MarketSortButton = styled.div`
+  margin-top: 32px;
+`;
+
 //market show one
 
 export const MarketShowOneTitle = styled.h2`
@@ -262,6 +416,99 @@ export const WishBids = styled.h3`
   font-size: 16px;
 `;
 
+export const MarketLocation = styled.div`
+  height: 40px;
+  margin-top: 8px;
+  background-color: #fae7d5;
+  p {
+    padding-left: 8px;
+    padding-top: 4px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    height: 32px;
+    line-height: 32px;
+    font-family: "Arial MT";
+  }
+`;
+
+export const MarketFollow = styled.div`
+  margin-top: 8px;
+  display: flex;
+  width: 380px;
+  height: 64px;
+  div {
+    width: 180px;
+    margin-right: 20px;
+    padding: 16px 0px;
+    display: flex;
+    cursor: pointer;
+  }
+  p {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 32px;
+    height: 32px;
+    color: #302d46;
+    margin-top: 0px;
+  }
+  img {
+    height: 32px;
+    width: 32px;
+    margin-right: 12px;
+  }
+`;
+
+export const MarketEditAndDeleteDiv = styled.div`
+  display: flex;
+  margin-top: 20px;
+  margin-left: 0px;
+  height: 64px;
+  img {
+    margin-top: 4px;
+    height: 24px;
+    width: 24px;
+  }
+  p {
+    margin-left: 8px;
+    margin-right: 32px;
+    line-height: 32px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+  }
+  div {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    display: flex;
+    cursor: pointer;
+  }
+`;
+
+export const MarketViewMore = styled.div`
+  height: 32px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  width: 200px;
+  background-color: #fae7d5;
+  display: flex;
+  cursor: pointer;
+  img {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+    margin-top: 4px;
+    margin-left: 4px;
+  }
+  p {
+    height: 32px;
+    line-height: 32px;
+    color: #302d46;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+`;
+
 export const WishBidsContext = styled.p`
   background-color: #c1eeff;
   margin-top: 16px;
@@ -273,15 +520,20 @@ export const WishBidsContext = styled.p`
 export const PriceInput = styled.div`
   display: flex;
   height: 48px;
-  margin-bottom: 36px;
+  margin: 0px auto;
+  width: 346px;
   input {
     height: 32px;
     width: 80px;
     margin-top: 16px;
     margin-left: 10px;
+    margin-right: 4px;
   }
   button {
     margin-top: 16px;
     margin-left: 86px;
+  }
+  p {
+    width: 24px;
   }
 `;

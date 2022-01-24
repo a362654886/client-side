@@ -11,6 +11,7 @@ export type MarketType = {
   priceHistory?: MarketPriceType[];
   userAvatar?: string;
   userName?: string;
+  userCountry?: string;
 };
 
 export type MarketPriceType = {

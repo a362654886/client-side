@@ -6,15 +6,19 @@ import {
   MarketBody,
   MarketBodyDiv,
   MarketDescription,
+  MarketEditAndDeleteDiv,
+  MarketFollow,
   MarketImgDiv,
   MarketItemImg,
   MarketItemName,
   MarketItemTime,
+  MarketLocation,
   MarketPlaceTitle,
   MarketPlaceTitleDiv,
   MarketSaveButton,
   MarketShowOneTitle,
   MarketText,
+  MarketViewMore,
   PriceInput,
   WishBids,
   WishBidsContext,
@@ -26,6 +30,17 @@ import { useSelector } from "react-redux";
 import { IStoreState } from "../../types/IStoreState";
 import { marketGet } from "../../api/marketAPI";
 import { useHistory } from "react-router-dom";
+import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
+import Flag from "react-flagkit";
+import { flagGet, flagGetName } from "../../helperFns/flag";
+import { _getDate } from "../../helperFns/timeFn";
+import marketFollow from "../../files/marketFollow.png";
+import marketMessage from "../../files/marketMessage.png";
+import editIcon from "../../files/editIcon.svg";
+import deleteIcon from "../../files/deleteIcon.svg";
+import moreRightImg from "../../files/moreRightArrow.png";
+import SettingImg from "../../components/SettingImg";
+import ShareDiv from "../../components/ShareDiv";
 
 const MarketplaceShowOne = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -97,7 +112,6 @@ const MarketplaceShowOne = (): JSX.Element => {
           <MarketShowOneTitle>{title}</MarketShowOneTitle>
           <MarketImgDiv>
             {imgArr.map((image, index) => {
-              console.log(image);
               return (
                 <div
                   key={index}
@@ -139,40 +153,98 @@ const MarketplaceShowOne = (): JSX.Element => {
           </MarketText>
           <MarketBody>
             <div style={{ display: "flex" }}>
-              <MarketItemImg
-                src={`${marketState ? marketState.userAvatar : ""}`}
+              <ProfileWrapperDiv
+                userId={marketState ? marketState.userId : ""}
+                element={
+                  <>
+                    <MarketItemImg
+                      src={`${marketState ? marketState.userAvatar : ""}`}
+                    />
+                    <MarketItemName>
+                      {marketState ? marketState.userName : ""}
+                      <Flag
+                        style={{ marginLeft: "5px", marginRight: "10px" }}
+                        country={flagGet(
+                          marketState
+                            ? marketState.userCountry
+                              ? marketState.userCountry
+                              : ""
+                            : ""
+                        )}
+                      />
+                    </MarketItemName>
+                  </>
+                }
+              ></ProfileWrapperDiv>
+              <SettingImg
+                userId={marketState ? marketState.userId : ""}
+                userName={
+                  marketState
+                    ? marketState.userName
+                      ? marketState.userName
+                      : ""
+                    : ""
+                }
+                userImg={
+                  marketState
+                    ? marketState.userAvatar
+                      ? marketState.userAvatar
+                      : ""
+                    : ""
+                }
+                marginTop="8px"
               />
-              <MarketItemName>
-                {marketState ? marketState.userName : ""}
-              </MarketItemName>
-              <MarketItemTime>{`${new Date().getDate()}-${
-                new Date().getMonth() + 1
-              }-${new Date().getFullYear()}`}</MarketItemTime>
+              <MarketItemTime>{_getDate(new Date())}</MarketItemTime>
             </div>
           </MarketBody>
           <MarketDescription>{description}</MarketDescription>
-          <MarketSaveButton>
-            <AnimeButton
-              para=""
-              text={"Save"}
-              width="120px"
-              height="32px"
-              textColor="white"
-              backGroundColor="#FFC300"
-              borderColor="#FFC300"
-              buttonClick={() => {
-                console.log("save");
-              }}
-            />
-          </MarketSaveButton>
+          <MarketLocation>
+            <p>{`Location: ${marketState ? marketState.location : ""}, ${
+              marketState ? flagGetName(marketState.country) : ""
+            }`}</p>
+          </MarketLocation>
+          <MarketFollow>
+            <div>
+              <img src={marketFollow} />
+              <p>Follow the Item</p>
+            </div>
+            <div>
+              <img src={marketMessage} />
+              <p>Send a Message</p>
+            </div>
+          </MarketFollow>
+          <ShareDiv />
+          {marketState && marketState.userId == loginUser?._id ? (
+            <MarketEditAndDeleteDiv>
+              <div onClick={() => console.log("edit")}>
+                <img src={`${editIcon}`} />
+                <p>Edit</p>
+              </div>
+              <div
+                onClick={() => {
+                  console.log("delete");
+                }}
+              >
+                <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                <p>Delete</p>
+              </div>
+            </MarketEditAndDeleteDiv>
+          ) : (
+            <></>
+          )}
+          <MarketViewMore>
+            <img src={moreRightImg} />
+            <p>View Other Items</p>
+          </MarketViewMore>
           <WishBids>Wish Bids</WishBids>
           <WishBidsContext>
             {`Your bid is for the seller's reference only. The final decision is
             up to the seller.`}
           </WishBidsContext>
           <PriceInput>
-            <p>+ $ (NZD)</p>
+            <p>+$</p>
             <Input />
+            <p>(NZD)</p>
             <AnimeButton
               para=""
               text={"Give a bid"}
@@ -182,7 +254,7 @@ const MarketplaceShowOne = (): JSX.Element => {
               backGroundColor="#FFC300"
               borderColor="#FFC300"
               buttonClick={() => {
-                console.log("save");
+                console.log("save bid");
               }}
             />
           </PriceInput>
