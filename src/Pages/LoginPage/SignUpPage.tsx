@@ -303,7 +303,9 @@ const SignUpPage = (): JSX.Element => {
           })}
         </Select>
       </EmailInput>
-      <AvatarInput>
+      <AvatarInput
+        style={{ height: `${avatarArr ? avatarArr[0].length * 60 : 0}px` }}
+      >
         <p>Avatar:</p>
         <AvatarBox1>{getAvatarDiv(avatarArr ? avatarArr[0] : null)}</AvatarBox1>
         <AvatarBox2>{getAvatarDiv(avatarArr ? avatarArr[1] : null)}</AvatarBox2>

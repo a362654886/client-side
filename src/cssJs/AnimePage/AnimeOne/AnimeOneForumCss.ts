@@ -145,6 +145,23 @@ export const AnimeEditAndDeleteDiv = styled.div`
   }
 `;
 
+export const DeleteDiv = styled.div`
+  padding-top: 16px;
+  padding-bottom: 16px;
+  display: flex;
+  cursor: pointer;
+  img {
+    margin-top: 4px;
+    height: 24px;
+    width: 24px;
+  }
+  p {
+    margin-left: 8px;
+    margin-right: 32px;
+    line-height: 32px;
+  }
+`;
+
 export const ForumMoreButtonDiv = styled.div`
   width: 100%;
   display: flex;

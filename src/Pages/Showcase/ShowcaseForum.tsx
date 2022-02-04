@@ -42,6 +42,7 @@ import editIcon from "../../files/editIcon.svg";
 import deleteIcon from "../../files/deleteIcon.svg";
 import FullTextEditor from "../../components/FullTextEditor";
 import {
+  AnimeEditAndDeleteDiv,
   ForumImg,
   ForumName,
   ForumTime,
@@ -70,6 +71,7 @@ import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
 import { _getDate } from "../../helperFns/timeFn";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
+import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -767,7 +769,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 <p>Awesome!</p>
                 <h6>{showcase.aweSome}</h6>
               </AweSomeDiv>
-              <ShareDiv />
+              <ShareDiv marginTop={"0px"} />
             </>
           )}
           {loginUser?._id == showcase.userId ? (
@@ -779,19 +781,15 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                     onClick={() => editShowcase(index)}
                   />
                   <p onClick={() => editShowcase(index)}>Edit</p>
-                  <img
-                    onClick={() => {
-                      console.log("deleteIcon");
-                    }}
-                    src={`${deleteIcon}`}
+                  <DeleteWrapperDiv
+                    element={
+                      <AnimeEditAndDeleteDiv>
+                        <img src={`${deleteIcon}`} />
+                        <p>Delete</p>
+                      </AnimeEditAndDeleteDiv>
+                    }
+                    deleteFn={async () => console.log("deleteIcon")}
                   />
-                  <p
-                    onClick={() => {
-                      console.log("deleteIcon");
-                    }}
-                  >
-                    Delete
-                  </p>
                 </div>
               ) : (
                 <></>

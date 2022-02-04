@@ -29,7 +29,7 @@ export const followByGetByUserId = async (
 } | null> => {
   const endpoint =
     basicURL +
-    `messagesGetByUserId?userId=${userId}&page=${page}&pageSize=${pageSize}`;
+    `followByGetByUserId?userId=${userId}&page=${page}&pageSize=${pageSize}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

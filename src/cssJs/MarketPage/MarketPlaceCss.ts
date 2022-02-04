@@ -49,7 +49,7 @@ export const MarketSearchInputDiv = styled.div`
 `;
 
 export const MarketBodyDiv = styled.div`
-  height: auto;
+  height: 2000px;
   width: 100%;
   p {
     font-size: 16px;
@@ -535,5 +535,74 @@ export const PriceInput = styled.div`
   }
   p {
     width: 24px;
+  }
+`;
+
+export const MarketPriceDiv = styled.div`
+  margin-top: 24px;
+  padding: 28px 0px;
+  width: 70%;
+  margin: 0px auto;
+`;
+
+export const LoadingBidImg = styled.div`
+  margin-top: 24px;
+  padding: 28px 0px;
+  width: 100%;
+  text-align: center;
+  img {
+    height: 80px;
+    weight: 80px;
+  }
+`;
+
+export const MarketPriceContextDiv = styled.div`
+  display: flex;
+  margin: 0px auto;
+  width: 517px;
+  height: 72px;
+`;
+
+export const MarketPricePriceName = styled.div`
+  color: #302d46;
+  font-weight: bold;
+  margin-left: 8px;
+  font-size: 14px;
+  margin-top: 8px;
+`;
+
+export const MarketPriceNum = styled.p`
+  color: #302d46;
+  margin-left: 32px;
+  font-size: 14px;
+  margin-top: 4px !important;
+`;
+
+export const MarketPriceImg = styled.img`
+  height: 32px;
+  weight: 32px;
+  margin-right: 32px;
+  margin-top: 4px;
+`;
+
+export const MarketPriceMoreDiv = styled.div`
+  width: 70%;
+  margin: 0px auto;
+  display: flex;
+  height: 32px;
+  background-color: #e2f6fe;
+  cursor: pointer;
+  p {
+    line-height: 32px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 16px;
+  }
+  img {
+    height: 24px;
+    weight: 24px;
+    margin-top: 4px;
+    margin-left: 8px;
+    margin-right: 8px;
   }
 `;

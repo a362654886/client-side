@@ -30,7 +30,7 @@ export const FooterText1 = styled.p`
 
 export const FooterText2 = styled.p`
   height: 22px;
-  width: 81px;
+  width: 137px;
   color: white;
   padding-top: 37px;
   font-size: 16px;
@@ -42,6 +42,17 @@ export const FooterText2 = styled.p`
 export const FooterText3 = styled.p`
   height: 22px;
   width: 86px;
+  color: white;
+  padding-top: 37px;
+  font-size: 16px;
+  padding-bottom: 37px;
+  color: #fae7d5;
+  line-height: 24px;
+`;
+
+export const FooterText4 = styled.p`
+  height: 22px;
+  width: 87px;
   color: white;
   padding-top: 37px;
   font-size: 16px;

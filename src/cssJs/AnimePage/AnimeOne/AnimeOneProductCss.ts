@@ -147,6 +147,10 @@ export const AvatarImg = styled.div`
   height: 40px;
   width: 40px;
   margin-top: 16px;
+  img {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 export const AvatarName = styled.p`

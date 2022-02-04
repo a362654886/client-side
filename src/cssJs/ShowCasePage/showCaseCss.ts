@@ -676,6 +676,27 @@ export const ShowcaseSideDivHeader = styled.div`
   }
 `;
 
+export const ShowcaseSideDivTagHeader = styled.div`
+  width: 276px;
+  height: 56px;
+  padding: 8px 16px;
+  background-color: #263e7d;
+  div {
+    display: flex;
+  }
+  img {
+    height: 40px;
+    width: 40px;
+    margin-right: 16px;
+  }
+  h2 {
+    font-size: 24px;
+    color: #ffdf00;
+    line-height: 40px;
+    margin-bottom: 0px;
+  }
+`;
+
 export const ShowcaseSideUser = styled.div`
   display: flex;
   padding-top: 16px;
@@ -689,6 +710,25 @@ export const ShowcaseSideUser = styled.div`
   p {
     margin-left: 14px;
     line-height: 40px;
+  }
+  border-bottom: 1px solid #e2f6fe;
+`;
+
+export const ShowcaseSideTag = styled.div`
+  display: flex;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  height: 47px;
+  width: 276px;
+  position: relative;
+  background-color: #e2f6fe;
+  p {
+    margin-left: 14px;
+    margin-bottom: 0px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 16px;
+    font-family: "Arial MT";
   }
   border-bottom: 1px solid #e2f6fe;
 `;

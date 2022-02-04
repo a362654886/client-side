@@ -97,6 +97,7 @@ const MarketplaceCreate = (): JSX.Element => {
       state: state,
       country: country,
       location: city,
+      uploadTime: new Date(),
     };
     dispatch({
       payload: LoadingType.OPEN,

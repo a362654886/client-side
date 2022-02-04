@@ -25,3 +25,16 @@ export const avatarsGet = async (): Promise<Avatar[] | null> => {
       return null;
     });
 };
+
+export const avatarDelete = async (
+  avatarId: string
+): Promise<number | null> => {
+  const endpoint = basicURL + `avatarDelete?avatarId=${avatarId}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};

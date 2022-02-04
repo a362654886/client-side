@@ -181,7 +181,6 @@ export const CountryInput = styled.div`
 
 export const AvatarInput = styled.div`
   margin-top: 8px;
-  height: 178px;
   p {
     width: 48px;
     height: 22px;
@@ -194,28 +193,32 @@ export const AvatarInput = styled.div`
 
 export const SubmitClickButton = styled.div`
   margin-left: 92px;
-  margin-top: 16px;
+  margin-top: 48px;
 `;
 
 export const AvatarBox1 = styled.div`
   display: inline;
   margin-left: 32px;
   position: absolute;
+  height: 180px;
 `;
 export const AvatarBox2 = styled.div`
   display: inline;
   margin-left: 96px;
   position: absolute;
+  height: auto;
 `;
 export const AvatarBox3 = styled.div`
   display: inline;
   margin-left: 160px;
   position: absolute;
+  height: auto;
 `;
 export const AvatarBox4 = styled.div`
   display: inline;
   margin-left: 224px;
   position: absolute;
+  height: auto;
 `;
 
 export const AvatarImg = styled.img`

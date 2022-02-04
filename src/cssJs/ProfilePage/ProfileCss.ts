@@ -285,3 +285,19 @@ export const ContactInfoContext = styled.div`
   padding: 8px;
   background-color: #e2f6fe;
 `;
+
+export const ProfileMessageButtons = styled.div`
+  height: 48px;
+  width: 100%;
+  padding: 8px 0px;
+  button {
+    margin-right: 32px;
+  }
+`;
+
+export const ProfileMessageBox = styled.div`
+  height: 264px;
+  width: 840px;
+  background-color: #ecf9fe;
+  margin-top: 8px;
+`;

@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import {
   ShowcaseSideDiv,
   ShowcaseSideDivHeader,
+  ShowcaseSideDivTagHeader,
   ShowcaseSideName,
   ShowcaseSideNum,
+  ShowcaseSideTag,
   ShowcaseSideUser,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import { userAwesomeGet } from "../../api/userApi";
 import { User } from "../../types/User";
 import hotLike from "../../files/hotLike.png";
+import hotTag from "../../files/hotTag.png";
 import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
 import { AnimOneSide, AnimOneSideTwo } from "../../cssJs/AnimePage/AnimeOneCss";
 import { MoreRight } from "../../cssJs/basicCss";
@@ -18,10 +21,13 @@ import { newAllGet } from "../../api/newsAPI";
 import { NewType } from "../../types/NewsType";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
+import { TagType } from "../../types/tagType";
+import { tagAllGet } from "../../api/tagAPI";
 
 const ShowcaseSide = (): JSX.Element => {
   const [users, setUsers] = useState<User[]>([]);
   const [allNews, setAllNews] = useState<NewType[]>([]);
+  const [allTags, setAllTags] = useState<TagType[]>([]);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -31,11 +37,13 @@ const ShowcaseSide = (): JSX.Element => {
 
   useEffect(() => {
     console.log(users);
-  }, [users]);
+    console.log(allTags);
+  }, [users, allTags]);
 
   useEffect(() => {
     (async function anyNameFunction() {
       await getNews();
+      await getTags();
     })();
   }, []);
 
@@ -44,6 +52,11 @@ const ShowcaseSide = (): JSX.Element => {
     if (animeResult) {
       setAllNews(animeResult.result);
     }
+  };
+
+  const getTags = async () => {
+    const tagsResult = await tagAllGet();
+    setAllTags(tagsResult);
   };
 
   const searchAwesome = async () => {
@@ -99,6 +112,19 @@ const ShowcaseSide = (): JSX.Element => {
               ></ProfileWrapperDiv>
               <ShowcaseSideNum>{formatNum(user.awesomeNum)}</ShowcaseSideNum>
             </ShowcaseSideUser>
+          );
+        })}
+        <ShowcaseSideDivTagHeader>
+          <div>
+            <img src={hotTag} />
+            <h2>Hot Tags</h2>
+          </div>
+        </ShowcaseSideDivTagHeader>
+        {allTags.map((tag, index) => {
+          return (
+            <ShowcaseSideTag key={index}>
+              <p>{tag.text}</p>
+            </ShowcaseSideTag>
           );
         })}
         <div

@@ -2,6 +2,7 @@ import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 import AnimeOne from "../Pages/AnimePage/AnimeOne";
 import AnimeShowPage from "../Pages/AnimePage/AnimeShowPage";
+import ContactUs from "../Pages/ContactUs";
 import Discovery from "../Pages/Discovery/Discovery";
 import HomePage from "../Pages/HomePage/HomePage";
 import LoginPage from "../Pages/LoginPage/LoginPage";
@@ -11,6 +12,7 @@ import Marketplace from "../Pages/Marketplace/Marketplace";
 import NewOnePage from "../Pages/NewsPage/NewOnePage";
 import NewsPage from "../Pages/NewsPage/NewsPage";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
+import Report from "../Pages/Report";
 import Showcase from "../Pages/Showcase/Showcase";
 
 const MainPageRouter = (): JSX.Element => {
@@ -29,6 +31,8 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={Mall} path="/mainPage/mall" />
         <Route component={NewsPage} path="/mainPage/news" />
         <Route component={NewOnePage} path="/mainPage/oneNew" />
+        <Route component={Report} path="/mainPage/report" />
+        <Route component={ContactUs} path="/mainPage/contactUs" />
       </Switch>
     </>
   );

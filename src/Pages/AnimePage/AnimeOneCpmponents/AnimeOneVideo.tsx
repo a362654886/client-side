@@ -14,8 +14,9 @@ import {
   VideoBottom,
   VideoBottomImg,
   VideoDiv,
-  VideoIframe,
   VideoIframeDiv,
+  VideoLineDiv,
+  VideoShortDiv,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import {
   AnimOneVideo,
@@ -38,6 +39,10 @@ import SettingImg from "../../../components/SettingImg";
 import ProfileWrapperDiv from "../../../components/ProfileWrapperDiv";
 import Flag from "react-flagkit";
 import { flagGet } from "../../../helperFns/flag";
+import { User } from "../../../types/User";
+import { useSelector } from "react-redux";
+import { IStoreState } from "../../../types/IStoreState";
+import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
 
 interface IProps {
   anime: Anime | null;
@@ -58,6 +63,10 @@ const AnimeOneVideo = ({
   toVideo,
   discovery,
 }: IProps): JSX.Element => {
+  const loginUser: User | null = useSelector(
+    (state: IStoreState) => state.loginUserState
+  );
+
   const [videos, setVideos] = useState<Video[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
@@ -103,30 +112,46 @@ const AnimeOneVideo = ({
     setUpdate(update + 1);
   };
 
+  const toOther = (url: string) => window.open(url);
+
+  const getDeleteButton = (video: Video) => {
+    if (loginUser && loginUser._id == video.userId) {
+      return (
+        <DeleteWrapperDiv
+          element={
+            <DeleteDiv>
+              <img src={`${deleteIcon}`} />
+              <AnimeButton
+                para=""
+                text={"Delete"}
+                width="47px"
+                height="32px"
+                textColor="black"
+                backGroundColor="#F6F6F6"
+                borderColor="#F6F6F6"
+                buttonClick={() => {
+                  console.log("");
+                }}
+              />
+            </DeleteDiv>
+          }
+          deleteFn={() => deleteVideo(video._id)}
+        />
+      );
+    } else {
+      return <></>;
+    }
+  };
+
   const getExistVideos = () =>
     videos.map((video, index) => {
       const date = new Date(video.uploadTime);
-      return (
+      return video.type == VideoType.Embed ? (
         <VideoDiv key={index}>
           {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
-          {video.type == VideoType.Link ? (
-            <VideoIframe
-              key={index}
-              src={
-                video.link.indexOf("facebook") == -1
-                  ? video.link.replace("watch?v=", "embed/")
-                  : video.link
-              }
-              frameBorder="0"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              title={video.title}
-            />
-          ) : (
-            <VideoIframeDiv
-              dangerouslySetInnerHTML={{ __html: video.link }}
-            ></VideoIframeDiv>
-          )}
+          <VideoIframeDiv
+            dangerouslySetInnerHTML={{ __html: video.link }}
+          ></VideoIframeDiv>
           <VideoBottom>
             <TimeText>{`${date.getDate()}-${
               date.getMonth() + 1
@@ -156,26 +181,51 @@ const AnimeOneVideo = ({
               marginTop="24px"
             />
           </VideoBottom>
-          {discovery ? (
-            <></>
-          ) : (
-            <DeleteDiv onClick={() => deleteVideo(video._id)}>
-              <img src={`${deleteIcon}`} />
-              <AnimeButton
-                para=""
-                text={"Delete"}
-                width="47px"
-                height="32px"
-                textColor="black"
-                backGroundColor="#F6F6F6"
-                borderColor="#F6F6F6"
-                buttonClick={() => {
-                  console.log("");
-                }}
-              />
-            </DeleteDiv>
-          )}
+          {discovery ? <></> : getDeleteButton(video)}
         </VideoDiv>
+      ) : (
+        <VideoShortDiv key={index}>
+          {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
+          <VideoLineDiv>
+            <h2
+              onClick={() => {
+                toOther(video.link);
+              }}
+            >
+              {video.title}
+            </h2>
+          </VideoLineDiv>
+          <VideoBottom>
+            <TimeText>{`${date.getDate()}-${
+              date.getMonth() + 1
+            }-${date.getFullYear()}`}</TimeText>
+            <FromText>from</FromText>
+            <ProfileWrapperDiv
+              userId={video.userId}
+              element={
+                <>
+                  <VideoBottomImg src={`${video.userAvatar}`} />
+                  <UserNameText>
+                    {video.userName}
+                    <Flag
+                      style={{ marginLeft: "5px" }}
+                      country={flagGet(
+                        video.userCountry ? video.userCountry : ""
+                      )}
+                    />
+                  </UserNameText>
+                </>
+              }
+            ></ProfileWrapperDiv>
+            <SettingImg
+              userId={video.userId}
+              userName={video.userName}
+              userImg={video.userAvatar}
+              marginTop="24px"
+            />
+          </VideoBottom>
+          {discovery ? <></> : getDeleteButton(video)}
+        </VideoShortDiv>
       );
     });
 

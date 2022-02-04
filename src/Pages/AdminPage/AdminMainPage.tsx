@@ -45,7 +45,7 @@ const AdminMainPage = (): JSX.Element => {
   }, [menuNum]);
 
   const toPage = (url: string) => history.replace(url);
-  const menu = ["News", "Anime", "Redeem Levels", "Custom Design"];
+  const menu = ["News", "Anime", "Redeem Levels", "Custom Design","Sys Setting"];
 
   const getMenu = () => {
     return menu.map((menuString: string, index: number) => {

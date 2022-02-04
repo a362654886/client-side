@@ -119,6 +119,7 @@ const ShowcaseCreate = (): JSX.Element => {
         return {
           _id: id + index,
           text: tag,
+          num: -1,
         };
       }),
       text: html,

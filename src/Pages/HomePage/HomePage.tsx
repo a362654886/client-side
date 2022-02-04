@@ -109,7 +109,16 @@ const HomePage = (): JSX.Element => {
   };
 
   const getMarkets = async () => {
-    const marketResult = await marketAllGet("", 1, 4);
+    const marketResult = await marketAllGet(
+      "",
+      1,
+      4,
+      "",
+      "",
+      "0",
+      "1000000",
+      "Latest"
+    );
     if (marketResult) {
       setAllMarkets(marketResult.markets);
     }

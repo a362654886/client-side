@@ -6,4 +6,8 @@ export type MessageType = {
   message: string;
   userAvatar?: string;
   userName?: string;
+  userCountry?: string;
+  receiveAvatar?: string;
+  receiveName?: string;
+  receiveCountry?: string;
 };

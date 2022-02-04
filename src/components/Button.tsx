@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import * as React from "react";
 import styled from "styled-components";
 
@@ -25,7 +26,7 @@ export const AnimeButton = ({
   const border = "1px solid " + borderColor;
 
   return (
-    <button
+    <Button
       style={{
         width: width,
         height: height,
@@ -40,7 +41,7 @@ export const AnimeButton = ({
       onClick={() => buttonClick(para)}
     >
       {text}
-    </button>
+    </Button>
   );
 };
 

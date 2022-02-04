@@ -88,7 +88,7 @@ export const AnimOneWhereWatchImg = styled.img`
 `;
 
 export const AnimOneIcons = styled.div`
-  height: 24px;
+  height: 32px;
   display: flex;
   margin-top: 24px;
   img {
@@ -147,12 +147,22 @@ export const VideoDiv = styled.div`
   text-align: center;
 `;
 
-export const VideoIframe = styled.iframe`
+export const VideoShortDiv = styled.div`
   width: 100%;
-  height: 600px;
-  padding-top: 24px;
-  padding-left: 16px;
-  padding-right: 16px;
+  height: 216px;
+  margin-bottom: 24px;
+  background-color: #f6f6f6;
+  text-align: center;
+`;
+
+export const VideoLineDiv = styled.div`
+  width: 100%;
+  height: 56px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  h2 {
+    cursor: pointer;
+  }
 `;
 
 export const VideoIframeDiv = styled.div`
@@ -161,6 +171,11 @@ export const VideoIframeDiv = styled.div`
   padding-top: 24px;
   margin-left: 16px;
   margin-right: 16px;
+  h2 {
+    height: 40px;
+    line-height: 40px;
+    color: #302d46;
+  }
 `;
 
 export const VideoBottom = styled.div`

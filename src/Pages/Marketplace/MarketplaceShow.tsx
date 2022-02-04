@@ -1,7 +1,7 @@
 import { Input, Popover } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import AnimeButton from "../../components/Button";
+import AnimeButton, { MoreButtonDiv } from "../../components/Button";
 import searchImg from "../../files/search.svg";
 import {
   MarketBodyDiv,
@@ -33,6 +33,9 @@ import marketFilter from "../../files/marketFilter.png";
 import iconSelect from "../../files/Icon-Selected.svg";
 import iconClose from "../../files/Icon-Close.svg";
 import iconClear from "../../files/Icon-Clear.svg";
+import loadingImg from "../../files/loading.gif";
+import getMoreImg from "../../files/getMore.png";
+import { LoadingImgDiv } from "../../cssJs/homePageCss";
 
 export enum FilterEnum {
   Latest = "Latest",
@@ -56,26 +59,57 @@ const MarketplaceShow = (): JSX.Element => {
   const [priceTo, setPriceTo] = useState<string>("");
   const [searchString, setSearchString] = useState<string>("");
   const [filterType, setFilterType] = useState<FilterEnum>(FilterEnum.Latest);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const pageSize = 4;
 
   useEffect(() => {
     (async function anyNameFunction() {
       await search("");
     })();
-  }, [page]);
+  }, []);
 
   useEffect(() => {
-    console.log(searchString);
-  }, [searchString]);
+    //console.log(searchString);
+  }, [searchString, page]);
 
   const search = async (value: string) => {
     setLoading(true);
-    const marketResult = await marketAllGet(value, page, pageSize);
+    const marketResult = await marketAllGet(
+      value,
+      1,
+      2,
+      city,
+      country,
+      priceFrom,
+      priceTo,
+      filterType
+    );
+    if (marketResult) {
+      //setAllMarket(allMarket.concat(marketResult.markets));
+      setAllMarket(marketResult.markets);
+      setCount(marketResult.count);
+    }
+    setLoading(false);
+  };
+
+  const getMore = async () => {
+    setLoadingMore(true);
+    const marketResult = await marketAllGet(
+      "",
+      page + 1,
+      2,
+      city,
+      country,
+      priceFrom,
+      priceTo,
+      filterType
+    );
     if (marketResult) {
       setAllMarket(allMarket.concat(marketResult.markets));
       setCount(marketResult.count);
     }
-    setLoading(false);
+    setLoadingMore(false);
+    setPage(page + 1);
   };
 
   const chooseMarket = (market: MarketType) => {
@@ -133,6 +167,15 @@ const MarketplaceShow = (): JSX.Element => {
   const getExistMarket = () => (
     <>{getMarketDiv(allMarket ? allMarket : null)}</>
   );
+
+  const getLoading = () =>
+    loadingMore ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      <></>
+    );
 
   const sortByDiv = () => {
     return (
@@ -260,7 +303,22 @@ const MarketplaceShow = (): JSX.Element => {
             <p>Clear</p>
           </StringClear>
         </StringBar>
-        <MarketShowBox className="row">{getExistMarket()}</MarketShowBox>
+        <MarketShowBox className="row">
+          {loading ? (
+            <div>
+              <img src={loadingImg} />
+            </div>
+          ) : (
+            getExistMarket()
+          )}
+        </MarketShowBox>
+        {getLoading()}
+        <MoreButtonDiv onClick={() => getMore()}>
+          <div>
+            <img src={`${getMoreImg}`} />
+            <p>Load More</p>
+          </div>
+        </MoreButtonDiv>
       </MarketBodyDiv>
     </div>
   );

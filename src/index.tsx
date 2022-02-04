@@ -18,7 +18,6 @@ import EpisodeShow from "./Pages/Showcase/EpisodeShow";
 import { loginUserMiddleware } from "./redux/middleWares/loginUserMiddleware";
 import { animeMiddleware } from "./redux/middleWares/animeMiddleware";
 
-
 const persistConfig = {
   key: "root",
   storage: storageSession,

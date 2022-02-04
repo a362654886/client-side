@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import AnimeButton from "../../components/Button";
 import SettingImg from "../../components/SettingImg";
@@ -42,12 +42,30 @@ import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import arrows from "../../files/arrows.svg";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
+import { MarketFollow } from "../../cssJs/MarketPage/MarketPlaceCss";
+import marketFollow from "../../files/marketFollow.png";
+import marketMessage from "../../files/marketMessage.png";
+import { MessageDiv, MessageModal } from "../../cssJs/settingImgCss";
+import TextArea from "antd/lib/input/TextArea";
+import { LoadingType } from "../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import { MessageType } from "../../types/MessageType";
+import { messageAdd } from "../../api/messageAPI";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
+import { LOGIN_USER_UPDATE_FOLLOW } from "../../redux/loginUser";
 
 const ProfilePage = (): JSX.Element => {
   const history = useHistory();
 
   const [follow, setFollow] = useState<number>(0);
   const [contactInfo, setContactInfo] = useState<boolean>(false);
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [messageValue, setMessageValue] = useState("");
+  const dispatch = useDispatch();
 
   const buttonsColor = [
     {
@@ -152,6 +170,55 @@ const ProfilePage = (): JSX.Element => {
     }
   };
 
+  const sendMessage = async () => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    if (loginUser) {
+      const messageBody: MessageType = {
+        _id: `${loginUser._id}${
+          (profileUser as User)._id
+        }${new Date().valueOf()}`,
+        userId: loginUser._id,
+        receiveId: (profileUser as User)._id,
+        uploadTime: new Date(),
+        message: messageValue,
+      };
+      const r = await messageAdd(messageBody);
+      if (r && r < 300) {
+        setMessageVisible(false);
+        setMessageValue("");
+      }
+    } else {
+      openNotification(
+        "please login and then send message",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
+  const ifFollow = () => {
+    if (profileUser) {
+      const exist = loginUser?.followUsers.indexOf(profileUser?._id);
+      return exist;
+    } else {
+      return -1;
+    }
+  };
+
+  const followUser = () => {
+    dispatch({
+      payload: profileUser?._id,
+      type: LOGIN_USER_UPDATE_FOLLOW,
+    });
+  };
+
   return (
     <ProfileBox>
       <ProfileDiv>
@@ -220,6 +287,24 @@ const ProfilePage = (): JSX.Element => {
           </p>
         </SettingAwesomeDiv>
       </SettingFollowDiv>
+      {loginUser?._id !== profileUser?._id ? (
+        <MarketFollow>
+          <div>
+            <img src={marketFollow} />
+            {ifFollow() == -1 ? (
+              <p onClick={() => followUser()}>Follow</p>
+            ) : (
+              <p onClick={() => followUser()}>Following</p>
+            )}
+          </div>
+          <div onClick={() => setMessageVisible(true)}>
+            <img src={marketMessage} />
+            <p>Send a Message</p>
+          </div>
+        </MarketFollow>
+      ) : (
+        <></>
+      )}
       <ContactInfoDiv onClick={() => setContactInfo(!contactInfo)}>
         <p>Contact Info</p>
         <img src={arrows} />
@@ -262,6 +347,43 @@ const ProfilePage = (): JSX.Element => {
       <ButtonsDiv>{getButtons()}</ButtonsDiv>
       <LineDiv></LineDiv>
       <ProfileChildDiv>{getProfileDiv()}</ProfileChildDiv>
+      <MessageModal
+        footer={[]}
+        onCancel={() => setMessageVisible(false)}
+        visible={messageVisible}
+      >
+        <MessageDiv>
+          <div>
+            <p>To:</p>
+            <img
+              src={`https://animeimagebucket.s3.amazonaws.com/${
+                (profileUser as User).avatar
+              }`}
+            />
+            <h6>{`${(profileUser as User).firstName}.${(
+              profileUser as User
+            ).lastName
+              .substring(0, 1)
+              .toUpperCase()}`}</h6>
+          </div>
+          <TextArea
+            value={messageValue}
+            onChange={(e) => setMessageValue(e.target.value)}
+          />
+          <div style={{ marginTop: "20px", float: "right" }}>
+            <AnimeButton
+              para=""
+              text={"Send"}
+              width="120px"
+              height="32px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() => sendMessage()}
+            />
+          </div>
+        </MessageDiv>
+      </MessageModal>
     </ProfileBox>
   );
 };

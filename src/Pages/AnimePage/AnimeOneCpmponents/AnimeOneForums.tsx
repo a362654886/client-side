@@ -68,6 +68,7 @@ import ProfileWrapperDiv from "../../../components/ProfileWrapperDiv";
 import { _getDate } from "../../../helperFns/timeFn";
 import Flag from "react-flagkit";
 import { flagGet } from "../../../helperFns/flag";
+import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
 
 interface IProps {
   anime: Anime | null;
@@ -824,20 +825,21 @@ const AnimeOneForum = ({
               ></ReactQuillCss>
             </>
           )}
-          {forums[index].userId == loginUser?._id && forum.edit == false ? (
+          {forums[index].userId == loginUser?._id ? (
             <AnimeEditAndDeleteDiv>
               <div onClick={() => editForum(index)}>
                 <img src={`${editIcon}`} />
                 <p>Edit</p>
               </div>
-              <div
-                onClick={() => {
-                  deleteForum(index);
-                }}
-              >
-                <img style={{ width: "20px" }} src={`${deleteIcon}`} />
-                <p>Delete</p>
-              </div>
+              <DeleteWrapperDiv
+                element={
+                  <>
+                    <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                    <p>Delete</p>
+                  </>
+                }
+                deleteFn={async () => await deleteForum(index)}
+              />
             </AnimeEditAndDeleteDiv>
           ) : (
             <></>
@@ -952,16 +954,23 @@ const AnimeOneForum = ({
                 </>
               )}
               {(forums[index].items as ForumItem[])[secondIndex].userId ==
-                loginUser?._id && forum.edit == false ? (
+                loginUser?._id ? (
                 <AnimeEditAndDeleteDiv>
                   <div onClick={() => editForumItem(index, secondIndex)}>
                     <img src={`${editIcon}`} />
                     <p>Edit</p>
                   </div>
-                  <div onClick={() => deleteForumItem(index, secondIndex)}>
-                    <img style={{ width: "20px" }} src={`${deleteIcon}`} />
-                    <p>Delete</p>
-                  </div>
+                  <DeleteWrapperDiv
+                    element={
+                      <>
+                        <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                        <p>Delete</p>
+                      </>
+                    }
+                    deleteFn={async () =>
+                      await deleteForumItem(index, secondIndex)
+                    }
+                  />
                 </AnimeEditAndDeleteDiv>
               ) : (
                 <></>
@@ -1115,14 +1124,20 @@ const AnimeOneForum = ({
                         <img src={`${editIcon}`} />
                         <p>Edit</p>
                       </div>
-                      <div
-                        onClick={() => {
-                          deleteSecondItem(index, secondIndex, thirdIndex);
-                        }}
-                      >
-                        <img style={{ width: "20px" }} src={`${deleteIcon}`} />
-                        <p>Delete</p>
-                      </div>
+                      <DeleteWrapperDiv
+                        element={
+                          <>
+                            <img
+                              style={{ width: "20px" }}
+                              src={`${deleteIcon}`}
+                            />
+                            <p>Delete</p>
+                          </>
+                        }
+                        deleteFn={async () =>
+                          await deleteSecondItem(index, secondIndex, thirdIndex)
+                        }
+                      />
                     </AnimeEditAndDeleteDiv>
                   </>
                 )}

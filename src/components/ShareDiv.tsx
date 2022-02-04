@@ -5,7 +5,11 @@ import insImage from "../files/insImage.svg";
 import twitter from "../files/twitter.svg";
 import copy from "../files/copy.svg";
 
-const ShareDiv = (): JSX.Element => {
+interface IProps {
+  marginTop: string;
+}
+
+const ShareDiv = ({ marginTop }: IProps): JSX.Element => {
   const shareToTwitter = (url: string, title: string) => {
     return window.open(
       "http://twitter.com/share?url=" +
@@ -30,7 +34,7 @@ const ShareDiv = (): JSX.Element => {
 
   return (
     <>
-      <AnimOneIcons>
+      <AnimOneIcons style={{ marginTop: marginTop }}>
         <img
           onClick={() => {
             shareToFaceBook("https://anime.come", "share to twitter");

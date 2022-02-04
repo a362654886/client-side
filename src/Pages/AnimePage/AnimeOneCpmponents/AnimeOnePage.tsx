@@ -293,7 +293,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
             {getWhereToWatch()}
           </AnimOneWhereWatchLabel>
           <LikeButton>{getLikesButton()}</LikeButton>
-          <ShareDiv />
+          <ShareDiv marginTop={"24px"} />
         </AnimOneHeaderRight>
       </AnimOneHeader>
       <AnimeOneVideo

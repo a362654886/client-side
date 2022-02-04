@@ -98,7 +98,7 @@ const SettingImg = ({
     });
     if (loginUser) {
       const messageBody: MessageType = {
-        _id: `${loginUser?._id}${userId}`,
+        _id: `${loginUser?._id}${userId}${new Date().valueOf()}`,
         userId: loginUser._id,
         receiveId: userId,
         uploadTime: new Date(),

@@ -109,6 +109,9 @@ export const AnimeLikeButton = styled(Button)`
     font-size: 16px;
     font-weight: bold;
   }
+  :focus {
+    background-color: #892e2f;
+  }
 `;
 
 export const AnimeAddButtonLeftDiv = styled.div`

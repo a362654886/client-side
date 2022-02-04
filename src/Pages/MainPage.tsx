@@ -30,12 +30,14 @@ import {
   FooterText1,
   FooterText2,
   FooterText3,
+  FooterText4,
 } from "../cssJs/footerCss";
 import loadingImg from "../files/loading.gif";
 import { Dropdown, Menu } from "antd";
 import Flag from "react-flagkit";
 import { flagGet } from "../helperFns/flag";
 import logOut from "../files/logOut.png";
+import ProfileWrapperDiv from "../components/ProfileWrapperDiv";
 
 const MainPage = (): JSX.Element => {
   const [size, setSize] = useState({
@@ -105,27 +107,34 @@ const MainPage = (): JSX.Element => {
     if (loginUser) {
       return (
         <>
-          <LoginImg
-            src={
-              loginUser && loginUser.avatarImage
-                ? loginUser.avatarImage[0].imageUrl
-                : avatar
+          <ProfileWrapperDiv
+            userId={loginUser._id}
+            element={
+              <>
+                <LoginImg
+                  src={
+                    loginUser && loginUser.avatarImage
+                      ? loginUser.avatarImage[0].imageUrl
+                      : avatar
+                  }
+                />
+                <LoginBox onClick={() => toProfile("/mainPage/profilePage")}>
+                  <p>{`${loginUser.firstName}.${loginUser.lastName
+                    .substring(0, 1)
+                    .toUpperCase()}`}</p>
+                </LoginBox>
+                <LoginCountry>
+                  <Flag country={flagGet(loginUser ? loginUser.country : "")} />
+                </LoginCountry>
+                <LoginOutImg
+                  src={logOut}
+                  onClick={() => {
+                    console.log("logout");
+                  }}
+                />
+              </>
             }
-          />
-          <LoginBox onClick={() => toProfile("/mainPage/profilePage")}>
-            <p>{`${loginUser.firstName}.${loginUser.lastName
-              .substring(0, 1)
-              .toUpperCase()}`}</p>
-          </LoginBox>
-          <LoginCountry>
-            <Flag country={flagGet(loginUser ? loginUser.country : "")} />
-          </LoginCountry>
-          <LoginOutImg
-            src={logOut}
-            onClick={() => {
-              console.log("logout");
-            }}
-          />
+          ></ProfileWrapperDiv>
         </>
       );
     } else {
@@ -282,18 +291,21 @@ const MainPage = (): JSX.Element => {
       <ProfilePageRouter />
       <Footer>
         <FootContainer className="col-xl-12 col-lg-12 col-md-12 col-sm-12 row">
-          <FooterLogo className="col-xl-6 col-lg-3 col-md-3 col-sm-3">
+          <FooterLogo className="col-xl-7 col-lg-2.4 col-md-2.4 col-sm-2.4">
             ©2021 AnimePark Limited Inc
           </FooterLogo>
-          <FooterText1 className="col-xl-2 col-lg-3 col-md-3 col-sm-3">
-            First time visitors
-          </FooterText1>
-          <FooterText2 className="col-xl-2 col-lg-3 col-md-3 col-sm-3">
-            Help/FAQ
-          </FooterText2>
-          <FooterText3 className="col-xl-2 col-lg-3 col-md-3 col-sm-3">
+          <FooterText1 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
             About Us
+          </FooterText1>
+          <FooterText2 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
+            First time visitors
+          </FooterText2>
+          <FooterText3 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
+            Help/FAQ
           </FooterText3>
+          <FooterText4 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
+            Contact us
+          </FooterText4>
         </FootContainer>
       </Footer>
     </div>
