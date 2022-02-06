@@ -33,7 +33,7 @@ import AnimeOneProducts from "./AnimeOneProducts";
 import AnimeOneVideo from "./AnimeOneVideo";
 import { User } from "../../../types/User";
 import { useEffect, useState } from "react";
-import { animeUpdateRate } from "../../../api/animeAPI";
+import { animeOneGet, animeUpdateRate } from "../../../api/animeAPI";
 import { userUpdateRate } from "../../../api/userApi";
 import {
   LOGIN_USER_ADD,
@@ -46,6 +46,7 @@ import {
   openNotification,
 } from "../../../helperFns/popUpAlert";
 import ShareDiv from "../../../components/ShareDiv";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   toPage: (page: number) => void;
@@ -53,6 +54,7 @@ interface IProps {
 
 const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
@@ -68,12 +70,19 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const toOther = (url: string) => window.open(url);
 
   useEffect(() => {
-    //console.log(enterRate);
-  }, [enterRate]);
+    const para = history.location.search.substring(1);
+    (async function anyNameFunction() {
+      const anime = await animeOneGet(para);
+      dispatch({
+        payload: anime,
+        type: ANIME_ADD,
+      });
+    })();
+  }, []);
 
   useEffect(() => {
     //
-  }, [loginUser, chooseAnime]);
+  }, [loginUser, chooseAnime, enterRate]);
 
   const likeAnimeFn = () => {
     dispatch({
@@ -311,6 +320,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         ifShowAdd={true}
         toAddProduct={toPage}
         toProduct={(num: number) => toPage(num)}
+        discovery={true}
       />
       <AnimeOneTitle>Forum</AnimeOneTitle>
       <AnimeOneForum

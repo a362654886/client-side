@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LoadingType } from "../types/EnumTypes";
 import { IStoreState } from "../types/IStoreState";
 import avatar from "../files/avatar.png";
@@ -38,8 +38,11 @@ import Flag from "react-flagkit";
 import { flagGet } from "../helperFns/flag";
 import logOut from "../files/logOut.png";
 import ProfileWrapperDiv from "../components/ProfileWrapperDiv";
+import { LOGIN_USER_NONE } from "../redux/loginUser";
 
 const MainPage = (): JSX.Element => {
+  const dispatch = useDispatch();
+
   const [size, setSize] = useState({
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
@@ -54,6 +57,10 @@ const MainPage = (): JSX.Element => {
   );
 
   const history = useHistory();
+
+  useEffect(() => {
+    //
+  }, [loginUser]);
 
   const onResize = React.useCallback(() => {
     setSize({
@@ -126,15 +133,18 @@ const MainPage = (): JSX.Element => {
                 <LoginCountry>
                   <Flag country={flagGet(loginUser ? loginUser.country : "")} />
                 </LoginCountry>
-                <LoginOutImg
-                  src={logOut}
-                  onClick={() => {
-                    console.log("logout");
-                  }}
-                />
               </>
             }
           ></ProfileWrapperDiv>
+          <LoginOutImg
+            src={logOut}
+            onClick={() => {
+              dispatch({
+                payload: null,
+                type: LOGIN_USER_NONE,
+              });
+            }}
+          />
         </>
       );
     } else {

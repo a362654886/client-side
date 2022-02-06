@@ -38,6 +38,10 @@ import SettingImg from "../../../components/SettingImg";
 import ProfileWrapperDiv from "../../../components/ProfileWrapperDiv";
 import Flag from "react-flagkit";
 import { flagGet } from "../../../helperFns/flag";
+import { User } from "../../../types/User";
+import { useSelector } from "react-redux";
+import { IStoreState } from "../../../types/IStoreState";
+import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
 
 interface IProps {
   anime: Anime | null;
@@ -58,6 +62,14 @@ const AnimeOneProducts = ({
   toProduct,
   discovery,
 }: IProps): JSX.Element => {
+  const loginUser: User | null = useSelector(
+    (state: IStoreState) => state.loginUserState
+  );
+
+  const chooseAnime: Anime | null = useSelector(
+    (state: IStoreState) => state.animeState
+  );
+
   const [productArr, setProductArr] = useState<Product[][] | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
@@ -68,10 +80,20 @@ const AnimeOneProducts = ({
   const pageSize = pageSizeSetting;
 
   useEffect(() => {
-    (async function anyNameFunction() {
-      await getProducts();
-    })();
+    if (pageNum > 1) {
+      (async function anyNameFunction() {
+        await getProducts();
+      })();
+    }
   }, [pageNum]);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      if (chooseAnime) {
+        await getIniProducts();
+      }
+    })();
+  }, [chooseAnime]);
 
   useEffect(() => {
     getProductArr();
@@ -80,12 +102,26 @@ const AnimeOneProducts = ({
   const getProducts = async () => {
     setLoading(true);
     const productsResult = await productAllGet(
-      anime ? anime._id : "",
+      discovery ? "" : chooseAnime ? chooseAnime._id : "",
       pageNum,
       pageSize
     );
     if (productsResult) {
       setProducts(products.concat(productsResult.result));
+      setCount(productsResult.count);
+    }
+    setLoading(false);
+  };
+
+  const getIniProducts = async () => {
+    setLoading(true);
+    const productsResult = await productAllGet(
+      discovery ? "" : chooseAnime ? chooseAnime._id : "",
+      pageNum,
+      pageSize
+    );
+    if (productsResult) {
+      setProducts(productsResult.result);
       setCount(productsResult.count);
     }
     setLoading(false);
@@ -120,6 +156,35 @@ const AnimeOneProducts = ({
     setProducts(newProducts);
     setCount(count - 1);
     setUpdate(update + 1);
+  };
+
+  const getDeleteButton = (product: Product) => {
+    if (loginUser && loginUser._id == product.userId) {
+      return (
+        <DeleteWrapperDiv
+          element={
+            <DeleteDiv>
+              <img src={`${deleteIcon}`} />
+              <AnimeButton
+                para=""
+                text={"Delete"}
+                width="47px"
+                height="32px"
+                textColor="black"
+                backGroundColor="#F6F6F6"
+                borderColor="#F6F6F6"
+                buttonClick={() => {
+                  console.log("");
+                }}
+              />
+            </DeleteDiv>
+          }
+          deleteFn={() => deleteProduct(product._id)}
+        />
+      );
+    } else {
+      return <></>;
+    }
   };
 
   const getProductsDiv = (productArr: Product[] | null) => {
@@ -165,23 +230,9 @@ const AnimeOneProducts = ({
             <TimeText>{`${date.getDate()}-${
               date.getMonth() + 1
             }-${date.getFullYear()}`}</TimeText>
-            {discovery ? (
+            {!discovery ? (
               <div style={{ textAlign: "center" }}>
-                <DeleteDiv onClick={() => deleteProduct(product._id)}>
-                  <img src={`${deleteIcon}`} />
-                  <AnimeButton
-                    para=""
-                    text={"Delete"}
-                    width="47px"
-                    height="32px"
-                    textColor="black"
-                    backGroundColor="#F6F6F6"
-                    borderColor="#F6F6F6"
-                    buttonClick={() => {
-                      console.log("");
-                    }}
-                  />
-                </DeleteDiv>
+                {getDeleteButton(product)}
               </div>
             ) : (
               <ProductHeader>{product.anime}</ProductHeader>

@@ -1,5 +1,4 @@
 import { animeUpdateLike } from "../../api/animeAPI";
-import { userUpdateFollowUsers, userUpdateLike } from "../../api/userApi";
 import {
   actionBody,
   middleStoreType,

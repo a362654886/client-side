@@ -36,6 +36,17 @@ export const animeAllGet = async (
     });
 };
 
+export const animeOneGet = async (value: string): Promise<Anime | null> => {
+  const endpoint = basicURL + `animeOneGet?searchValue=${value}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const animeUpdate = async (anime: Anime): Promise<number | null> => {
   const endpoint = basicURL + "animeUpdate";
   return Axios.put(endpoint, { animeBody: anime })

@@ -6,7 +6,6 @@ import { userUpdate } from "../../../api/userApi";
 import AnimeButton from "../../../components/Button";
 import LoadingDiv from "../../../components/LoadingDiv";
 import {
-  PasswordInput,
   ProfileAccountDiv,
 } from "../../../cssJs/ProfilePage/ProfileAccountCss";
 import {

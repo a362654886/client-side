@@ -37,7 +37,7 @@ import { NewType } from "../../types/NewsType";
 import loadingImg from "../../files/loading.gif";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ANIME_ADD } from "../../redux/anime";
+import { ANIME_ADD, ANIME_NONE } from "../../redux/anime";
 import { MoreRight } from "../../cssJs/basicCss";
 import moreRightImg from "../../files/moreRightArrow.png";
 import productDealer from "../../files/productDealer.png";
@@ -126,10 +126,10 @@ const HomePage = (): JSX.Element => {
 
   const chooseAnime = (anime: Anime) => {
     dispatch({
-      payload: anime,
-      type: ANIME_ADD,
+      payload: null,
+      type: ANIME_NONE,
     });
-    history.replace("oneAnime");
+    history.replace(`oneAnime?${anime._id}`);
   };
 
   const chooseMarket = (market: MarketType) => {

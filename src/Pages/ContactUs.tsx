@@ -1,9 +1,7 @@
 import { Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import * as React from "react";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
 import AnimeButton from "../components/Button";
 import { ContactUsDiv, InputDiv, TextAreaDiv } from "../cssJs/contactUs";
 

@@ -12,12 +12,9 @@ import {
   MarketPlaceTitleDiv,
   MarketUploadImage,
   PublishButtonsDiv,
-  StateDiv,
 } from "../../cssJs/MarketPage/MarketPlaceCss";
 import lodash from "lodash";
 import add from "../../files/Add.svg";
-import stateAvailable from "../../files/stateAvailable.png";
-import stateSoldOut from "../../files/stateSoldOut.png";
 import TextArea from "antd/lib/input/TextArea";
 import AnimeButton, { MiddleDiv } from "../../components/Button";
 import { MarketType } from "../../types/MarketType";
@@ -103,7 +100,7 @@ const MarketplaceCreate = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    const r = await marketAdd(marketBody);
+    await marketAdd(marketBody);
     dispatch({
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,

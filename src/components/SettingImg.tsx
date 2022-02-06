@@ -22,7 +22,6 @@ import {
 } from "../helperFns/popUpAlert";
 import { MessageType } from "../types/MessageType";
 import { messageAdd } from "../api/messageAPI";
-import { followByGetByUserId } from "../api/followByAPI";
 import { LOGIN_USER_UPDATE_FOLLOW } from "../redux/loginUser";
 
 interface IProps {

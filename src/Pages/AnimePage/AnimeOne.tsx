@@ -138,6 +138,7 @@ const AnimeOne = (): JSX.Element => {
             ifShowHeader={true}
             ifShowAdd={true}
             toAddProduct={(page: number) => changeButton(page)}
+            discovery={false}
           />
         );
       case 3:

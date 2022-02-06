@@ -1,10 +1,11 @@
-import { Input } from "antd";
+import { Button, Input } from "antd";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productAdd } from "../../../api/productAPI";
 import AnimeButton from "../../../components/Button";
 import ImgUploadDiv from "../../../components/conponentDivs/ImgUploadDiv";
+import CropImgDiv from "../../../components/CropImgDiv";
 import {
   ProductImg,
   ProductInput,
@@ -27,6 +28,8 @@ import { Product } from "../../../types/ProductType";
 import { Avatar, User } from "../../../types/User";
 
 const AnimeOneProductAdd = (): JSX.Element => {
+  const ImgCorpRef = useRef<Cropper>(null);
+
   const chooseAnime: Anime | null = useSelector(
     (state: IStoreState) => state.animeState
   );
@@ -38,13 +41,17 @@ const AnimeOneProductAdd = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const [uploadImg, setLoadImg] = useState<string>("");
+  const [resizeUploadImg, setResizeUploadImg] = useState<string>("");
   const [link, setLink] = useState<string>("");
+  const [showCropper, setShowCropper] = useState<boolean>(false);
 
   useEffect(() => {
     //
-  }, [uploadImg]);
+  }, [uploadImg, resizeUploadImg]);
 
-  const setImg = (value: ImageBody) => setLoadImg(value.imgBase64);
+  const setUploadImg = (value: ImageBody) => {
+    setLoadImg(value.imgBase64);
+  };
 
   const onChange = (e: React.ChangeEvent<Element>): void =>
     setLink((e.target as HTMLInputElement).value);
@@ -60,7 +67,7 @@ const AnimeOneProductAdd = (): JSX.Element => {
         userId: loginUser?._id as string,
         anime: chooseAnime?._id as string,
         link: link,
-        productImg: uploadImg,
+        productImg: resizeUploadImg,
         uploadTime: new Date(),
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
         userName: `${loginUser.firstName}.${loginUser.lastName
@@ -88,10 +95,16 @@ const AnimeOneProductAdd = (): JSX.Element => {
       </SubtitleDiv>
       <ProductImg>
         <h6>Product Picture</h6>
-        <img src={`${uploadImg}`} />
+        <img src={`${resizeUploadImg}`} />
       </ProductImg>
       <UploadButton>
-        <ImgUploadDiv setImg={setImg} />
+        <ImgUploadDiv
+          setImg={(value) => {
+            setUploadImg(value);
+            console.log("Sd")
+            setShowCropper(true);
+          }}
+        />
       </UploadButton>
       <ProductInput>
         <h6>Shopping Link</h6>
@@ -120,6 +133,15 @@ const AnimeOneProductAdd = (): JSX.Element => {
         />
       </ProductCancelButton>
       <div style={{ minHeight: "32px" }}></div>
+      <CropImgDiv
+        uploadImg={uploadImg}
+        setLoadImg={(image: string) => {
+          setResizeUploadImg(image);
+          setShowCropper(false);
+        }}
+        visible={showCropper}
+        setVisibleFalse={() => setShowCropper(false)}
+      />
     </AnimOneVideo>
   );
 };

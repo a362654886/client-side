@@ -18,7 +18,7 @@ import {
   LikeDiv,
   StarDiv,
 } from "../../cssJs/AnimePage/AnimeShowCss";
-import { ANIME_ADD } from "../../redux/anime";
+import { ANIME_ADD, ANIME_NONE } from "../../redux/anime";
 import { Anime, RateBody } from "../../types/Amine";
 import starBorder from "../../files/Star-border.svg";
 import starFill from "../../files/Star-filled.svg";
@@ -94,10 +94,10 @@ const AnimeShowPage = (): JSX.Element => {
 
   const chooseAnime = (anime: Anime) => {
     dispatch({
-      payload: anime,
-      type: ANIME_ADD,
+      payload: null,
+      type: ANIME_NONE,
     });
-    history.replace("oneAnime");
+    history.replace(`oneAnime?${anime._id}`);
   };
 
   const getStar = (rate: RateBody) => {

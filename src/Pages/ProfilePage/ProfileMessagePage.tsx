@@ -10,7 +10,6 @@ import {
   ProfileDiv,
   ProfileMessageBox,
   ProfileMessageButtons,
-  ProfileSettingBox,
   SettingIconDiv,
   SettingIconsDiv,
 } from "../../cssJs/ProfilePage/ProfileCss";
@@ -60,7 +59,6 @@ const ProfileMessagePage = (): JSX.Element => {
             pageSize
           );
           setMessages(r ? r.result : []);
-          console.log(r ? r.result : []);
           setCount(r ? r.count : 0);
         } else {
           const r = await messagesAllGetByReceivedId(

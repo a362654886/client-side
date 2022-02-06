@@ -118,6 +118,7 @@ const Discovery = (): JSX.Element => {
             pageSizeSetting={3}
             ifShowHeader={false}
             ifShowAdd={false}
+            discovery={true}
           />
         );
       case 2:
@@ -127,6 +128,7 @@ const Discovery = (): JSX.Element => {
             pageSizeSetting={3}
             ifShowHeader={false}
             ifShowAdd={false}
+            discovery={true}
           />
         );
       default:

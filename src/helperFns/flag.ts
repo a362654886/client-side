@@ -256,12 +256,12 @@ export const flagArr = [
   "(ZW)Zimbabwe",
 ];
 
-export const flagGetName = (flag: string) => {
+export const flagGetName = (flag: string): string => {
   const index = flag.indexOf(")");
   return flag.substring(index + 1, flag.length);
 };
 
-export const flagGet = (flag: string) => {
+export const flagGet = (flag: string): string => {
   const index = flag.indexOf(")");
   return flag.substring(1, index);
 };

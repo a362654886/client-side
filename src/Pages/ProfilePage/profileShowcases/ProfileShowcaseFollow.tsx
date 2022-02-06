@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { showCaseAllGetByArr } from "../../../api/showcaseAPI";
-import AnimeButton, { MiddleDiv } from "../../../components/Button";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ShowCaseType } from "../../../types/showCaseType";
 import loadingImg from "../../../files/loading.gif";

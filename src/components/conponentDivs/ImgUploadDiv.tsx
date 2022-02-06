@@ -1,7 +1,11 @@
 import * as React from "react";
 import { ChangeEvent } from "react";
 import styled from "styled-components";
-import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 import { ImageBody } from "../../types/BasicType";
 
 type ImageCheck = {
@@ -101,7 +105,15 @@ const ImgUploadDiv = ({ setImg }: IProps): JSX.Element => {
     });
   };
 
-  return <Upload type="file" onChange={(e) => handleImageChange(e)} />;
+  return (
+    <Upload
+      type="file"
+      onClick={(e) => {
+        (e.target as any).value = "";
+      }}
+      onChange={(e) => handleImageChange(e)}
+    />
+  );
 };
 
 export default ImgUploadDiv;

@@ -67,6 +67,10 @@ const AnimeOneVideo = ({
     (state: IStoreState) => state.loginUserState
   );
 
+  const chooseAnime: Anime | null = useSelector(
+    (state: IStoreState) => state.animeState
+  );
+
   const [videos, setVideos] = useState<Video[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
@@ -80,19 +84,43 @@ const AnimeOneVideo = ({
   }, [videos, update]);
 
   useEffect(() => {
-    (async function anyNameFunction() {
-      await getVideos();
-    })();
+    if (pageNum > 1) {
+      (async function anyNameFunction() {
+        await getVideos();
+      })();
+    }
   }, [pageNum]);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      if (chooseAnime) {
+        await getIniVideos();
+      }
+    })();
+  }, [chooseAnime]);
+
+  const getIniVideos = async () => {
+    setLoading(true);
+    const videoResult = await videosAllGet(
+      discovery ? "" : chooseAnime ? chooseAnime._id : "",
+      pageNum,
+      pageSize
+    );
+    if (videoResult) {
+      console.log(videoResult);
+      setVideos(videoResult.result);
+      setCount(videoResult.count);
+    }
+    setLoading(false);
+  };
 
   const getVideos = async () => {
     setLoading(true);
     const videoResult = await videosAllGet(
-      anime ? anime._id : "",
+      discovery ? "" : chooseAnime ? chooseAnime._id : "",
       pageNum,
       pageSize
     );
-    console.log(videoResult);
     if (videoResult && videos.length < videoResult.count) {
       setVideos(videos.concat(videoResult.result));
       setCount(videoResult.count);

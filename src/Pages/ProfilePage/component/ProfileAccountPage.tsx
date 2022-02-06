@@ -17,7 +17,6 @@ import {
 } from "../../../cssJs/loginCss";
 import {
   AvatarBox,
-  ConfirmPasswordInput,
   PasswordInput,
   ProfileAccountDiv,
   ProfileAccountHeaderDiv,

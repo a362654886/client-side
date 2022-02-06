@@ -1046,6 +1046,18 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                         updateShowcaseSecondItem(index, secondIndex, thirdIndex)
                       }
                     />
+                    <AnimeButton
+                      para=""
+                      text={`Cancel`}
+                      width="120px"
+                      height="32px"
+                      textColor="black"
+                      backGroundColor="white"
+                      borderColor="black"
+                      buttonClick={() =>
+                        editShowcaseSecondReply(index, secondIndex, thirdIndex)
+                      }
+                    />
                   </ShowcaseEditDiv>
                 ) : (
                   <>

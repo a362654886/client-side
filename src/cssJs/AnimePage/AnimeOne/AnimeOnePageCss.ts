@@ -90,7 +90,6 @@ export const AnimOneWhereWatchImg = styled.img`
 export const AnimOneIcons = styled.div`
   height: 32px;
   display: flex;
-  margin-top: 24px;
   img {
     height: 32px;
     width: 32px;
@@ -246,5 +245,7 @@ export const DeleteDiv = styled.div`
   }
   button {
     margin-top: 16px;
+    padding: 0px;
+    margin-left: 4px;
   }
 `;

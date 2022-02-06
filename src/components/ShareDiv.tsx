@@ -4,6 +4,11 @@ import facebook from "../files/facebook.svg";
 import insImage from "../files/insImage.svg";
 import twitter from "../files/twitter.svg";
 import copy from "../files/copy.svg";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../helperFns/popUpAlert";
 
 interface IProps {
   marginTop: string;
@@ -32,6 +37,15 @@ const ShareDiv = ({ marginTop }: IProps): JSX.Element => {
     );
   };
 
+  const copyFn = () => {
+    navigator.clipboard.writeText(window.location.href);
+    openNotification(
+      "copy link success ",
+      NotificationColor.Success,
+      NotificationTitle.Success
+    );
+  };
+
   return (
     <>
       <AnimOneIcons style={{ marginTop: marginTop }}>
@@ -55,7 +69,7 @@ const ShareDiv = ({ marginTop }: IProps): JSX.Element => {
         />
         <img
           onClick={() => {
-            console.log("copy");
+            copyFn();
           }}
           src={`${copy}`}
         />

@@ -6,7 +6,7 @@ import starBorder from "../../files/Star-border.svg";
 import starFill from "../../files/Star-filled.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ANIME_ADD } from "../../redux/anime";
+import { ANIME_ADD, ANIME_NONE } from "../../redux/anime";
 import { AnimeBox, LikeDiv, StarDiv } from "../../cssJs/AnimePage/AnimeShowCss";
 import {
   DiscoveryHeaderDiv,
@@ -42,10 +42,10 @@ const DiscoveryHeader = (): JSX.Element => {
 
   const chooseAnime = (anime: Anime) => {
     dispatch({
-      payload: anime,
-      type: ANIME_ADD,
+      payload: null,
+      type: ANIME_NONE,
     });
-    history.replace("oneAnime");
+    history.replace(`oneAnime?${anime._id}`);
   };
 
   const getStar = (rate: RateBody) => {
@@ -89,7 +89,11 @@ const DiscoveryHeader = (): JSX.Element => {
         return (
           <div
             className="col-xl-3 col-md-4 col-sm-6"
-            style={{ marginBottom: "24px", marginRight: "24px" }}
+            style={{
+              marginBottom: "24px",
+              marginRight: "24px",
+              cursor: "pointer",
+            }}
             key={index}
             onClick={() => chooseAnime(anime)}
           >

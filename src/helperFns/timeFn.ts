@@ -43,7 +43,7 @@ export const getDateString = (date: Date): string => {
   }
 };
 
-export const getMonentDate = (date: Date) => {
+export const getMonentDate = (date: Date): moment.Moment => {
   if (date) {
     const newDate = new Date(date);
     return moment()

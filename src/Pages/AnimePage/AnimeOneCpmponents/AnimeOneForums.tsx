@@ -76,6 +76,7 @@ interface IProps {
   ifShowHeader: boolean;
   ifShowAdd: boolean;
   toForum?: (num: number) => void;
+  discovery?: boolean;
 }
 
 const AnimeOneForum = ({
@@ -84,11 +85,16 @@ const AnimeOneForum = ({
   ifShowHeader,
   ifShowAdd,
   toForum,
+  discovery,
 }: IProps): JSX.Element => {
   const dispatch = useDispatch();
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
+  );
+
+  const chooseAnime: Anime | null = useSelector(
+    (state: IStoreState) => state.animeState
   );
 
   const [forums, setForums] = useState<ForumType[]>([]);
@@ -106,8 +112,27 @@ const AnimeOneForum = ({
   const pageSize = pageSizeSetting;
 
   useEffect(() => {
+    if (pageNum > 1) {
+      (async function anyNameFunction() {
+        await getForums();
+      })();
+      const newArr: string[][] = [[]];
+      for (let k = 0; k < forums.length; k++) {
+        newArr.push([]);
+        const l = forums[k].items;
+        if (l) {
+          for (let j = 0; j < l.length; j++) {
+            newArr[k].push("");
+          }
+        }
+      }
+      setNewSecondItemHtml(newArr);
+    }
+  }, [pageNum]);
+
+  useEffect(() => {
     (async function anyNameFunction() {
-      await getForums();
+      await getIniForums();
     })();
     const newArr: string[][] = [[]];
     for (let k = 0; k < forums.length; k++) {
@@ -120,7 +145,7 @@ const AnimeOneForum = ({
       }
     }
     setNewSecondItemHtml(newArr);
-  }, [pageNum]);
+  }, [chooseAnime]);
 
   useEffect(() => {
     //console.log(forums);
@@ -129,12 +154,26 @@ const AnimeOneForum = ({
   const getForums = async () => {
     setLoading(true);
     const forumResult = await forumsAllGet(
-      anime ? anime._id : "",
+      discovery ? "" : chooseAnime ? chooseAnime._id : "",
       pageNum,
       pageSize
     );
     if (forumResult && forums.length < forumResult.count) {
       setForums(forums.concat(forumResult.result));
+      setCount(forumResult.count);
+    }
+    setLoading(false);
+  };
+
+  const getIniForums = async () => {
+    setLoading(true);
+    const forumResult = await forumsAllGet(
+      discovery ? "" : chooseAnime ? chooseAnime._id : "",
+      pageNum,
+      pageSize
+    );
+    if (forumResult) {
+      setForums(forumResult.result);
       setCount(forumResult.count);
     }
     setLoading(false);
@@ -226,7 +265,7 @@ const AnimeOneForum = ({
           .substring(0, 1)
           .toUpperCase()}`,
         userCountry: `${loginUser.country}`,
-        anime: anime?._id as string,
+        anime: chooseAnime?._id as string,
       };
       const r = await forumAdd(forum);
       if (r && r < 300) {
@@ -274,7 +313,7 @@ const AnimeOneForum = ({
           .substring(0, 1)
           .toUpperCase()}`,
         userCountry: `${loginUser.country}`,
-        anime: anime?._id as string,
+        anime: chooseAnime?._id as string,
       };
       const r = await forumItemAdd(forumItem);
       if (r && r < 300) {
@@ -336,7 +375,7 @@ const AnimeOneForum = ({
           .substring(0, 1)
           .toUpperCase()}`,
         userCountry: `${loginUser.country}`,
-        anime: anime?._id as string,
+        anime: chooseAnime?._id as string,
       };
       const r = await forumSecondItemAdd(secondForumItem);
       if (r && r < 300) {
@@ -954,7 +993,7 @@ const AnimeOneForum = ({
                 </>
               )}
               {(forums[index].items as ForumItem[])[secondIndex].userId ==
-                loginUser?._id ? (
+              loginUser?._id ? (
                 <AnimeEditAndDeleteDiv>
                   <div onClick={() => editForumItem(index, secondIndex)}>
                     <img src={`${editIcon}`} />
