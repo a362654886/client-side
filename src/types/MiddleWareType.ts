@@ -25,6 +25,6 @@ export type actionBody =
   | NewAction
   | LoadingAction
   | ShowcaseAction
-  | ProfileUser;
+  | ProfileUser
 
 export type nextAction = (action: actionBody) => void;

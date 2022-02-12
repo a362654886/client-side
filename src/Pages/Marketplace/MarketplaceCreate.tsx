@@ -26,6 +26,7 @@ import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { marketAdd } from "../../api/marketAPI";
 import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
 import Flag from "react-flagkit";
+import CropImgBodyDiv from "../../components/CropImgBodyDiv";
 
 const { Option } = Select;
 
@@ -43,12 +44,19 @@ const MarketplaceCreate = (): JSX.Element => {
   const [country, setCountry] = useState<string>("");
   const [imgArr, setImgArr] = useState<(string | ImageBody)[]>(["add"]);
   const [state, setState] = useState<string>("available");
+  const [uploadImg, setLoadImg] = useState<ImageBody>({
+    width: 0,
+    height: 0,
+    imgBase64: "",
+    imgName: "",
+  });
+  const [showCropper, setShowCropper] = useState<boolean>(false);
 
   useEffect(() => {
     console.log(imgArr);
   }, [imgArr, state]);
 
-  const setNewImage = (imageBody: ImageBody) => {
+  const setResizeUploadImg = (imageBody: ImageBody) => {
     const exist = imgArr
       .map((image) => {
         if (typeof image == "string") {
@@ -150,7 +158,10 @@ const MarketplaceCreate = (): JSX.Element => {
                       border={"1px solid #F6F6F6"}
                       text={"Image"}
                       margin={"15px 0px 0px 0px"}
-                      setImg={(value: ImageBody) => setNewImage(value)}
+                      setImg={(value: ImageBody) => {
+                        setLoadImg(value);
+                        setShowCropper(true);
+                      }}
                     />
                   </div>
                 );
@@ -266,6 +277,15 @@ const MarketplaceCreate = (): JSX.Element => {
             </MiddleDiv>
           </PublishButtonsDiv>
         </MarketBodyDiv>
+        <CropImgBodyDiv
+          uploadImg={uploadImg}
+          setLoadImg={(imageBody: ImageBody) => {
+            setResizeUploadImg(imageBody);
+            setShowCropper(false);
+          }}
+          visible={showCropper}
+          setVisibleFalse={() => setShowCropper(false)}
+        />
       </div>
       <div className="col-xl-3 col-md-3 col-sm-3 col-3">side</div>
     </>

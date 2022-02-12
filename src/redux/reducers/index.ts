@@ -14,5 +14,5 @@ export default combineReducers({
   newState,
   loadingState,
   mangaState,
-  profileUserState,
+  profileUserState
 });

@@ -20,7 +20,7 @@ import ShowcaseForum from "./ShowcaseForum";
 import loadingImg from "../../files/loading.gif";
 import searchImg from "../../files/search.svg";
 import ShowcaseManga from "./ShowcaseMaga";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
 import ShowcaseSide from "./ShowcaseSide";
 import {
@@ -30,10 +30,17 @@ import {
 import newIcon from "../../files/newIcon.png";
 import hotIcon from "../../files/hotIcon.png";
 import getMoreImg from "../../files/getMore.png";
+import { IfLoginCheck } from "../../helperFns/loginCheck";
+import { User } from "../../types/User";
+import { IStoreState } from "../../types/IStoreState";
 
 const ShowcaseShow = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const loginUser: User | null = useSelector(
+    (state: IStoreState) => state.loginUserState
+  );
 
   const [loading, setLoading] = useState(false);
   const [typeLoading, setTypeLoading] = useState(false);
@@ -162,10 +169,12 @@ const ShowcaseShow = (): JSX.Element => {
                 backGroundColor="#FFC300"
                 borderColor="white"
                 buttonClick={() => {
-                  history.push({
-                    pathname: "/mainPage/showcase/create",
-                    state: { type: ShowCaseEnum.Collections },
-                  });
+                  IfLoginCheck(loginUser)
+                    ? history.push({
+                        pathname: "/mainPage/showcase/create",
+                        state: { type: ShowCaseEnum.Collections },
+                      })
+                    : "";
                 }}
               />
             </ShowcaseMiddleDivPost>
@@ -188,10 +197,12 @@ const ShowcaseShow = (): JSX.Element => {
                 backGroundColor="#FFC300"
                 borderColor="white"
                 buttonClick={() => {
-                  history.push({
-                    pathname: "/mainPage/showcase/create",
-                    state: { type: ShowCaseEnum.Illustrations },
-                  });
+                  IfLoginCheck(loginUser)
+                    ? history.push({
+                        pathname: "/mainPage/showcase/create",
+                        state: { type: ShowCaseEnum.Illustrations },
+                      })
+                    : "";
                 }}
               />
             </MiddleDiv>
@@ -213,10 +224,12 @@ const ShowcaseShow = (): JSX.Element => {
                 backGroundColor="#FFC300"
                 borderColor="white"
                 buttonClick={() => {
-                  history.push({
-                    pathname: "/mainPage/showcase/create",
-                    state: { type: ShowCaseEnum.Manga },
-                  });
+                  IfLoginCheck(loginUser)
+                    ? history.push({
+                        pathname: "/mainPage/showcase/create",
+                        state: { type: ShowCaseEnum.Manga },
+                      })
+                    : "";
                 }}
               />
             </MiddleDiv>

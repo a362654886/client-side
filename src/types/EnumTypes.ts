@@ -31,3 +31,8 @@ export enum LoadingType {
   OPEN = "OPEN",
   CLOSE = "CLOSE"
 }
+
+export enum AlertType {
+  OPEN = "OPEN",
+  CLOSE = "CLOSE"
+}

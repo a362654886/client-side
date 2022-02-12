@@ -59,7 +59,8 @@ const LoginPage = (): JSX.Element => {
         payload: user,
         type: LOGIN_USER_ADD,
       });
-      toPage("/mainPage/home");
+      const url = localStorage.getItem("url");
+      url ? toPage(url) : toPage("/mainPage/home");
     }
     dispatch({
       payload: LoadingType.CLOSE,

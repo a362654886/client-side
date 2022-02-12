@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const AnimOneForum = styled.div`
   height: auto;
-  width: 896px;
 `;
 
 export const AnimAddDiv = styled.div`
@@ -40,6 +39,7 @@ export const ForumIframe = styled.div`
   padding: 16px;
   border: 1px solid #7f7e82;
   margin-bottom: 16px;
+  width: 100%;
 `;
 
 export const ForumImg = styled.img`

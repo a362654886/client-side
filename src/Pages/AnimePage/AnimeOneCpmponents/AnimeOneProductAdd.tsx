@@ -101,7 +101,6 @@ const AnimeOneProductAdd = (): JSX.Element => {
         <ImgUploadDiv
           setImg={(value) => {
             setUploadImg(value);
-            console.log("Sd")
             setShowCropper(true);
           }}
         />

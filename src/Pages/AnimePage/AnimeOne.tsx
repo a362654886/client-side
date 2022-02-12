@@ -21,6 +21,7 @@ import AnimeOneProducts from "./AnimeOneCpmponents/AnimeOneProducts";
 import AnimeOneVideo from "./AnimeOneCpmponents/AnimeOneVideo";
 import AnimeOneVideoAdd from "./AnimeOneCpmponents/AnimeOneVideoAdd";
 import moreRightImg from "../../files/moreRightArrow.png";
+import { getWidth } from "../../helperFns/widthFn";
 
 const AnimeOne = (): JSX.Element => {
   const chooseAnime: Anime | null = useSelector(
@@ -160,17 +161,22 @@ const AnimeOne = (): JSX.Element => {
   };
 
   return (
-    <div>
-      <AnimOne className="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+    <>
+      <AnimOne>
         <AnimOneMain>
           <h1>Anime</h1>
           <h1 style={{ marginTop: "0px" }}>{chooseAnime?.title}</h1>
-          <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
+          {getWidth() > 600 ? (
+            <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
+          ) : (
+            <>{getButtons()}</>
+          )}
           <div>{getChildDiv()}</div>
         </AnimOneMain>
         <div
           style={{
             width: "276px",
+            marginLeft: "10px",
             display:
               document.documentElement.clientWidth > 1181 ? "inline" : "none",
           }}
@@ -214,7 +220,7 @@ const AnimeOne = (): JSX.Element => {
           </AnimOneSideTwo>
         </div>
       </AnimOne>
-    </div>
+    </>
   );
 };
 

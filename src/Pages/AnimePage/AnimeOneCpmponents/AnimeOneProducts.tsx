@@ -42,6 +42,8 @@ import { User } from "../../../types/User";
 import { useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
 import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
+import { IfLoginCheck } from "../../../helperFns/loginCheck";
+import { getWidth } from "../../../helperFns/widthFn";
 
 interface IProps {
   anime: Anime | null;
@@ -247,7 +249,12 @@ const AnimeOneProducts = ({
 
   const getExistProducts = () => {
     return (
-      <div style={{ display: "flex", marginTop: "16px" }}>
+      <div
+        style={{
+          display: getWidth() > 600 ? "flex" : "inline",
+          marginTop: "16px",
+        }}
+      >
         <ProductBox1>
           {getProductsDiv(productArr ? productArr[0] : null)}
         </ProductBox1>
@@ -305,7 +312,13 @@ const AnimeOneProducts = ({
                   textColor="white"
                   backGroundColor="#FFC300"
                   borderColor="#FFC300"
-                  buttonClick={() => (toAddProduct ? toAddProduct(5) : "")}
+                  buttonClick={() =>
+                    IfLoginCheck(loginUser)
+                      ? toAddProduct
+                        ? toAddProduct(5)
+                        : ""
+                      : ""
+                  }
                 />
               </MiddleDiv>
             </>
@@ -324,7 +337,13 @@ const AnimeOneProducts = ({
                 textColor="white"
                 backGroundColor="#FFC300"
                 borderColor="#FFC300"
-                buttonClick={() => (toAddProduct ? toAddProduct(5) : "")}
+                buttonClick={() =>
+                  IfLoginCheck(loginUser)
+                    ? toAddProduct
+                      ? toAddProduct(5)
+                      : ""
+                    : ""
+                }
               />
             </AnimeAddButtonLeftDiv>
           )}

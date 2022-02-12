@@ -27,12 +27,17 @@ export const openNotification = (
     onClick: () => {
       console.log("Notification Clicked!");
     },
-    duration: 20,
     style: { width: `400px`, right: `${right}px`, backgroundColor: type },
   });
+  setTimeout(() => {
+    localStorage.setItem("alert", "1");
+  }, 300);
 };
 
-export const popUpAPIResult = async <T>(apiFn: T, failResult: string): Promise<void> => {
+export const popUpAPIResult = async <T>(
+  apiFn: T,
+  failResult: string
+): Promise<void> => {
   try {
     const r = await apiFn;
     if (r && typeof r == "number") {

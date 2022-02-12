@@ -7,11 +7,11 @@ export const AnimOne = styled.div`
   height: auto;
   margin: auto;
   display: flex;
+  width: 100%;
 `;
 
 export const AnimOneMain = styled.div`
   max-width: 896px;
-  margin-right: 32px;
   h1 {
     font-size: 36px;
     margin-top: 8px;
@@ -48,6 +48,7 @@ export const AnimOneSide = styled.div`
 export const AnimOneSideTwo = styled.div`
   background-color: #f6f6f6;
   padding: 23px 16px;
+  margin: 23px 16px;
   p {
     margin-top: 16px;
     height: 24px;

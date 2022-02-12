@@ -43,6 +43,9 @@ import { User } from "../../../types/User";
 import { useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
 import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
+import { IfLoginCheck } from "../../../helperFns/loginCheck";
+import { Button, notification } from "antd";
+import { getWidth } from "../../../helperFns/widthFn";
 
 interface IProps {
   anime: Anime | null;
@@ -174,11 +177,13 @@ const AnimeOneVideo = ({
   const getExistVideos = () =>
     videos.map((video, index) => {
       const date = new Date(video.uploadTime);
+      const videoLink =
+        getWidth() > 600 ? video.link : video.link.replace("560", "200");
       return video.type == VideoType.Embed ? (
         <VideoDiv key={index}>
           {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
           <VideoIframeDiv
-            dangerouslySetInnerHTML={{ __html: video.link }}
+            dangerouslySetInnerHTML={{ __html: videoLink }}
           ></VideoIframeDiv>
           <VideoBottom>
             <TimeText>{`${date.getDate()}-${
@@ -293,7 +298,13 @@ const AnimeOneVideo = ({
                   textColor="white"
                   backGroundColor="#FFC300"
                   borderColor="#FFC300"
-                  buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
+                  buttonClick={() =>
+                    IfLoginCheck(loginUser)
+                      ? toAddVideo
+                        ? toAddVideo(4)
+                        : ""
+                      : ""
+                  }
                 />
               </MiddleDiv>
             </>
@@ -312,7 +323,13 @@ const AnimeOneVideo = ({
                 textColor="white"
                 backGroundColor="#FFC300"
                 borderColor="#FFC300"
-                buttonClick={() => (toAddVideo ? toAddVideo(4) : "")}
+                buttonClick={() =>
+                  IfLoginCheck(loginUser)
+                    ? toAddVideo
+                      ? toAddVideo(4)
+                      : ""
+                    : ""
+                }
               />
             </AnimeAddButtonLeftDiv>
           )}

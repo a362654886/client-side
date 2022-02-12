@@ -81,6 +81,8 @@ import SettingImg from "../../components/SettingImg";
 import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
+import { IfLoginCheck } from "../../helperFns/loginCheck";
+import ShareDiv from "../../components/ShareDiv";
 
 const ShowcaseMangaOne = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -188,7 +190,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           backGroundColor="white"
           borderColor="
           #302D46"
-          buttonClick={() => cancelFollowFn()}
+          buttonClick={() => (IfLoginCheck(loginUser) ? cancelFollowFn() : "")}
         />
       );
     } else {
@@ -201,7 +203,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="#FFC300"
-          buttonClick={() => followFn()}
+          buttonClick={() => (IfLoginCheck(loginUser) ? followFn() : "")}
         />
       );
     }
@@ -589,7 +591,11 @@ const ShowcaseMangaOne = (): JSX.Element => {
     <div style={{ marginTop: "16px" }}>
       <TextInput>
         <TextArea
-          onChange={(e) => sendNewSecondReply(e.target.value, secondIndex)}
+          onChange={(e) => {
+            IfLoginCheck(loginUser)
+              ? sendNewSecondReply(e.target.value, secondIndex)
+              : "";
+          }}
         />
         <br />
         <ReplyAddDiv>
@@ -795,7 +801,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
       <TextInput>
         <TextArea
           value={newReplyHtml}
-          onChange={(e) => setNewReplyHtml(e.target.value)}
+          onChange={(e) =>
+            IfLoginCheck(loginUser) ? setNewReplyHtml(e.target.value) : ""
+          }
         />
         <br />
         <ReplyAddDiv>
@@ -1055,32 +1063,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           </AnimeButtonsDiv>
           {getOneShowcase()}
           {getFollowButton()}
-          <ShowCaseIcons>
-            <img
-              onClick={() => {
-                console.log("facebook");
-              }}
-              src={`${facebook}`}
-            />
-            <img
-              onClick={() => {
-                console.log("insImage");
-              }}
-              src={`${insImage}`}
-            />
-            <img
-              onClick={() => {
-                console.log("twitter");
-              }}
-              src={`${twitter}`}
-            />
-            <img
-              onClick={() => {
-                console.log("copy");
-              }}
-              src={`${copy}`}
-            />
-          </ShowCaseIcons>
+          <ShareDiv marginTop={"24px"} />
           <EpisodesText>
             <img src={episodes} />
             Episodes
@@ -1103,32 +1086,36 @@ const ShowcaseMangaOne = (): JSX.Element => {
             {addLoading ? <Spin /> : <></>}
             {getEpisodesPage()}
           </ShowMangaButtons>
-          <EpisodesEditDiv>
-            <img
-              onClick={() => {
-                console.log("edit");
-              }}
-              src={`${editIcon}`}
-            />
-            <p>Edit</p>
-            <h6
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                setEditShowCaseManga(!editShowCaseManga);
-              }}
-            >
-              Cover Info
-            </h6>
-            <h6>|</h6>
-            <h6
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                setEditEpisodesManga(!editEpisode);
-              }}
-            >
-              Episodes
-            </h6>
-          </EpisodesEditDiv>
+          {loginUser && loginUser?._id == manga?.userId ? (
+            <EpisodesEditDiv>
+              <img
+                onClick={() => {
+                  console.log("edit");
+                }}
+                src={`${editIcon}`}
+              />
+              <p>Edit</p>
+              <h6
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setEditShowCaseManga(!editShowCaseManga);
+                }}
+              >
+                Cover Info
+              </h6>
+              <h6>|</h6>
+              <h6
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setEditEpisodesManga(!editEpisode);
+                }}
+              >
+                Episodes
+              </h6>
+            </EpisodesEditDiv>
+          ) : (
+            <></>
+          )}
           <EpisodesDeleteDiv>
             <img
               onClick={() => {

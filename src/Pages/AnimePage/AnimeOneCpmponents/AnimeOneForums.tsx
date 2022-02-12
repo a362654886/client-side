@@ -69,6 +69,8 @@ import { _getDate } from "../../../helperFns/timeFn";
 import Flag from "react-flagkit";
 import { flagGet } from "../../../helperFns/flag";
 import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
+import { IfLoginCheck } from "../../../helperFns/loginCheck";
+import { getWidth } from "../../../helperFns/widthFn";
 
 interface IProps {
   anime: Anime | null;
@@ -446,7 +448,7 @@ const AnimeOneForum = ({
         <FullTextEditor
           html={newItemHtml[index]}
           setFullText={(e) => {
-            sendNewItem(e, index);
+            IfLoginCheck(loginUser) ? sendNewItem(e, index) : "";
           }}
         />
         <br />
@@ -470,7 +472,7 @@ const AnimeOneForum = ({
         <FullTextEditor
           html={html}
           setFullText={(e) => {
-            setHtml(e);
+            IfLoginCheck(loginUser) ? setHtml(e) : "";
           }}
         />
         <AnimeButton
@@ -499,7 +501,9 @@ const AnimeOneForum = ({
               : ""
           }
           setFullText={(e) => {
-            sendNewSecondItem(e, index, secondIndex);
+            IfLoginCheck(loginUser)
+              ? sendNewSecondItem(e, index, secondIndex)
+              : "";
           }}
         />
         <br />
@@ -1257,7 +1261,7 @@ const AnimeOneForum = ({
     );
 
   return (
-    <AnimOneForum>
+    <AnimOneForum style={{ width: getWidth() > 600 ? "876px" : "100%" }}>
       <AnimAddDiv
         style={{
           display: ifShowHeader || ifShowAdd ? "inline" : "none",

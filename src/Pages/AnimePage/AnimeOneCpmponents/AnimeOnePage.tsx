@@ -4,7 +4,6 @@ import {
   AnimOneHeader,
   AnimOneHeaderLabel,
   AnimOneHeaderLeft,
-  AnimOneHeaderRight,
   AnimOnePage,
   AnimOneWhereWatchImg,
   AnimOneWhereWatchLabel,
@@ -47,6 +46,7 @@ import {
 } from "../../../helperFns/popUpAlert";
 import ShareDiv from "../../../components/ShareDiv";
 import { useHistory } from "react-router-dom";
+import { getWidth } from "../../../helperFns/widthFn";
 
 interface IProps {
   toPage: (page: number) => void;
@@ -91,59 +91,62 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
     });
   };
 
-  const getWhereToWatch = () =>
-    chooseAnime?.whereToWatch.map((img, index) => {
-      switch (img) {
-        case "Funimation":
-          return (
-            <AnimOneWhereWatchImg
-              src={Funimation}
-              key={index}
-              onClick={() => toOther("https://www.funimation.com")}
-            />
-          );
-        case "crunchyroll":
-          return (
-            <AnimOneWhereWatchImg
-              src={crunchyroll}
-              key={index}
-              onClick={() => toOther("https://www.crunchyroll.com")}
-            />
-          );
-        case "hidive":
-          return (
-            <AnimOneWhereWatchImg
-              src={hidive}
-              key={index}
-              onClick={() => toOther("https://www.hidive.com/dashboard")}
-            />
-          );
-        case "tubi":
-          return (
-            <AnimOneWhereWatchImg
-              src={tubi}
-              key={index}
-              onClick={() => toOther("https://tubitv.com/")}
-            />
-          );
-        case "VIZ":
-          return (
-            <AnimOneWhereWatchImg
-              src={VIZ}
-              key={index}
-              onClick={() => toOther("https://www.viz.com/")}
-            />
-          );
-        case "AnimePlant":
-          return (
-            <AnimOneWhereWatchImg
-              src={AnimePlant}
-              key={index}
-              onClick={() => toOther("https://www.anime-planet.com/ ")}
-            />
-          );
-      }
-    });
+  const getWhereToWatch = () => {
+    if (chooseAnime?.whereToWatch) {
+      return chooseAnime?.whereToWatch.map((img, index) => {
+        switch (img) {
+          case "Funimation":
+            return (
+              <AnimOneWhereWatchImg
+                src={Funimation}
+                key={index}
+                onClick={() => toOther("https://www.funimation.com")}
+              />
+            );
+          case "crunchyroll":
+            return (
+              <AnimOneWhereWatchImg
+                src={crunchyroll}
+                key={index}
+                onClick={() => toOther("https://www.crunchyroll.com")}
+              />
+            );
+          case "hidive":
+            return (
+              <AnimOneWhereWatchImg
+                src={hidive}
+                key={index}
+                onClick={() => toOther("https://www.hidive.com/dashboard")}
+              />
+            );
+          case "tubi":
+            return (
+              <AnimOneWhereWatchImg
+                src={tubi}
+                key={index}
+                onClick={() => toOther("https://tubitv.com/")}
+              />
+            );
+          case "VIZ":
+            return (
+              <AnimOneWhereWatchImg
+                src={VIZ}
+                key={index}
+                onClick={() => toOther("https://www.viz.com/")}
+              />
+            );
+          case "AnimePlant":
+            return (
+              <AnimOneWhereWatchImg
+                src={AnimePlant}
+                key={index}
+                onClick={() => toOther("https://www.anime-planet.com/ ")}
+              />
+            );
+        }
+      });
+    }
+  };
 
   const isLogin = (likeFn: () => Promise<void> | void) => {
     if (loginUser) {
@@ -263,7 +266,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
 
   return (
     <AnimOnePage>
-      <AnimOneHeader>
+      <AnimOneHeader style={{ display: getWidth() > 600 ? "flex" : "inline" }}>
         <AnimOneHeaderLeft>
           <img src={chooseAnime?.headImage} />
           <OnePageStarDiv
@@ -284,7 +287,12 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
             <p>Give it a rate if you watched it</p>
           </OnePageStarDiv>
         </AnimOneHeaderLeft>
-        <AnimOneHeaderRight>
+        <div
+          style={{
+            marginLeft: getWidth() > 600 ? "40px" : "0px",
+            width: getWidth() > 600 ? "520px" : "100%",
+          }}
+        >
           <AnimOneHeaderLabel>
             <h6>Aired:</h6>
             <p>{chooseAnime?.aired}</p>
@@ -303,7 +311,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
           </AnimOneWhereWatchLabel>
           <LikeButton>{getLikesButton()}</LikeButton>
           <ShareDiv marginTop={"24px"} />
-        </AnimOneHeaderRight>
+        </div>
       </AnimOneHeader>
       <AnimeOneVideo
         anime={chooseAnime}

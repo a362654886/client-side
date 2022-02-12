@@ -11,6 +11,13 @@ export const HeaderContainer = styled.div`
   padding-left: 20px;
   display: flex;
   margin: auto;
+  position: relative;
+`;
+
+export const HeaderImg = styled.img`
+  height: 32px;
+  width: 32px;
+  margin-top: 4px;
 `;
 
 export const FootContainer = styled.div`
@@ -39,11 +46,21 @@ export const HeaderContext = styled.div`
     line-height: 96px;
     margin-right: 32px;
     color: #fae7d5;
-    font-size: 16px;
     font-family: "Arial";
     font-weight: bold;
     cursor: pointer;
   }
+`;
+
+export const HeaderSmallImg = styled.img`
+  margin-right: 20px;
+`;
+
+export const HeaderMobileHeader = styled.div`
+  display: flex;
+  height: 40px;
+  width: 100%;
+  position: relative;
 `;
 
 export const LoginImg = styled.img`
@@ -66,6 +83,26 @@ export const LoginBox = styled.div`
   }
 `;
 
+export const MobileLoginBox = styled.div`
+  height: 40px;
+  display: flex;
+  p {
+    margin-left: 6px;
+    line-height: 40px;
+    color: #fae7d5;
+    font-size: 12px;
+    font-family: "Arial";
+    font-weight: bold;
+    cursor: pointer;
+  }
+`;
+
+export const MobileLoginBoxDiv = styled.div`
+  display: flex;
+  width: 200px;
+  margin: 0px auto;
+`;
+
 export const LoginOutImg = styled.img`
   width: 32px;
   height: 32px;
@@ -74,8 +111,21 @@ export const LoginOutImg = styled.img`
   cursor: pointer;
 `;
 
+export const MobileLoginOutImg = styled.img`
+  width: 32px;
+  height: 32px;
+  margin-top: 4px;
+  margin-left: 10px;
+  cursor: pointer;
+`;
+
 export const LoginCountry = styled.div`
   margin-top: 33px;
+  margin-left: 10px;
+`;
+
+export const LoginMobileCountry = styled.div`
+  margin-top: 8px;
   margin-left: 10px;
 `;
 
@@ -102,11 +152,11 @@ export const LoadingBox = styled.div`
 
 export const ProfileDiv = styled.div`
   display: flex;
+  position: absolute;
+  right: 50px;
 `;
 
 export const MenuButton = styled(Button)`
-  margin-top: 32px;
-  margin-left: 50px;
   background-color: #892e2f;
   border: 1px solid #892e2f;
   color: white;

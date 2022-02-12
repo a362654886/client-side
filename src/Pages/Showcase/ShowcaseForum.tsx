@@ -72,6 +72,7 @@ import { _getDate } from "../../helperFns/timeFn";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
+import { IfLoginCheck } from "../../helperFns/loginCheck";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -333,7 +334,9 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
       <TextInput>
         <TextArea
           value={newReplyHtml[index]}
-          onChange={(e) => sendNewReply(e.target.value, index)}
+          onChange={(e) => {
+            IfLoginCheck(loginUser) ? sendNewReply(e.target.value, index) : "";
+          }}
         />
         <br />
         <ReplyAddDiv>
@@ -367,9 +370,11 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 : ""
               : ""
           }
-          onChange={(e) =>
-            sendNewSecondReply(e.target.value, index, secondIndex)
-          }
+          onChange={(e) => {
+            IfLoginCheck(loginUser)
+              ? sendNewSecondReply(e.target.value, index, secondIndex)
+              : "";
+          }}
         />
         <br />
         <ReplyAddDiv>

@@ -5,15 +5,13 @@ export const AnimOnePage = styled.div`
 `;
 
 export const AnimOneHeader = styled.div`
-  display: flex;
   height: 432px;
   margin-bottom: 16px;
 `;
 
 export const AnimOneHeaderLeft = styled.div`
   width: 280px;
-  display: inline;
-  position: relative;
+  height: 400px;
   img {
     height: 280px;
     width: 280px;
@@ -32,12 +30,6 @@ export const AnimOneHeaderLeft = styled.div`
     line-height: 32px;
     font-family: "Arial MT";
   }
-`;
-
-export const AnimOneHeaderRight = styled.div`
-  width: 520px;
-  margin-left: 40px;
-  display: inline;
 `;
 
 export const AnimOneHeaderLabel = styled.div`
@@ -60,7 +52,7 @@ export const AnimOneHeaderLabel = styled.div`
     color: #4a4a4a;
     margin-bottom: 0;
     line-height: 32px;
-    width: 520px;
+    width: 100%;
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;
