@@ -27,6 +27,7 @@ import searchImg from "../../files/search.svg";
 import newIcon from "../../files/newIcon.png";
 import hotIcon from "../../files/hotIcon.png";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
+import { getWidth } from "../../helperFns/widthFn";
 
 const AnimeShowPage = (): JSX.Element => {
   const history = useHistory();
@@ -40,7 +41,7 @@ const AnimeShowPage = (): JSX.Element => {
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
   const [ifNew, setIfNew] = useState<boolean>(true);
   const [sortType, setSortType] = useState<string>("new");
-  const pageSize = 6;
+  const pageSize = getWidth() > 600 ? 24 : 6;
 
   useEffect(() => {
     if (page >= 1) {

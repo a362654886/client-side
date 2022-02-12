@@ -332,10 +332,20 @@ const MainPage = (): JSX.Element => {
                   className="col-xl-3 col-lg-3 col-md-4 col-sm-5"
                   placeholder={"searchValue"}
                 >
-                  <AnimeParkImg src={titleTextWhite} />
+                  <AnimeParkImg
+                    onClick={() => {
+                      toProfile("/mainPage/home");
+                    }}
+                    src={titleTextWhite}
+                  />
                 </HeaderTitle>
               ) : (
-                <HeaderSmallImg src={LOGOMobile} />
+                <HeaderSmallImg
+                  onClick={() => {
+                    toProfile("/mainPage/home");
+                  }}
+                  src={LOGOMobile}
+                />
               )}
               <HeaderContext>
                 <p

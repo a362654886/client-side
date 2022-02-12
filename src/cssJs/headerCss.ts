@@ -54,6 +54,7 @@ export const HeaderContext = styled.div`
 
 export const HeaderSmallImg = styled.img`
   margin-right: 20px;
+  cursor: pointer;
 `;
 
 export const HeaderMobileHeader = styled.div`
@@ -167,4 +168,5 @@ export const AnimeParkImg = styled.img`
   width: 235.2px;
   height: 32px;
   color: white;
+  cursor: pointer;
 `;

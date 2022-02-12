@@ -7,7 +7,6 @@ export const AnimOne = styled.div`
   height: auto;
   margin: auto;
   display: flex;
-  width: 100%;
 `;
 
 export const AnimOneMain = styled.div`

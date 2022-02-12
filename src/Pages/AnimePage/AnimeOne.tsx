@@ -135,7 +135,7 @@ const AnimeOne = (): JSX.Element => {
         return (
           <AnimeOneProducts
             anime={chooseAnime}
-            pageSizeSetting={6}
+            pageSizeSetting={getWidth() > 600 ? 18 : 6}
             ifShowHeader={true}
             ifShowAdd={true}
             toAddProduct={(page: number) => changeButton(page)}
@@ -162,7 +162,12 @@ const AnimeOne = (): JSX.Element => {
 
   return (
     <>
-      <AnimOne>
+      <AnimOne
+        style={{
+          width:
+            getWidth() > 1200 ? "100%" : getWidth() > 600 ? "896px" : "100%",
+        }}
+      >
         <AnimOneMain>
           <h1>Anime</h1>
           <h1 style={{ marginTop: "0px" }}>{chooseAnime?.title}</h1>
