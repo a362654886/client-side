@@ -9,7 +9,6 @@ import {
   EmailInput,
   LoginBox,
   LoginClickButton,
-  PasswordInput,
   SignUpButtons,
 } from "../../cssJs/loginCss";
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";

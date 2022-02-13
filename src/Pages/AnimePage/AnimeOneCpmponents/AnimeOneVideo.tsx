@@ -134,7 +134,8 @@ const AnimeOneVideo = ({
   const deleteVideo = (videoId: string) => {
     popUpAPIResult<Promise<number | null>>(
       videoDelete(videoId),
-      "delete video fail"
+      "delete video fail",
+      () => ""
     );
     const newVideos = videos;
     const index = newVideos.map((video) => video._id).indexOf(videoId);
@@ -178,11 +179,20 @@ const AnimeOneVideo = ({
     videos.map((video, index) => {
       const date = new Date(video.uploadTime);
       const videoLink =
-        getWidth() > 600 ? video.link : video.link.replace("560", "200");
+        getWidth() > 600
+          ? video.link.replace(
+              "<iframe",
+              "<iframe className='bi_iframe' width='808' height='580'"
+            )
+          : video.link.replace(
+              "<iframe",
+              "<iframe className='bi_iframe' width='200' height='400'"
+            );
       return video.type == VideoType.Embed ? (
         <VideoDiv key={index}>
           {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
           <VideoIframeDiv
+            style={{ height: getWidth() > 600 ? "600px" : "400px" }}
             dangerouslySetInnerHTML={{ __html: videoLink }}
           ></VideoIframeDiv>
           <VideoBottom>

@@ -150,7 +150,8 @@ const AnimeOneProducts = ({
   const deleteProduct = (productId: string) => {
     popUpAPIResult<Promise<number | null>>(
       productDelete(productId),
-      "delete product fail"
+      "delete product fail",
+      () => ""
     );
     const newProducts = products;
     const index = newProducts.map((product) => product._id).indexOf(productId);

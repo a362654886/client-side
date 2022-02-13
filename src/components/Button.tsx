@@ -11,6 +11,7 @@ interface IProps {
   backGroundColor: string;
   borderColor: string;
   buttonClick: (value: string | number | null) => void;
+  padding?: string;
 }
 
 export const AnimeButton = ({
@@ -22,6 +23,7 @@ export const AnimeButton = ({
   backGroundColor,
   borderColor,
   buttonClick,
+  padding,
 }: IProps): JSX.Element => {
   const border = "1px solid " + borderColor;
 
@@ -37,6 +39,7 @@ export const AnimeButton = ({
         fontWeight: "bold",
         fontSize: " 16px",
         textAlign: "center",
+        padding: padding,
       }}
       onClick={() => buttonClick(para)}
     >

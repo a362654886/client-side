@@ -36,7 +36,8 @@ export const openNotification = (
 
 export const popUpAPIResult = async <T>(
   apiFn: T,
-  failResult: string
+  failResult: string,
+  toPage: () => void
 ): Promise<void> => {
   try {
     const r = await apiFn;
@@ -46,6 +47,7 @@ export const popUpAPIResult = async <T>(
         NotificationColor.Success,
         NotificationTitle.Success
       );
+      toPage();
     } else {
       openNotification(
         failResult,

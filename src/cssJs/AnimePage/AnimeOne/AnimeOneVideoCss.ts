@@ -8,7 +8,7 @@ export const AnimOneVideo = styled.div`
 
 export const Subtitle = styled.p`
   width: 100%;
-  height: 50px;
+  height: auto;
   font-size: 14px;
   line-height: 22px;
   color: #4a4a4a;
@@ -23,7 +23,7 @@ export const Subtitle = styled.p`
 export const VideoInput = styled.div`
   margin-top: 16px;
   p {
-    height: 48px;
+    height: 32px;
     font-size: 16px;
     font-weight: bold;
     color: #302d46;

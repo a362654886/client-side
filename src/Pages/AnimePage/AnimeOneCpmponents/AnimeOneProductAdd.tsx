@@ -18,7 +18,9 @@ import {
   NotificationColor,
   NotificationTitle,
   openNotification,
+  popUpAPIResult,
 } from "../../../helperFns/popUpAlert";
+import { getWidth } from "../../../helperFns/widthFn";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
 import { ImageBody } from "../../../types/BasicType";
@@ -27,9 +29,11 @@ import { IStoreState } from "../../../types/IStoreState";
 import { Product } from "../../../types/ProductType";
 import { Avatar, User } from "../../../types/User";
 
-const AnimeOneProductAdd = (): JSX.Element => {
-  const ImgCorpRef = useRef<Cropper>(null);
+interface IProps {
+  toProduct: (num: number) => void;
+}
 
+const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
   const chooseAnime: Anime | null = useSelector(
     (state: IStoreState) => state.animeState
   );
@@ -74,7 +78,11 @@ const AnimeOneProductAdd = (): JSX.Element => {
           .substring(0, 1)
           .toUpperCase()}`,
       };
-      await productAdd(product);
+      await popUpAPIResult<Promise<number | null>>(
+        productAdd(product),
+        "add new product fail",
+        () => toProduct(2)
+      );
     } else {
       openNotification(
         "please login and then reply",
@@ -89,8 +97,8 @@ const AnimeOneProductAdd = (): JSX.Element => {
   };
 
   return (
-    <AnimOneVideo>
-      <SubtitleDiv>
+    <AnimOneVideo style={{ width: getWidth() > 600 ? "840px" : "100%" }}>
+      <SubtitleDiv style={{ height: getWidth() > 450 ? "48px" : "96px" }}>
         <p>Post product shopping links here to tell those fans who want it</p>
       </SubtitleDiv>
       <ProductImg>
@@ -112,7 +120,7 @@ const AnimeOneProductAdd = (): JSX.Element => {
       <AnimeButton
         para=""
         text="Post"
-        width="840px"
+        width="100%"
         height="32px"
         textColor="white"
         backGroundColor="#FFC300"
@@ -131,7 +139,6 @@ const AnimeOneProductAdd = (): JSX.Element => {
           buttonClick={() => console.log("cancel")}
         />
       </ProductCancelButton>
-      <div style={{ minHeight: "32px" }}></div>
       <CropImgDiv
         uploadImg={uploadImg}
         setLoadImg={(image: string) => {

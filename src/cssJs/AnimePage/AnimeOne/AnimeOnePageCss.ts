@@ -132,7 +132,7 @@ export const OnePageStarChildDiv = styled.div`
 
 export const VideoDiv = styled.div`
   width: 100%;
-  height: 784px;
+  height: auto;
   margin-bottom: 24px;
   background-color: #f6f6f6;
   text-align: center;
@@ -158,8 +158,7 @@ export const VideoLineDiv = styled.div`
 
 export const VideoIframeDiv = styled.div`
   width: 100%;
-  height: 600px;
-  padding-top: 24px;
+  padding-top: 16px;
   margin-left: 16px;
   margin-right: 16px;
   h2 {

@@ -152,9 +152,15 @@ const AnimeOne = (): JSX.Element => {
           />
         );
       case 4:
-        return <AnimeOneVideoAdd />;
+        return (
+          <AnimeOneVideoAdd toVideo={(num: number) => setChooseButton(num)} />
+        );
       case 5:
-        return <AnimeOneProductAdd />;
+        return (
+          <AnimeOneProductAdd
+            toProduct={(num: number) => setChooseButton(num)}
+          />
+        );
       default:
         return <></>;
     }

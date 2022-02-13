@@ -28,8 +28,13 @@ import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import stateAvailable from "../../../files/stateAvailable.png";
 import stateSoldOut from "../../../files/stateSoldOut.png";
+import { useHistory } from "react-router-dom";
 
-const AnimeOneVideoAdd = (): JSX.Element => {
+interface IProps {
+  toVideo: (num: number) => void;
+}
+
+const AnimeOneVideoAdd = ({ toVideo }: IProps): JSX.Element => {
   const chooseAnime: Anime | null = useSelector(
     (state: IStoreState) => state.animeState
   );
@@ -67,10 +72,6 @@ const AnimeOneVideoAdd = (): JSX.Element => {
   };
 
   const submit = async () => {
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
     if (loginUser) {
       const video: Video = {
         _id: `${loginUser?._id}${new Date().valueOf()}`,
@@ -85,13 +86,22 @@ const AnimeOneVideoAdd = (): JSX.Element => {
           .substring(0, 1)
           .toUpperCase()}`,
       };
-      popUpAPIResult<Promise<number | null>>(
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
+      await popUpAPIResult<Promise<number | null>>(
         videoAdd(video),
-        "add new video fail"
+        "add new video fail",
+        () => toVideo(1)
       );
       setLink("");
       setEmbed("");
       setTitle("");
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
     } else {
       openNotification(
         "please login and then reply",
@@ -99,10 +109,6 @@ const AnimeOneVideoAdd = (): JSX.Element => {
         NotificationTitle.Warning
       );
     }
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
   };
 
   const getBody = () =>
@@ -141,6 +147,7 @@ const AnimeOneVideoAdd = (): JSX.Element => {
             textColor="black"
             backGroundColor={"white"}
             borderColor="white"
+            padding="0px"
             buttonClick={() => console.log()}
           />
         </VideoAddButtonsDiv>
@@ -154,6 +161,7 @@ const AnimeOneVideoAdd = (): JSX.Element => {
             textColor="black"
             backGroundColor={"white"}
             borderColor="white"
+            padding="0px"
             buttonClick={() => console.log()}
           />
         </VideoAddButtonsDiv>
