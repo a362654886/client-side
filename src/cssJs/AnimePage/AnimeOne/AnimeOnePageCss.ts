@@ -159,7 +159,6 @@ export const VideoLineDiv = styled.div`
 export const VideoIframeDiv = styled.div`
   width: 100%;
   padding-top: 16px;
-  margin-left: 16px;
   margin-right: 16px;
   h2 {
     height: 40px;
