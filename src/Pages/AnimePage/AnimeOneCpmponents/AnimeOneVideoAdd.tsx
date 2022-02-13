@@ -72,7 +72,13 @@ const AnimeOneVideoAdd = ({ toVideo }: IProps): JSX.Element => {
   };
 
   const submit = async () => {
-    if (loginUser) {
+    if (embed.indexOf("iframe") == -1) {
+      openNotification(
+        "there are embed error, please add iframe element",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (loginUser) {
       const video: Video = {
         _id: `${loginUser?._id}${new Date().valueOf()}`,
         userId: loginUser?._id as string,

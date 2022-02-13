@@ -30,7 +30,7 @@ export const SettingDiv = styled.div`
 export const MessageModal = styled(Modal)`
   .ant-modal-content,
   .ant-modal-body {
-    width: 840px;
+    width: 100%;
     height: 338px;
   }
 `;

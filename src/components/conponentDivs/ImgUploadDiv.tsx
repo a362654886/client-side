@@ -70,8 +70,8 @@ const ImgUploadDiv = ({ setImg }: IProps): JSX.Element => {
       await getBase64file(files[0]).then((result: ImageBody) => {
         resultImg = result;
       });
+      setImg(resultImg);
     }
-    setImg(resultImg);
   };
 
   const getBase64file = (file: File) => {

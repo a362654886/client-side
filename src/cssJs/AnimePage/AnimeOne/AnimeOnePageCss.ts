@@ -187,7 +187,6 @@ export const TimeText = styled.p`
   font-size: 14px;
   line-height: 32px;
   width: 72px;
-  margin: 0px auto;
   margin-top: 20px;
 `;
 
@@ -226,7 +225,7 @@ export const DeleteDiv = styled.div`
   height: 64px;
   margin-bottom: 16px;
   margin-top: 16px;
-  margin: 16px auto;
+  margin: 0px auto;
   display: flex;
   img {
     width: 24px;
