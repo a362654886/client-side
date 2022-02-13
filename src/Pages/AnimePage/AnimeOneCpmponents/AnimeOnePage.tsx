@@ -328,7 +328,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         ifShowAdd={true}
         toAddProduct={toPage}
         toProduct={(num: number) => toPage(num)}
-        discovery={true}
+        discovery={false}
       />
       <AnimeOneTitle>Forum</AnimeOneTitle>
       <AnimeOneForum

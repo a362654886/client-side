@@ -265,7 +265,10 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    localStorage.setItem("url", history.location.pathname);
+                    localStorage.setItem(
+                      "url",
+                      `${history.location.pathname}${history.location.search}`
+                    );
                     toProfile("/mainPage/login");
                   }}
                 >
@@ -287,7 +290,10 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    localStorage.setItem("url", history.location.pathname);
+                    localStorage.setItem(
+                      "url",
+                      `${history.location.pathname}${history.location.search}`
+                    );
                     toProfile("/mainPage/login");
                   }}
                 >

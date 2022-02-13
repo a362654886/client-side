@@ -2,7 +2,7 @@ import { Input, Select } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { avatarsGet } from "../../api/avatarAPI";
+import { avatarAdd, avatarsGet } from "../../api/avatarAPI";
 import AnimeButton from "../../components/Button";
 import {
   AvatarBox1,
@@ -31,6 +31,11 @@ import {
 } from "../../helperFns/popUpAlert";
 import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
 import Flag from "react-flagkit";
+import CropImgDiv from "../../components/CropImgDiv";
+import { UploadButton } from "../../cssJs/AnimePage/AnimeOne/AnimeOneProductCss";
+import ImgUploadDiv from "../../components/conponentDivs/ImgUploadDiv";
+import ImageUpload, { ImageBody } from "../../components/ImageUpload";
+import AUpload from "../../components/AUpload";
 
 const { Option } = Select;
 
@@ -50,6 +55,10 @@ const SignUpPage = (): JSX.Element => {
   const [chooseAvatar, setChooseAvatarIndex] = useState<Avatar | null>(null);
   const [ifLoadingAlert, setLoadingAlert] = useState<boolean>(false);
 
+  const [uploadImg, setLoadImg] = useState<string>("");
+  const [showCropper, setShowCropper] = useState<boolean>(false);
+  const [imgName, setImgName] = useState<string>("");
+
   useEffect(() => {
     (async function anyNameFunction() {
       dispatch({
@@ -68,6 +77,10 @@ const SignUpPage = (): JSX.Element => {
     setChooseAvatarIndex(avatarArr ? avatarArr[0][0] : null);
     getAvatarArr();
   }, [avatars]);
+
+  useEffect(() => {
+    //
+  }, [uploadImg]);
 
   const getAvatars = async () => {
     //get all plate
@@ -233,6 +246,23 @@ const SignUpPage = (): JSX.Element => {
     }
   };
 
+  const setUploadImg = async (value: string) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    await avatarAdd({
+      _id: new Date().valueOf().toString(),
+      imageName: imgName,
+      imageUrl: value,
+    });
+    await getAvatars();
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
   return (
     <SignUpBox>
       <AlertBox
@@ -304,10 +334,23 @@ const SignUpPage = (): JSX.Element => {
         </Select>
       </EmailInput>
       <AvatarInput
-        style={{ height: `${avatarArr ? avatarArr[0].length * 60 : 0}px` }}
+        style={{ height: `${avatarArr ? avatarArr[0].length * 60 + 80 : 0}px` }}
       >
         <p>Avatar:</p>
-        
+        <AUpload
+          width={"120px"}
+          height={"76px"}
+          textColor={"black"}
+          backGroundColor={"white"}
+          border={"1px solid white"}
+          text={"Upload"}
+          setImg={(value: ImageBody) => {
+            setImgName(value.imgName);
+            setLoadImg(value.imgBase64);
+            setShowCropper(true);
+          }}
+          margin={"0px 67px "}
+        />
         <AvatarBox1>{getAvatarDiv(avatarArr ? avatarArr[0] : null)}</AvatarBox1>
         <AvatarBox2>{getAvatarDiv(avatarArr ? avatarArr[1] : null)}</AvatarBox2>
         <AvatarBox3>{getAvatarDiv(avatarArr ? avatarArr[2] : null)}</AvatarBox3>
@@ -324,6 +367,15 @@ const SignUpPage = (): JSX.Element => {
           buttonClick={() => submit()}
         />
       </SubmitClickButton>
+      <CropImgDiv
+        uploadImg={uploadImg}
+        setLoadImg={(image: string) => {
+          setUploadImg(image);
+          setShowCropper(false);
+        }}
+        visible={showCropper}
+        setVisibleFalse={() => setShowCropper(false)}
+      />
     </SignUpBox>
   );
 };

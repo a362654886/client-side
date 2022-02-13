@@ -1,14 +1,20 @@
 import { Spin } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { avatarAdd, avatarDelete, avatarsGet } from "../../../api/avatarAPI";
 import AnimeButton from "../../../components/Button";
 import ImageUpload, { ImageBody } from "../../../components/ImageUpload";
 import { AvatarDeleteDiv } from "../../../cssJs/AdminPage/adminNewsCss";
 import { AdminSysAvatarDiv } from "../../../cssJs/AdminPage/adminSysSettingCss";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
+import { LoadingType } from "../../../types/EnumTypes";
 import { Avatar } from "../../../types/User";
 
 const AvatarSetting = (): JSX.Element => {
+  
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [avatars, setAvatars] = useState<Avatar[] | null>(null);
 
@@ -31,8 +37,16 @@ const AvatarSetting = (): JSX.Element => {
   };
 
   const deleteAvatar = async (id: string) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     await avatarDelete(id);
     await getAvatars();
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const setImg = async (value: ImageBody) => {

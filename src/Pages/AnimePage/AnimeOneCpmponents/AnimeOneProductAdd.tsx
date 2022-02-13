@@ -6,6 +6,7 @@ import { productAdd } from "../../../api/productAPI";
 import AnimeButton from "../../../components/Button";
 import ImgUploadDiv from "../../../components/conponentDivs/ImgUploadDiv";
 import CropImgDiv from "../../../components/CropImgDiv";
+import ImageUpload from "../../../components/ImageUpload";
 import {
   ProductImg,
   ProductInput,
@@ -106,11 +107,18 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
         <img src={`${resizeUploadImg}`} />
       </ProductImg>
       <UploadButton>
-        <ImgUploadDiv
-          setImg={(value) => {
+        <ImageUpload
+          width={"120px"}
+          height={"32px"}
+          textColor={"black"}
+          backGroundColor={"white"}
+          border={"1px solid #D1D2D3"}
+          text={"Upload"}
+          setImg={(value: ImageBody) => {
             setUploadImg(value);
             setShowCropper(true);
           }}
+          margin={"0px auto"}
         />
       </UploadButton>
       <ProductInput>

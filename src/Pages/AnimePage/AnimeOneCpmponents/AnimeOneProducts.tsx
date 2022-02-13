@@ -103,6 +103,7 @@ const AnimeOneProducts = ({
 
   const getProducts = async () => {
     setLoading(true);
+    console.log(chooseAnime);
     const productsResult = await productAllGet(
       discovery ? "" : chooseAnime ? chooseAnime._id : "",
       pageNum,
@@ -117,6 +118,7 @@ const AnimeOneProducts = ({
 
   const getIniProducts = async () => {
     setLoading(true);
+    console.log(chooseAnime);
     const productsResult = await productAllGet(
       discovery ? "" : chooseAnime ? chooseAnime._id : "",
       pageNum,
@@ -233,12 +235,12 @@ const AnimeOneProducts = ({
             <TimeText>{`${date.getDate()}-${
               date.getMonth() + 1
             }-${date.getFullYear()}`}</TimeText>
-            {!discovery ? (
+            {discovery ? (
+              <ProductHeader>{product.anime}</ProductHeader>
+            ) : (
               <div style={{ textAlign: "center" }}>
                 {getDeleteButton(product)}
               </div>
-            ) : (
-              <ProductHeader>{product.anime}</ProductHeader>
             )}
           </ProductBox>
         );

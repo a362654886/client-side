@@ -4,8 +4,8 @@ import { UploadFile } from "antd/lib/upload/interface";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ImageAddButtonDiv, UploadButtons } from "./style";
-import add from "../../files/Add.svg";
+import { AvatarUploadImg, UploadButtons } from "./style";
+import avatarUpload from "../../files/avatarUpload.png";
 
 type ImageCheck = {
   width: number;
@@ -35,7 +35,7 @@ interface IProps {
   margin: string;
 }
 
-const ImageUpload = ({
+const AUpload = ({
   setImg,
   text,
   width,
@@ -122,44 +122,17 @@ const ImageUpload = ({
     });
   };
 
-  const getBody = () => {
-    if (imageAdd == undefined || imageAdd == true) {
-      return (
-        <Upload
-          style={{
-            width: width,
-          }}
-          showUploadList={false}
-          onChange={(e) => handleChange(e)}
-        >
-          <p
-            style={{
-              color: textColor,
-              lineHeight: height,
-              width: width,
-            }}
-          >
-            {text}
-          </p>
-        </Upload>
-      );
-    } else {
-      return (
-        <Upload
-          style={{
-            width: width,
-          }}
-          showUploadList={false}
-          onChange={(e) => handleChange(e)}
-        >
-          <ImageAddButtonDiv>
-            <img src={add} />
-            <p>Image</p>
-          </ImageAddButtonDiv>
-        </Upload>
-      );
-    }
-  };
+  const getBody = () => (
+    <Upload
+      style={{
+        width: width,
+      }}
+      showUploadList={false}
+      onChange={(e) => handleChange(e)}
+    >
+      <AvatarUploadImg src={avatarUpload} />
+    </Upload>
+  );
 
   return (
     <UploadButtons
@@ -181,4 +154,4 @@ const ImageUpload = ({
   );
 };
 
-export default ImageUpload;
+export default AUpload;

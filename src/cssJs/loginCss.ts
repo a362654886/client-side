@@ -232,6 +232,7 @@ export const AvatarChooseImg = styled.img`
   height: 40px;
   margin: 10px;
   background-color: #ffc300;
+  border: 1px black solid;
 `;
 
 // alert
