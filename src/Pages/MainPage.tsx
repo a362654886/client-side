@@ -410,7 +410,7 @@ const MainPage = (): JSX.Element => {
               <HeaderImg src={LOGOMobile} />
               {getProfile()}
               <div style={{ right: "20px", position: "absolute" }}>
-                <Dropdown overlay={menu}>
+                <Dropdown overlay={menu} placement="bottomRight">
                   <HeaderImg src={menuPng} />
                 </Dropdown>
               </div>

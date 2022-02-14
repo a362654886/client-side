@@ -293,24 +293,66 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
             width: getWidth() > 600 ? "520px" : "100%",
           }}
         >
-          <AnimOneHeaderLabel>
+          <AnimOneHeaderLabel
+            style={{
+              width: getWidth() > 600 ? "100%" : "269px",
+            }}
+          >
             <h6>Aired:</h6>
             <p>{chooseAnime?.aired}</p>
           </AnimOneHeaderLabel>
-          <AnimOneHeaderLabel>
+          <AnimOneHeaderLabel
+            style={{
+              width: getWidth() > 600 ? "100%" : "269px",
+            }}
+          >
             <h6>Producers:</h6>
             <p>{chooseAnime?.producers}</p>
           </AnimOneHeaderLabel>
-          <AnimOneHeaderLabel>
+          <AnimOneHeaderLabel
+            style={{
+              width: getWidth() > 600 ? "100%" : "269px",
+            }}
+          >
             <h6>Rating:</h6>
             <p>{chooseAnime?.rating}</p>
           </AnimOneHeaderLabel>
-          <AnimOneWhereWatchLabel>
-            <h6>Where to Watch:</h6>
-            {getWhereToWatch()}
+          <AnimOneWhereWatchLabel
+            style={{
+              width: getWidth() > 600 ? "100%" : "300px",
+            }}
+          >
+            <h6
+              style={{
+                width: getWidth() > 600 ? "100%" : "269px",
+              }}
+            >
+              Where to Watch:
+            </h6>
+            <div
+              style={{
+                width: getWidth() > 600 ? "100%" : "269px",
+                margin: getWidth() > 600 ? "" : "0px auto",
+              }}
+            >
+              {getWhereToWatch()}
+            </div>
           </AnimOneWhereWatchLabel>
-          <LikeButton>{getLikesButton()}</LikeButton>
-          <ShareDiv marginTop={"24px"} />
+          <LikeButton
+            style={{
+              width: getWidth() > 600 ? "100%" : "269px",
+            }}
+          >
+            {getLikesButton()}
+          </LikeButton>
+          <div
+            style={{
+              width: getWidth() > 600 ? "100%" : "269px",
+              margin: getWidth() > 600 ? "" : "0px auto",
+            }}
+          >
+            <ShareDiv marginTop={"24px"} />
+          </div>
         </div>
       </AnimOneHeader>
       <AnimeOneVideo

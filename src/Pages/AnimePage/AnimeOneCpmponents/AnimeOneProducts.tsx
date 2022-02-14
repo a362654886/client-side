@@ -197,7 +197,13 @@ const AnimeOneProducts = ({
       return productArr.map((product: Product, index: number) => {
         const date = new Date(product.uploadTime);
         return (
-          <ProductBox key={index}>
+          <ProductBox
+            style={{
+              width: getWidth() > 600 ? "100%" : "240px",
+              margin: getWidth() > 600 ? "" : "16px auto",
+            }}
+            key={index}
+          >
             <ProductImgDiv src={product.productImg} />
             <LinkP
               onClick={() => {

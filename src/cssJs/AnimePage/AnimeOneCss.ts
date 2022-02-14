@@ -66,6 +66,16 @@ export const AnimeButtonsDiv = styled.div`
   }
 `;
 
+export const AnimeMobileButtonsDiv = styled.div`
+  display: flex;
+  width: "100%";
+  flex-flow: "wrap";
+  button {
+    margin-right: 16px;
+    margin-bottom: 8px;
+  }
+`;
+
 export const AnimeOneTitle = styled.h3`
   font-size: 16px;
   font-weight: bold;

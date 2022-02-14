@@ -5,6 +5,7 @@ import { newAllGet } from "../../api/newsAPI";
 import AnimeButton from "../../components/Button";
 import {
   AnimeButtonsDiv,
+  AnimeMobileButtonsDiv,
   AnimOne,
   AnimOneMain,
   AnimOneSide,
@@ -172,6 +173,7 @@ const AnimeOne = (): JSX.Element => {
         style={{
           width:
             getWidth() > 1200 ? "100%" : getWidth() > 600 ? "896px" : "100%",
+          paddingLeft: getWidth() > 600 ? "" : "8px",
         }}
       >
         <AnimOneMain>
@@ -180,7 +182,11 @@ const AnimeOne = (): JSX.Element => {
           {getWidth() > 600 ? (
             <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
           ) : (
-            <>{getButtons()}</>
+            <AnimeMobileButtonsDiv
+              style={{ display: "flex", width: "100%", flexFlow: "wrap" }}
+            >
+              {getButtons()}
+            </AnimeMobileButtonsDiv>
           )}
           <div>{getChildDiv()}</div>
         </AnimOneMain>

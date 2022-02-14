@@ -12,6 +12,7 @@ export const AnimOneHeader = styled.div`
 export const AnimOneHeaderLeft = styled.div`
   width: 280px;
   height: 400px;
+  margin: 0px auto;
   img {
     height: 280px;
     width: 280px;
@@ -34,10 +35,8 @@ export const AnimOneHeaderLeft = styled.div`
 
 export const AnimOneHeaderLabel = styled.div`
   display: flex;
-  width: 100%;
   height: 48px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin: 8px auto;
   h6 {
     color: #302d46;
     height: 24px;
@@ -52,7 +51,7 @@ export const AnimOneHeaderLabel = styled.div`
     color: #4a4a4a;
     margin-bottom: 0;
     line-height: 32px;
-    width: 100%;
+    width: 200px;
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;
@@ -65,7 +64,7 @@ export const AnimOneWhereWatchLabel = styled.div`
     color: #302d46;
     height: 24px;
     font-size: 16px !important;
-    margin-right: 24px;
+    margin: 0 auto;
     font-weight: bold;
     line-height: 24px;
     margin-bottom: 16px;
@@ -91,6 +90,7 @@ export const AnimOneIcons = styled.div`
 `;
 
 export const LikeButton = styled.div`
+  margin: 0 auto;
   margin-top: 33px;
   display: flex;
 `;
