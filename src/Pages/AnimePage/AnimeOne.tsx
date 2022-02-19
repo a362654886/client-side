@@ -182,11 +182,7 @@ const AnimeOne = (): JSX.Element => {
           {getWidth() > 600 ? (
             <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
           ) : (
-            <AnimeMobileButtonsDiv
-              style={{ display: "flex", width: "100%", flexFlow: "wrap" }}
-            >
-              {getButtons()}
-            </AnimeMobileButtonsDiv>
+            <AnimeMobileButtonsDiv>{getButtons()}</AnimeMobileButtonsDiv>
           )}
           <div>{getChildDiv()}</div>
         </AnimOneMain>

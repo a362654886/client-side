@@ -14,4 +14,5 @@ export type Video = {
 export enum VideoType {
   Embed = "Embed",
   Link = "Link",
+  LinkError = 'LinkError'
 }

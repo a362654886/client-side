@@ -72,7 +72,7 @@ const AnimeOneVideoAdd = ({ toVideo }: IProps): JSX.Element => {
   };
 
   const submit = async () => {
-    if (embed.indexOf("iframe") == -1) {
+    if (embed.indexOf("iframe") == -1 && videoType == false) {
       openNotification(
         "there are embed error, please add iframe element",
         NotificationColor.Warning,

@@ -74,3 +74,9 @@ export const VideoAddButtonsDiv = styled.div`
     width: 20px;
   }
 `;
+
+export const VideoIframe = styled.iframe`
+  width: 560px;
+  height: 316px;
+  margin: 24px auto;
+`;

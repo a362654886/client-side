@@ -21,6 +21,7 @@ import {
 import {
   AnimOneVideo,
   Subtitle,
+  VideoIframe,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
 import {
   AnimeAddButtonLeftDiv,
@@ -46,6 +47,8 @@ import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
 import { IfLoginCheck } from "../../../helperFns/loginCheck";
 import { Button, notification } from "antd";
 import { getWidth } from "../../../helperFns/widthFn";
+import ReactPlayer from "react-player";
+import { cloneDeep } from "lodash";
 
 interface IProps {
   anime: Anime | null;
@@ -175,6 +178,60 @@ const AnimeOneVideo = ({
     }
   };
 
+  const getBottomButton = (video: Video) => {
+    const date = new Date(video.uploadTime);
+    return (
+      <>
+        <VideoBottom>
+          <TimeText>{`${date.getDate()}-${
+            date.getMonth() + 1
+          }-${date.getFullYear()}`}</TimeText>
+          <FromText>from</FromText>
+          <ProfileWrapperDiv
+            userId={video.userId}
+            element={
+              <>
+                <VideoBottomImg src={`${video.userAvatar}`} />
+                <UserNameText>
+                  {video.userName}
+                  <Flag
+                    style={{ marginLeft: "5px" }}
+                    country={flagGet(
+                      video.userCountry ? video.userCountry : ""
+                    )}
+                  />
+                </UserNameText>
+              </>
+            }
+          ></ProfileWrapperDiv>
+          <SettingImg
+            userId={video.userId}
+            userName={video.userName}
+            userImg={video.userAvatar}
+            marginTop="24px"
+          />
+        </VideoBottom>
+        {discovery ? <></> : getDeleteButton(video)}
+      </>
+    );
+  };
+
+  const linkWithEmbed = (video: Video, index: number) => {
+    return (
+      <ReactPlayer
+        url={video.link}
+        onError={(e) => {
+          const newVideoArr = cloneDeep(videos);
+          newVideoArr[index].type = VideoType.LinkError;
+          setVideos(newVideoArr);
+        }}
+        width={getWidth() > 600 ? 808 : 200}
+        height={getWidth() > 580 ? 580 : 400}
+        style={{ margin: "0 auto" }}
+      />
+    );
+  };
+
   const getExistVideos = () =>
     videos.map((video, index) => {
       const date = new Date(video.uploadTime);
@@ -195,41 +252,14 @@ const AnimeOneVideo = ({
             style={{ height: getWidth() > 600 ? "600px" : "400px" }}
             dangerouslySetInnerHTML={{ __html: videoLink }}
           ></VideoIframeDiv>
-          <VideoBottom>
-            <TimeText>{`${date.getDate()}-${
-              date.getMonth() + 1
-            }-${date.getFullYear()}`}</TimeText>
-            <FromText>from</FromText>
-            <ProfileWrapperDiv
-              userId={video.userId}
-              element={
-                <>
-                  <VideoBottomImg src={`${video.userAvatar}`} />
-                  <UserNameText>
-                    {video.userName}
-                    <Flag
-                      style={{ marginLeft: "5px" }}
-                      country={flagGet(
-                        video.userCountry ? video.userCountry : ""
-                      )}
-                    />
-                  </UserNameText>
-                </>
-              }
-            ></ProfileWrapperDiv>
-            <SettingImg
-              userId={video.userId}
-              userName={video.userName}
-              userImg={video.userAvatar}
-              marginTop="24px"
-            />
-          </VideoBottom>
-          {discovery ? <></> : getDeleteButton(video)}
+          {getBottomButton(video)}
         </VideoDiv>
       ) : (
-        <VideoShortDiv key={index}>
+        <VideoDiv key={index}>
           {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
-          <VideoLineDiv>
+          {video.type == VideoType.Link ? (
+            linkWithEmbed(video, index)
+          ) : (
             <h2
               onClick={() => {
                 toOther(video.link);
@@ -237,38 +267,9 @@ const AnimeOneVideo = ({
             >
               {video.title}
             </h2>
-          </VideoLineDiv>
-          <VideoBottom>
-            <TimeText>{`${date.getDate()}-${
-              date.getMonth() + 1
-            }-${date.getFullYear()}`}</TimeText>
-            <FromText>from</FromText>
-            <ProfileWrapperDiv
-              userId={video.userId}
-              element={
-                <>
-                  <VideoBottomImg src={`${video.userAvatar}`} />
-                  <UserNameText>
-                    {video.userName}
-                    <Flag
-                      style={{ marginLeft: "5px" }}
-                      country={flagGet(
-                        video.userCountry ? video.userCountry : ""
-                      )}
-                    />
-                  </UserNameText>
-                </>
-              }
-            ></ProfileWrapperDiv>
-            <SettingImg
-              userId={video.userId}
-              userName={video.userName}
-              userImg={video.userAvatar}
-              marginTop="24px"
-            />
-          </VideoBottom>
-          {discovery ? <></> : getDeleteButton(video)}
-        </VideoShortDiv>
+          )}
+          {getBottomButton(video)}
+        </VideoDiv>
       );
     });
 

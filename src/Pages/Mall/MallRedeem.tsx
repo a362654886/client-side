@@ -1,21 +1,28 @@
 import * as React from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AnimeButton } from "../../components/Button";
 import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
 import {
-  MallDiv,
   MallShowDiv,
   MallTitle,
   MallTitleDiv,
 } from "../../cssJs/MallPage/MallPageCss";
-import MallRouter from "../../router/MallRouter";
-import MallSide from "./MallSide";
+import { IStoreState } from "../../types/IStoreState";
+import { User } from "../../types/User";
 
-const MallPage = (): JSX.Element => {
+const MallRedeem = (): JSX.Element => {
+  const dispatch = useDispatch();
   const history = useHistory();
 
+  const loginUser: User | null = useSelector(
+    (state: IStoreState) => state.loginUserState
+  );
+
   const [chooseButton, setChooseButton] = useState<number>(0);
+
+  const pageSize = 3;
 
   const buttonsColor = [
     {
@@ -32,12 +39,7 @@ const MallPage = (): JSX.Element => {
 
   const changeButton = (index: number) => {
     setChooseButton(index);
-    index == 0
-      ? toPage("/mainPage/mall/redeem")
-      : toPage("/mainPage/mall/custom");
   };
-
-  const toPage = (url: string) => history.replace(url);
 
   const getButtons = () => {
     const indexNum = chooseButton;
@@ -77,21 +79,10 @@ const MallPage = (): JSX.Element => {
   };
 
   return (
-    <MallDiv>
-      <div style={{ display: "flex" }}>
-        <MallShowDiv className="col-xl-9 col-md-9 col-sm-9 col-9">
-          <MallTitleDiv>
-            <MallTitle>Mall</MallTitle>
-          </MallTitleDiv>
-          <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
-          <MallRouter />
-        </MallShowDiv>
-        <div className="col-xl-3 col-md-3 col-sm-3 col-3">
-          <MallSide />
-        </div>
-      </div>
-    </MallDiv>
+    <>
+      <div>MallRedeem</div>
+    </>
   );
 };
 
-export default MallPage;
+export default MallRedeem;
