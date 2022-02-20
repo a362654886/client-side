@@ -49,18 +49,21 @@ export const showCaseSecondReplyAdd = async (
 };
 
 export const showCaseAllGet = async (
-  type: ShowCaseEnum,
+  type: ShowCaseEnum | string,
   sortType: string,
   page: number,
   pageSize: number,
-  userId: string
+  userId: string,
+  tag: string,
+  text: string
 ): Promise<{
   result: ShowCaseType[];
   count: number;
 } | null> => {
   const endpoint =
     basicURL +
-    `showCasesGet?type=${type}&sortType=${sortType}&page=${page}&pageSize=${pageSize}&userId=${userId}`;
+    `showCasesGet?type=${type}&sortType=${sortType}&page=${page}&pageSize=${pageSize}&userId=${userId}&tag=${tag}&text=${text}`;
+  console.log(endpoint);
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;
@@ -190,6 +193,17 @@ export const showCaseAwesomeUpdate = async (
 ): Promise<number | null> => {
   const endpoint = basicURL + "showcaseUpdateAwesome";
   return Axios.put(endpoint, { id: _id, awesome: awesome })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const showCaseDelete = async (_id: string): Promise<number | null> => {
+  const endpoint = basicURL + `showCaseDelete?id=${_id}`;
+  return Axios.delete(endpoint)
     .then((response) => {
       return response.status;
     })

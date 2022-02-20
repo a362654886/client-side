@@ -47,7 +47,9 @@ const ProfileShowcaseCollections = (): JSX.Element => {
       "hot",
       pageNum,
       pageSize,
-      loginUser ? loginUser._id : ""
+      loginUser ? loginUser._id : "",
+      "",
+      ""
     );
     if (showcaseResult) {
       //setAllShowCases(allShowCases.concat(showcaseResult.result));
@@ -64,7 +66,9 @@ const ProfileShowcaseCollections = (): JSX.Element => {
       "hot",
       pageNum,
       pageSize,
-      loginUser ? loginUser._id : ""
+      loginUser ? loginUser._id : "",
+      "",
+      ""
     );
     if (showcaseResult) {
       setAllShowCases(allShowCases.concat(showcaseResult.result));

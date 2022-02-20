@@ -142,7 +142,7 @@ const MainPage = (): JSX.Element => {
         </p>
         <p
           onClick={() => {
-            toProfile("/mainPage/showcase/show");
+            toProfile("/mainPage/showcase/showCollection");
           }}
         >
           Showcase
@@ -373,7 +373,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/mainPage/showcase/show");
+                    toProfile("/mainPage/showcase/showCollection");
                   }}
                 >
                   Showcase

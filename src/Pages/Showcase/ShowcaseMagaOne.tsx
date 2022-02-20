@@ -1028,7 +1028,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               borderColor="#4BA3C3"
               buttonClick={() => {
                 history.push({
-                  pathname: "/mainPage/showcase/show",
+                  pathname: "/mainPage/showcase/showCollection",
                   state: `Collections`,
                 });
               }}
@@ -1043,7 +1043,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               borderColor="#4BA3C3"
               buttonClick={() => {
                 history.push({
-                  pathname: "/mainPage/showcase/show",
+                  pathname: "/mainPage/showcase/showIllustrations",
                   state: `Illustrations`,
                 });
               }}

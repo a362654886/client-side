@@ -32,16 +32,22 @@ const DeleteWrapperDiv = ({ element, deleteFn }: IProps): JSX.Element => {
             borderColor="#979797"
             buttonClick={() => setDeleteModal(false)}
           />
-          <AnimeButton
-            para=""
-            text={"Delete"}
-            width="120px"
-            height="32px"
-            textColor="black"
-            backGroundColor="white"
-            borderColor="black"
-            buttonClick={deleteFn}
-          />
+          <div
+            onClick={() => {
+              setDeleteModal(false);
+            }}
+          >
+            <AnimeButton
+              para=""
+              text={"Delete"}
+              width="120px"
+              height="32px"
+              textColor="black"
+              backGroundColor="white"
+              borderColor="black"
+              buttonClick={deleteFn}
+            />
+          </div>
         </DeleteButtons>
       </DeleteModal>
     </>

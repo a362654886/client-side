@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
-  showCaseAwesomeUpdate,
+  showCaseDelete,
   showCaseReplyAdd,
   showCaseReplyGet,
   showCaseReplyUpdate,
@@ -22,6 +22,7 @@ import {
   ShowcaseEditDiv,
   ShowcaseImage,
   ShowcaseMoreButtonDiv,
+  ShowcasePointerText,
   ShowcaseReply,
   ShowcaseSource,
   ShowcaseTaDiv,
@@ -59,7 +60,6 @@ import {
 } from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactQuillCss } from "../../cssJs/fullTextEditor";
-import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import TextArea from "antd/lib/input/TextArea";
 import { Spin } from "antd";
@@ -73,12 +73,20 @@ import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
 import { IfLoginCheck } from "../../helperFns/loginCheck";
+import {
+  SHOWCASE_AWESOME_ADD,
+  SHOWCASE_AWESOME_CANCEL,
+} from "../../redux/showcaseAwesome";
+import { cloneDeep } from "lodash";
+import { getWidth } from "../../helperFns/widthFn";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   showcases: ShowCaseType[];
 }
 
 const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const loginUser: User | null = useSelector(
@@ -95,7 +103,6 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     loginUser?.likeShowcase ? loginUser?.likeShowcase : []
   );
 
-  const [loading, setLoading] = useState<boolean>(false);
   const [itemLoading, setItemLoading] = useState<boolean>(false);
   const [secondItemLoading, setSecondItemLoading] = useState<boolean>(false);
 
@@ -111,9 +118,10 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
   }, [update]);
 
   useEffect(() => {
-    console.log(loginUser);
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
   }, []);
+
+  const toPage = (url: string) => history.replace(url);
 
   const sendNewReply = (e: string, index: number) => {
     const newReplyHtmls = newReplyHtml;
@@ -607,60 +615,30 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
   };
 
   const awesomeFn = async (showCaseIdAndTitle: string, index: number) => {
-    if (loading == false) {
-      let awesomeArr: string[] = [];
-      if (loginUser?.likeShowcase) {
-        awesomeArr = loginUser?.likeShowcase;
-      }
-      awesomeArr.push(showCaseIdAndTitle);
-
-      //update state
-      updateAllShowcaseAwesome(index, 1, awesomeArr);
-      //post like num
-      setLoading(true);
-      const animeLikeResult = await showCaseAwesomeUpdate(
-        allShowCases[index]._id,
-        allShowCases[index].aweSome
-      );
-      console.log(animeLikeResult);
-      const userLikeResult = await userUpdateShowcases(
-        loginUser?._id as string,
-        awesomeArr
-      );
-      console.log(userLikeResult);
-      await userUpdateAwesome(loginUser?._id as string, true);
-      setLoading(false);
-    } else {
-      console.log("please wait some seconds");
+    let awesomeArr: string[] = [];
+    if (loginUser?.likeShowcase) {
+      awesomeArr = loginUser?.likeShowcase;
     }
+    awesomeArr.push(showCaseIdAndTitle);
+    updateAllShowcaseAwesome(index, 1, awesomeArr);
+    dispatch({
+      payload: allShowCases[index],
+      type: SHOWCASE_AWESOME_ADD,
+    });
   };
 
   const cancelAwesomeFn = async (showCaseIdAndTitle: string, index: number) => {
-    if (loading == false) {
-      const awesomeArr = awesomeArrState;
-      const r = awesomeArr.indexOf(showCaseIdAndTitle);
-      if (r != -1) {
-        awesomeArr.splice(r, 1);
-        console.log(awesomeArr);
-        //update state
-        updateAllShowcaseAwesome(index, -1, awesomeArr);
-        //post like num
-        setLoading(true);
-        const animeLikeResult = await showCaseAwesomeUpdate(
-          allShowCases[index]._id,
-          allShowCases[index].aweSome
-        );
-        const userLikeResult = await userUpdateShowcases(
-          loginUser?._id as string,
-          awesomeArr
-        );
-        console.log(userLikeResult);
-        console.log(animeLikeResult);
-        await userUpdateAwesome(loginUser?._id as string, false);
-        setLoading(false);
-      }
-    } else {
-      console.log("please wait some seconds");
+    const awesomeArr = awesomeArrState;
+    const r = awesomeArr.indexOf(showCaseIdAndTitle);
+    if (r != -1) {
+      awesomeArr.splice(r, 1);
+      //update state
+      updateAllShowcaseAwesome(index, -1, awesomeArr);
+      //post like num
+      dispatch({
+        payload: allShowCases[index],
+        type: SHOWCASE_AWESOME_CANCEL,
+      });
     }
   };
 
@@ -684,6 +662,13 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
       payload: readyUpdateUser,
       type: LOGIN_USER_ADD,
     });
+  };
+
+  const deleteShowcase = async (id: string, index: number) => {
+    const newAllShowcase = cloneDeep(allShowCases);
+    newAllShowcase.splice(index, 1);
+    setAllShowCases(newAllShowcase);
+    await showCaseDelete(id);
   };
 
   const getExistShowcases = () =>
@@ -718,7 +703,16 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
             <ShowTime>{_getDate(date)}</ShowTime>
           </ShowAvatarDiv>
           {showcase.imageArr.map((image: string, index: number) => {
-            return <ShowcaseImage key={index} src={image} />;
+            return (
+              <ShowcaseImage
+                key={index}
+                src={image}
+                style={{
+                  width: "100%",
+                  paddingLeft: getWidth() > 600 ? "" : "8px",
+                }}
+              />
+            );
           })}
           {showcase.edit ? (
             <ShowcaseEditDiv>
@@ -764,7 +758,18 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 {showcase.tags.map((tag, index) => {
                   return (
                     <ShowcaseTag key={index}>
-                      <p>{tag.text}</p>
+                      <ShowcasePointerText
+                        onClick={() => {
+                          toPage(
+                            `/mainPage/showcase/showTag?tag=${tag.text.replace(
+                              "#",
+                              ""
+                            )}`
+                          );
+                        }}
+                      >
+                        {tag.text}
+                      </ShowcasePointerText>
                     </ShowcaseTag>
                   );
                 })}
@@ -793,7 +798,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                         <p>Delete</p>
                       </AnimeEditAndDeleteDiv>
                     }
-                    deleteFn={async () => console.log("deleteIcon")}
+                    deleteFn={() => deleteShowcase(showcase._id, index)}
                   />
                 </div>
               ) : (

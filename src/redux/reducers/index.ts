@@ -5,6 +5,7 @@ import { loadingState } from "../loading";
 import { loginUserState } from "../loginUser";
 import { newState } from "../newBody";
 import { profileUserState } from "../profileUser";
+import { showcaseAwesomeState } from "../showcaseAwesome";
 import { mangaState } from "../showcaseManga";
 
 export default combineReducers({
@@ -14,5 +15,6 @@ export default combineReducers({
   newState,
   loadingState,
   mangaState,
-  profileUserState
+  profileUserState,
+  showcaseAwesomeState,
 });

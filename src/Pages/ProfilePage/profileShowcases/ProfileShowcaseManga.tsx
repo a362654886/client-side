@@ -52,7 +52,9 @@ const ProfileShowcaseManga = (): JSX.Element => {
       "hot",
       pageNum,
       pageSize,
-      loginUser ? loginUser._id : ""
+      loginUser ? loginUser._id : "",
+      "",
+      ""
     );
     if (showcaseResult) {
       //setAllShowCases(allShowCases.concat(showcaseResult.result));
@@ -69,7 +71,9 @@ const ProfileShowcaseManga = (): JSX.Element => {
       "hot",
       pageNum,
       pageSize,
-      loginUser ? loginUser._id : ""
+      loginUser ? loginUser._id : "",
+      "",
+      ""
     );
     if (showcaseResult) {
       setAllShowCases(allShowCases.concat(showcaseResult.result));

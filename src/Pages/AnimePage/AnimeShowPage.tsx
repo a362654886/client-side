@@ -18,7 +18,7 @@ import {
   LikeDiv,
   StarDiv,
 } from "../../cssJs/AnimePage/AnimeShowCss";
-import { ANIME_ADD, ANIME_NONE } from "../../redux/anime";
+import { ANIME_NONE } from "../../redux/anime";
 import { Anime, RateBody } from "../../types/Amine";
 import starBorder from "../../files/Star-border.svg";
 import starFill from "../../files/Star-filled.svg";

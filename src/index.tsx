@@ -17,6 +17,7 @@ import AdminMainPage from "./Pages/AdminPage/AdminMainPage";
 import EpisodeShow from "./Pages/Showcase/EpisodeShow";
 import { loginUserMiddleware } from "./redux/middleWares/loginUserMiddleware";
 import { animeMiddleware } from "./redux/middleWares/animeMiddleware";
+import { showcaseAwesomeMiddleware } from "./redux/middleWares/showcaseAwesomeMiddleware";
 
 const persistConfig = {
   key: "root",
@@ -29,7 +30,12 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 const store: any = createStore(
   persistedReducer,
-  applyMiddleware(thunk, loginUserMiddleware, animeMiddleware)
+  applyMiddleware(
+    thunk,
+    loginUserMiddleware,
+    animeMiddleware,
+    showcaseAwesomeMiddleware
+  )
 );
 persistStore(store);
 

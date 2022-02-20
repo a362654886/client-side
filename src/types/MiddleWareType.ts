@@ -5,8 +5,10 @@ import { LoadingAction } from "../redux/loading";
 import { LoginUser } from "../redux/loginUser";
 import { NewAction } from "../redux/newBody";
 import { ProfileUser } from "../redux/profileUser";
+import { ShowcaseAwesomeAction } from "../redux/showcaseAwesome";
 import { ShowcaseAction } from "../redux/showcaseManga";
 import { Anime } from "./Amine";
+import { ShowCaseType } from "./showCaseType";
 import { User } from "./User";
 
 export type middleStoreType = MiddlewareAPI<
@@ -15,6 +17,7 @@ export type middleStoreType = MiddlewareAPI<
     authState: string;
     loginUserState: User | null;
     animeState: Anime | null;
+    showcaseAwesomeState: ShowCaseType | null;
   }
 > & { dispatch: unknown };
 
@@ -26,5 +29,6 @@ export type actionBody =
   | LoadingAction
   | ShowcaseAction
   | ProfileUser
+  | ShowcaseAwesomeAction;
 
 export type nextAction = (action: actionBody) => void;

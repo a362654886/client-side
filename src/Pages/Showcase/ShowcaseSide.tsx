@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
+  ShowcasePointerText,
   ShowcaseSideDiv,
   ShowcaseSideDivHeader,
   ShowcaseSideDivTagHeader,
@@ -23,8 +24,11 @@ import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import { TagType } from "../../types/tagType";
 import { tagAllGet } from "../../api/tagAPI";
+import { useHistory } from "react-router-dom";
 
 const ShowcaseSide = (): JSX.Element => {
+  const history = useHistory();
+
   const [users, setUsers] = useState<User[]>([]);
   const [allNews, setAllNews] = useState<NewType[]>([]);
   const [allTags, setAllTags] = useState<TagType[]>([]);
@@ -46,6 +50,8 @@ const ShowcaseSide = (): JSX.Element => {
       await getTags();
     })();
   }, []);
+
+  const toPage = (url: string) => history.replace(url);
 
   const getNews = async () => {
     const animeResult = await newAllGet("", 1, 3);
@@ -123,7 +129,18 @@ const ShowcaseSide = (): JSX.Element => {
         {allTags.map((tag, index) => {
           return (
             <ShowcaseSideTag key={index}>
-              <p>{tag.text}</p>
+              <ShowcasePointerText
+                onClick={() => {
+                  toPage(
+                    `/mainPage/showcase/showTag?tag=${tag.text.replace(
+                      "#",
+                      ""
+                    )}`
+                  );
+                }}
+              >
+                {tag.text}
+              </ShowcasePointerText>
             </ShowcaseSideTag>
           );
         })}

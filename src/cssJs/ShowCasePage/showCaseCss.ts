@@ -2,8 +2,9 @@ import { Input, Radio, Select } from "antd";
 import styled from "styled-components";
 
 export const ShowCaseDiv = styled.div`
-  width: 1140px;
+  max-width: 1140px;
   margin: 0 auto;
+  height: auto;
 `;
 
 export const ShowCaseTitleDiv = styled.div`
@@ -449,7 +450,7 @@ export const ShowcaseEditDiv = styled.div`
 //images
 
 export const ShowcaseImage = styled.img`
-  width: 794px;
+  //width: 794px;
 `;
 
 //showcase manga
@@ -754,4 +755,19 @@ export const ShowcaseSideNum = styled.p`
   border-radius: 20px;
   font-weight: bold;
   color: #ef392a;
+`;
+
+export const ShowcasePointerText = styled.p`
+  cursor: pointer;
+`;
+
+export const ShowcaseTagText = styled.h2`
+  height: 56px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background-color: #c1eeff;
+  padding: 8px 8px;
+  line-height: 40px;
+  font-size: 24px;
+  width: 100%;
 `;

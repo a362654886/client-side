@@ -45,7 +45,6 @@ import { useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
 import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
 import { IfLoginCheck } from "../../../helperFns/loginCheck";
-import { Button, notification } from "antd";
 import { getWidth } from "../../../helperFns/widthFn";
 import ReactPlayer from "react-player";
 import { cloneDeep } from "lodash";

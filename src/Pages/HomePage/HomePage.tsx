@@ -344,7 +344,9 @@ const HomePage = (): JSX.Element => {
         <CenterDiv>
           <MiddleBiggerDiv>
             <MoreRight
-              onClick={() => history.replace("/mainPage/showcase/show")}
+              onClick={() =>
+                history.replace("/mainPage/showcase/showCollection")
+              }
             >
               <img src={moreRightImg} />
               <p>View All</p>
