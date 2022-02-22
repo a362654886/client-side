@@ -47,11 +47,10 @@ export const EpisodeImages = styled.div`
 //episode show
 
 export const EpisodeShowPageDiv = styled.div`
-  width: 840px;
+  max-width: 840px;
   margin: 0 auto;
   overflow: scroll;
   img {
-    width: 840px;
     margin-top: 8px;
   }
 `;
@@ -92,7 +91,6 @@ export const EpisodeShowFooter = styled.div`
 `;
 
 export const EpisodeShowHeaderLeft = styled.p`
-  font-size: 20px;
   line-height: 48px;
   color: white;
   text-align: left;
@@ -102,7 +100,6 @@ export const EpisodeShowHeaderLeft = styled.p`
 `;
 
 export const EpisodeShowHeaderMiddle = styled.p`
-  font-size: 20px;
   line-height: 48px;
   color: white;
   text-align: center;
@@ -112,7 +109,6 @@ export const EpisodeShowHeaderMiddle = styled.p`
 `;
 
 export const EpisodeShowHeaderRight = styled.p`
-  font-size: 20px;
   line-height: 48px;
   color: white;
   text-align: right;
@@ -122,7 +118,6 @@ export const EpisodeShowHeaderRight = styled.p`
 `;
 
 export const EpisodeShowFooterLeft = styled.p`
-  font-size: 20px;
   line-height: 48px;
   color: #4ba3c3;
   text-align: center;
@@ -132,7 +127,6 @@ export const EpisodeShowFooterLeft = styled.p`
 `;
 
 export const EpisodeShowFooterMiddle = styled.p`
-  font-size: 20px;
   line-height: 48px;
   color: white;
   text-align: center;
@@ -142,7 +136,6 @@ export const EpisodeShowFooterMiddle = styled.p`
 `;
 
 export const EpisodeShowFooterRight = styled.p`
-  font-size: 20px;
   line-height: 48px;
   color: #4ba3c3;
   text-align: center;
@@ -163,9 +156,7 @@ export const EpisodeDrawer = styled(Drawer)`
 
 export const EpisodeChapter = styled.h3`
   color: white;
-  height: 24px;
   line-height: 24px;
-  font-size: 16px;
   margin-bottom: 24px;
   cursor: pointer;
 `;

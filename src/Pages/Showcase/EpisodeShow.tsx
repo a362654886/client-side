@@ -28,6 +28,7 @@ import {
   NotificationTitle,
   openNotification,
 } from "../../helperFns/popUpAlert";
+import { getWidth } from "../../helperFns/widthFn";
 
 const EpisodeShow = (): JSX.Element => {
   const history = useHistory();
@@ -36,6 +37,11 @@ const EpisodeShow = (): JSX.Element => {
   const loading: LoadingType = useSelector(
     (state: IStoreState) => state.loadingState
   );
+
+  const [size, setSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  });
 
   const [episodeId, setEpisodeId] = useState<string>("");
   const [episode, setEpisode] = useState<EpisodeType | null>(null);
@@ -69,6 +75,24 @@ const EpisodeShow = (): JSX.Element => {
     //
   }, [episode, update, loading]);
 
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  const onResize = React.useCallback(() => {
+    setSize({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    });
+    localStorage.setItem(
+      "animeWidth",
+      document.documentElement.clientWidth.toString()
+    );
+  }, []);
+
   const getEpisode = async () => {
     const episodeResult = await episodeGetById(episodeId);
     if (episodeResult) {
@@ -81,7 +105,7 @@ const EpisodeShow = (): JSX.Element => {
   const getImages = () => {
     if (episode) {
       return episode.imageArr.map((image, index) => {
-        return <img style={{ width: "840px" }} key={index} src={image} />;
+        return <img style={{ width: "100%" }} key={index} src={image} />;
       });
     }
   };
@@ -111,7 +135,14 @@ const EpisodeShow = (): JSX.Element => {
   const getChapters = () =>
     Array.from({ length: count }, (v, k) => k).map((n, index) => {
       return (
-        <EpisodeChapter key={index} onClick={() => toChapter(index + 1)}>
+        <EpisodeChapter
+          style={{
+            fontSize: getWidth() > 600 ? "16px" : "10px",
+            height: getWidth() > 600 ? "24px" : "14px",
+          }}
+          key={index}
+          onClick={() => toChapter(index + 1)}
+        >
           {`Episode ${index + 1}`}
         </EpisodeChapter>
       );
@@ -204,12 +235,22 @@ const EpisodeShow = (): JSX.Element => {
       </LoadingBox>
       <EpisodeShowDiv>
         <EpisodeShowHeader>
-          <EpisodeShowHeaderLeft>Back</EpisodeShowHeaderLeft>
-          <EpisodeShowHeaderMiddle>{episode?.title}</EpisodeShowHeaderMiddle>
+          <EpisodeShowHeaderLeft
+            style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
+            onClick={() => history.replace("/mainPage/showcase/Manga")}
+          >
+            Back
+          </EpisodeShowHeaderLeft>
+          <EpisodeShowHeaderMiddle
+            style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
+          >
+            {episode?.title}
+          </EpisodeShowHeaderMiddle>
           <EpisodeShowHeaderRight
             onClick={() => {
               setDrawerVisible(true);
             }}
+            style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
           >
             Episodes
           </EpisodeShowHeaderRight>
@@ -218,13 +259,21 @@ const EpisodeShow = (): JSX.Element => {
           {getImages()}
         </EpisodeShowPageDiv>
         <EpisodeShowFooter>
-          <EpisodeShowFooterLeft onClick={() => prePage()}>
+          <EpisodeShowFooterLeft
+            style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
+            onClick={() => prePage()}
+          >
             PRE
           </EpisodeShowFooterLeft>
-          <EpisodeShowFooterMiddle>
+          <EpisodeShowFooterMiddle
+            style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
+          >
             {`${scrollPosition}/${episode?.imageArr.length}`}
           </EpisodeShowFooterMiddle>
-          <EpisodeShowFooterRight onClick={() => nextPage()}>
+          <EpisodeShowFooterRight
+            style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
+            onClick={() => nextPage()}
+          >
             NEXT
           </EpisodeShowFooterRight>
         </EpisodeShowFooter>
@@ -234,7 +283,7 @@ const EpisodeShow = (): JSX.Element => {
           onClose={onClose}
           visible={drawerVisible}
           headerStyle={{ display: "none" }}
-          width={"380px"}
+          width={getWidth() > 600 ? "380px" : "150px"}
         >
           {getChapters()}
         </EpisodeDrawer>

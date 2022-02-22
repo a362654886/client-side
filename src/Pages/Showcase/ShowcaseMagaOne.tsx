@@ -23,7 +23,6 @@ import {
   ShowAvatarDiv,
   ShowCaseDiv,
   ShowcaseEditDiv,
-  ShowCaseIcons,
   ShowcaseImage,
   ShowcaseMangaHeader,
   ShowcaseMangaHeaderP,
@@ -58,10 +57,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { userUpdateFollow, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import AnimeButton from "../../components/Button";
-import facebook from "../../files/facebook.svg";
-import insImage from "../../files/insImage.svg";
-import twitter from "../../files/twitterP.svg";
-import copy from "../../files/copy.svg";
 import add from "../../files/Add.svg";
 import { useHistory } from "react-router-dom";
 import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
@@ -83,6 +78,11 @@ import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import { IfLoginCheck } from "../../helperFns/loginCheck";
 import ShareDiv from "../../components/ShareDiv";
+import { getWidth } from "../../helperFns/widthFn";
+import {
+  SHOWCASE_AWESOME_ADD,
+  SHOWCASE_AWESOME_CANCEL,
+} from "../../redux/showcaseAwesome";
 
 const ShowcaseMangaOne = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -223,58 +223,30 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
   //awesome functions
   const awesomeFn = async (showCaseIdAndTitle: string) => {
-    if (loading == false) {
-      let awesomeArr: string[] = [];
-      if (loginUser?.likeShowcase) {
-        awesomeArr = loginUser?.likeShowcase;
-      }
-      awesomeArr.push(showCaseIdAndTitle);
-
-      //update state
-      updateAllShowcaseAwesome(1, awesomeArr);
-      //post like num
-      setLoading(true);
-      const animeLikeResult = await showCaseAwesomeUpdate(
-        showCase ? showCase._id : "",
-        showCase ? showCase.aweSome : 0
-      );
-      const userLikeResult = await userUpdateShowcases(
-        loginUser?._id as string,
-        awesomeArr
-      );
-      console.log(animeLikeResult);
-      console.log(userLikeResult);
-      setLoading(false);
-    } else {
-      console.log("please wait some seconds");
+    let awesomeArr: string[] = [];
+    if (loginUser?.likeShowcase) {
+      awesomeArr = loginUser?.likeShowcase;
     }
+    awesomeArr.push(showCaseIdAndTitle);
+    updateAllShowcaseAwesome(1, awesomeArr);
+    dispatch({
+      payload: showCase,
+      type: SHOWCASE_AWESOME_ADD,
+    });
   };
 
   const cancelAwesomeFn = async (showCaseIdAndTitle: string) => {
-    if (loading == false) {
-      const awesomeArr = awesomeArrState;
-      const r = awesomeArr.indexOf(showCaseIdAndTitle);
-      if (r != -1) {
-        awesomeArr.splice(r, 1);
-        console.log(awesomeArr);
-        //update state
-        updateAllShowcaseAwesome(-1, awesomeArr);
-        //post like num
-        setLoading(true);
-        const animeLikeResult = await showCaseAwesomeUpdate(
-          showCase ? showCase._id : "",
-          showCase ? showCase.aweSome : 0
-        );
-        console.log(animeLikeResult);
-        const userLikeResult = await userUpdateShowcases(
-          loginUser?._id as string,
-          awesomeArr
-        );
-        console.log(userLikeResult);
-        setLoading(false);
-      }
-    } else {
-      console.log("please wait some seconds");
+    const awesomeArr = awesomeArrState;
+    const r = awesomeArr.indexOf(showCaseIdAndTitle);
+    if (r != -1) {
+      awesomeArr.splice(r, 1);
+      //update state
+      updateAllShowcaseAwesome(-1, awesomeArr);
+      //post like num
+      dispatch({
+        payload: showCase,
+        type: SHOWCASE_AWESOME_CANCEL,
+      });
     }
   };
 
@@ -343,7 +315,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
     //update user
     const readyUpdateUser: User = loginUser as User;
+    console.log(readyUpdateUser);
     readyUpdateUser.likeShowcase = awesomeArr;
+    console.log(readyUpdateUser);
     setAwesomeArrState(awesomeArr);
     setUpdate(update + 1);
 
@@ -914,16 +888,35 @@ const ShowcaseMangaOne = (): JSX.Element => {
                         editShowcaseSecondReply(secondIndex, thirdIndex)
                       }
                       src={`${editIcon}`}
+                      style={{
+                        cursor: "pointer",
+                      }}
                     />
-                    <p>Edit</p>
+                    <p
+                      onClick={() =>
+                        editShowcaseSecondReply(secondIndex, thirdIndex)
+                      }
+                      style={{
+                        cursor: "pointer",
+                      }}
+                    >
+                      Edit
+                    </p>
                     <img
-                      style={{ width: "20px" }}
+                      style={{ width: "20px", cursor: "pointer" }}
                       onClick={() => {
                         console.log("deleteIcon");
                       }}
                       src={`${deleteIcon}`}
                     />
-                    <p>Delete</p>
+                    <p
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        console.log("deleteIcon");
+                      }}
+                    >
+                      Delete
+                    </p>
                   </EditAndDeleteDiv>
                 )}
                 <ReplyAddDiv>
@@ -1016,7 +1009,13 @@ const ShowcaseMangaOne = (): JSX.Element => {
         <ShowCaseTitle>Showcase</ShowCaseTitle>
       </ShowCaseTitleDiv>
       <div style={{ display: "flex" }}>
-        <ShowCaseDiv className="col-xl-9 col-md-9 col-sm-9 col-9">
+        <ShowCaseDiv
+          style={{
+            width:
+              getWidth() > 1200 ? "100%" : getWidth() > 600 ? "896px" : "100%",
+            paddingLeft: getWidth() > 600 ? "" : "8px",
+          }}
+        >
           <AnimeButtonsDiv>
             <AnimeButton
               para=""
@@ -1163,7 +1162,14 @@ const ShowcaseMangaOne = (): JSX.Element => {
         >
           <EpisodeEditModal episodeNum={episodeNum + 1} />
         </Modal>
-        <div className="col-xl-3 col-md-3 col-sm-3 col-3">
+        <div
+          style={{
+            width: "276px",
+            marginLeft: "10px",
+            display:
+              document.documentElement.clientWidth > 1181 ? "inline" : "none",
+          }}
+        >
           <ShowcaseSide />
         </div>
       </div>

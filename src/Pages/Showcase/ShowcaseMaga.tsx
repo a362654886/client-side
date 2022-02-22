@@ -33,6 +33,10 @@ import SettingImg from "../../components/SettingImg";
 import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
+import {
+  SHOWCASE_AWESOME_ADD,
+  SHOWCASE_AWESOME_CANCEL,
+} from "../../redux/showcaseAwesome";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -105,60 +109,30 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
   };
 
   const awesomeFn = async (showCaseIdAndTitle: string, index: number) => {
-    if (loading == false) {
-      let awesomeArr: string[] = [];
-      if (loginUser?.likeShowcase) {
-        awesomeArr = loginUser?.likeShowcase;
-      }
-      awesomeArr.push(showCaseIdAndTitle);
-
-      //update state
-      updateAllShowcaseAwesome(index, 1, awesomeArr);
-      //post like num
-      setLoading(true);
-      const animeLikeResult = await showCaseAwesomeUpdate(
-        allShowCases[index]._id,
-        allShowCases[index].aweSome
-      );
-      const userLikeResult = await userUpdateShowcases(
-        loginUser?._id as string,
-        awesomeArr
-      );
-      console.log(animeLikeResult);
-      console.log(userLikeResult);
-      await userUpdateAwesome(loginUser?._id as string, true);
-      setLoading(false);
-    } else {
-      console.log("please wait some seconds");
+    let awesomeArr: string[] = [];
+    if (loginUser?.likeShowcase) {
+      awesomeArr = loginUser?.likeShowcase;
     }
+    awesomeArr.push(showCaseIdAndTitle);
+    updateAllShowcaseAwesome(index, 1, awesomeArr);
+    dispatch({
+      payload: allShowCases[index],
+      type: SHOWCASE_AWESOME_ADD,
+    });
   };
 
   const cancelAwesomeFn = async (showCaseIdAndTitle: string, index: number) => {
-    if (loading == false) {
-      const awesomeArr = awesomeArrState;
-      const r = awesomeArr.indexOf(showCaseIdAndTitle);
-      if (r != -1) {
-        awesomeArr.splice(r, 1);
-        console.log(awesomeArr);
-        //update state
-        updateAllShowcaseAwesome(index, -1, awesomeArr);
-        //post like num
-        setLoading(true);
-        const animeLikeResult = await showCaseAwesomeUpdate(
-          allShowCases[index]._id,
-          allShowCases[index].aweSome
-        );
-        const userLikeResult = await userUpdateShowcases(
-          loginUser?._id as string,
-          awesomeArr
-        );
-        console.log(animeLikeResult);
-        console.log(userLikeResult);
-        await userUpdateAwesome(loginUser?._id as string, false);
-        setLoading(false);
-      }
-    } else {
-      console.log("please wait some seconds");
+    const awesomeArr = awesomeArrState;
+    const r = awesomeArr.indexOf(showCaseIdAndTitle);
+    if (r != -1) {
+      awesomeArr.splice(r, 1);
+      //update state
+      updateAllShowcaseAwesome(index, -1, awesomeArr);
+      //post like num
+      dispatch({
+        payload: allShowCases[index],
+        type: SHOWCASE_AWESOME_CANCEL,
+      });
     }
   };
 

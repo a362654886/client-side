@@ -411,7 +411,7 @@ export const ReplyDiv = styled.div`
 `;
 
 export const ReplyBox = styled.div`
-  width: 794px;
+  max-width: 794px;
   height: auto;
   padding: 8px 0px;
   button {
@@ -420,7 +420,7 @@ export const ReplyBox = styled.div`
 `;
 
 export const ReplySecondBox = styled.div`
-  width: 760px;
+  max-width: 760px;
   height: auto;
   padding: 8px 0px;
   button {
@@ -450,7 +450,7 @@ export const ShowcaseEditDiv = styled.div`
 //images
 
 export const ShowcaseImage = styled.img`
-  //width: 794px;
+  max-width: 100%;
 `;
 
 //showcase manga

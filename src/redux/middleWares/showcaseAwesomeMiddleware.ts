@@ -15,7 +15,10 @@ export const showcaseAwesomeMiddleware =
   (next: nextAction) =>
   async (action: actionBody): Promise<void> => {
     next(action);
-    if (action.type == (SHOWCASE_AWESOME_ADD || SHOWCASE_AWESOME_CANCEL)) {
+    if (
+      action.type == SHOWCASE_AWESOME_ADD ||
+      action.type == SHOWCASE_AWESOME_CANCEL
+    ) {
       const loginUser = store.getState().loginUserState;
       const showcase = store.getState().showcaseAwesomeState;
       if (showcase && loginUser) {
