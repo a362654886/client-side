@@ -49,7 +49,7 @@ export const MarketSearchInputDiv = styled.div`
 `;
 
 export const MarketBodyDiv = styled.div`
-  height: 2000px;
+  height: auto;
   width: 100%;
   p {
     font-size: 16px;
@@ -188,6 +188,9 @@ export const PublishButtonsDiv = styled.div`
 export const MarketShowBox = styled.div`
   margin-top: 31px;
   cursor: pointer;
+  img {
+    border-radius: 20px;
+  }
 `;
 
 export const MarketBox = styled.div`
@@ -372,6 +375,7 @@ export const MarketDiv = styled.div`
 export const MarketItemImg = styled.img`
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 `;
 
 export const MarketItemName = styled.p`

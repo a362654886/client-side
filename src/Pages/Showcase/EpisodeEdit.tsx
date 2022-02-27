@@ -39,7 +39,6 @@ const EpisodeEdit = (): JSX.Element => {
 
   const getEpisodeById = async (id: string) => {
     const episodeResult = await episodeGetById(`${manga?._id}Episode${id}`);
-    console.log(episodeResult);
     if (episodeResult) {
       setImgArr(episodeResult.episodes.imageArr);
       setEpisodeNum(episodeResult.count);

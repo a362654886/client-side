@@ -134,7 +134,7 @@ const ShowcaseCreate = (): JSX.Element => {
     });
     if (TagCheck(tags)) {
       const r = await showCaseAdd(showCase);
-      console.log(r);
+      history.replace("/mainPage/showcase/showManga");
     } else {
       openNotification(
         "please add # before tag",

@@ -23,6 +23,8 @@ import {
 import { MessageType } from "../types/MessageType";
 import { messageAdd } from "../api/messageAPI";
 import { LOGIN_USER_UPDATE_FOLLOW } from "../redux/loginUser";
+import { REPORT_USER_UPDATE } from "../redux/reportUser";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   userId: string;
@@ -38,6 +40,8 @@ const SettingImg = ({
   marginTop,
 }: IProps): JSX.Element => {
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
@@ -59,7 +63,7 @@ const SettingImg = ({
             {exist == -1 ? `Follow` : "Following"}
           </p>
           <p onClick={() => setMessageVisible(true)}>Message</p>
-          <p>Report</p>
+          <p onClick={() => reportUser(userId)}>Report</p>
         </SettingPopUpDiv>
       );
     } else {
@@ -88,6 +92,15 @@ const SettingImg = ({
       payload: userId,
       type: LOGIN_USER_UPDATE_FOLLOW,
     });
+  };
+
+  const reportUser = (id: string) => {
+    console.log("asdqwe")
+    dispatch({
+      payload: id,
+      type: REPORT_USER_UPDATE,
+    });
+    history.replace("/mainPage/report");
   };
 
   const sendMessage = async () => {

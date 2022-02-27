@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
-  showCaseAwesomeUpdate,
   showCaseDescriptionUpdate,
+  showCaseMangaDelete,
   showCaseReplyAdd,
   showCaseReplyUpdate,
   showCaseSecondReplyAdd,
@@ -83,6 +83,7 @@ import {
   SHOWCASE_AWESOME_ADD,
   SHOWCASE_AWESOME_CANCEL,
 } from "../../redux/showcaseAwesome";
+import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
 
 const ShowcaseMangaOne = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -324,6 +325,19 @@ const ShowcaseMangaOne = (): JSX.Element => {
     dispatch({
       payload: readyUpdateUser,
       type: LOGIN_USER_ADD,
+    });
+  };
+
+  const deleteMange = async () => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    await showCaseMangaDelete(manga ? manga._id : "");
+    history.replace("/mainPage/showcase/showManga");
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
     });
   };
 
@@ -1115,15 +1129,15 @@ const ShowcaseMangaOne = (): JSX.Element => {
           ) : (
             <></>
           )}
-          <EpisodesDeleteDiv>
-            <img
-              onClick={() => {
-                console.log("edit");
-              }}
-              src={`${editIcon}`}
-            />
-            <p>Delete the whole series</p>
-          </EpisodesDeleteDiv>
+          <DeleteWrapperDiv
+            element={
+              <EpisodesDeleteDiv>
+                <img src={`${editIcon}`} />
+                <p>Delete the whole series</p>
+              </EpisodesDeleteDiv>
+            }
+            deleteFn={() => deleteMange()}
+          />
           <EpisodesComments
             onClick={() => {
               setCommentShow(!commentShow);
@@ -1160,7 +1174,12 @@ const ShowcaseMangaOne = (): JSX.Element => {
           onCancel={() => setEditEpisodesManga(false)}
           footer={[]}
         >
-          <EpisodeEditModal episodeNum={episodeNum + 1} />
+          <EpisodeEditModal
+            episodeNum={episodeNum}
+            deleteEpidose={() => {
+              setEpisodeNum(episodeNum - 1);
+            }}
+          />
         </Modal>
         <div
           style={{

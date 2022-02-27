@@ -207,6 +207,7 @@ export const VideoBottomImg = styled.img`
   height: 40px;
   margin-left: 16px;
   margin-top: 16px;
+  border-radius: 50%;
 `;
 
 export const UserNameText = styled.p`

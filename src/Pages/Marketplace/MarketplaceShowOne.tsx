@@ -39,7 +39,7 @@ import {
   marketPriceInsert,
   marketPricesGetById,
 } from "../../api/marketAPI";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
 import Flag from "react-flagkit";
 import { flagGet, flagGetName } from "../../helperFns/flag";
@@ -65,8 +65,15 @@ import {
   NotificationTitle,
   openNotification,
 } from "../../helperFns/popUpAlert";
+import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
+
+interface Para {
+  id: string;
+}
 
 const MarketplaceShowOne = (): JSX.Element => {
+  const para: Para = useParams();
+
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
   );
@@ -86,13 +93,13 @@ const MarketplaceShowOne = (): JSX.Element => {
   const [update, setUpdate] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
   const [bidLoading, setBidLoading] = useState<boolean>(false);
+  const [bidIniLoading, setBidIniLoading] = useState<boolean>(false);
   const [messageVisible, setMessageVisible] = useState(false);
   const [messageValue, setMessageValue] = useState("");
 
   useEffect(() => {
-    const id: string = history.location.state as string;
     (async function anyNameFunction() {
-      const market = await marketGet(id);
+      const market = await marketGet(para.id);
       if (market && market.imageArr) {
         setImgArr(market.imageArr);
         setTitle(market.title);
@@ -106,7 +113,15 @@ const MarketplaceShowOne = (): JSX.Element => {
 
   useEffect(() => {
     //
-  }, [title, price, description, marketPrices, update, bidLoading]);
+  }, [
+    title,
+    price,
+    description,
+    marketPrices,
+    update,
+    bidLoading,
+    bidIniLoading,
+  ]);
 
   useEffect(() => {
     addImg();
@@ -114,15 +129,34 @@ const MarketplaceShowOne = (): JSX.Element => {
 
   useEffect(() => {
     (async function anyNameFunction() {
-      await getMarketPrices();
+      if (page == 1) {
+        await getIniMarketPrices();
+      } else {
+        await getMarketPrices();
+      }
     })();
   }, [marketState, page]);
 
   const getMarketPrices = async () => {
-    setBidLoading(false);
+    setBidLoading(true);
     const marketResult = await marketPricesGetById(
       marketState ? marketState._id : "",
       page,
+      3
+    );
+    if (marketResult) {
+      setMarketPrices(marketPrices.concat(marketResult.marketPrices));
+      setMarketPricesCount(marketResult.count);
+      setUpdate(update + 1);
+    }
+    setBidLoading(false);
+  };
+
+  const getIniMarketPrices = async () => {
+    setBidIniLoading(true);
+    const marketResult = await marketPricesGetById(
+      marketState ? marketState._id : "",
+      1,
       3
     );
     if (marketResult) {
@@ -130,7 +164,7 @@ const MarketplaceShowOne = (): JSX.Element => {
       setMarketPricesCount(marketResult.count);
       setUpdate(update + 1);
     }
-    setBidLoading(true);
+    setBidIniLoading(false);
   };
 
   const addImg = () => {
@@ -147,7 +181,6 @@ const MarketplaceShowOne = (): JSX.Element => {
 
   const insertMarketPrice = async () => {
     if (marketState && loginUser) {
-      setBidLoading(false);
       const marketPrice: MarketPriceType = {
         _id: marketState._id + new Date().valueOf(),
         marketId: marketState._id,
@@ -155,9 +188,10 @@ const MarketplaceShowOne = (): JSX.Element => {
         price: bidPrice,
         uploadTime: new Date(),
       };
-      const r = await marketPriceInsert(marketPrice);
+      await marketPriceInsert(marketPrice);
       setPage(1);
-      getMarketPrices();
+
+      getIniMarketPrices();
     }
   };
 
@@ -233,6 +267,19 @@ const MarketplaceShowOne = (): JSX.Element => {
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,
     });
+  };
+
+  const getMoreElement = () => {
+    if (page * 3 < marketPricesCount) {
+      return (
+        <MarketPriceMoreDiv onClick={() => setPage(page + 1)}>
+          <img src={moreBottomArrow} />
+          <p>More</p>
+        </MarketPriceMoreDiv>
+      );
+    } else {
+      return <></>;
+    }
   };
 
   return (
@@ -359,23 +406,34 @@ const MarketplaceShowOne = (): JSX.Element => {
           <ShareDiv marginTop={"0px"} />
           {marketState && marketState.userId == loginUser?._id ? (
             <MarketEditAndDeleteDiv>
-              <div onClick={() => console.log("edit")}>
+              <div
+                onClick={() => {
+                  history.replace({
+                    pathname: `/mainPage/marketplace/edit/${para.id}`,
+                  });
+                }}
+              >
                 <img src={`${editIcon}`} />
                 <p>Edit</p>
               </div>
-              <div
-                onClick={() => {
-                  console.log("delete");
-                }}
-              >
-                <img style={{ width: "20px" }} src={`${deleteIcon}`} />
-                <p>Delete</p>
-              </div>
+              <DeleteWrapperDiv
+                element={
+                  <>
+                    <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                    <p>Delete</p>
+                  </>
+                }
+                deleteFn={() => console.log("delete")}
+              />
             </MarketEditAndDeleteDiv>
           ) : (
             <div style={{ marginTop: "16px" }}></div>
           )}
-          <MarketViewMore>
+          <MarketViewMore
+            onClick={() => {
+              history.replace("/mainPage/marketplace/show");
+            }}
+          >
             <img src={moreRightImg} />
             <p>View Other Items</p>
           </MarketViewMore>
@@ -384,55 +442,58 @@ const MarketplaceShowOne = (): JSX.Element => {
             {`Your bid is for the seller's reference only. The final decision is
             up to the seller.`}
           </WishBidsContext>
-          {!bidLoading ? (
+          <PriceInput>
+            <p>+$</p>
+            <Input
+              onChange={(e) => {
+                const price = e.target.value;
+                setBidPrice(Number(price));
+              }}
+            />
+            <p>(NZD)</p>
+            <button
+              style={{
+                width: "156px",
+                height: "32px",
+                color: "white",
+                backgroundColor: "#FFC300",
+                borderRadius: "4px",
+                border: "#FFC300",
+                fontWeight: "bold",
+                fontSize: " 16px",
+                textAlign: "center",
+                marginLeft: "36px",
+              }}
+              onClick={() => insertMarketPrice()}
+            >
+              <img
+                style={{
+                  height: "24px",
+                  width: "24px",
+                  marginRight: "5px",
+                  marginTop: "0px",
+                }}
+                src={marketPrice}
+              />
+              {"Show Your Bid"}
+            </button>
+          </PriceInput>
+          {bidIniLoading ? (
             <LoadingBidImg>
               <img src={loading} />
             </LoadingBidImg>
           ) : (
             <>
-              <PriceInput>
-                <p>+$</p>
-                <Input
-                  onChange={(e) => {
-                    const price = e.target.value;
-                    setBidPrice(Number(price));
-                  }}
-                />
-                <p>(NZD)</p>
-                <button
-                  style={{
-                    width: "156px",
-                    height: "32px",
-                    color: "white",
-                    backgroundColor: "#FFC300",
-                    borderRadius: "4px",
-                    border: "#FFC300",
-                    fontWeight: "bold",
-                    fontSize: " 16px",
-                    textAlign: "center",
-                    marginLeft: "36px",
-                  }}
-                  onClick={() => insertMarketPrice()}
-                >
-                  <img
-                    style={{
-                      height: "24px",
-                      width: "24px",
-                      marginRight: "5px",
-                      marginTop: "0px",
-                    }}
-                    src={marketPrice}
-                  />
-                  {"Show Your Bid"}
-                </button>
-              </PriceInput>
               <MarketPriceDiv>{getMarketPricesDiv()}</MarketPriceDiv>
+              {bidLoading ? (
+                <LoadingBidImg>
+                  <img src={loading} />
+                </LoadingBidImg>
+              ) : (
+                getMoreElement()
+              )}
             </>
           )}
-          <MarketPriceMoreDiv onClick={() => setPage(page + 1)}>
-            <img src={moreBottomArrow} />
-            <p>More</p>
-          </MarketPriceMoreDiv>
         </MarketBodyDiv>
         <MessageModal
           footer={[]}

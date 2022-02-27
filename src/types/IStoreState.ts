@@ -12,4 +12,5 @@ export interface IStoreState {
   loadingState: LoadingType;
   mangaState: ShowCaseType | null;
   profileUserState: User | null;
+  reportUserState: string | null;
 }

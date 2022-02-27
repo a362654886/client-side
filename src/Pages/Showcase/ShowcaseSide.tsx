@@ -102,6 +102,7 @@ const ShowcaseSide = (): JSX.Element => {
                 element={
                   <>
                     <img
+                      style={{ borderRadius: "50%" }}
                       src={`https://animeimagebucket.s3.amazonaws.com/${user.avatar}`}
                     />
                     <ShowcaseSideName>

@@ -42,7 +42,8 @@ export const AnimTapButton = styled.div`
 export const AnimSearchBox = styled.div`
   display: flex;
   height: 72px;
-  width: 60%;
+  width: 90%;
+  max-width: 800px;
   padding-left: 18px;
   Input {
     width: 576px;

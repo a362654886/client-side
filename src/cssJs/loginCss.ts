@@ -225,6 +225,7 @@ export const AvatarImg = styled.img`
   width: 40px;
   height: 40px;
   margin: 10px;
+  border-radius: 50%;
 `;
 
 export const AvatarChooseImg = styled.img`
@@ -233,6 +234,7 @@ export const AvatarChooseImg = styled.img`
   margin: 10px;
   background-color: #ffc300;
   border: 1px black solid;
+  border-radius: 50%;
 `;
 
 // alert
@@ -245,5 +247,15 @@ export const AlertDiv = styled.p`
     height: auto;
     padding: 7px 20px;
     background-color: ${(props) => props.color};
+  }
+`;
+
+export const AvatarChooseUploadImg = styled.div`
+  width: 100%;
+  img {
+    margin: 0px 90px;
+    height: 76px;
+    width: 76px;
+    border-radius: 50%;
   }
 `;

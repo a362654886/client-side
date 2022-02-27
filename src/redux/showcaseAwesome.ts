@@ -1,5 +1,4 @@
 import { createReducer } from "./reducers/reducerFn";
-import { Anime } from "../types/Amine";
 import { ShowCaseType } from "../types/showCaseType";
 
 //actions

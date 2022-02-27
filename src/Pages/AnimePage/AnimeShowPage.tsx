@@ -205,12 +205,8 @@ const AnimeShowPage = (): JSX.Element => {
           <p>Hot</p>
         </AnimTapButton>
       </AnimTwoButtons>
-      <AnimSearchBox className="row">
-        <Input
-          className="col-xl-10 col-md-10 col-sm-10 col-10"
-          placeholder={"title"}
-          onChange={onChange}
-        ></Input>
+      <AnimSearchBox>
+        <Input placeholder={"title"} onChange={onChange}></Input>
         <AnimSearchImg
           src={`${searchImg}`}
           onClick={() => search(sortType, page)}

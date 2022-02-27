@@ -15,13 +15,10 @@ import {
   VideoBottomImg,
   VideoDiv,
   VideoIframeDiv,
-  VideoLineDiv,
-  VideoShortDiv,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import {
   AnimOneVideo,
   Subtitle,
-  VideoIframe,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOneVideoCss";
 import {
   AnimeAddButtonLeftDiv,

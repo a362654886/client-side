@@ -26,7 +26,6 @@ import {
   openNotification,
 } from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdateAwesome, userUpdateShowcases } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import AnimeButton from "../../components/Button";
 import SettingImg from "../../components/SettingImg";
@@ -55,8 +54,6 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
   const [awesomeArrState, setAwesomeArrState] = useState<string[]>(
     loginUser?.likeShowcase ? loginUser?.likeShowcase : []
   );
-
-  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setAllShowCases(showcases);

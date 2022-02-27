@@ -63,7 +63,6 @@ export const showCaseAllGet = async (
   const endpoint =
     basicURL +
     `showCasesGet?type=${type}&sortType=${sortType}&page=${page}&pageSize=${pageSize}&userId=${userId}&tag=${tag}&text=${text}`;
-  console.log(endpoint);
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;
@@ -203,6 +202,19 @@ export const showCaseAwesomeUpdate = async (
 
 export const showCaseDelete = async (_id: string): Promise<number | null> => {
   const endpoint = basicURL + `showCaseDelete?id=${_id}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const showCaseMangaDelete = async (
+  _id: string
+): Promise<number | null> => {
+  const endpoint = basicURL + `showCaseMangaDelete?id=${_id}`;
   return Axios.delete(endpoint)
     .then((response) => {
       return response.status;

@@ -57,6 +57,7 @@ export const AnimOneSideTwo = styled.div`
 `;
 
 export const AnimeButtonsDiv = styled.div`
+  display: flex;
   height: auto;
   padding-top: 16px;
   padding-bottom: 16px;

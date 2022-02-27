@@ -9,20 +9,33 @@ import {
 } from "../../cssJs/ShowCasePage/EpisodeCss";
 import editIcon from "../../files/editIcon.svg";
 import deleteIcon from "../../files/deleteIcon.svg";
+import { ShowCaseType } from "../../types/showCaseType";
+import { IStoreState } from "../../types/IStoreState";
+import { useSelector } from "react-redux";
+import { episodeDelete } from "../../api/episodeAPI";
 
 export interface IProps {
   episodeNum: number;
+  deleteEpidose: () => void;
 }
 
 const { Option } = Select;
 
-const EpisodeEditModal = ({ episodeNum }: IProps): JSX.Element => {
+const EpisodeEditModal = ({
+  episodeNum,
+  deleteEpidose,
+}: IProps): JSX.Element => {
   const history = useHistory();
 
+  const manga: ShowCaseType | null = useSelector(
+    (state: IStoreState) => state.mangaState
+  );
+
   const [episode, setEpisode] = useState("1");
+  const [episodeTotal, setEpisodeTotal] = useState(episodeNum);
 
   useEffect(() => {
-    console.log(episodeNum);
+    setEpisode(episodeNum.toString());
   }, []);
 
   const editFn = () => {
@@ -32,17 +45,28 @@ const EpisodeEditModal = ({ episodeNum }: IProps): JSX.Element => {
     });
   };
 
+  const deleteEpisode = async () => {
+    const epidoseId = `${manga?._id}Episode${episode}`;
+    await episodeDelete(epidoseId);
+    setEpisodeTotal(episodeTotal - 1);
+    deleteEpidose();
+  };
+
   return (
     <EpisodeModalDiv>
       <EpisodeSelectDiv>
         <Select
           defaultValue={"Episodes"}
           onSelect={(e) => setEpisode(e as string)}
+          style={{ width: 200 }}
         >
-          {Array.from({ length: episodeNum + 1 }, (v, k) => k).map(
+          <Option key={"Episodes"} value={"Episodes"}>
+            {"Episodes"}
+          </Option>
+          {Array.from({ length: episodeTotal }, (v, k) => k).map(
             (value: number, index: number): JSX.Element => {
               return (
-                <Option key={index} value={value}>
+                <Option key={index} value={value + 1}>
                   {value + 1}
                 </Option>
               );
@@ -55,7 +79,7 @@ const EpisodeEditModal = ({ episodeNum }: IProps): JSX.Element => {
           <img src={editIcon} />
           edit
         </Button>
-        <Button onClick={() => console.log("delete")}>
+        <Button onClick={() => deleteEpisode()}>
           <img src={deleteIcon} />
           Delete
         </Button>

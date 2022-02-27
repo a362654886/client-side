@@ -63,3 +63,16 @@ export const episodeUpdate = async (
       return null;
     });
 };
+
+export const episodeDelete = async (
+  episodeId: string
+): Promise<number | null> => {
+  const endpoint = basicURL + `episodeDelete?episodeId=${episodeId}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};

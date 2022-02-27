@@ -15,6 +15,19 @@ export const marketAdd = async (market: MarketType): Promise<number | null> => {
     });
 };
 
+export const marketEditAsync = async (
+  market: MarketType
+): Promise<number | null> => {
+  const endpoint = basicURL + "marketEdit";
+  return Axios.put(endpoint, { marketBody: market })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const marketAllGet = async (
   value: string,
   page: number,

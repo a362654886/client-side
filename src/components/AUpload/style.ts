@@ -17,8 +17,8 @@ export const LogoImg = styled.img`
 `;
 
 export const AvatarUploadImg = styled.img`
-  width: 76px;
-  height: 76px;
+  width: 40px;
+  height: 40px;
 `;
 
 export const UploadInput = styled(Button)`

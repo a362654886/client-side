@@ -46,6 +46,7 @@ export const ForumImg = styled.img`
   width: 40px;
   height: 40px;
   margin-top: 16px;
+  border-radius: 50%;
 `;
 
 export const ForumName = styled.p`

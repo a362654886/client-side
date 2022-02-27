@@ -68,6 +68,7 @@ export const LoginImg = styled.img`
   width: 40px;
   height: 40px;
   margin-top: 28px;
+  border-radius: 50%;
 `;
 
 export const LoginBox = styled.div`

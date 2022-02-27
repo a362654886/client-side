@@ -113,9 +113,8 @@ const MarketplaceShow = (): JSX.Element => {
   };
 
   const chooseMarket = (market: MarketType) => {
-    history.push({
-      pathname: "/mainPage/marketplace/showOne",
-      state: `${market._id}`,
+    history.replace({
+      pathname: `/mainPage/marketplace/showOne/${market._id}`,
     });
   };
 

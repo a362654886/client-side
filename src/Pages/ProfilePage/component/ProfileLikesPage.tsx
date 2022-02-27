@@ -64,11 +64,31 @@ const ProfileLikesPage = (): JSX.Element => {
     return [1, 2, 3, 4, 5].map((n, index) => {
       if (rateNum > n) {
         return (
-          <img key={index} style={{ marginRight: "8px" }} src={starFill} />
+          <img
+            key={index}
+            style={{
+              width: "24px",
+              height: "24px",
+              marginRight: "6.4px",
+              marginLeft: "6.4px",
+              marginTop: "8px",
+            }}
+            src={starFill}
+          />
         );
       } else {
         return (
-          <img key={index} style={{ marginRight: "8px" }} src={starBorder} />
+          <img
+            key={index}
+            style={{
+              width: "24px",
+              height: "24px",
+              marginRight: "6.4px",
+              marginLeft: "6.4px",
+              marginTop: "8px",
+            }}
+            src={starBorder}
+          />
         );
       }
     });

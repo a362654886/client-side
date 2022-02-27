@@ -9,6 +9,7 @@ import {
   AvatarBox2,
   AvatarBox3,
   AvatarChooseImg,
+  AvatarChooseUploadImg,
   AvatarImg,
   AvatarInput,
   EmailInput,
@@ -32,10 +33,9 @@ import {
 import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
 import Flag from "react-flagkit";
 import CropImgDiv from "../../components/CropImgDiv";
-import { UploadButton } from "../../cssJs/AnimePage/AnimeOne/AnimeOneProductCss";
-import ImgUploadDiv from "../../components/conponentDivs/ImgUploadDiv";
-import ImageUpload, { ImageBody } from "../../components/ImageUpload";
+import { ImageBody } from "../../components/ImageUpload";
 import AUpload from "../../components/AUpload";
+import avatarUpload from "../../files/avatarUpload.png";
 
 const { Option } = Select;
 
@@ -200,13 +200,13 @@ const SignUpPage = (): JSX.Element => {
     const arr3: Avatar[] = [];
     avatars?.forEach((avatar, index) => {
       if ((index - 3) % 3 == 0 || index == 0) {
-        arr1.push(avatar);
+        arr3.push(avatar);
       }
       if ((index - 3) % 3 == 1 || index == 1) {
         arr2.push(avatar);
       }
       if ((index - 3) % 3 == 2 || index == 2) {
-        arr3.push(avatar);
+        arr1.push(avatar);
       }
     });
     setAvatarArr([arr1, arr2, arr3]);
@@ -334,24 +334,31 @@ const SignUpPage = (): JSX.Element => {
         </Select>
       </EmailInput>
       <AvatarInput
-        style={{ height: `${avatarArr ? avatarArr[0].length * 60 + 80 : 0}px` }}
+        style={{
+          height: `${avatarArr ? avatarArr[0].length * 60 + 140 : 0}px`,
+        }}
       >
         <p>Avatar:</p>
-        <AUpload
-          width={"120px"}
-          height={"76px"}
-          textColor={"black"}
-          backGroundColor={"white"}
-          border={"1px solid white"}
-          text={"Upload"}
-          setImg={(value: ImageBody) => {
-            setImgName(value.imgName);
-            setLoadImg(value.imgBase64);
-            setShowCropper(true);
-          }}
-          margin={"0px 67px "}
-        />
-        <AvatarBox1>{getAvatarDiv(avatarArr ? avatarArr[0] : null)}</AvatarBox1>
+        <AvatarChooseUploadImg>
+          <img src={chooseAvatar?.imageUrl} />
+        </AvatarChooseUploadImg>
+        <AvatarBox1>
+          <AUpload
+            width={"40px"}
+            height={"40px"}
+            textColor={"black"}
+            backGroundColor={"white"}
+            border={"1px solid white"}
+            text={"Upload"}
+            setImg={(value: ImageBody) => {
+              setImgName(value.imgName);
+              setLoadImg(value.imgBase64);
+              setShowCropper(true);
+            }}
+            margin={"10px 10px "}
+          />
+          {getAvatarDiv(avatarArr ? avatarArr[0] : null)}
+        </AvatarBox1>
         <AvatarBox2>{getAvatarDiv(avatarArr ? avatarArr[1] : null)}</AvatarBox2>
         <AvatarBox3>{getAvatarDiv(avatarArr ? avatarArr[2] : null)}</AvatarBox3>
       </AvatarInput>
