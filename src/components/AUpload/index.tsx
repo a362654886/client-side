@@ -5,7 +5,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AvatarUploadImg, UploadButtons } from "./style";
-import avatarUpload from "../../files/avatarUpload.png";
+import addAvatar from "../../files/addAvatar.svg";
 
 type ImageCheck = {
   width: number;
@@ -130,7 +130,7 @@ const AUpload = ({
       showUploadList={false}
       onChange={(e) => handleChange(e)}
     >
-      <AvatarUploadImg src={avatarUpload} />
+      <AvatarUploadImg src={addAvatar} />
     </Upload>
   );
 

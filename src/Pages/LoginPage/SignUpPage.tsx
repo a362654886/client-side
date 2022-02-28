@@ -36,6 +36,7 @@ import CropImgDiv from "../../components/CropImgDiv";
 import { ImageBody } from "../../components/ImageUpload";
 import AUpload from "../../components/AUpload";
 import avatarUpload from "../../files/avatarUpload.png";
+import addAvatar from "../../files/addAvatar.png";
 
 const { Option } = Select;
 
@@ -340,7 +341,7 @@ const SignUpPage = (): JSX.Element => {
       >
         <p>Avatar:</p>
         <AvatarChooseUploadImg>
-          <img src={chooseAvatar?.imageUrl} />
+          <img src={chooseAvatar ? chooseAvatar.imageUrl : avatarUpload} />
         </AvatarChooseUploadImg>
         <AvatarBox1>
           <AUpload
