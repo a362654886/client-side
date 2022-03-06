@@ -72,6 +72,19 @@ export const showCaseAllGet = async (
     });
 };
 
+export const showCaseOneMangaGet = async (
+  id: string
+): Promise<ShowCaseType> => {
+  const endpoint = basicURL + `showcaseOneMangaGet?id=${id}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const showCaseReplyGet = async (
   showCaseId: string,
   page: number,
@@ -114,12 +127,36 @@ export const showCaseSecondReplyGet = async (
 
 export const showCaseAllGetByArr = async (
   id: string,
+  type: string,
   page: number,
   pageSize: number
-): Promise<ShowCaseType[] | null> => {
+): Promise<{
+  result: ShowCaseType[];
+  count: number;
+} | null> => {
   const endpoint =
     basicURL +
-    `showCasesGetByArr?userId=${id}&page=${page}&pageSize=${pageSize}`;
+    `showCasesGetByUserArr?userId=${id}&type=${type}&page=${page}&pageSize=${pageSize}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const showCaseFollowAllGetByArr = async (
+  id: string,
+  page: number,
+  pageSize: number
+): Promise<{
+  result: ShowCaseType[];
+  count: number;
+} | null> => {
+  const endpoint =
+    basicURL +
+    `showCaseFollowGetByUserArr?userId=${id}&page=${page}&pageSize=${pageSize}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

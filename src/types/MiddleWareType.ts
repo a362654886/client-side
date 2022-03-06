@@ -3,6 +3,7 @@ import { AnimeAction } from "../redux/anime";
 import { AuthUser } from "../redux/auth";
 import { LoadingAction } from "../redux/loading";
 import { LoginUser } from "../redux/loginUser";
+import { MarketFollowAction } from "../redux/marketFollow";
 import { NewAction } from "../redux/newBody";
 import { ProfileUser } from "../redux/profileUser";
 import { ReportUser } from "../redux/reportUser";
@@ -19,6 +20,7 @@ export type middleStoreType = MiddlewareAPI<
     loginUserState: User | null;
     animeState: Anime | null;
     showcaseAwesomeState: ShowCaseType | null;
+    marketFollowState: string[];
   }
 > & { dispatch: unknown };
 
@@ -31,6 +33,7 @@ export type actionBody =
   | ShowcaseAction
   | ProfileUser
   | ShowcaseAwesomeAction
-  | ReportUser;
+  | ReportUser
+  | MarketFollowAction;
 
 export type nextAction = (action: actionBody) => void;

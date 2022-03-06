@@ -59,4 +59,5 @@ export const FooterText4 = styled.p`
   padding-bottom: 37px;
   color: #fae7d5;
   line-height: 24px;
+  cursor: pointer;
 `;

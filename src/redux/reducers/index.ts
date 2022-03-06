@@ -3,6 +3,7 @@ import { animeState } from "../anime";
 import { authState } from "../auth";
 import { loadingState } from "../loading";
 import { loginUserState } from "../loginUser";
+import { marketFollowState } from "../marketFollow";
 import { newState } from "../newBody";
 import { profileUserState } from "../profileUser";
 import { reportUserState } from "../reportUser";
@@ -19,4 +20,5 @@ export default combineReducers({
   profileUserState,
   showcaseAwesomeState,
   reportUserState,
+  marketFollowState,
 });

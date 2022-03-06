@@ -53,6 +53,25 @@ export const marketAllGet = async (
     });
 };
 
+export const marketAllGetByArr = async (
+  id: string,
+  page: number,
+  pageSize: number
+): Promise<{
+  markets: MarketType[];
+  count: number;
+} | null> => {
+  const endpoint =
+    basicURL + `marketsGetByUserArr?id=${id}&page=${page}&pageSize=${pageSize}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const marketGet = async (id: string): Promise<MarketType | null> => {
   const endpoint = basicURL + `marketGet?id=${id}`;
   return Axios.get(endpoint)

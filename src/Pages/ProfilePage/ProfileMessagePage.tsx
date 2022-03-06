@@ -35,14 +35,18 @@ import {
   ForumTime,
 } from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import { _getDate } from "../../helperFns/timeFn";
+import { Button, Spin } from "antd";
 
 const ProfileMessagePage = (): JSX.Element => {
   const history = useHistory();
 
   const [ifIn, setIfIn] = useState<boolean>(true);
-  const [page, setPage] = useState<number>(1);
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [inPage, setInPage] = useState<number>(1);
+  const [outPage, setOutPage] = useState<number>(1);
+  const [inMessages, setInMessages] = useState<MessageType[]>([]);
+  const [outMessages, setOutMessages] = useState<MessageType[]>([]);
   const [count, setCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const pageSize = 2;
 
   const loginUser: User | null = useSelector(
@@ -53,21 +57,9 @@ const ProfileMessagePage = (): JSX.Element => {
     (async function anyNameFunction() {
       if (loginUser) {
         if (ifIn) {
-          const r = await messagesAllGetByUserId(
-            loginUser?._id,
-            page,
-            pageSize
-          );
-          setMessages(r ? r.result : []);
-          setCount(r ? r.count : 0);
+          await getInMessages(inPage, pageSize);
         } else {
-          const r = await messagesAllGetByReceivedId(
-            loginUser?._id,
-            page,
-            pageSize
-          );
-          setMessages(r ? r.result : []);
-          setCount(r ? r.count : 0);
+          await getOutMessages(outPage, pageSize);
         }
       }
     })();
@@ -75,12 +67,56 @@ const ProfileMessagePage = (): JSX.Element => {
 
   useEffect(() => {
     //
-  }, [messages]);
+  }, [inMessages, outMessages, loading]);
+
+  const getInMessages = async (page: number, pageSize: number) => {
+    setLoading(true);
+    if (loginUser) {
+      const r = await messagesAllGetByUserId(loginUser?._id, page, pageSize);
+      if (page == 1) {
+        setInMessages(r ? r.result : []);
+        setCount(r ? r.count : 0);
+      } else {
+        setInMessages(r ? inMessages.concat(r.result) : []);
+        setCount(r ? count + r.count : 0);
+      }
+    }
+    setLoading(false);
+  };
+
+  const getOutMessages = async (page: number, pageSize: number) => {
+    setLoading(true);
+    if (loginUser) {
+      const r = await messagesAllGetByReceivedId(
+        loginUser?._id,
+        page,
+        pageSize
+      );
+      if (page == 1) {
+        setOutMessages(r ? r.result : []);
+        setCount(r ? r.count : 0);
+      } else {
+        setOutMessages(r ? outMessages.concat(r.result) : []);
+        setCount(r ? count + r.count : 0);
+      }
+    }
+    setLoading(false);
+  };
 
   const toPage = (url: string) => history.replace(url);
 
+  const getMoreInMessage = async () => {
+    setInPage(inPage + 1);
+    await getInMessages(inPage + 1, pageSize);
+  };
+
+  const getMoreOutMessage = async () => {
+    setOutPage(outPage + 1);
+    await getOutMessages(outPage + 1, pageSize);
+  };
+
   const getInMessage = () =>
-    messages.map((message, index) => {
+    inMessages.map((message, index) => {
       const date = new Date(message.uploadTime);
       return (
         <ProfileMessageBox key={index}>
@@ -116,7 +152,7 @@ const ProfileMessagePage = (): JSX.Element => {
     });
 
   const getOutMessage = () =>
-    messages.map((message, index) => {
+    outMessages.map((message, index) => {
       const date = new Date(message.uploadTime);
       return (
         <ProfileMessageBox key={index}>
@@ -150,6 +186,20 @@ const ProfileMessagePage = (): JSX.Element => {
         </ProfileMessageBox>
       );
     });
+
+  const getLoadingElement = () => {
+    return ifIn ? (
+      <>
+        {getInMessage()}
+        <Button onClick={() => getMoreInMessage()}>more</Button>
+      </>
+    ) : (
+      <>
+        {getOutMessage()}
+        <Button onClick={() => getMoreOutMessage()}>more</Button>
+      </>
+    );
+  };
 
   return (
     <ProfileBox>
@@ -193,7 +243,7 @@ const ProfileMessagePage = (): JSX.Element => {
       <ProfileMessageButtons>
         <AnimeButton
           para=""
-          text={"In"}
+          text={"Out"}
           width="120px"
           height="32px"
           textColor="black"
@@ -203,7 +253,7 @@ const ProfileMessagePage = (): JSX.Element => {
         />
         <AnimeButton
           para=""
-          text={"Out"}
+          text={"In"}
           width="120px"
           height="32px"
           textColor="black"
@@ -212,7 +262,7 @@ const ProfileMessagePage = (): JSX.Element => {
           buttonClick={() => setIfIn(false)}
         />
       </ProfileMessageButtons>
-      {ifIn ? getInMessage() : getOutMessage()}
+      {loading ? <Spin /> : getLoadingElement()}
     </ProfileBox>
   );
 };

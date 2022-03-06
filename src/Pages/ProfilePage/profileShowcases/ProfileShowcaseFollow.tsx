@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { showCaseAllGetByArr } from "../../../api/showcaseAPI";
+import { showCaseFollowAllGetByArr } from "../../../api/showcaseAPI";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ShowCaseType } from "../../../types/showCaseType";
 import loadingImg from "../../../files/loading.gif";
@@ -27,10 +27,11 @@ const ProfileShowcaseFollow = (): JSX.Element => {
   const [allShowCases, setAllShowCases] = useState<ShowCaseType[]>([]);
   const [count, setCount] = useState<number>(0);
 
-  const pageSize = 100;
+  const pageSize = 6;
 
   useEffect(() => {
     (async function anyNameFunction() {
+      console.log("sd");
       await searchType();
       //need to be checked
       setCount(100);
@@ -51,26 +52,28 @@ const ProfileShowcaseFollow = (): JSX.Element => {
 
   const searchType = async () => {
     setTypeLoading(true);
-    const showcaseResult = await showCaseAllGetByArr(
+    const showcaseResult = await showCaseFollowAllGetByArr(
       loginUser ? loginUser._id : "",
       pageNum,
       pageSize
     );
     if (showcaseResult) {
-      setAllShowCases(showcaseResult);
+      setAllShowCases(showcaseResult.result);
+      setCount(showcaseResult.count);
     }
     setTypeLoading(false);
   };
 
   const searchPage = async () => {
     setLoading(true);
-    const showcaseResult = await showCaseAllGetByArr(
+    const showcaseResult = await showCaseFollowAllGetByArr(
       loginUser ? loginUser._id : "",
       pageNum,
       pageSize
     );
     if (showcaseResult) {
-      setAllShowCases(allShowCases.concat(showcaseResult));
+      setAllShowCases(allShowCases.concat(showcaseResult.result));
+      setCount(showcaseResult.count);
     }
     setLoading(false);
   };

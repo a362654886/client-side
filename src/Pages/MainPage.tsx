@@ -436,7 +436,12 @@ const MainPage = (): JSX.Element => {
               <FooterText3 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
                 Help/FAQ
               </FooterText3>
-              <FooterText4 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
+              <FooterText4
+                className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4"
+                onClick={() => {
+                  toProfile("/mainPage/contactUs");
+                }}
+              >
                 Contact us
               </FooterText4>
             </FootContainer>
@@ -452,7 +457,12 @@ const MainPage = (): JSX.Element => {
             <FooterText3 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
               Help/FAQ
             </FooterText3>
-            <FooterText4 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
+            <FooterText4
+              className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4"
+              onClick={() => {
+                toProfile("/mainPage/contactUs");
+              }}
+            >
               Contact us
             </FooterText4>
           </div>

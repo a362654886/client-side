@@ -41,7 +41,7 @@ export const popUpAPIResult = async <T>(
 ): Promise<void> => {
   try {
     const r = await apiFn;
-    if (r && typeof r == "number" && r == 200) {
+    if (r && typeof r == "number" && (r == 200 || r == 204)) {
       openNotification(
         "success",
         NotificationColor.Success,

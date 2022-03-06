@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { showCaseAwesomeUpdate } from "../../api/showcaseAPI";
 import {
   AweSomeDiv,
   ShowAvatarDiv,
@@ -210,7 +209,7 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
             })}
           </div>
           <AweSomeDiv>
-            {getAwesomeButton(`${showcase._id}${showcase.title}`, index)}
+            {getAwesomeButton(`${showcase._id}`, index)}
             <p>Awesome!</p>
             <h6>{showcase.aweSome}</h6>
           </AweSomeDiv>

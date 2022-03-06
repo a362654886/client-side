@@ -775,7 +775,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 })}
               </ShowcaseTaDiv>
               <AweSomeDiv>
-                {getAwesomeButton(`${showcase._id}${showcase.title}`, index)}
+                {getAwesomeButton(`${showcase._id}`, index)}
                 <p>Awesome!</p>
                 <h6>{showcase.aweSome}</h6>
               </AweSomeDiv>

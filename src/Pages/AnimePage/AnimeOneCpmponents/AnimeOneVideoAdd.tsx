@@ -28,7 +28,6 @@ import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import stateAvailable from "../../../files/stateAvailable.png";
 import stateSoldOut from "../../../files/stateSoldOut.png";
-import { useHistory } from "react-router-dom";
 
 interface IProps {
   toVideo: (num: number) => void;

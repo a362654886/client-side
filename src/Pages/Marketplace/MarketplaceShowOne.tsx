@@ -66,6 +66,8 @@ import {
   openNotification,
 } from "../../helperFns/popUpAlert";
 import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
+import { LOGIN_USER_ADD } from "../../redux/loginUser";
+import { MARKET_FOLLOW_ARR } from "../../redux/marketFollow";
 
 interface Para {
   id: string;
@@ -113,6 +115,7 @@ const MarketplaceShowOne = (): JSX.Element => {
 
   useEffect(() => {
     //
+    console.log(loginUser);
   }, [
     title,
     price,
@@ -121,6 +124,7 @@ const MarketplaceShowOne = (): JSX.Element => {
     update,
     bidLoading,
     bidIniLoading,
+    loginUser,
   ]);
 
   useEffect(() => {
@@ -282,6 +286,37 @@ const MarketplaceShowOne = (): JSX.Element => {
     }
   };
 
+  const updateFollowMarket = (id: string, add: boolean) => {
+    let marketArr: string[] = [];
+    if (loginUser?.followMarket) {
+      marketArr = loginUser?.followMarket;
+    }
+    // set arr
+    if (add) {
+      marketArr.push(id);
+    } else {
+      const index = marketArr.indexOf(id);
+      if (index > -1) {
+        marketArr.splice(index, 1);
+      }
+    }
+    console.log(marketArr)
+    //update user
+    const readyUpdateUser: User = loginUser as User;
+    readyUpdateUser.followMarket = marketArr;
+
+    dispatch({
+      payload: readyUpdateUser,
+      type: LOGIN_USER_ADD,
+    });
+    setUpdate(update + 1);
+    //update
+    dispatch({
+      payload: marketArr,
+      type: MARKET_FOLLOW_ARR,
+    });
+  };
+
   return (
     <>
       <div className="col-xl-9 col-md-9 col-sm-9 col-9">
@@ -393,16 +428,35 @@ const MarketplaceShowOne = (): JSX.Element => {
               marketState ? flagGetName(marketState.country) : ""
             }`}</p>
           </MarketLocation>
-          <MarketFollow>
-            <div>
-              <img src={marketFollow} />
-              <p>Follow the Item</p>
-            </div>
-            <div onClick={() => setMessageVisible(true)}>
-              <img src={marketMessage} />
-              <p>Send a Message</p>
-            </div>
-          </MarketFollow>
+          {loginUser ? (
+            <MarketFollow>
+              {loginUser.followMarket.indexOf(marketState?._id as string) ==
+              -1 ? (
+                <div
+                  onClick={() =>
+                    updateFollowMarket(marketState?._id as string, true)
+                  }
+                >
+                  <img src={marketFollow} />
+                  <p>Follow the Item</p>
+                </div>
+              ) : (
+                <div
+                  onClick={() =>
+                    updateFollowMarket(marketState?._id as string, false)
+                  }
+                >
+                  <p>Following</p>
+                </div>
+              )}
+              <div onClick={() => setMessageVisible(true)}>
+                <img src={marketMessage} />
+                <p>Send a Message</p>
+              </div>
+            </MarketFollow>
+          ) : (
+            <></>
+          )}
           <ShareDiv marginTop={"0px"} />
           {marketState && marketState.userId == loginUser?._id ? (
             <MarketEditAndDeleteDiv>

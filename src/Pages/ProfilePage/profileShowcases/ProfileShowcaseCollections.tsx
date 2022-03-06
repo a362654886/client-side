@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { showCaseAllGet } from "../../../api/showcaseAPI";
+import { showCaseAllGet, showCaseAllGetByArr } from "../../../api/showcaseAPI";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ShowCaseEnum, ShowCaseType } from "../../../types/showCaseType";
 import loadingImg from "../../../files/loading.gif";
@@ -11,7 +11,11 @@ import { useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
 import { ProfileMiddleDiv } from "../../../cssJs/ProfilePage/ProfileCss";
 
-const ProfileShowcaseCollections = (): JSX.Element => {
+interface IProps {
+  profile?: boolean;
+}
+
+const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
   );
@@ -22,7 +26,7 @@ const ProfileShowcaseCollections = (): JSX.Element => {
   const [allShowCases, setAllShowCases] = useState<ShowCaseType[]>([]);
   const [count, setCount] = useState<number>(0);
 
-  const pageSize = 1;
+  const pageSize = 6;
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -42,15 +46,23 @@ const ProfileShowcaseCollections = (): JSX.Element => {
 
   const searchType = async () => {
     setTypeLoading(true);
-    const showcaseResult = await showCaseAllGet(
-      ShowCaseEnum.Collections,
-      "hot",
-      pageNum,
-      pageSize,
-      loginUser ? loginUser._id : "",
-      "",
-      ""
-    );
+    const showcaseResult =
+      profile == true
+        ? await showCaseAllGetByArr(
+            loginUser ? loginUser._id : "",
+            "collections",
+            pageNum,
+            pageSize
+          )
+        : await showCaseAllGet(
+            ShowCaseEnum.Collections,
+            "hot",
+            pageNum,
+            pageSize,
+            loginUser ? loginUser._id : "",
+            "",
+            ""
+          );
     if (showcaseResult) {
       //setAllShowCases(allShowCases.concat(showcaseResult.result));
       setAllShowCases(showcaseResult.result);
@@ -61,15 +73,23 @@ const ProfileShowcaseCollections = (): JSX.Element => {
 
   const searchPage = async () => {
     setLoading(true);
-    const showcaseResult = await showCaseAllGet(
-      ShowCaseEnum.Collections,
-      "hot",
-      pageNum,
-      pageSize,
-      loginUser ? loginUser._id : "",
-      "",
-      ""
-    );
+    const showcaseResult =
+      profile == true
+        ? await showCaseAllGetByArr(
+            loginUser ? loginUser._id : "",
+            "collections",
+            pageNum,
+            pageSize
+          )
+        : await showCaseAllGet(
+            ShowCaseEnum.Collections,
+            "hot",
+            pageNum,
+            pageSize,
+            loginUser ? loginUser._id : "",
+            "",
+            ""
+          );
     if (showcaseResult) {
       setAllShowCases(allShowCases.concat(showcaseResult.result));
       //setAllShowCases(showcaseResult.result);

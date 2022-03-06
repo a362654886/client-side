@@ -72,13 +72,13 @@ const ProfileShowcasePage = (): JSX.Element => {
   const getShowcaseDiv = () => {
     switch (chooseButton) {
       case 0:
-        return <ProfileShowcaseCollections />;
+        return <ProfileShowcaseCollections profile={true} />;
         break;
       case 1:
-        return <ProfileShowcaseIllustration />;
+        return <ProfileShowcaseIllustration profile={true} />;
         break;
       case 2:
-        return <ProfileShowcaseManga />;
+        return <ProfileShowcaseManga profile={true} />;
         break;
       case 3:
         return <ProfileShowcaseFollow />;

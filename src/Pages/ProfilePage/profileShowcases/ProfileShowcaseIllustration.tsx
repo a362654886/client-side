@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { showCaseAllGet } from "../../../api/showcaseAPI";
+import { showCaseAllGet, showCaseAllGetByArr } from "../../../api/showcaseAPI";
 import getMoreImg from "../../../files/getMore.png";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ShowCaseEnum, ShowCaseType } from "../../../types/showCaseType";
@@ -10,8 +10,11 @@ import { User } from "../../../types/User";
 import { useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
 import { ProfileMiddleDiv } from "../../../cssJs/ProfilePage/ProfileCss";
+interface IProps {
+  profile?: boolean;
+}
 
-const ProfileShowcaseIllustration = (): JSX.Element => {
+const ProfileShowcaseIllustration = ({ profile }: IProps): JSX.Element => {
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
   );
@@ -22,7 +25,7 @@ const ProfileShowcaseIllustration = (): JSX.Element => {
   const [allShowCases, setAllShowCases] = useState<ShowCaseType[]>([]);
   const [count, setCount] = useState<number>(0);
 
-  const pageSize = 1;
+  const pageSize = 6;
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -42,15 +45,23 @@ const ProfileShowcaseIllustration = (): JSX.Element => {
 
   const searchType = async () => {
     setTypeLoading(true);
-    const showcaseResult = await showCaseAllGet(
-      ShowCaseEnum.Illustrations,
-      "hot",
-      pageNum,
-      pageSize,
-      loginUser ? loginUser._id : "",
-      "",
-      ""
-    );
+    const showcaseResult =
+      profile == true
+        ? await showCaseAllGetByArr(
+            loginUser ? loginUser._id : "",
+            "illustration",
+            pageNum,
+            pageSize
+          )
+        : await showCaseAllGet(
+            ShowCaseEnum.Collections,
+            "hot",
+            pageNum,
+            pageSize,
+            loginUser ? loginUser._id : "",
+            "",
+            ""
+          );
     if (showcaseResult) {
       //setAllShowCases(allShowCases.concat(showcaseResult.result));
       setAllShowCases(showcaseResult.result);
@@ -61,15 +72,23 @@ const ProfileShowcaseIllustration = (): JSX.Element => {
 
   const searchPage = async () => {
     setLoading(true);
-    const showcaseResult = await showCaseAllGet(
-      ShowCaseEnum.Illustrations,
-      "hot",
-      pageNum,
-      pageSize,
-      loginUser ? loginUser._id : "",
-      "",
-      ""
-    );
+    const showcaseResult =
+      profile == true
+        ? await showCaseAllGetByArr(
+            loginUser ? loginUser._id : "",
+            "illustration",
+            pageNum,
+            pageSize
+          )
+        : await showCaseAllGet(
+            ShowCaseEnum.Collections,
+            "hot",
+            pageNum,
+            pageSize,
+            loginUser ? loginUser._id : "",
+            "",
+            ""
+          );
     if (showcaseResult) {
       setAllShowCases(allShowCases.concat(showcaseResult.result));
       //setAllShowCases(showcaseResult.result);

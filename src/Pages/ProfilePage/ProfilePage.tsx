@@ -219,29 +219,35 @@ const ProfilePage = (): JSX.Element => {
     });
   };
 
+  const getNameImg = () => {
+    return profileUser
+      ? profileUser.avatarImage
+        ? profileUser.avatarImage[0].imageUrl
+        : ""
+      : "";
+  };
+
   return (
     <ProfileBox>
       <ProfileDiv>
-        <NamePic
-          src={((profileUser as User).avatarImage as Avatar[])[0].imageUrl}
-        />
+        <NamePic src={getNameImg()} />
         <NameDiv>
           <NameSetting>
             <p>
-              {`${(profileUser as User).firstName}.${(
-                profileUser as User
-              ).lastName
-                .substring(0, 1)
-                .toUpperCase()}`}
+              {`${profileUser ? profileUser.firstName : ""}.${
+                profileUser
+                  ? profileUser.lastName.substring(0, 1).toUpperCase()
+                  : ""
+              }`}
               <Flag
                 style={{ marginLeft: "5px" }}
                 country={flagGet(profileUser ? profileUser.country : "")}
               />
             </p>
             <SettingImg
-              userId={(profileUser as User)._id}
-              userName={`${(profileUser as User).firstName}.${
-                (profileUser as User).lastName
+              userId={profileUser ? profileUser._id : ""}
+              userName={`${profileUser ? profileUser.firstName : ""}.${
+                profileUser ? profileUser.lastName : ""
               }`}
               userImg={avatarSetting}
               marginTop="4px"
@@ -356,15 +362,17 @@ const ProfilePage = (): JSX.Element => {
           <div>
             <p>To:</p>
             <img
-              src={`https://animeimagebucket.s3.amazonaws.com/${
-                (profileUser as User).avatar
-              }`}
+              src={
+                profileUser
+                  ? `https://animeimagebucket.s3.amazonaws.com/${profileUser.avatar}`
+                  : ""
+              }
             />
-            <h6>{`${(profileUser as User).firstName}.${(
-              profileUser as User
-            ).lastName
-              .substring(0, 1)
-              .toUpperCase()}`}</h6>
+            <h6>{`${profileUser ? profileUser.firstName : ""}.${
+              profileUser
+                ? profileUser.lastName
+                : "".substring(0, 1).toUpperCase()
+            }`}</h6>
           </div>
           <TextArea
             value={messageValue}

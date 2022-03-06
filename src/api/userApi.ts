@@ -175,6 +175,20 @@ export const userUpdateShowcases = async (
     });
 };
 
+export const userUpdateMarket = async (
+  userId: string,
+  likeArr: string[]
+): Promise<number | null> => {
+  const endpoint = basicURL + "userUpdateMarket";
+  return Axios.put(endpoint, { id: userId, followMarket: likeArr })
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 //user get likes/showcase/marketplace/mall
 
 export const userGetUserLikes = (

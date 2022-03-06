@@ -216,11 +216,7 @@ const ShowcaseShowManga = (): JSX.Element => {
     );
 
   const toManga = (index: number) => {
-    dispatch({
-      payload: allShowCases[index],
-      type: SHOWCASE_MANGA_ADD,
-    });
-    history.replace("/mainPage/showcase/Manga");
+    history.replace(`/mainPage/showcase/Manga/${allShowCases[index]._id}`);
   };
 
   const getShowcaseForums = () => {

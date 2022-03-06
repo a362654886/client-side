@@ -179,6 +179,7 @@ const SignUpPage = (): JSX.Element => {
       likeShowcase: [],
       followManga: [],
       followUsers: [],
+      followMarket: [],
       awesomeNum: 0,
     };
     const r = await userAdd(user);

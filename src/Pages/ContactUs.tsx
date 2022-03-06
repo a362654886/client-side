@@ -2,14 +2,34 @@ import { Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import * as React from "react";
 import { useState } from "react";
+import { emailPost } from "../api/emailAPI";
 import AnimeButton from "../components/Button";
 import { ContactUsDiv, InputDiv, TextAreaDiv } from "../cssJs/contactUs";
+import { popUpAPIResult } from "../helperFns/popUpAlert";
 
 const ContactUs = (): JSX.Element => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+
+  const sendEmail = async () => {
+    await popUpAPIResult<Promise<number | null>>(
+      emailPost(
+        `leolupersonal@gmail.com`,
+        `
+        name: ${name},
+        email:${email},
+        title:${title},
+        message:${message}
+      `
+      ),
+      "send email fail",
+      () => {
+        //
+      }
+    );
+  };
 
   return (
     <ContactUsDiv>
@@ -41,7 +61,7 @@ const ContactUs = (): JSX.Element => {
         textColor="white"
         backGroundColor="#FFC300"
         borderColor="#FFC300"
-        buttonClick={() => console.log("send")}
+        buttonClick={() => sendEmail()}
       />
     </ContactUsDiv>
   );

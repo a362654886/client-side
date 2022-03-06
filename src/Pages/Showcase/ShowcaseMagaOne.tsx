@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import {
   showCaseDescriptionUpdate,
   showCaseMangaDelete,
+  showCaseOneMangaGet,
   showCaseReplyAdd,
+  showCaseReplyGet,
   showCaseReplyUpdate,
   showCaseSecondReplyAdd,
   showCaseSecondReplyUpdate,
@@ -54,11 +56,11 @@ import {
   openNotification,
 } from "../../helperFns/popUpAlert";
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdateFollow, userUpdateShowcases } from "../../api/userApi";
+import { userUpdateFollow } from "../../api/userApi";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import AnimeButton from "../../components/Button";
 import add from "../../files/Add.svg";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
 import { episodeGet } from "../../api/episodeAPI";
 import { Button, Modal, Spin } from "antd";
@@ -84,8 +86,15 @@ import {
   SHOWCASE_AWESOME_CANCEL,
 } from "../../redux/showcaseAwesome";
 import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
+import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
+
+interface Para {
+  id: string;
+}
 
 const ShowcaseMangaOne = (): JSX.Element => {
+  const para: Para = useParams();
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -121,6 +130,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
   useEffect(() => {
     (async function anyNameFunction() {
+      await getManga(para.id);
       await getEpisode();
     })();
     console.log(showCase);
@@ -133,6 +143,14 @@ const ShowcaseMangaOne = (): JSX.Element => {
   useEffect(() => {
     //setShowCase(manga);
   }, [episodeNum, loading]);
+
+  const getManga = async (id: string) => {
+    const manga = await showCaseOneMangaGet(id);
+    dispatch({
+      payload: manga,
+      type: SHOWCASE_MANGA_ADD,
+    });
+  };
 
   const getEpisode = async () => {
     setAddLoading(true);
@@ -1027,6 +1045,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           style={{
             width:
               getWidth() > 1200 ? "100%" : getWidth() > 600 ? "896px" : "100%",
+            minHeight: getWidth() > 1200 ? "1300px" : "100%",
             paddingLeft: getWidth() > 600 ? "" : "8px",
           }}
         >

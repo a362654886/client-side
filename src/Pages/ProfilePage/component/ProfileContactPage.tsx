@@ -5,9 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userUpdate } from "../../../api/userApi";
 import AnimeButton from "../../../components/Button";
 import LoadingDiv from "../../../components/LoadingDiv";
-import {
-  ProfileAccountDiv,
-} from "../../../cssJs/ProfilePage/ProfileAccountCss";
+import { ProfileAccountDiv } from "../../../cssJs/ProfilePage/ProfileAccountCss";
 import {
   ContactEmailInput,
   ContactLocationInput,
@@ -89,6 +87,7 @@ const ProfileContactPage = (): JSX.Element => {
       likeShowcase: loginUser?.likeShowcase ? loginUser?.likeShowcase : [],
       followManga: loginUser?.followManga ? loginUser?.followManga : [],
       followUsers: loginUser?.followUsers ? loginUser?.followUsers : [],
+      followMarket: loginUser?.followMarket ? loginUser?.followMarket : [],
       awesomeNum: loginUser?.awesomeNum ? loginUser?.awesomeNum : 0,
     };
     setLoading(true);

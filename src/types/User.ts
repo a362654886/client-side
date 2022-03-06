@@ -18,6 +18,7 @@ export type User = {
   likeShowcase: string[];
   followManga: string[];
   followUsers: string[];
+  followMarket: string[];
   awesomeNum: number;
 };
 

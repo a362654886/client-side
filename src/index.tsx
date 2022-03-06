@@ -18,6 +18,7 @@ import EpisodeShow from "./Pages/Showcase/EpisodeShow";
 import { loginUserMiddleware } from "./redux/middleWares/loginUserMiddleware";
 import { animeMiddleware } from "./redux/middleWares/animeMiddleware";
 import { showcaseAwesomeMiddleware } from "./redux/middleWares/showcaseAwesomeMiddleware";
+import { marketFollowMiddleware } from "./redux/middleWares/marketFollowMiddleware";
 
 const persistConfig = {
   key: "root",
@@ -34,7 +35,8 @@ const store: any = createStore(
     thunk,
     loginUserMiddleware,
     animeMiddleware,
-    showcaseAwesomeMiddleware
+    showcaseAwesomeMiddleware,
+    marketFollowMiddleware
   )
 );
 persistStore(store);
