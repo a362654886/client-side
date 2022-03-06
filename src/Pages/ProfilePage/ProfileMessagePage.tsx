@@ -10,18 +10,19 @@ import {
   ProfileDiv,
   ProfileMessageBox,
   ProfileMessageButtons,
+  ProfileMessageMore,
   SettingIconDiv,
   SettingIconsDiv,
 } from "../../cssJs/ProfilePage/ProfileCss";
 import { IStoreState } from "../../types/IStoreState";
 import { Avatar, User } from "../../types/User";
-import avatarSetting from "../../files/avatarSetting.png";
+import getMoreImg from "../../files/getMore.png";
 import SettingImg from "../../components/SettingImg";
 import IconSettings from "../../files/IconSettings.svg";
 import IconInbox from "../../files/IconInbox.svg";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
-import AnimeButton from "../../components/Button";
+import AnimeButton, { MoreButtonDiv } from "../../components/Button";
 import { useEffect, useState } from "react";
 import {
   messagesAllGetByUserId,
@@ -45,7 +46,8 @@ const ProfileMessagePage = (): JSX.Element => {
   const [outPage, setOutPage] = useState<number>(1);
   const [inMessages, setInMessages] = useState<MessageType[]>([]);
   const [outMessages, setOutMessages] = useState<MessageType[]>([]);
-  const [count, setCount] = useState<number>(0);
+  const [inCount, setInCount] = useState<number>(0);
+  const [outCount, setOutCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const pageSize = 2;
 
@@ -67,6 +69,7 @@ const ProfileMessagePage = (): JSX.Element => {
 
   useEffect(() => {
     //
+    console.log(loginUser);
   }, [inMessages, outMessages, loading]);
 
   const getInMessages = async (page: number, pageSize: number) => {
@@ -75,10 +78,9 @@ const ProfileMessagePage = (): JSX.Element => {
       const r = await messagesAllGetByUserId(loginUser?._id, page, pageSize);
       if (page == 1) {
         setInMessages(r ? r.result : []);
-        setCount(r ? r.count : 0);
+        setInCount(r ? r.count : 0);
       } else {
         setInMessages(r ? inMessages.concat(r.result) : []);
-        setCount(r ? count + r.count : 0);
       }
     }
     setLoading(false);
@@ -94,10 +96,9 @@ const ProfileMessagePage = (): JSX.Element => {
       );
       if (page == 1) {
         setOutMessages(r ? r.result : []);
-        setCount(r ? r.count : 0);
+        setOutCount(r ? r.count : 0);
       } else {
         setOutMessages(r ? outMessages.concat(r.result) : []);
-        setCount(r ? count + r.count : 0);
       }
     }
     setLoading(false);
@@ -191,12 +192,34 @@ const ProfileMessagePage = (): JSX.Element => {
     return ifIn ? (
       <>
         {getInMessage()}
-        <Button onClick={() => getMoreInMessage()}>more</Button>
+        {loading ? (
+          <Spin />
+        ) : inMessages.length < inCount ? (
+          <ProfileMessageMore onClick={() => getMoreInMessage()}>
+            <div>
+              <img src={`${getMoreImg}`} />
+              <p>Load More</p>
+            </div>
+          </ProfileMessageMore>
+        ) : (
+          <></>
+        )}
       </>
     ) : (
       <>
         {getOutMessage()}
-        <Button onClick={() => getMoreOutMessage()}>more</Button>
+        {loading ? (
+          <Spin />
+        ) : outMessages.length < outCount ? (
+          <ProfileMessageMore onClick={() => getMoreOutMessage()}>
+            <div>
+              <img src={`${getMoreImg}`} />
+              <p>Load More</p>
+            </div>
+          </ProfileMessageMore>
+        ) : (
+          <></>
+        )}
       </>
     );
   };
@@ -223,7 +246,9 @@ const ProfileMessagePage = (): JSX.Element => {
               userName={`${(loginUser as User).firstName}.${
                 (loginUser as User).lastName
               }`}
-              userImg={avatarSetting}
+              userImg={`https://animeimagebucket.s3.amazonaws.com/${
+                (loginUser as User).avatar
+              }`}
               marginTop="4px"
             />
           </NameSetting>
@@ -262,7 +287,7 @@ const ProfileMessagePage = (): JSX.Element => {
           buttonClick={() => setIfIn(false)}
         />
       </ProfileMessageButtons>
-      {loading ? <Spin /> : getLoadingElement()}
+      {getLoadingElement()}
     </ProfileBox>
   );
 };

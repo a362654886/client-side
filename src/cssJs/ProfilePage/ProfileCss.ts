@@ -301,3 +301,27 @@ export const ProfileMessageBox = styled.div`
   background-color: #ecf9fe;
   margin-top: 8px;
 `;
+
+export const ProfileMessageMore = styled.div`
+  width: 100%;
+  max-width: 840px;
+  height: 64px;
+  cursor: pointer;
+  div {
+    display: flex;
+    margin: 0 auto;
+    width: 120px;
+    img {
+      width: 32px;
+      height: 32px;
+      margin-top: 16px;
+    }
+    p {
+      height: 32px;
+      font-family: "Arial MT";
+      margin-left: 8px;
+      margin-top: 16px;
+      line-height: 32px;
+    }
+  }
+`;
