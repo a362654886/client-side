@@ -1,3 +1,4 @@
+import { Radio } from "antd";
 import styled from "styled-components";
 
 export const MallDiv = styled.div`
@@ -27,6 +28,26 @@ export const MallTitle = styled.h1`
   line-height: 52px;
   margin-bottom: 0px;
   padding: 8px 0px;
+`;
+
+export const MallDisplayText = styled.p`
+  font-size: 16px;
+  color: #302d46;
+  height: 48px;
+  line-height: 32px;
+  padding: 8px 0px;
+  margin-bottom: 0px;
+`;
+
+// T-shirt
+
+export const MallRadio = styled(Radio)`
+  font-size: 16px;
+  height: 32px;
+  margin-bottom: 0px;
+  .ant-space-item {
+    margin-bottom: 0px;
+  }
 `;
 
 //showcase side

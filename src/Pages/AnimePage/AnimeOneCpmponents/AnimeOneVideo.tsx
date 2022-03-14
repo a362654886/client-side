@@ -45,6 +45,7 @@ import { IfLoginCheck } from "../../../helperFns/loginCheck";
 import { getWidth } from "../../../helperFns/widthFn";
 import ReactPlayer from "react-player";
 import { cloneDeep } from "lodash";
+import { formatName } from "../../../helperFns/nameFn";
 
 interface IProps {
   anime: Anime | null;
@@ -189,7 +190,7 @@ const AnimeOneVideo = ({
               <>
                 <VideoBottomImg src={`${video.userAvatar}`} />
                 <UserNameText>
-                  {video.userName}
+                  {formatName(video.userName)}
                   <Flag
                     style={{ marginLeft: "5px" }}
                     country={flagGet(

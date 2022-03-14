@@ -22,7 +22,8 @@ import IconSettings from "../../files/IconSettings.svg";
 import IconInbox from "../../files/IconInbox.svg";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
-import AnimeButton, { MoreButtonDiv } from "../../components/Button";
+import AnimeButton from "../../components/Button";
+import loadingImg from "../../files/loading.gif";
 import { useEffect, useState } from "react";
 import {
   messagesAllGetByUserId,
@@ -37,6 +38,7 @@ import {
 } from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import { _getDate } from "../../helperFns/timeFn";
 import { Button, Spin } from "antd";
+import { LoadingImgDiv } from "../../cssJs/homePageCss";
 
 const ProfileMessagePage = (): JSX.Element => {
   const history = useHistory();
@@ -193,7 +195,9 @@ const ProfileMessagePage = (): JSX.Element => {
       <>
         {getInMessage()}
         {loading ? (
-          <Spin />
+          <LoadingImgDiv>
+            <img src={`${loadingImg}`} />
+          </LoadingImgDiv>
         ) : inMessages.length < inCount ? (
           <ProfileMessageMore onClick={() => getMoreInMessage()}>
             <div>
@@ -209,7 +213,9 @@ const ProfileMessagePage = (): JSX.Element => {
       <>
         {getOutMessage()}
         {loading ? (
-          <Spin />
+          <LoadingImgDiv>
+            <img src={`${loadingImg}`} />
+          </LoadingImgDiv>
         ) : outMessages.length < outCount ? (
           <ProfileMessageMore onClick={() => getMoreOutMessage()}>
             <div>

@@ -21,14 +21,15 @@ export const followByAdd = async (
 export const followByGetByUserId = async (
   userId: string,
   page: number,
-  pageSize: number
+  pageSize: number,
+  type: number
 ): Promise<{
-  result: MessageType[];
+  result: followByType[];
   count: number;
 } | null> => {
   const endpoint =
     basicURL +
-    `followByGetByUserId?userId=${userId}&page=${page}&pageSize=${pageSize}`;
+    `followByGetByUserId?userId=${userId}&page=${page}&pageSize=${pageSize}&type=${type}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

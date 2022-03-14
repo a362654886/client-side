@@ -190,7 +190,9 @@ const MainPage = (): JSX.Element => {
                       }
                     />
                     <LoginBox
-                      onClick={() => toProfile("/mainPage/profilePage")}
+                      onClick={() =>
+                        toProfile(`/mainPage/profilePage/${loginUser._id}`)
+                      }
                     >
                       <p>{`${loginUser.firstName}.${loginUser.lastName
                         .substring(0, 1)
@@ -228,7 +230,9 @@ const MainPage = (): JSX.Element => {
                       }
                     />
                     <MobileLoginBox
-                      onClick={() => toProfile("/mainPage/profilePage")}
+                      onClick={() =>
+                        toProfile(`/mainPage/profilePage/${loginUser._id}`)
+                      }
                     >
                       <p>{`${loginUser.firstName}.${loginUser.lastName
                         .substring(0, 1)

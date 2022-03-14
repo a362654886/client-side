@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Checkbox, Input } from "antd";
 import styled from "styled-components";
 
 export const MallCustomTitle = styled.h2`
@@ -53,7 +53,7 @@ export const MallCustomInsideInnerImg = styled.img`
 `;
 
 export const MallCustomerInputTitle = styled.h3`
-  height: 48px;
+  height: 32px;
   padding: 8px 0px;
   font-size: 16px;
   font-weight: bold;
@@ -62,9 +62,26 @@ export const MallCustomerInputTitle = styled.h3`
 `;
 
 export const MallCustomerInput = styled(Input)`
-  height: 40px;
+  height: 32px;
   padding: 8px 4px;
-  margin-bottom: 16px;
+  margin-bottom: 0px;
+  width: 102px;
+`;
+
+export const MallCustomerCheckBoxDiv = styled.div`
+  display: flex;
+  margin-bottom: 12px;
+  p {
+    width: 150px;
+  }
+`;
+
+export const MallCustomerCheckBox = styled(Checkbox)`
+  height: 48px;
+  padding: 0px;
+  line-height: 32px;
+  margin-bottom: 0px;
+  width: 150px;
 `;
 
 export const MallCustomerEmailInput = styled(Input)`

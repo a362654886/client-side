@@ -6,6 +6,12 @@ export const ProfileBox = styled.div`
   margin: auto;
 `;
 
+export const ProfileFollowBox = styled.div`
+  height: auto;
+  max-width: 680px;
+  margin: auto;
+`;
+
 export const ProfileSettingBox = styled.div`
   height: auto;
   max-width: 320px;
@@ -16,6 +22,18 @@ export const ProfileDiv = styled.div`
   height: 112px;
   width: 332px;
   margin-top: 8px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  display: flex;
+  div {
+    display: inline;
+  }
+`;
+
+export const ProfileFollowDiv = styled.div`
+  height: 112px;
+  width: 332px;
+  margin: 8px auto;
   padding-top: 16px;
   padding-bottom: 16px;
   display: flex;
@@ -236,6 +254,7 @@ export const SettingFollowingDiv = styled.div`
   margin-right: 54px;
   width: 60px;
   text-align: center;
+  cursor: pointer;
 `;
 
 export const SettingFollowerDiv = styled.div`
@@ -246,6 +265,7 @@ export const SettingFollowerDiv = styled.div`
   margin-right: 42px;
   width: 64px;
   text-align: center;
+  cursor: pointer;
 `;
 
 export const SettingAwesomeDiv = styled.div`

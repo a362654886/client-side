@@ -189,6 +189,26 @@ export const userUpdateMarket = async (
     });
 };
 
+export const userFollowsGets = (
+  userId: string,
+  page: number,
+  pageSize: number
+): Promise<{
+  result: User[];
+  count: number;
+} | null> => {
+  const endpoint =
+    basicURL +
+    `userFollowGet?userId=${userId}&page=${page}&pageSize=${pageSize}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 //user get likes/showcase/marketplace/mall
 
 export const userGetUserLikes = (

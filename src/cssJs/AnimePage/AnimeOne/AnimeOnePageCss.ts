@@ -169,7 +169,7 @@ export const VideoIframeDiv = styled.div`
 
 export const VideoBottom = styled.div`
   display: flex;
-  width: 303px;
+  width: 403px;
   margin: 8px auto;
   height: 72px;
 `;
@@ -187,6 +187,16 @@ export const TimeText = styled.p`
   font-size: 14px;
   line-height: 32px;
   width: 72px;
+  margin: 0px 5px;
+  margin-top: 20px;
+`;
+
+export const TimeMiddleText = styled.p`
+  color: #4a4a4a;
+  font-family: "Arial MT";
+  font-size: 14px;
+  line-height: 32px;
+  width: 72px;
   margin: 0px auto;
   margin-top: 20px;
 `;
@@ -198,7 +208,6 @@ export const FromText = styled.p`
   line-height: 32px;
   width: 28px;
   margin-top: 20px;
-  margin-left: 16px;
   margin-bottom: 0px;
 `;
 
@@ -218,8 +227,9 @@ export const UserNameText = styled.p`
   margin-top: 20px;
   font-weight: bold;
   margin-left: 4px;
-  width: 87px;
+  width: 150px;
   text-align: left;
+  white-space: nowrap;
 `;
 
 export const DeleteDiv = styled.div`

@@ -56,13 +56,15 @@ export const marketAllGet = async (
 export const marketAllGetByArr = async (
   id: string,
   page: number,
-  pageSize: number
+  pageSize: number,
+  type: number
 ): Promise<{
   markets: MarketType[];
   count: number;
 } | null> => {
   const endpoint =
-    basicURL + `marketsGetByUserArr?id=${id}&page=${page}&pageSize=${pageSize}`;
+    basicURL +
+    `marketsGetByUserArr?id=${id}&page=${page}&pageSize=${pageSize}&type=${type}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

@@ -105,7 +105,7 @@ const Discovery = (): JSX.Element => {
         return (
           <AnimeOneVideo
             anime={null}
-            pageSizeSetting={3}
+            pageSizeSetting={6}
             ifShowHeader={false}
             ifShowAdd={false}
             discovery={true}
@@ -115,7 +115,7 @@ const Discovery = (): JSX.Element => {
         return (
           <AnimeOneProducts
             anime={null}
-            pageSizeSetting={3}
+            pageSizeSetting={6}
             ifShowHeader={false}
             ifShowAdd={false}
             discovery={true}
@@ -125,7 +125,7 @@ const Discovery = (): JSX.Element => {
         return (
           <AnimeOneForum
             anime={null}
-            pageSizeSetting={3}
+            pageSizeSetting={6}
             ifShowHeader={false}
             ifShowAdd={false}
             discovery={true}

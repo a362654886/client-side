@@ -103,27 +103,32 @@ const ProfileSettingPage = (): JSX.Element => {
   const getPart = () =>
     account ? <ProfileContactPage /> : <ProfileAccountPage />;
 
+  const getImage = () => {
+    const imageArr = loginUser ? loginUser.avatarImage : null;
+    return imageArr ? imageArr[0].imageUrl : "";
+  };
+
   return (
     <ProfileSettingBox>
       <ProfileDiv>
-        <NamePic
-          src={((loginUser as User).avatarImage as Avatar[])[0].imageUrl}
-        />
+        <NamePic src={getImage()} />
         <NameDiv>
           <NameSetting>
             <p>
-              {`${(loginUser as User).firstName}.${(loginUser as User).lastName
-                .substring(0, 1)
-                .toUpperCase()}`}
+              {`${loginUser ? loginUser.firstName : ""}.${
+                loginUser
+                  ? loginUser.lastName.substring(0, 1).toUpperCase()
+                  : ""
+              }`}
               <Flag
                 style={{ marginLeft: "5px" }}
                 country={flagGet(loginUser ? loginUser.country : "")}
               />
             </p>
             <SettingImg
-              userId={(loginUser as User)._id}
-              userName={`${(loginUser as User).firstName}.${
-                (loginUser as User).lastName
+              userId={loginUser ? loginUser._id : ""}
+              userName={`${loginUser ? loginUser.firstName : ""}.${
+                loginUser ? loginUser.lastName : ""
               }`}
               userImg={avatarSetting}
               marginTop="4px"

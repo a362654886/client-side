@@ -139,7 +139,7 @@ export const LinkP = styled.p`
 
 export const ProductAvatarDiv = styled.div`
   height: 72x;
-  width: 171px;
+  width: 221px;
   margin: 0 auto;
   display: flex;
 `;
@@ -161,6 +161,6 @@ export const AvatarName = styled.p`
   margin-top: 20px;
   line-height: 32px;
   margin-left: 4px;
-  width: 87px;
+  width: 160px;
   text-align: left !important;
 `;

@@ -16,8 +16,9 @@ interface IProps {
 }
 
 const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
-  const loginUser: User | null = useSelector(
-    (state: IStoreState) => state.loginUserState
+
+  const profileUser: User | null = useSelector(
+    (state: IStoreState) => state.profileUserState
   );
 
   const [loading, setLoading] = useState(false);
@@ -49,7 +50,7 @@ const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
     const showcaseResult =
       profile == true
         ? await showCaseAllGetByArr(
-            loginUser ? loginUser._id : "",
+            profileUser ? profileUser._id : "",
             "collections",
             pageNum,
             pageSize
@@ -59,7 +60,7 @@ const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
             "hot",
             pageNum,
             pageSize,
-            loginUser ? loginUser._id : "",
+            profileUser ? profileUser._id : "",
             "",
             ""
           );
@@ -76,7 +77,7 @@ const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
     const showcaseResult =
       profile == true
         ? await showCaseAllGetByArr(
-            loginUser ? loginUser._id : "",
+            profileUser ? profileUser._id : "",
             "collections",
             pageNum,
             pageSize
@@ -86,7 +87,7 @@ const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
             "hot",
             pageNum,
             pageSize,
-            loginUser ? loginUser._id : "",
+            profileUser ? profileUser._id : "",
             "",
             ""
           );

@@ -11,33 +11,66 @@ import { IStoreState } from "../../../types/IStoreState";
 import { MarketType } from "../../../types/MarketType";
 import { User } from "../../../types/User";
 import loadingImg from "../../../files/loading.gif";
+import {
+  ButtonsDiv,
+  ProfileSubDiv,
+} from "../../../cssJs/ProfilePage/ProfileCss";
+import stateAvailable from "../../../files/stateAvailable.png";
+import stateSoldOut from "../../../files/stateSoldOut.png";
+
+const buttonsColor = [
+  {
+    text: "Listings",
+    color: "#4BA3C3",
+    backColor: "white",
+  },
+  {
+    text: "Following",
+    color: "#4BA3C3",
+    backColor: "white",
+  },
+  {
+    text: "Bids",
+    color: "#4BA3C3",
+    backColor: "white",
+  },
+];
 
 const ProfileMarketplacePage = (): JSX.Element => {
   const history = useHistory();
 
-  const loginUser: User | null = useSelector(
-    (state: IStoreState) => state.loginUserState
+  const profileUser: User | null = useSelector(
+    (state: IStoreState) => state.profileUserState
   );
 
   const [allMarket, setAllMarkets] = useState<MarketType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  //0 listing
+  //1 following
+  // bids
+  const [chooseButton, setChooseButton] = useState<number>(0);
+
+  const changeButton = (index: number) => setChooseButton(index);
 
   useEffect(() => {
     (async function anyNameFunction() {
       await getMarkets();
     })();
-  }, []);
+  }, [chooseButton]);
 
   useEffect(() => {
     //
   }, [allMarket]);
 
   const getMarkets = async () => {
-    console.log(loginUser)
-    if (loginUser) {
+    if (profileUser) {
       setLoading(true);
-      const result = await marketAllGetByArr(loginUser?.userEmail, 1, 24);
-      console.log(result)
+      const result = await marketAllGetByArr(
+        profileUser?.userEmail,
+        1,
+        24,
+        chooseButton
+      );
       if (result) {
         result.markets ? setAllMarkets(result.markets) : "";
       }
@@ -49,8 +82,36 @@ const ProfileMarketplacePage = (): JSX.Element => {
     history.replace(`marketplace/showOne/${marketId}`);
   };
 
+  const getButtons = () => {
+    return buttonsColor.map(
+      (
+        button: {
+          text: string;
+          color: string;
+          backColor: string;
+        },
+        index: number
+      ) => {
+        if (index == chooseButton) {
+          return (
+            <ProfileSubDiv onClick={() => changeButton(index)}>
+              <img src={stateAvailable} />
+              <h6>{button.text}</h6>
+            </ProfileSubDiv>
+          );
+        } else {
+          return (
+            <ProfileSubDiv onClick={() => changeButton(index)}>
+              <img src={stateSoldOut} />
+              <h6>{button.text}</h6>
+            </ProfileSubDiv>
+          );
+        }
+      }
+    );
+  };
+
   const getMarketDiv = (marketArr: MarketType[] | null) => {
-    console.log(marketArr)
     if (marketArr) {
       return marketArr.map((market: MarketType, index: number) => {
         return (
@@ -78,6 +139,7 @@ const ProfileMarketplacePage = (): JSX.Element => {
 
   return (
     <>
+      <ButtonsDiv>{getButtons()}</ButtonsDiv>
       <MarketShowBox className="row">
         {loading ? (
           <div>

@@ -338,7 +338,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
 
   //get html element
   const getAddReplyBox = (showcase: ShowCaseType, index: number) => (
-    <div style={{ marginTop: "16px" }}>
+    <div key={index} style={{ marginTop: "16px" }}>
       <TextInput>
         <TextArea
           value={newReplyHtml[index]}
@@ -368,7 +368,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     index: number,
     secondIndex: number
   ) => (
-    <div style={{ marginTop: "16px" }}>
+    <div key={index} style={{ marginTop: "16px" }}>
       <TextInput>
         <TextArea
           value={

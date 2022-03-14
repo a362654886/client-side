@@ -22,7 +22,7 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={HomePage} path="/mainPage/home" />
         <Route component={LoginPage} path="/mainPage/login" />
         <Route component={SignUpPage} path="/mainPage/signUpPage" />
-        <Route component={ProfilePage} path="/mainPage/profilePage" />
+        <Route component={ProfilePage} path="/mainPage/profilePage/:id" />
         <Route component={AnimeShowPage} path="/mainPage/animeShowPage" />
         <Route component={AnimeOne} path="/mainPage/oneAnime" />
         <Route component={Discovery} path="/mainPage/discovery" />

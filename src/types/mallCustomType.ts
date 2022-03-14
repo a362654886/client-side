@@ -3,3 +3,9 @@ export type MallCustomType = {
   name: string;
   imgURL: string;
 };
+
+export type MallCustomInputCheckBoxType = {
+  name: string;
+  choose: boolean;
+  value: string;
+};

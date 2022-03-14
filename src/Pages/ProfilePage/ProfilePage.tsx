@@ -29,7 +29,7 @@ import { IStoreState } from "../../types/IStoreState";
 import { Avatar, User } from "../../types/User";
 import ProfileLikesPage from "./component/ProfileLikesPage";
 import ProfileMallPage from "./component/ProfileMallPage";
-import ProfileMarketplacePage from "./component/ProfileMarketplacePage";
+import ProfileMarketplacePage from "./profileMarketPlace/ProfileMarketplacePage";
 import ProfileShowcasePage from "./component/ProfileShowcasePage";
 import avatarSetting from "../../files/avatarSetting.png";
 import IconSettings from "../../files/IconSettings.svg";
@@ -57,8 +57,17 @@ import {
   openNotification,
 } from "../../helperFns/popUpAlert";
 import { LOGIN_USER_UPDATE_FOLLOW } from "../../redux/loginUser";
+import { useParams } from "react-router-dom";
+import { userGet } from "../../api/userApi";
+import { PROFILE_USER_UPDATE } from "../../redux/profileUser";
+
+interface Para {
+  id: string;
+}
 
 const ProfilePage = (): JSX.Element => {
+  const para: Para = useParams();
+
   const history = useHistory();
 
   const [follow, setFollow] = useState<number>(0);
@@ -100,12 +109,21 @@ const ProfilePage = (): JSX.Element => {
 
   useEffect(() => {
     (async function anyNameFunction() {
-      await getFollowers(profileUser ? profileUser._id : "");
+      const user = await userGet(para.id);
+      dispatch({
+        payload: user,
+        type: PROFILE_USER_UPDATE,
+      });
+      await getFollowers(para.id);
     })();
   }, []);
 
+  useEffect(() => {
+    //
+  }, [profileUser]);
+
   const getFollowers = async (userId: string) => {
-    const followerResult = await followByGetByUserId(userId, 1, 1);
+    const followerResult = await followByGetByUserId(userId, 1, 1, 1);
     setFollow(followerResult ? followerResult.count : 0);
   };
 
@@ -271,7 +289,11 @@ const ProfilePage = (): JSX.Element => {
         <></>
       )}
       <SettingFollowDiv>
-        <SettingFollowingDiv>
+        <SettingFollowingDiv
+          onClick={() => {
+            toPage(`/mainPage/profileFollow/${profileUser?._id}`);
+          }}
+        >
           <h6>
             {profileUser
               ? profileUser.followUsers
@@ -281,7 +303,11 @@ const ProfilePage = (): JSX.Element => {
           </h6>
           <p>Following</p>
         </SettingFollowingDiv>
-        <SettingFollowerDiv>
+        <SettingFollowerDiv
+          onClick={() => {
+            toPage(`/mainPage/profileFollow/${profileUser?._id}`);
+          }}
+        >
           <h6>{follow}</h6>
           <p>Followers</p>
         </SettingFollowerDiv>

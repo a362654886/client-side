@@ -4,4 +4,5 @@ export type followByType = {
   followById: string;
   userAvatar?: string;
   userName?: string;
+  country?: string;
 };

@@ -28,6 +28,7 @@ import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { popUpAPIResult } from "../../../helperFns/popUpAlert";
 import {
   DeleteDiv,
+  TimeMiddleText,
   TimeText,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import deleteIcon from "../../../files/deleteIcon.svg";
@@ -44,6 +45,7 @@ import { IStoreState } from "../../../types/IStoreState";
 import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
 import { IfLoginCheck } from "../../../helperFns/loginCheck";
 import { getWidth } from "../../../helperFns/widthFn";
+import { formatName } from "../../../helperFns/nameFn";
 
 interface IProps {
   anime: Anime | null;
@@ -220,7 +222,7 @@ const AnimeOneProducts = ({
                       <img src={product.userAvatar} />
                     </AvatarImg>
                     <AvatarName>
-                      {product.userName}
+                      {formatName(product.userName)}
                       <Flag
                         style={{ marginLeft: "5px" }}
                         country={flagGet(
@@ -238,9 +240,9 @@ const AnimeOneProducts = ({
                 marginTop="24px"
               />
             </ProductAvatarDiv>
-            <TimeText>{`${date.getDate()}-${
+            <TimeMiddleText>{`${date.getDate()}-${
               date.getMonth() + 1
-            }-${date.getFullYear()}`}</TimeText>
+            }-${date.getFullYear()}`}</TimeMiddleText>
             {discovery ? (
               <ProductHeader>{product.anime}</ProductHeader>
             ) : (

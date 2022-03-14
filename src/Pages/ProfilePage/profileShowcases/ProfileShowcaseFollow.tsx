@@ -14,8 +14,9 @@ import getMoreImg from "../../../files/getMore.png";
 import { ProfileMiddleDiv } from "../../../cssJs/ProfilePage/ProfileCss";
 
 const ProfileShowcaseFollow = (): JSX.Element => {
-  const loginUser: User | null = useSelector(
-    (state: IStoreState) => state.loginUserState
+
+  const profileUser: User | null = useSelector(
+    (state: IStoreState) => state.profileUserState
   );
 
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const ProfileShowcaseFollow = (): JSX.Element => {
   const searchType = async () => {
     setTypeLoading(true);
     const showcaseResult = await showCaseFollowAllGetByArr(
-      loginUser ? loginUser._id : "",
+      profileUser ? profileUser._id : "",
       pageNum,
       pageSize
     );
@@ -67,7 +68,7 @@ const ProfileShowcaseFollow = (): JSX.Element => {
   const searchPage = async () => {
     setLoading(true);
     const showcaseResult = await showCaseFollowAllGetByArr(
-      loginUser ? loginUser._id : "",
+      profileUser ? profileUser._id : "",
       pageNum,
       pageSize
     );

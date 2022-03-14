@@ -106,7 +106,7 @@ const ShowcaseSide = (): JSX.Element => {
                       src={`https://animeimagebucket.s3.amazonaws.com/${user.avatar}`}
                     />
                     <ShowcaseSideName>
-                      {`${user.firstName}.${user.lastName
+                      {`${user.firstName.slice(0, 12)}.${user.lastName
                         .substring(0, 1)
                         .toUpperCase()}`}
                       <Flag

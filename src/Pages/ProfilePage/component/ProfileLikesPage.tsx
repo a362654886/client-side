@@ -22,8 +22,8 @@ const ProfileLikesPage = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const loginUser: User | null = useSelector(
-    (state: IStoreState) => state.loginUserState
+  const profileUser: User | null = useSelector(
+    (state: IStoreState) => state.profileUserState
   );
 
   /*const [count, setCounts] = useState<number>(
@@ -43,9 +43,9 @@ const ProfileLikesPage = (): JSX.Element => {
   }, [loading]);
 
   const getAnimes = async () => {
-    if (loginUser) {
+    if (profileUser) {
       setLoading(true);
-      const animeResult = await userGetUserLikes(loginUser?.userEmail, 1, 24);
+      const animeResult = await userGetUserLikes(profileUser?.userEmail, 1, 24);
       setAllAnime(animeResult);
       setLoading(false);
     }

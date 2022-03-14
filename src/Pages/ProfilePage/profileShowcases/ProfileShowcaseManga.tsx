@@ -17,8 +17,8 @@ interface IProps {
 }
 
 const ProfileShowcaseManga = ({ profile }: IProps): JSX.Element => {
-  const loginUser: User | null = useSelector(
-    (state: IStoreState) => state.loginUserState
+  const profileUser: User | null = useSelector(
+    (state: IStoreState) => state.profileUserState
   );
 
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const ProfileShowcaseManga = ({ profile }: IProps): JSX.Element => {
     const showcaseResult =
       profile == true
         ? await showCaseAllGetByArr(
-            loginUser ? loginUser._id : "",
+            profileUser ? profileUser._id : "",
             "manga",
             pageNum,
             pageSize
@@ -63,7 +63,7 @@ const ProfileShowcaseManga = ({ profile }: IProps): JSX.Element => {
             "hot",
             pageNum,
             pageSize,
-            loginUser ? loginUser._id : "",
+            profileUser ? profileUser._id : "",
             "",
             ""
           );
@@ -80,7 +80,7 @@ const ProfileShowcaseManga = ({ profile }: IProps): JSX.Element => {
     const showcaseResult =
       profile == true
         ? await showCaseAllGetByArr(
-            loginUser ? loginUser._id : "",
+            profileUser ? profileUser._id : "",
             "manga",
             pageNum,
             pageSize
@@ -90,7 +90,7 @@ const ProfileShowcaseManga = ({ profile }: IProps): JSX.Element => {
             "hot",
             pageNum,
             pageSize,
-            loginUser ? loginUser._id : "",
+            profileUser ? profileUser._id : "",
             "",
             ""
           );

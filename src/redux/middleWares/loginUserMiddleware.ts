@@ -5,7 +5,11 @@ import {
   nextAction,
 } from "../../types/MiddleWareType";
 import { ANIME_UPDATE_LIKE } from "../anime";
-import { LOGIN_USER_UPDATE_FOLLOW, LOGIN_USER_UPDATE_LIKE } from "../loginUser";
+import {
+  LOGIN_USER_ADD,
+  LOGIN_USER_UPDATE_FOLLOW,
+  LOGIN_USER_UPDATE_LIKE,
+} from "../loginUser";
 
 export const loginUserMiddleware =
   (store: middleStoreType) =>
@@ -20,6 +24,13 @@ export const loginUserMiddleware =
           loginUser.followUsers,
           action.payload
         );
+        /*const arr = loginUser.followUsers;
+        arr.push(action.payload);
+        loginUser.followUsers = arr;
+        store.dispatch({
+          payload: loginUser,
+          type: LOGIN_USER_ADD,
+        });*/
       }
     }
 

@@ -95,7 +95,6 @@ const SettingImg = ({
   };
 
   const reportUser = (id: string) => {
-    console.log("asdqwe")
     dispatch({
       payload: id,
       type: REPORT_USER_UPDATE,
