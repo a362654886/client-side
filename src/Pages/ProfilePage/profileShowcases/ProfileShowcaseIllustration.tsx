@@ -9,12 +9,19 @@ import ShowcaseForum from "../../Showcase/ShowcaseForum";
 import { User } from "../../../types/User";
 import { useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
-import { ProfileMiddleDiv } from "../../../cssJs/ProfilePage/ProfileCss";
+import {
+  ProfileAddButtonDiv,
+  ProfileMiddleDiv,
+} from "../../../cssJs/ProfilePage/ProfileCss";
+import AnimeButton from "../../../components/Button";
+import { useHistory } from "react-router-dom";
 interface IProps {
   profile?: boolean;
 }
 
 const ProfileShowcaseIllustration = ({ profile }: IProps): JSX.Element => {
+  const history = useHistory();
+
   const profileUser: User | null = useSelector(
     (state: IStoreState) => state.profileUserState
   );
@@ -114,6 +121,23 @@ const ProfileShowcaseIllustration = ({ profile }: IProps): JSX.Element => {
   const getShocaseForums = () => {
     return (
       <>
+        <ProfileAddButtonDiv>
+          <AnimeButton
+            para=""
+            text={"Post"}
+            width="120px"
+            height="36px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="white"
+            buttonClick={() => {
+              history.push({
+                pathname: "/mainPage/showcase/create",
+                state: { type: ShowCaseEnum.Illustrations },
+              });
+            }}
+          />
+        </ProfileAddButtonDiv>
         {typeLoading ? (
           <LoadingImgDiv>
             <img src={`${loadingImg}`} />

@@ -1,7 +1,6 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
 import { followByType } from "../types/FollowBycopy";
-import { MessageType } from "../types/MessageType";
 
 const basicURL = backEndLink;
 

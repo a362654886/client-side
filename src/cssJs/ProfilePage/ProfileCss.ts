@@ -345,3 +345,7 @@ export const ProfileMessageMore = styled.div`
     }
   }
 `;
+
+export const ProfileAddButtonDiv = styled.div`
+  margin-bottom: 16px;
+`;

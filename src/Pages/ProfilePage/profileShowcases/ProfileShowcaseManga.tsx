@@ -11,7 +11,11 @@ import { IStoreState } from "../../../types/IStoreState";
 import ShowcaseManga from "../../Showcase/ShowcaseMaga";
 import { SHOWCASE_MANGA_ADD } from "../../../redux/showcaseManga";
 import getMoreImg from "../../../files/getMore.png";
-import { ProfileMiddleDiv } from "../../../cssJs/ProfilePage/ProfileCss";
+import {
+  ProfileAddButtonDiv,
+  ProfileMiddleDiv,
+} from "../../../cssJs/ProfilePage/ProfileCss";
+import AnimeButton from "../../../components/Button";
 interface IProps {
   profile?: boolean;
 }
@@ -127,6 +131,23 @@ const ProfileShowcaseManga = ({ profile }: IProps): JSX.Element => {
   const getShocaseForums = () => {
     return (
       <>
+        <ProfileAddButtonDiv>
+          <AnimeButton
+            para=""
+            text={"Create a new Series"}
+            width="200px"
+            height="36px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="white"
+            buttonClick={() => {
+              history.push({
+                pathname: "/mainPage/showcase/create",
+                state: { type: ShowCaseEnum.Manga },
+              });
+            }}
+          />
+        </ProfileAddButtonDiv>
         {typeLoading ? (
           <LoadingImgDiv>
             <img src={`${loadingImg}`} />

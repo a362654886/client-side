@@ -13,10 +13,12 @@ import { User } from "../../../types/User";
 import loadingImg from "../../../files/loading.gif";
 import {
   ButtonsDiv,
+  ProfileAddButtonDiv,
   ProfileSubDiv,
 } from "../../../cssJs/ProfilePage/ProfileCss";
 import stateAvailable from "../../../files/stateAvailable.png";
 import stateSoldOut from "../../../files/stateSoldOut.png";
+import AnimeButton from "../../../components/Button";
 
 const buttonsColor = [
   {
@@ -140,6 +142,22 @@ const ProfileMarketplacePage = (): JSX.Element => {
   return (
     <>
       <ButtonsDiv>{getButtons()}</ButtonsDiv>
+      <ProfileAddButtonDiv>
+        <AnimeButton
+          para=""
+          text={"Lis an Item"}
+          width="200px"
+          height="36px"
+          textColor="white"
+          backGroundColor="#FFC300"
+          borderColor="white"
+          buttonClick={() => {
+            history.push({
+              pathname: "/mainPage/marketplace/create",
+            });
+          }}
+        />
+      </ProfileAddButtonDiv>
       <MarketShowBox className="row">
         {loading ? (
           <div>
