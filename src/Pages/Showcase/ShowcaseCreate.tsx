@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showCaseAdd } from "../../api/showcaseAPI";
 import AnimeButton from "../../components/Button";
-import FullTextEditor from "../../components/FullTextEditor";
 import ImageUpload, { ImageBody } from "../../components/ImageUpload";
 import {
   CancelButton,
@@ -60,6 +59,21 @@ const ShowcaseCreate = (): JSX.Element => {
   useEffect(() => {
     console.log(tags);
   }, [imgArr, tags]);
+
+  const formatTag = (tagArr: string[]) => {
+    let newTagArr: string[] = [];
+    tagArr.forEach((item) => {
+      const arr = item.split("#");
+      newTagArr = newTagArr.concat(arr);
+    });
+    const returnTagArr: string[] = [];
+    newTagArr.forEach((item) => {
+      if (item != "") {
+        returnTagArr.push(`#${item}`);
+      }
+    });
+    setTags(returnTagArr);
+  };
 
   const getHeader = () => {
     switch (showCaseType) {
@@ -123,7 +137,7 @@ const ShowcaseCreate = (): JSX.Element => {
         };
       }),
       text: html,
-      source: sourceType == "origin" ? sourceType : "source" + sourceValue,
+      source: sourceType == "origin" ? sourceType : `source ${sourceValue}`,
       title: title,
       description: description,
       aweSome: 0,
@@ -134,7 +148,7 @@ const ShowcaseCreate = (): JSX.Element => {
     });
     if (TagCheck(tags)) {
       const r = await showCaseAdd(showCase);
-      history.replace("/mainPage/showcase/showManga");
+      history.replace("/mainPage/showcase/showCollection");
     } else {
       openNotification(
         "please add # before tag",
@@ -255,12 +269,7 @@ const ShowcaseCreate = (): JSX.Element => {
             <ShowCaseCreateImageHeader>
               Write a caption
             </ShowCaseCreateImageHeader>
-            <FullTextEditor
-              html={html}
-              setFullText={(e) => {
-                setHtml(e);
-              }}
-            />
+            <DescriptionInput onChange={(e) => setHtml(e.target.value)} />
           </>
         )}
         <br />
@@ -268,9 +277,8 @@ const ShowcaseCreate = (): JSX.Element => {
           <ShowCaseCreateImageHeader>Tags</ShowCaseCreateImageHeader>
           <TagSelect
             mode="tags"
-            placeholder="#"
-            defaultValue={tags}
-            onChange={(e) => setTags(e as string[])}
+            value={tags}
+            onChange={(e) => formatTag(e as string[])}
             dropdownStyle={{ display: "none" }}
           ></TagSelect>
         </TagSelectDiv>

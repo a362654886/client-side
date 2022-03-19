@@ -1,4 +1,4 @@
-import { Checkbox, Input, RadioChangeEvent, Row, Col } from "antd";
+import { Checkbox, Input, RadioChangeEvent, Row, Col, DatePicker } from "antd";
 import * as React from "react";
 import { useState } from "react";
 import ImgUploadDiv from "../../../components/conponentDivs/ImgUploadDiv";
@@ -33,6 +33,8 @@ import {
   openNotification,
 } from "../../../helperFns/popUpAlert";
 import AlertBox, { ColorType } from "../../../components/AlertBox";
+import moment from "moment";
+import ImageUpload from "../../../components/ImageUpload";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -130,25 +132,39 @@ const AdminEditComponent = ({ anime }: IProps): JSX.Element => {
         <Input placeholder={"title"} value={title} onChange={onChange}></Input>
       </AdminAnimeInput>
       <UploadImageDiv>
-        <p>Head Image</p>
-        <img src={`${uploadImg}`} />
+        <h6>Head Image</h6>
+        <div>
+          <img src={`${uploadImg}`}></img>
+          <p>280x280</p>
+        </div>
       </UploadImageDiv>
       <UploadImageButton>
-        <ImgUploadDiv setImg={setImg} />
+        <ImageUpload
+          width={"120px"}
+          height={"32px"}
+          textColor={"black"}
+          backGroundColor={"white"}
+          border={"1px solid #D1D2D3"}
+          text={"Upload"}
+          setImg={(value: ImageBody) => setImg(value)}
+          margin={"0px"}
+        />
       </UploadImageButton>
       <AdminAiredInput>
         <h6>Aired:</h6>
-        <Input
+        <DatePicker
           placeholder={"Aired Start"}
-          value={airedStart}
-          onChange={onChange}
-        ></Input>
+          value={moment(airedStart)}
+          picker="month"
+          onChange={(e) => setAiredStart(moment(e).format(`YYYY MM`))}
+        />
         <p>-</p>
-        <Input
+        <DatePicker
           placeholder={"Aired End"}
-          value={airedEnd}
-          onChange={onChange}
-        ></Input>
+          value={moment(airedEnd)}
+          picker="month"
+          onChange={(e) => setAiredEnd(moment(e).format(`YYYY MM`))}
+        />
       </AdminAiredInput>
       <AdminAnimeInput>
         <p>Producers:</p>

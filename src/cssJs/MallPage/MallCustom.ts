@@ -33,7 +33,7 @@ export const MallCustomImgDiv = styled.div`
 
 export const MallCustomInsideImgDiv = styled.div`
   width: 600px;
-  margin: 0px auto;
+  margin: 0px;
   position: relative;
 `;
 
@@ -44,12 +44,20 @@ export const MallCustomInsideBackImg = styled.img`
   text-align: center;
 `;
 
-export const MallCustomInsideInnerImg = styled.img`
+export const MallCustomScrollInsideInnerImg = styled.img`
   position: absolute;
-  top: 175px;
-  left: 175px;
-  width: 250px;
-  height: 250px;
+  top: 53px;
+  left: 125px;
+  width: 345px;
+  height: 525px;
+`;
+
+export const MallCustomPillowInsideInnerImg = styled.img`
+  position: absolute;
+  top: 20px;
+  left: 125px;
+  width: 345px;
+  height: 525px;
 `;
 
 export const MallCustomerInputTitle = styled.h3`

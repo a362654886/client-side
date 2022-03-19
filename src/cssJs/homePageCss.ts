@@ -61,6 +61,7 @@ export const HomeNewsBodyDiv = styled.div`
 export const HomePageAnimeDiv = styled.div`
   margin-top: 40px;
   text-align: center;
+  min-height: 570px;
   h1 {
     color: #f5a623;
     font-size: 36px;
@@ -131,8 +132,8 @@ export const MarketPlaceMore = styled.div`
 `;
 
 export const CustomerProductBottomImg = styled.img`
-  width: 1200px;
-  height: 500px;
+  width: 100%;
+  max-height: 500px;
   margin-bottom: 56px;
 `;
 
@@ -198,5 +199,20 @@ export const MarketHomeBox = styled.div`
     word-break: break-all;
     background-color: white;
     padding-left: 8px;
+  }
+`;
+
+//modal
+
+export const MobileHeaderDiv = styled.div`
+  img {
+    width: 320px;
+    height: 160px;
+    margin: 0 auto;
+  }
+  p {
+    height: 64px !important;
+    color: white;
+    margin-left: 4px;
   }
 `;

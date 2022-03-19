@@ -18,7 +18,8 @@ import {
   MallCustomImgDiv,
   MallCustomInsideBackImg,
   MallCustomInsideImgDiv,
-  MallCustomInsideInnerImg,
+  MallCustomPillowInsideInnerImg,
+  MallCustomScrollInsideInnerImg,
   MallCustomTitle,
 } from "../../cssJs/MallPage/MallCustom";
 import { MallDisplayText } from "../../cssJs/MallPage/MallPageCss";
@@ -135,8 +136,12 @@ const MallCustom = (): JSX.Element => {
             src={
               mallCustomer[chooseIndex] ? mallCustomer[chooseIndex].imgURL : ""
             }
+            style={{
+              backgroundImage: `url(${resizeUploadImg})`,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+            }}
           />
-          <MallCustomInsideInnerImg src={resizeUploadImg} />
         </MallCustomInsideImgDiv>
       </MallCustomImgDiv>
       <UploadButton>

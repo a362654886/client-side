@@ -716,9 +716,10 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
           })}
           {showcase.edit ? (
             <ShowcaseEditDiv>
-              <FullTextEditor
-                html={showcase.text}
-                setFullText={(e) => editShowcaseText(index, e)}
+              <TextArea
+                style={{ height: "200px" }}
+                value={showcase.text}
+                onChange={(e) => editShowcaseText(index, e.target.value)}
               />
               <AnimeButton
                 para=""
@@ -751,29 +752,32 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 dangerouslySetInnerHTML={{ __html: showcase.text }}
               ></ReactQuillCss>
               <ShowcaseSource>
-                <p>{`Source: Original from`}</p>
-                <p>{showcase.source}</p>
+                <p>{`Source: Original from ${showcase.source}`}</p>
               </ShowcaseSource>
-              <ShowcaseTaDiv>
-                {showcase.tags.map((tag, index) => {
-                  return (
-                    <ShowcaseTag key={index}>
-                      <ShowcasePointerText
-                        onClick={() => {
-                          toPage(
-                            `/mainPage/showcase/showTag?tag=${tag.text.replace(
-                              "#",
-                              ""
-                            )}`
-                          );
-                        }}
-                      >
-                        {tag.text}
-                      </ShowcasePointerText>
-                    </ShowcaseTag>
-                  );
-                })}
-              </ShowcaseTaDiv>
+              {showcase.tags.length > 0 ? (
+                <ShowcaseTaDiv>
+                  {showcase.tags.map((tag, index) => {
+                    return (
+                      <ShowcaseTag key={index}>
+                        <ShowcasePointerText
+                          onClick={() => {
+                            toPage(
+                              `/mainPage/showcase/showTag?tag=${tag.text.replace(
+                                "#",
+                                ""
+                              )}`
+                            );
+                          }}
+                        >
+                          {tag.text}
+                        </ShowcasePointerText>
+                      </ShowcaseTag>
+                    );
+                  })}
+                </ShowcaseTaDiv>
+              ) : (
+                <></>
+              )}
               <AweSomeDiv>
                 {getAwesomeButton(`${showcase._id}`, index)}
                 <p>Awesome!</p>

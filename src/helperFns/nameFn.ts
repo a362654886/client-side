@@ -1,4 +1,4 @@
-export const formatName = (name: string) => {
+export const formatName = (name: string): string => {
   console.log(name.slice(0, 10));
   return name.length < 14
     ? name

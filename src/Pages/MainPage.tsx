@@ -234,7 +234,10 @@ const MainPage = (): JSX.Element => {
                         toProfile(`/mainPage/profilePage/${loginUser._id}`)
                       }
                     >
-                      <p>{`${loginUser.firstName}.${loginUser.lastName
+                      <p>{`${loginUser.firstName.slice(
+                        0,
+                        12
+                      )}.${loginUser.lastName
                         .substring(0, 1)
                         .toUpperCase()}`}</p>
                     </MobileLoginBox>

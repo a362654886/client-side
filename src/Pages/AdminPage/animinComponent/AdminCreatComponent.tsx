@@ -1,4 +1,4 @@
-import { Checkbox, Input, RadioChangeEvent, Row, Col } from "antd";
+import { Checkbox, Input, RadioChangeEvent, Row, Col, DatePicker } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { AdminAnimeCreateDiv } from "../../../cssJs/AdminPage/adminAdminCreateCss";
@@ -33,6 +33,7 @@ import {
   openNotification,
 } from "../../../helperFns/popUpAlert";
 import AlertBox, { ColorType } from "../../../components/AlertBox";
+import moment from "moment";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -62,12 +63,6 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
     switch (type) {
       case "title":
         setTitle((e.target as HTMLInputElement).value);
-        break;
-      case "Aired Start":
-        setAiredStart((e.target as HTMLInputElement).value);
-        break;
-      case "Aired End":
-        setAiredEnd((e.target as HTMLInputElement).value);
         break;
       case "producers":
         setProducers((e.target as HTMLInputElement).value);
@@ -154,9 +149,15 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
       </UploadImageButton>
       <AdminAiredInput>
         <h6>Aired:</h6>
-        <Input placeholder={"Aired Start"} onChange={onChange}></Input>
+        <DatePicker
+          picker="month"
+          onChange={(e) => setAiredStart(moment(e).format(`YYYY MM`))}
+        />
         <p>-</p>
-        <Input placeholder={"Aired End"} onChange={onChange}></Input>
+        <DatePicker
+          picker="month"
+          onChange={(e) => setAiredEnd(moment(e).format(`YYYY MM`))}
+        />
       </AdminAiredInput>
       <AdminAnimeInput>
         <p>Producers:</p>

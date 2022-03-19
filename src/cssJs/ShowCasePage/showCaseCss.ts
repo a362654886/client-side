@@ -1,4 +1,5 @@
 import { Input, Radio, Select } from "antd";
+import TextArea from "antd/lib/input/TextArea";
 import styled from "styled-components";
 
 export const ShowCaseDiv = styled.div`
@@ -288,8 +289,8 @@ export const TitleInput = styled(Input)`
   margin-bottom: 32px;
 `;
 
-export const DescriptionInput = styled(Input)`
-  height: 96px;
+export const DescriptionInput = styled(TextArea)`
+  height: 200px;
   margin-bottom: 16px;
 `;
 

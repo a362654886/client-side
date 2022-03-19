@@ -1,3 +1,4 @@
+import { DatePicker } from "antd";
 import styled from "styled-components";
 
 export const AdminAnimeDiv = styled.div`
@@ -57,6 +58,10 @@ export const AdminAiredInput = styled.div`
     margin-left: 12px;
     line-height: 36px;
   }
+  .ant-picker {
+    padding: 0px 10px 0px 5px;
+    margin-left: 13px;
+  }
 `;
 
 export const UploadImageDiv = styled.div`
@@ -87,7 +92,6 @@ export const UploadImageDiv = styled.div`
 
 export const UploadImageButton = styled.div`
   margin-left: 210px;
-  margin-top: 17px;
 `;
 
 export const WhereWatchDiv = styled.div`
@@ -117,4 +121,8 @@ export const AnimeCreateSubmitButton = styled.div`
   margin-top: 38px;
   margin-left: 271px;
   padding-bottom: 38px;
+`;
+
+export const AnimeDatePicker = styled(DatePicker)`
+  height: 36px;
 `;

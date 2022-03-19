@@ -28,8 +28,8 @@ const EpisodeEdit = (): JSX.Element => {
   const [imgArr, setImgArr] = useState<(string | ImageBody)[]>([]);
 
   useEffect(() => {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     const id: string = (history.location.state as any).type;
-    console.log(id);
     if (id) {
       (async function anyNameFunction() {
         await getEpisodeById(parseInt(id).toString());

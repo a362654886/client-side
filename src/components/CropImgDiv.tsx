@@ -74,3 +74,18 @@ const CropImgDiv = ({
 };
 
 export default CropImgDiv;
+
+/*
+   <Cropper
+            src={uploadImg}
+            ref={ImgCorpRef as any}
+            minCropBoxHeight={10}
+            minCropBoxWidth={10}
+            background={false}
+            responsive={true}
+            cropBoxResizable={true}
+            onInitialized={(instance) => {
+              setCropper(instance);
+            }}
+          />
+  */

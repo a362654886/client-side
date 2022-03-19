@@ -24,6 +24,7 @@ import {
   MarketHomeBox,
   MarketPlaceMore,
   MarketPlaceTitle,
+  MobileHeaderDiv,
   ProductContextDiv,
   ProductDealerDiv,
   ShowCaseImgDiv,
@@ -58,7 +59,7 @@ import { flagGet } from "../../helperFns/flag";
 import SettingImg from "../../components/SettingImg";
 import { TimeText } from "../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import animeProduct from "../../files/animeProduct.png";
-import { Button } from "antd";
+import { Button, Carousel } from "antd";
 import { marketAllGet } from "../../api/marketAPI";
 import { MarketType } from "../../types/MarketType";
 import { MarketBox } from "../../cssJs/MarketPage/MarketPlaceCss";
@@ -73,6 +74,29 @@ const HomePage = (): JSX.Element => {
   const [allMarkets, setAllMarkets] = useState<MarketType[]>([]);
   const [newLoading, setNewLoading] = useState<boolean>(false);
   const [animeLoading, setAnimeLoading] = useState<boolean>(false);
+
+  const [size, setSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  });
+
+  const onResize = React.useCallback(() => {
+    setSize({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    });
+    localStorage.setItem(
+      "animeWidth",
+      document.documentElement.clientWidth.toString()
+    );
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -229,6 +253,31 @@ const HomePage = (): JSX.Element => {
     );
   };
 
+  const getAnimeMobileDiv = () => {
+    return animeLoading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      allAnime.map((anime, index) => (
+        <div
+          onClick={() => chooseAnime(anime)}
+          key={index}
+          style={{ cursor: "pointer", zIndex: 1000 }}
+        >
+          <AnimeBox>
+            <img src={`${anime.headImage}`} />
+            <h6>{anime.title}</h6>
+          </AnimeBox>
+          <LikeDiv>
+            <StarDiv>{getStar(anime.rate)}</StarDiv>
+            <p>{anime.likes} Fans</p>
+          </LikeDiv>
+        </div>
+      ))
+    );
+  };
+
   const getProductDiv = () => {
     const result = allProducts.map((product, index) => {
       const date = new Date(product.uploadTime);
@@ -305,23 +354,63 @@ const HomePage = (): JSX.Element => {
   return (
     <HomePageDiv>
       <HomePageBodyDiv>
-        <HomePageHeaderDiv className="row">
-          <HomePageHeaderLeftDiv className="col-xl-6 col-md-6 col-sm-6">
-            <img src={mainPagePic} />
-          </HomePageHeaderLeftDiv>
-          <HomePageHeaderRightDiv className="col-xl-6 col-md-6 col-sm-6">
-            {getNewDiv()}
-          </HomePageHeaderRightDiv>
-        </HomePageHeaderDiv>
+        {size.width > 700 ? (
+          <HomePageHeaderDiv className="row">
+            <HomePageHeaderLeftDiv className="col-xl-6 col-md-6 col-sm-6">
+              <img src={mainPagePic} />
+            </HomePageHeaderLeftDiv>
+            <HomePageHeaderRightDiv className="col-xl-6 col-md-6 col-sm-6">
+              {getNewDiv()}
+            </HomePageHeaderRightDiv>
+          </HomePageHeaderDiv>
+        ) : (
+          <>
+            <div style={{ display: "inline" }}>
+              <Carousel>
+                {allNews.map((item, index) => {
+                  return (
+                    <MobileHeaderDiv key={index}>
+                      <img src={mainPagePic} />
+                      <p style={{ height: "200px" }}>{item.header}</p>
+                    </MobileHeaderDiv>
+                  );
+                })}
+              </Carousel>
+            </div>
+          </>
+        )}
         <HomePageAnimeDiv>
           <h1>Meet your favourite anime</h1>
           <h3>
             Find the most popular anime, as well as the peripheral products and
             fans.
           </h3>
-          <div className="row" style={{ display: "flex" }}>
-            {getAnimeDiv()}
-          </div>
+          {size.width > 700 ? (
+            <>
+              <div className="row" style={{ display: "flex" }}>
+                {getAnimeDiv()}
+              </div>
+            </>
+          ) : (
+            <div
+              style={{
+                overflowX: "auto",
+                overflowY: "hidden",
+                position: "relative",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  width: "300px",
+                  position: "absolute",
+                  overflowX: "auto",
+                }}
+              >
+                {getAnimeMobileDiv()}
+              </div>
+            </div>
+          )}
         </HomePageAnimeDiv>
         <CenterDiv>
           <MiddleBiggerDiv>
@@ -333,46 +422,64 @@ const HomePage = (): JSX.Element => {
             </MoreRight>
           </MiddleBiggerDiv>
         </CenterDiv>
-        <HomePageAnimeDiv>
-          <h1>Show your anime world</h1>
-          <h3>
-            Display your collections and anime drawing talents. Redeem Rewards
-            by your Awesome pictures!
-          </h3>
-          <ShowCaseImgDiv src={showCaseImg} />
-        </HomePageAnimeDiv>
-        <CenterDiv>
-          <MiddleBiggerDiv>
-            <MoreRight
-              onClick={() =>
-                history.replace("/mainPage/showcase/showCollection")
-              }
-            >
-              <img src={moreRightImg} />
-              <p>View All</p>
-            </MoreRight>
-          </MiddleBiggerDiv>
-        </CenterDiv>
-        <MarketPlaceTitle>
-          <h2>Marketplace</h2>
-          <MarketPlaceMore
-            onClick={() => history.replace("/mainPage/animeShowPage")}
-          >
-            <img src={moreRightImg} />
-            <p>See More</p>
-          </MarketPlaceMore>
-        </MarketPlaceTitle>
-        <MarketContextDiv>{getMarketsDiv()}</MarketContextDiv>
-        <MarketPlaceTitle>
-          <h2>Anime Products</h2>
-          <MarketPlaceMore
-            onClick={() => history.replace("/mainPage/animeShowPage")}
-          >
-            <img src={moreRightImg} />
-            <p>See More</p>
-          </MarketPlaceMore>
-        </MarketPlaceTitle>
-        <ProductContextDiv>{getProductDiv()}</ProductContextDiv>
+        {size.width > 700 ? (
+          <>
+            <HomePageAnimeDiv>
+              <h1>Show your anime world</h1>
+              <h3>
+                Display your collections and anime drawing talents. Redeem
+                Rewards by your Awesome pictures!
+              </h3>
+              <ShowCaseImgDiv src={showCaseImg} />
+            </HomePageAnimeDiv>
+            <CenterDiv>
+              <MiddleBiggerDiv>
+                <MoreRight
+                  onClick={() =>
+                    history.replace("/mainPage/showcase/showCollection")
+                  }
+                >
+                  <img src={moreRightImg} />
+                  <p>View All</p>
+                </MoreRight>
+              </MiddleBiggerDiv>
+            </CenterDiv>
+          </>
+        ) : (
+          <></>
+        )}
+        {size.width > 700 ? (
+          <>
+            <MarketPlaceTitle>
+              <h2>Marketplace</h2>
+              <MarketPlaceMore
+                onClick={() => history.replace("/mainPage/animeShowPage")}
+              >
+                <img src={moreRightImg} />
+                <p>See More</p>
+              </MarketPlaceMore>
+            </MarketPlaceTitle>
+            <MarketContextDiv>{getMarketsDiv()}</MarketContextDiv>
+          </>
+        ) : (
+          <></>
+        )}
+        {size.width > 700 ? (
+          <>
+            <MarketPlaceTitle>
+              <h2>Anime Products</h2>
+              <MarketPlaceMore
+                onClick={() => history.replace("/mainPage/animeShowPage")}
+              >
+                <img src={moreRightImg} />
+                <p>See More</p>
+              </MarketPlaceMore>
+            </MarketPlaceTitle>
+            <ProductContextDiv>{getProductDiv()}</ProductContextDiv>
+          </>
+        ) : (
+          <></>
+        )}
         <CustomerProductBottomImg src={animeProduct} />
       </HomePageBodyDiv>
     </HomePageDiv>
