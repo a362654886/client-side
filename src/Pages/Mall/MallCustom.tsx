@@ -198,6 +198,7 @@ const MallCustom = (): JSX.Element => {
         }}
         visible={showCropper}
         setVisibleFalse={() => setShowCropper(false)}
+        mall={true}
       />
     </>
   );

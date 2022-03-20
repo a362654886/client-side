@@ -103,7 +103,7 @@ export const ProductBox = styled.div`
   height: 492px !important;
   margin-bottom: 24px;
   background-color: #f6f6f6;
-  width: 240px;
+  width: 240px !important;
   p {
     text-align: center;
     margin-bottom: 0px;

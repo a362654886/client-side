@@ -52,6 +52,29 @@ const ProfileMarketplacePage = (): JSX.Element => {
   // bids
   const [chooseButton, setChooseButton] = useState<number>(0);
 
+  const [size, setSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  });
+
+  const onResize = React.useCallback(() => {
+    setSize({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    });
+    localStorage.setItem(
+      "animeWidth",
+      document.documentElement.clientWidth.toString()
+    );
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
   const changeButton = (index: number) => setChooseButton(index);
 
   useEffect(() => {
@@ -141,7 +164,11 @@ const ProfileMarketplacePage = (): JSX.Element => {
 
   return (
     <>
-      <ButtonsDiv>{getButtons()}</ButtonsDiv>
+      {size.width > 700 ? (
+        <ButtonsDiv>{getButtons()}</ButtonsDiv>
+      ) : (
+        <div>{getButtons()}</div>
+      )}
       <ProfileAddButtonDiv>
         <AnimeButton
           para=""

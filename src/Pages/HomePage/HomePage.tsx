@@ -7,6 +7,7 @@ import {
   AnimeBox,
   CenterDiv,
   LikeDiv,
+  ShowcaseBox,
   StarDiv,
 } from "../../cssJs/AnimePage/AnimeShowCss";
 import {
@@ -18,6 +19,7 @@ import {
   HomePageHeaderDiv,
   HomePageHeaderLeftDiv,
   HomePageHeaderRightDiv,
+  HomePageMobileShowcaseDiv,
   HomePageNewDiv,
   LoadingImgDiv,
   MarketContextDiv,
@@ -63,6 +65,8 @@ import { Button, Carousel } from "antd";
 import { marketAllGet } from "../../api/marketAPI";
 import { MarketType } from "../../types/MarketType";
 import { MarketBox } from "../../cssJs/MarketPage/MarketPlaceCss";
+import { ShowCaseEnum, ShowCaseType } from "../../types/showCaseType";
+import { showCaseAllGet } from "../../api/showcaseAPI";
 
 const HomePage = (): JSX.Element => {
   const history = useHistory();
@@ -72,8 +76,10 @@ const HomePage = (): JSX.Element => {
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [allMarkets, setAllMarkets] = useState<MarketType[]>([]);
+  const [allShowcases, setAllShowcases] = useState<ShowCaseType[]>([]);
   const [newLoading, setNewLoading] = useState<boolean>(false);
   const [animeLoading, setAnimeLoading] = useState<boolean>(false);
+  const [showcaseLoading, setShowcaseLoading] = useState<boolean>(false);
 
   const [size, setSize] = useState({
     width: document.documentElement.clientWidth,
@@ -104,6 +110,7 @@ const HomePage = (): JSX.Element => {
       await getAnimes();
       await getProducts();
       await getMarkets();
+      await getShowcases();
     })();
   }, []);
 
@@ -114,6 +121,23 @@ const HomePage = (): JSX.Element => {
       setAllNews(animeResult.result);
     }
     setNewLoading(false);
+  };
+
+  const getShowcases = async () => {
+    setShowcaseLoading(true);
+    const showCaseResult = await showCaseAllGet(
+      ShowCaseEnum.Collections,
+      "hot",
+      1,
+      4,
+      "",
+      "",
+      ""
+    );
+    if (showCaseResult) {
+      setAllShowcases(showCaseResult.result);
+    }
+    setShowcaseLoading(false);
   };
 
   const getAnimes = async () => {
@@ -263,7 +287,7 @@ const HomePage = (): JSX.Element => {
         <div
           onClick={() => chooseAnime(anime)}
           key={index}
-          style={{ cursor: "pointer", zIndex: 1000 }}
+          style={{ cursor: "pointer" }}
         >
           <AnimeBox>
             <img src={`${anime.headImage}`} />
@@ -273,6 +297,22 @@ const HomePage = (): JSX.Element => {
             <StarDiv>{getStar(anime.rate)}</StarDiv>
             <p>{anime.likes} Fans</p>
           </LikeDiv>
+        </div>
+      ))
+    );
+  };
+
+  const getShowcaseMobileDiv = () => {
+    return showcaseLoading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      allShowcases.map((showcase, index) => (
+        <div key={index} style={{ cursor: "pointer" }}>
+          <ShowcaseBox>
+            <img src={`${showcase.imageArr[0]}`} />
+          </ShowcaseBox>
         </div>
       ))
     );
@@ -371,7 +411,7 @@ const HomePage = (): JSX.Element => {
                   return (
                     <MobileHeaderDiv key={index}>
                       <img src={mainPagePic} />
-                      <p style={{ height: "200px" }}>{item.header}</p>
+                      <p>{item.header}</p>
                     </MobileHeaderDiv>
                   );
                 })}
@@ -392,34 +432,19 @@ const HomePage = (): JSX.Element => {
               </div>
             </>
           ) : (
-            <div
-              style={{
-                overflowX: "auto",
-                overflowY: "hidden",
-                position: "relative",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  width: "300px",
-                  position: "absolute",
-                  overflowX: "auto",
-                }}
-              >
-                {getAnimeMobileDiv()}
-              </div>
-            </div>
+            <Carousel style={{ marginLeft: "10px" }} dots={false}>
+              {getAnimeMobileDiv()}
+            </Carousel>
           )}
         </HomePageAnimeDiv>
         <CenterDiv>
           <MiddleBiggerDiv>
-            <MoreRight
+            <MarketPlaceMore
               onClick={() => history.replace("/mainPage/animeShowPage")}
             >
               <img src={moreRightImg} />
               <p>View All</p>
-            </MoreRight>
+            </MarketPlaceMore>
           </MiddleBiggerDiv>
         </CenterDiv>
         {size.width > 700 ? (
@@ -446,7 +471,30 @@ const HomePage = (): JSX.Element => {
             </CenterDiv>
           </>
         ) : (
-          <></>
+          <>
+            <HomePageMobileShowcaseDiv>
+              <h1>Show your anime world</h1>
+              <h3>
+                Display your collections and anime drawing talents. Redeem
+                Rewards by your Awesome pictures!
+              </h3>
+            </HomePageMobileShowcaseDiv>
+            <Carousel style={{ marginLeft: "10px" }} dots={false}>
+              {getShowcaseMobileDiv()}
+            </Carousel>
+            <CenterDiv>
+              <MiddleBiggerDiv>
+                <MarketPlaceMore
+                  onClick={() =>
+                    history.replace("/mainPage/showcase/showCollection")
+                  }
+                >
+                  <img src={moreRightImg} />
+                  <p>View All</p>
+                </MarketPlaceMore>
+              </MiddleBiggerDiv>
+            </CenterDiv>
+          </>
         )}
         {size.width > 700 ? (
           <>
@@ -456,13 +504,30 @@ const HomePage = (): JSX.Element => {
                 onClick={() => history.replace("/mainPage/animeShowPage")}
               >
                 <img src={moreRightImg} />
-                <p>See More</p>
+                <p>View All</p>
               </MarketPlaceMore>
             </MarketPlaceTitle>
             <MarketContextDiv>{getMarketsDiv()}</MarketContextDiv>
           </>
         ) : (
-          <></>
+          <>
+            <MarketPlaceTitle>
+              <h2>Marketplace</h2>
+            </MarketPlaceTitle>
+            <Carousel style={{ marginLeft: "10px" }} dots={false}>
+              {getMarketsDiv()}
+            </Carousel>
+            <CenterDiv>
+              <MiddleBiggerDiv>
+                <MarketPlaceMore
+                  onClick={() => history.replace("/mainPage/animeShowPage")}
+                >
+                  <img src={moreRightImg} />
+                  <p>View All</p>
+                </MarketPlaceMore>
+              </MiddleBiggerDiv>
+            </CenterDiv>
+          </>
         )}
         {size.width > 700 ? (
           <>
@@ -472,13 +537,30 @@ const HomePage = (): JSX.Element => {
                 onClick={() => history.replace("/mainPage/animeShowPage")}
               >
                 <img src={moreRightImg} />
-                <p>See More</p>
+                <p>View All</p>
               </MarketPlaceMore>
             </MarketPlaceTitle>
             <ProductContextDiv>{getProductDiv()}</ProductContextDiv>
           </>
         ) : (
-          <></>
+          <>
+            <MarketPlaceTitle>
+              <h2>Anime Products</h2>
+            </MarketPlaceTitle>
+            <Carousel style={{ marginLeft: "10px" }} dots={false}>
+              {getProductDiv()}
+            </Carousel>
+            <CenterDiv>
+              <MiddleBiggerDiv>
+                <MarketPlaceMore
+                  onClick={() => history.replace("/mainPage/animeShowPage")}
+                >
+                  <img src={moreRightImg} />
+                  <p>View All</p>
+                </MarketPlaceMore>
+              </MiddleBiggerDiv>
+            </CenterDiv>
+          </>
         )}
         <CustomerProductBottomImg src={animeProduct} />
       </HomePageBodyDiv>

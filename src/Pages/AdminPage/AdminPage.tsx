@@ -1,7 +1,8 @@
 import * as React from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { Route } from "react-router-dom";
 import { userAuth } from "../../api/userApi";
 import AnimeButton from "../../components/Button";
 import LoadingDiv from "../../components/LoadingDiv";
@@ -16,8 +17,12 @@ import {
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { LoginType } from "../../types/EnumTypes";
+import { IStoreState } from "../../types/IStoreState";
+import { User } from "../../types/User";
+import AdminMainPage from "./AdminMainPage";
 
 const AdminPage = (): JSX.Element => {
+
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -60,7 +65,6 @@ const AdminPage = (): JSX.Element => {
         payload: user,
         type: LOGIN_USER_ADD,
       });
-      toPage("/adminManagement");
     }
     setLoading(false);
   };
@@ -69,7 +73,7 @@ const AdminPage = (): JSX.Element => {
     if (ifLoading) {
       return (
         <>
-          <div style={{marginLeft:"180px",marginTop:"30px"}}>
+          <div style={{ marginLeft: "180px", marginTop: "30px" }}>
             <LoadingDiv height="180px" width="180px" />
           </div>
         </>

@@ -12,8 +12,6 @@ import {
   NameIdDiv,
   NamePic,
   NameSetting,
-  ProfileBox,
-  ProfileDiv,
   ProfileFollowBox,
   ProfileFollowDiv,
 } from "../../cssJs/ProfilePage/ProfileCss";

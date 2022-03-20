@@ -102,6 +102,7 @@ const ProfileLikesPage = (): JSX.Element => {
             className="col-xl-3 col-md-4 col-sm-6"
             key={index}
             onClick={() => chooseAnime(anime)}
+            style={{ marginBottom: "5px" }}
           >
             <AnimeBox>
               <img src={`${anime.headImage}`} />

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   AdminLeftMenuDiv,
@@ -20,6 +20,8 @@ import { LoadingType } from "../../types/EnumTypes";
 import { IStoreState } from "../../types/IStoreState";
 import { User } from "../../types/User";
 import loadingImg from "../../files/loading.gif";
+import AdminPage from "./AdminPage";
+import { LOGIN_USER_NONE } from "../../redux/loginUser";
 
 const AdminMainPage = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -31,8 +33,13 @@ const AdminMainPage = (): JSX.Element => {
   );
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(loginUser);
+    if (loginUser == null) {
+      //toPage("/adminPage");
+    }
     if (loginUser && history.location.pathname == "/adminManagement") {
       toPage("/adminManagement/News");
     }
@@ -45,7 +52,13 @@ const AdminMainPage = (): JSX.Element => {
   }, [menuNum]);
 
   const toPage = (url: string) => history.replace(url);
-  const menu = ["News", "Anime", "Redeem Levels", "Custom Design","Sys Setting"];
+  const menu = [
+    "News",
+    "Anime",
+    "Redeem Levels",
+    "Custom Design",
+    "Sys Setting",
+  ];
 
   const getMenu = () => {
     return menu.map((menuString: string, index: number) => {
@@ -77,23 +90,36 @@ const AdminMainPage = (): JSX.Element => {
     });
   };
 
+  const logOut = () => {
+    dispatch({
+      payload: null,
+      type: LOGIN_USER_NONE,
+    });
+  };
+
   return (
     <>
-      <LoadingBox>
-        <div className={loading == LoadingType.OPEN ? "mask" : "noMask"}>
-          <img src={`${loadingImg}`} />
-        </div>
-      </LoadingBox>
-      <AdminPageDiv>
-        <AdminLeftMenuDiv>
-          <AdminLogoutDiv>
-            <AdminText>{loginUser?.userEmail}</AdminText>
-            <LogoutButton>Log out</LogoutButton>
-          </AdminLogoutDiv>
-          <AdminMenuDiv>{getMenu()}</AdminMenuDiv>
-        </AdminLeftMenuDiv>
-        <AdminPageRouter />
-      </AdminPageDiv>
+      {loginUser !== null ? (
+        <>
+          <LoadingBox>
+            <div className={loading == LoadingType.OPEN ? "mask" : "noMask"}>
+              <img src={`${loadingImg}`} />
+            </div>
+          </LoadingBox>
+          <AdminPageDiv>
+            <AdminLeftMenuDiv>
+              <AdminLogoutDiv>
+                <AdminText>{loginUser?.userEmail}</AdminText>
+                <LogoutButton onClick={() => logOut()}>Log out</LogoutButton>
+              </AdminLogoutDiv>
+              <AdminMenuDiv>{getMenu()}</AdminMenuDiv>
+            </AdminLeftMenuDiv>
+            <AdminPageRouter />
+          </AdminPageDiv>
+        </>
+      ) : (
+        <AdminPage />
+      )}
     </>
   );
 };

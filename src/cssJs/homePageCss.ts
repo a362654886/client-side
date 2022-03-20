@@ -61,7 +61,27 @@ export const HomeNewsBodyDiv = styled.div`
 export const HomePageAnimeDiv = styled.div`
   margin-top: 40px;
   text-align: center;
-  min-height: 570px;
+  min-height: 630px;
+  h1 {
+    color: #f5a623;
+    font-size: 36px;
+    line-height: 44px;
+    font-weight: bold;
+    font-family: Arial;
+  }
+  h3 {
+    color: #fae7d5;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: bold;
+    font-family: Arial;
+  }
+`;
+
+export const HomePageMobileShowcaseDiv = styled.div`
+  margin-top: 40px;
+  text-align: center;
+  min-height: 50px;
   h1 {
     color: #f5a623;
     font-size: 36px;
@@ -173,7 +193,7 @@ export const MarketContextDiv = styled.div`
 `;
 
 export const MarketHomeBox = styled.div`
-  width: 240px;
+  width: 240px !important;
   height: 360px;
   margin-right: 60px;
   padding: 0px;
@@ -211,7 +231,7 @@ export const MobileHeaderDiv = styled.div`
     margin: 0 auto;
   }
   p {
-    height: 64px !important;
+    height: 64px;
     color: white;
     margin-left: 4px;
   }

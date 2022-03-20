@@ -9,6 +9,7 @@ interface IProps {
   setLoadImg: (imgString: string) => void;
   visible: boolean;
   setVisibleFalse: () => void;
+  mall?: boolean;
 }
 
 const CropImgDiv = ({
@@ -16,6 +17,7 @@ const CropImgDiv = ({
   setLoadImg,
   visible,
   setVisibleFalse,
+  mall,
 }: IProps): JSX.Element => {
   const ImgCorpRef = useRef<Cropper>(null);
 
@@ -34,29 +36,50 @@ const CropImgDiv = ({
     }
   };
 
+  const getCropper = () => {
+    console.log(mall)
+    return mall ? (
+      <Cropper
+        src={uploadImg}
+        // Cropper.js options
+        ref={ImgCorpRef as any}
+        minCropBoxHeight={10}
+        minCropBoxWidth={10}
+        background={false}
+        responsive={true}
+        cropBoxResizable={true}
+        onInitialized={(instance) => {
+          setCropper(instance);
+        }}
+      />
+    ) : (
+      <Cropper
+        src={uploadImg}
+        style={{ height: "100%", width: "100%" }}
+        // Cropper.js options
+        initialAspectRatio={1 / 1}
+        ref={ImgCorpRef as any}
+        zoomTo={0.5}
+        viewMode={1}
+        aspectRatio={1}
+        minCropBoxHeight={10}
+        minCropBoxWidth={10}
+        background={false}
+        responsive={true}
+        autoCropArea={1}
+        cropBoxResizable={true}
+        onInitialized={(instance) => {
+          setCropper(instance);
+        }}
+      />
+    );
+  };
+
   return (
     <>
       <Modal footer={[]} onCancel={() => setVisibleFalse()} visible={visible}>
         <div style={{ marginTop: "30px", textAlign: "center" }}>
-          <Cropper
-            src={uploadImg}
-            style={{ height: "100%", width: "100%" }}
-            // Cropper.js options
-            initialAspectRatio={1 / 1}
-            ref={ImgCorpRef as any}
-            zoomTo={0.5}
-            viewMode={1}
-            aspectRatio={1}
-            minCropBoxHeight={10}
-            minCropBoxWidth={10}
-            background={false}
-            responsive={true}
-            autoCropArea={1}
-            cropBoxResizable={true}
-            onInitialized={(instance) => {
-              setCropper(instance);
-            }}
-          />
+          {getCropper()}
           <Button
             style={{
               right: "0px",

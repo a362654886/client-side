@@ -85,6 +85,26 @@ export const AnimeBox = styled.div`
   }
 `;
 
+export const ShowcaseBox = styled.div`
+  width: 260px;
+  height: 260px;
+  margin-right: 19px;
+  img {
+    width: 260px;
+    height: 264px;
+  }
+  h6 {
+    height: 80px;
+    padding: 8px;
+    background-color: #f6f6f6;
+    color: #4a4a4a;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 32px;
+    font-family: "Arial MT";
+  }
+`;
+
 export const LikeDiv = styled.div`
   width: 260px;
   height: 96px;

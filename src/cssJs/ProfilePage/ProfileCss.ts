@@ -279,7 +279,7 @@ export const SettingAwesomeDiv = styled.div`
 
 export const ContactInfoDiv = styled.div`
   height: 48px;
-  width: 840px;
+  max-width: 840px;
   padding-top: 8px;
   padding-bottom: 8px;
   display: flex;

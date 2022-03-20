@@ -47,7 +47,6 @@ ReactDOM.render(
       <Switch>
         <Route path="/mainPage" component={MainPage} />
         <Route path="/episodeShow" component={EpisodeShow} />
-        <Route path="/adminPage" component={AdminPage} />
         <Route path="/adminManagement" component={AdminMainPage} />
         <Route path="/" component={MainPage} />
       </Switch>

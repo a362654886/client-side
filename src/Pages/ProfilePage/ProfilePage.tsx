@@ -66,6 +66,8 @@ interface Para {
 }
 
 const ProfilePage = (): JSX.Element => {
+  const dispatch = useDispatch();
+
   const para: Para = useParams();
 
   const history = useHistory();
@@ -74,7 +76,29 @@ const ProfilePage = (): JSX.Element => {
   const [contactInfo, setContactInfo] = useState<boolean>(false);
   const [messageVisible, setMessageVisible] = useState(false);
   const [messageValue, setMessageValue] = useState("");
-  const dispatch = useDispatch();
+
+  const [size, setSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  });
+
+  const onResize = React.useCallback(() => {
+    setSize({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    });
+    localStorage.setItem(
+      "animeWidth",
+      document.documentElement.clientWidth.toString()
+    );
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
 
   const buttonsColor = [
     {
@@ -376,7 +400,11 @@ const ProfilePage = (): JSX.Element => {
       ) : (
         <></>
       )}
-      <ButtonsDiv>{getButtons()}</ButtonsDiv>
+      {size.width > 700 ? (
+        <ButtonsDiv>{getButtons()}</ButtonsDiv>
+      ) : (
+        <div>{getButtons()}</div>
+      )}
       <LineDiv></LineDiv>
       <ProfileChildDiv>{getProfileDiv()}</ProfileChildDiv>
       <MessageModal
