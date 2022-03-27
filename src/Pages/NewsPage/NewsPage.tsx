@@ -46,7 +46,7 @@ const NewsPage = (): JSX.Element => {
       payload: newBody,
       type: NEW_ADD,
     });
-    history.replace("oneNew");
+    history.push("oneNew");
   };
 
   const getExistNews = () =>

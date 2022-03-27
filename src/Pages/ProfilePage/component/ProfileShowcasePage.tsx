@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   ButtonsDiv,
   ProfileCollectionDiv,
@@ -11,31 +11,9 @@ import ProfileShowcaseIllustration from "../profileShowcases/ProfileShowcaseIllu
 import ProfileShowcaseManga from "../profileShowcases/ProfileShowcaseManga";
 import stateAvailable from "../../../files/stateAvailable.png";
 import stateSoldOut from "../../../files/stateSoldOut.png";
+import { getWidth } from "../../../helperFns/widthFn";
 
 const ProfileShowcasePage = (): JSX.Element => {
-  const [size, setSize] = useState({
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
-  });
-
-  const onResize = React.useCallback(() => {
-    setSize({
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
-    });
-    localStorage.setItem(
-      "animeWidth",
-      document.documentElement.clientWidth.toString()
-    );
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
-
   const buttonsColor = [
     {
       text: "Collections",
@@ -113,7 +91,7 @@ const ProfileShowcasePage = (): JSX.Element => {
 
   return (
     <>
-      {size.width > 700 ? (
+      {getWidth() > 700 ? (
         <ButtonsDiv>{getButtons()}</ButtonsDiv>
       ) : (
         <div>{getButtons()}</div>

@@ -6,7 +6,7 @@ import starBorder from "../../files/Star-border.svg";
 import starFill from "../../files/Star-filled.svg";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ANIME_ADD, ANIME_NONE } from "../../redux/anime";
+import { ANIME_NONE } from "../../redux/anime";
 import { AnimeBox, LikeDiv, StarDiv } from "../../cssJs/AnimePage/AnimeShowCss";
 import {
   DiscoveryHeaderDiv,
@@ -45,7 +45,7 @@ const DiscoveryHeader = (): JSX.Element => {
       payload: null,
       type: ANIME_NONE,
     });
-    history.replace(`oneAnime?${anime._id}`);
+    history.push(`oneAnime?${anime._id}`);
   };
 
   const getStar = (rate: RateBody) => {
@@ -88,10 +88,9 @@ const DiscoveryHeader = (): JSX.Element => {
       return allAnime.map((anime: Anime, index: number) => {
         return (
           <div
-            className="col-xl-3 col-md-4 col-sm-6"
+            className="col-xl-4 col-md-4 col-sm-6"
             style={{
               marginBottom: "24px",
-              marginRight: "24px",
               cursor: "pointer",
             }}
             key={index}
@@ -116,14 +115,14 @@ const DiscoveryHeader = (): JSX.Element => {
   return (
     <>
       <DiscoveryHeaderTopThree>Top 3 - NZ favorite</DiscoveryHeaderTopThree>
-      <DiscoveryHeaderDiv>{getAnimeDiv()}</DiscoveryHeaderDiv>
+      <DiscoveryHeaderDiv className="row">{getAnimeDiv()}</DiscoveryHeaderDiv>
       <MiddleViewAll>
         <DiscoveryViewAll>View All to meet your favorite.</DiscoveryViewAll>
       </MiddleViewAll>
       <MiddleBiggerDiv>
         <ViewAll
           onClick={() => {
-            history.replace("animeShowPage");
+            history.push("animeShowPage");
           }}
         >
           <img src={moreRightImg} />

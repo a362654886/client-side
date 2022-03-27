@@ -60,6 +60,7 @@ import { LOGIN_USER_UPDATE_FOLLOW } from "../../redux/loginUser";
 import { useParams } from "react-router-dom";
 import { userGet } from "../../api/userApi";
 import { PROFILE_USER_UPDATE } from "../../redux/profileUser";
+import { getWidth } from "../../helperFns/widthFn";
 
 interface Para {
   id: string;
@@ -76,29 +77,6 @@ const ProfilePage = (): JSX.Element => {
   const [contactInfo, setContactInfo] = useState<boolean>(false);
   const [messageVisible, setMessageVisible] = useState(false);
   const [messageValue, setMessageValue] = useState("");
-
-  const [size, setSize] = useState({
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
-  });
-
-  const onResize = React.useCallback(() => {
-    setSize({
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
-    });
-    localStorage.setItem(
-      "animeWidth",
-      document.documentElement.clientWidth.toString()
-    );
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
 
   const buttonsColor = [
     {
@@ -151,7 +129,7 @@ const ProfilePage = (): JSX.Element => {
     setFollow(followerResult ? followerResult.count : 0);
   };
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
   const [chooseButton, setChooseButton] = useState<number>(0);
 
   const changeButton = (index: number) => setChooseButton(index);
@@ -400,7 +378,7 @@ const ProfilePage = (): JSX.Element => {
       ) : (
         <></>
       )}
-      {size.width > 700 ? (
+      {getWidth() > 700 ? (
         <ButtonsDiv>{getButtons()}</ButtonsDiv>
       ) : (
         <div>{getButtons()}</div>

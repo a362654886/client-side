@@ -330,7 +330,7 @@ const MarketplaceShowOne = (): JSX.Element => {
             textColor="white"
             backGroundColor="#FFC300"
             borderColor="#FFC300"
-            buttonClick={() => history.replace(`/mainPage/marketplace/create`)}
+            buttonClick={() => history.push(`/mainPage/marketplace/create`)}
           />
         </MarketPlaceTitleDiv>
         <MarketBodyDiv>
@@ -462,7 +462,7 @@ const MarketplaceShowOne = (): JSX.Element => {
             <MarketEditAndDeleteDiv>
               <div
                 onClick={() => {
-                  history.replace({
+                  history.push({
                     pathname: `/mainPage/marketplace/edit/${para.id}`,
                   });
                 }}
@@ -485,7 +485,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           )}
           <MarketViewMore
             onClick={() => {
-              history.replace("/mainPage/marketplace/show");
+              history.push("/mainPage/marketplace/show");
             }}
           >
             <img src={moreRightImg} />

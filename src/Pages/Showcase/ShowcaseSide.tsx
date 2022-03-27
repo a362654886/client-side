@@ -51,7 +51,7 @@ const ShowcaseSide = (): JSX.Element => {
     })();
   }, []);
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const getNews = async () => {
     const animeResult = await newAllGet("", 1, 3);

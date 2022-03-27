@@ -26,7 +26,7 @@ const LoginPage = (): JSX.Element => {
   const [password, setPassword] = useState<string>("");
   const [ifLoadingAlert, setLoadingAlert] = useState<boolean>(false);
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const login = async () => {
     dispatch({

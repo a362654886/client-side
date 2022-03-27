@@ -43,7 +43,6 @@ import showCaseAwesomeUnClick from "../../files/showCaseAwesomeUnClick.svg";
 import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import editIcon from "../../files/editIcon.svg";
 import deleteIcon from "../../files/deleteIcon.svg";
-import FullTextEditor from "../../components/FullTextEditor";
 import {
   AnimeEditAndDeleteDiv,
   ForumImg,
@@ -83,6 +82,7 @@ import { cloneDeep } from "lodash";
 import { getWidth } from "../../helperFns/widthFn";
 import { useHistory } from "react-router-dom";
 import ImageUpload, { ImageBody } from "../../components/ImageUpload";
+import { formatName } from "../../helperFns/nameFn";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -124,7 +124,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
   }, []);
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const sendNewReply = (e: string, index: number) => {
     const newReplyHtmls = newReplyHtml;
@@ -743,7 +743,7 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 <>
                   <ShowImg src={`${showcase.userAvatar}`} />
                   <ShowName>
-                    {showcase.userName}
+                    {formatName(showcase.userName)}
                     <Flag
                       style={{ marginLeft: "5px" }}
                       country={flagGet(

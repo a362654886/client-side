@@ -51,7 +51,7 @@ const AdminMainPage = (): JSX.Element => {
     //toPage("adminManagement/News")
   }, [menuNum]);
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
   const menu = [
     "News",
     "Anime",

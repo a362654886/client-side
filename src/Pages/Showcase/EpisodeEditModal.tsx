@@ -39,7 +39,7 @@ const EpisodeEditModal = ({
   }, []);
 
   const editFn = () => {
-    history.replace({
+    history.push({
       pathname: "/mainPage/showcase/episodeEdit",
       state: { type: episode },
     });

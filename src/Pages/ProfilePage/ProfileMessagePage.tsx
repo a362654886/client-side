@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   NameDiv,
@@ -11,6 +11,7 @@ import {
   ProfileMessageBox,
   ProfileMessageButtons,
   ProfileMessageMore,
+  ProfileReply,
   SettingIconDiv,
   SettingIconsDiv,
 } from "../../cssJs/ProfilePage/ProfileCss";
@@ -28,6 +29,7 @@ import { useEffect, useState } from "react";
 import {
   messagesAllGetByUserId,
   messagesAllGetByReceivedId,
+  messageAdd,
 } from "../../api/messageAPI";
 import { MessageType } from "../../types/MessageType";
 import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
@@ -37,10 +39,20 @@ import {
   ForumTime,
 } from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import { _getDate } from "../../helperFns/timeFn";
-import { Button, Spin } from "antd";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
+import { MessageDiv, MessageModal } from "../../cssJs/settingImgCss";
+import TextArea from "antd/lib/input/TextArea";
+import { Button } from "antd";
+import { LoadingType } from "../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 
 const ProfileMessagePage = (): JSX.Element => {
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [ifIn, setIfIn] = useState<boolean>(true);
@@ -52,6 +64,13 @@ const ProfileMessagePage = (): JSX.Element => {
   const [outCount, setOutCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const pageSize = 2;
+
+  //message
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [messageValue, setMessageValue] = useState("");
+  const [userImg, setUserImg] = useState("");
+  const [userName, setUserName] = useState("");
+  const [messageUserId, setMessageUserId] = useState("");
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
@@ -71,7 +90,6 @@ const ProfileMessagePage = (): JSX.Element => {
 
   useEffect(() => {
     //
-    console.log(loginUser);
   }, [inMessages, outMessages, loading]);
 
   const getInMessages = async (page: number, pageSize: number) => {
@@ -106,7 +124,7 @@ const ProfileMessagePage = (): JSX.Element => {
     setLoading(false);
   };
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const getMoreInMessage = async () => {
     setInPage(inPage + 1);
@@ -116,6 +134,44 @@ const ProfileMessagePage = (): JSX.Element => {
   const getMoreOutMessage = async () => {
     setOutPage(outPage + 1);
     await getOutMessages(outPage + 1, pageSize);
+  };
+
+  const reply = (message: MessageType) => {
+    setUserImg(message.userAvatar ? message.userAvatar : "");
+    setUserName(message.userName ? message.userName : "");
+    setMessageUserId(message.userId);
+    setMessageVisible(true);
+  };
+
+  const sendMessage = async () => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    if (loginUser) {
+      const messageBody: MessageType = {
+        _id: `${loginUser?._id}${messageUserId}${new Date().valueOf()}`,
+        userId: loginUser._id,
+        receiveId: messageUserId,
+        uploadTime: new Date(),
+        message: messageValue,
+      };
+      const r = await messageAdd(messageBody);
+      if (r && r < 300) {
+        setMessageVisible(false);
+        setMessageValue("");
+      }
+    } else {
+      openNotification(
+        "please login and then send message",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const getInMessage = () =>
@@ -150,6 +206,7 @@ const ProfileMessagePage = (): JSX.Element => {
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
           <p>{message.message}</p>
+          <ProfileReply onClick={() => reply(message)}>Reply</ProfileReply>
         </ProfileMessageBox>
       );
     });
@@ -186,6 +243,7 @@ const ProfileMessagePage = (): JSX.Element => {
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
           <p>{message.message}</p>
+          <ProfileReply onClick={() => reply(message)}>Reply</ProfileReply>
         </ProfileMessageBox>
       );
     });
@@ -231,70 +289,105 @@ const ProfileMessagePage = (): JSX.Element => {
   };
 
   return (
-    <ProfileBox>
-      <ProfileDiv>
-        <NamePic
-          src={((loginUser as User).avatarImage as Avatar[])[0].imageUrl}
-        />
-        <NameDiv>
-          <NameSetting>
-            <p>
-              {`${(loginUser as User).firstName}.${(loginUser as User).lastName
-                .substring(0, 1)
-                .toUpperCase()}`}
-              <Flag
-                style={{ marginLeft: "5px" }}
-                country={flagGet(loginUser ? loginUser.country : "")}
+    <>
+      <ProfileBox>
+        <ProfileDiv>
+          <NamePic
+            src={
+              loginUser ? (loginUser.avatarImage as Avatar[])[0].imageUrl : ""
+            }
+          />
+          <NameDiv>
+            <NameSetting>
+              <p>
+                {`${loginUser ? loginUser.firstName : ""}.${
+                  loginUser
+                    ? loginUser.lastName.substring(0, 1).toUpperCase()
+                    : ""
+                }`}
+                <Flag
+                  style={{ marginLeft: "5px" }}
+                  country={flagGet(loginUser ? loginUser.country : "")}
+                />
+              </p>
+              <SettingImg
+                userId={(loginUser as User)._id}
+                userName={`${(loginUser as User).firstName}.${
+                  (loginUser as User).lastName
+                }`}
+                userImg={`https://animeimagebucket.s3.amazonaws.com/${
+                  (loginUser as User).avatar
+                }`}
+                marginTop="4px"
               />
-            </p>
-            <SettingImg
-              userId={(loginUser as User)._id}
-              userName={`${(loginUser as User).firstName}.${
-                (loginUser as User).lastName
-              }`}
-              userImg={`https://animeimagebucket.s3.amazonaws.com/${
-                (loginUser as User).avatar
-              }`}
-              marginTop="4px"
+            </NameSetting>
+            <NameIdDiv>(ID: 202201)</NameIdDiv>
+          </NameDiv>
+        </ProfileDiv>
+        <SettingIconsDiv>
+          <SettingIconDiv onClick={() => toPage("/mainPage/ProfileSetting")}>
+            <img src={IconSettings} />
+            <p>Profile</p>
+          </SettingIconDiv>
+          <SettingIconDiv onClick={() => toPage("/mainPage/ProfileMessage")}>
+            <img src={IconInbox} />
+            <p>Inbox</p>
+          </SettingIconDiv>
+        </SettingIconsDiv>
+        <ProfileMessageButtons>
+          <AnimeButton
+            para=""
+            text={"Out"}
+            width="120px"
+            height="32px"
+            textColor="black"
+            backGroundColor={ifIn ? "#AAFFC9" : "white"}
+            borderColor={ifIn ? "#AAFFC9" : "#302D46"}
+            buttonClick={() => setIfIn(true)}
+          />
+          <AnimeButton
+            para=""
+            text={"In"}
+            width="120px"
+            height="32px"
+            textColor="black"
+            backGroundColor={!ifIn ? "#AAFFC9" : "white"}
+            borderColor={!ifIn ? "#AAFFC9" : "#302D46"}
+            buttonClick={() => setIfIn(false)}
+          />
+        </ProfileMessageButtons>
+        {getLoadingElement()}
+      </ProfileBox>
+      <MessageModal
+        footer={[]}
+        onCancel={() => setMessageVisible(false)}
+        visible={messageVisible}
+      >
+        <MessageDiv>
+          <div>
+            <p>To:</p>
+            <img src={userImg} />
+            <h6>{userName}</h6>
+          </div>
+          <TextArea
+            value={messageValue}
+            onChange={(e) => setMessageValue(e.target.value)}
+          />
+          <div style={{ marginTop: "20px", float: "right" }}>
+            <AnimeButton
+              para=""
+              text={"Send"}
+              width="120px"
+              height="32px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() => sendMessage()}
             />
-          </NameSetting>
-          <NameIdDiv>(ID: 202201)</NameIdDiv>
-        </NameDiv>
-      </ProfileDiv>
-      <SettingIconsDiv>
-        <SettingIconDiv onClick={() => toPage("/mainPage/ProfileSetting")}>
-          <img src={IconSettings} />
-          <p>Profile</p>
-        </SettingIconDiv>
-        <SettingIconDiv onClick={() => toPage("/mainPage/ProfileMessage")}>
-          <img src={IconInbox} />
-          <p>Inbox</p>
-        </SettingIconDiv>
-      </SettingIconsDiv>
-      <ProfileMessageButtons>
-        <AnimeButton
-          para=""
-          text={"Out"}
-          width="120px"
-          height="32px"
-          textColor="black"
-          backGroundColor={ifIn ? "#AAFFC9" : "white"}
-          borderColor={ifIn ? "#AAFFC9" : "#302D46"}
-          buttonClick={() => setIfIn(true)}
-        />
-        <AnimeButton
-          para=""
-          text={"In"}
-          width="120px"
-          height="32px"
-          textColor="black"
-          backGroundColor={!ifIn ? "#AAFFC9" : "white"}
-          borderColor={!ifIn ? "#AAFFC9" : "#302D46"}
-          buttonClick={() => setIfIn(false)}
-        />
-      </ProfileMessageButtons>
-      {getLoadingElement()}
-    </ProfileBox>
+          </div>
+        </MessageDiv>
+      </MessageModal>
+    </>
   );
 };
 

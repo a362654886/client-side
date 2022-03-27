@@ -121,7 +121,7 @@ const MainPage = (): JSX.Element => {
     (state: IStoreState) => state.authState
   );*/
 
-  const toProfile = (url: string) => history.replace(url);
+  const toProfile = (url: string) => history.push(url);
 
   const menu = (
     <Menu>

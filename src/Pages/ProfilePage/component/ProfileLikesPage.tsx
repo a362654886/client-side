@@ -56,7 +56,7 @@ const ProfileLikesPage = (): JSX.Element => {
       payload: anime,
       type: ANIME_ADD,
     });
-    history.replace("oneAnime");
+    history.push("oneAnime");
   };
 
   const getStar = (rate: RateBody) => {

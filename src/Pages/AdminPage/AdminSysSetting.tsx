@@ -18,7 +18,7 @@ const AdminSysSetting = (): JSX.Element => {
     }
   }, []);
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   return (
     <AdminSysDiv>

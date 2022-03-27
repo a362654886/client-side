@@ -99,7 +99,7 @@ const SettingImg = ({
       payload: id,
       type: REPORT_USER_UPDATE,
     });
-    history.replace("/mainPage/report");
+    history.push("/mainPage/report");
   };
 
   const sendMessage = async () => {

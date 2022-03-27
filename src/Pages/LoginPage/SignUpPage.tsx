@@ -89,7 +89,7 @@ const SignUpPage = (): JSX.Element => {
     setAvatars(avatars);
   };
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const onChange = (e: React.ChangeEvent<Element>): void => {
     const type = (e.target as HTMLInputElement).placeholder;

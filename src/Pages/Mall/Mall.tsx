@@ -37,7 +37,7 @@ const MallPage = (): JSX.Element => {
       : toPage("/mainPage/mall/custom");
   };
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const getButtons = () => {
     const indexNum = chooseButton;

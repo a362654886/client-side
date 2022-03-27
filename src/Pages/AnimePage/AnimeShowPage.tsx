@@ -98,7 +98,7 @@ const AnimeShowPage = (): JSX.Element => {
       payload: null,
       type: ANIME_NONE,
     });
-    history.replace(`oneAnime?${anime._id}`);
+    history.push(`oneAnime?${anime._id}`);
   };
 
   const getStar = (rate: RateBody) => {

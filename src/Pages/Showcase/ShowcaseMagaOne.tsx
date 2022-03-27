@@ -352,7 +352,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
       type: LOADING_OPEN,
     });
     await showCaseMangaDelete(manga ? manga._id : "");
-    history.replace("/mainPage/showcase/showManga");
+    history.push("/mainPage/showcase/showManga");
     dispatch({
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,
@@ -436,7 +436,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
             {loginUser ? (
               <EpisodesAddButton
                 onClick={() => {
-                  history.replace("/mainPage/showcase/episodeAdd");
+                  history.push("/mainPage/showcase/episodeAdd");
                 }}
               >
                 <img src={`${add}`} />

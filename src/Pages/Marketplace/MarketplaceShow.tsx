@@ -113,7 +113,7 @@ const MarketplaceShow = (): JSX.Element => {
   };
 
   const chooseMarket = (market: MarketType) => {
-    history.replace({
+    history.push({
       pathname: `/mainPage/marketplace/showOne/${market._id}`,
     });
   };
@@ -257,7 +257,7 @@ const MarketplaceShow = (): JSX.Element => {
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="#FFC300"
-          buttonClick={() => history.replace(`/mainPage/marketplace/create`)}
+          buttonClick={() => history.push(`/mainPage/marketplace/create`)}
         />
       </MarketPlaceTitleDiv>
       <MarketBodyDiv>

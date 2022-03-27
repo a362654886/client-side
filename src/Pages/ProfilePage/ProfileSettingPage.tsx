@@ -48,7 +48,7 @@ const ProfileSettingPage = (): JSX.Element => {
     //
   }, [account]);
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const changeButton = (index: number) => {
     setChooseButton(index);

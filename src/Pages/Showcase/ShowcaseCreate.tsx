@@ -148,7 +148,7 @@ const ShowcaseCreate = (): JSX.Element => {
     });
     if (TagCheck(tags)) {
       const r = await showCaseAdd(showCase);
-      history.replace("/mainPage/showcase/showCollection");
+      history.push("/mainPage/showcase/showCollection");
     } else {
       openNotification(
         "please add # before tag",

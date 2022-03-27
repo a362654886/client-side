@@ -42,7 +42,7 @@ const AdminPage = (): JSX.Element => {
     }
   };
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const login = async () => {
     setLoading(true);

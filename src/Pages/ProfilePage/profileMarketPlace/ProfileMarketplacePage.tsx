@@ -19,6 +19,7 @@ import {
 import stateAvailable from "../../../files/stateAvailable.png";
 import stateSoldOut from "../../../files/stateSoldOut.png";
 import AnimeButton from "../../../components/Button";
+import { getWidth } from "../../../helperFns/widthFn";
 
 const buttonsColor = [
   {
@@ -52,29 +53,6 @@ const ProfileMarketplacePage = (): JSX.Element => {
   // bids
   const [chooseButton, setChooseButton] = useState<number>(0);
 
-  const [size, setSize] = useState({
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
-  });
-
-  const onResize = React.useCallback(() => {
-    setSize({
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
-    });
-    localStorage.setItem(
-      "animeWidth",
-      document.documentElement.clientWidth.toString()
-    );
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
-
   const changeButton = (index: number) => setChooseButton(index);
 
   useEffect(() => {
@@ -104,7 +82,7 @@ const ProfileMarketplacePage = (): JSX.Element => {
   };
 
   const chooseMarket = (marketId: string) => {
-    history.replace(`marketplace/showOne/${marketId}`);
+    history.push(`marketplace/showOne/${marketId}`);
   };
 
   const getButtons = () => {
@@ -164,7 +142,7 @@ const ProfileMarketplacePage = (): JSX.Element => {
 
   return (
     <>
-      {size.width > 700 ? (
+      {getWidth() > 700 ? (
         <ButtonsDiv>{getButtons()}</ButtonsDiv>
       ) : (
         <div>{getButtons()}</div>

@@ -320,6 +320,7 @@ export const ProfileMessageBox = styled.div`
   width: 840px;
   background-color: #ecf9fe;
   margin-top: 8px;
+  position: relative;
 `;
 
 export const ProfileMessageMore = styled.div`
@@ -348,4 +349,12 @@ export const ProfileMessageMore = styled.div`
 
 export const ProfileAddButtonDiv = styled.div`
   margin-bottom: 16px;
+`;
+
+export const ProfileReply = styled.p`
+  position: absolute;
+  bottom: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #4ba3c3;
 `;

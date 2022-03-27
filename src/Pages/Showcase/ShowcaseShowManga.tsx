@@ -80,7 +80,7 @@ const ShowcaseShowManga = (): JSX.Element => {
     }
   }, [ifNew]);
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const getButtons = () => {
     return buttonsColor.map((button, index) => {
@@ -216,7 +216,7 @@ const ShowcaseShowManga = (): JSX.Element => {
     );
 
   const toManga = (index: number) => {
-    history.replace(`/mainPage/showcase/Manga/${allShowCases[index]._id}`);
+    history.push(`/mainPage/showcase/Manga/${allShowCases[index]._id}`);
   };
 
   const getShowcaseForums = () => {

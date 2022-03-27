@@ -84,7 +84,7 @@ const ShowcaseShowTag = (): JSX.Element => {
     }
   }, [ifNew]);
 
-  const toPage = (url: string) => history.replace(url);
+  const toPage = (url: string) => history.push(url);
 
   const getButtons = () => {
     return buttonsColor.map((button, index) => {

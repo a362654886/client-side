@@ -38,11 +38,6 @@ const EpisodeShow = (): JSX.Element => {
     (state: IStoreState) => state.loadingState
   );
 
-  const [size, setSize] = useState({
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
-  });
-
   const [episodeId, setEpisodeId] = useState<string>("");
   const [episode, setEpisode] = useState<EpisodeType | null>(null);
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -74,24 +69,6 @@ const EpisodeShow = (): JSX.Element => {
   useEffect(() => {
     //
   }, [episode, update, loading]);
-
-  useEffect(() => {
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
-
-  const onResize = React.useCallback(() => {
-    setSize({
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
-    });
-    localStorage.setItem(
-      "animeWidth",
-      document.documentElement.clientWidth.toString()
-    );
-  }, []);
 
   const getEpisode = async () => {
     const episodeResult = await episodeGetById(episodeId);
@@ -237,7 +214,7 @@ const EpisodeShow = (): JSX.Element => {
         <EpisodeShowHeader>
           <EpisodeShowHeaderLeft
             style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
-            onClick={() => history.replace("/mainPage/showcase/Manga")}
+            onClick={() => history.push("/mainPage/showcase/Manga")}
           >
             Back
           </EpisodeShowHeaderLeft>

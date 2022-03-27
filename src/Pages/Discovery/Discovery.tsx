@@ -20,6 +20,7 @@ import AnimeOneProducts from "../AnimePage/AnimeOneCpmponents/AnimeOneProducts";
 import AnimeOneVideo from "../AnimePage/AnimeOneCpmponents/AnimeOneVideo";
 import DiscoveryHeader from "./DiscoveryHeader";
 import moreRightImg from "../../files/moreRightArrow.png";
+import { getWidth } from "../../helperFns/widthFn";
 
 const Discovery = (): JSX.Element => {
   const [chooseButton, setChooseButton] = useState<number>(0);
@@ -143,7 +144,11 @@ const Discovery = (): JSX.Element => {
           <DiscoveryTitle>Explore</DiscoveryTitle>
           <DiscoveryHeader />
           <DiscoverySubTitle>The latest posts</DiscoverySubTitle>
-          <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
+          {getWidth() > 600 ? (
+            <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
+          ) : (
+            getButtons()
+          )}
           {getChildDiv()}
         </DiscoveryBox>
         <div

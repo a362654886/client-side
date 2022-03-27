@@ -93,11 +93,11 @@ const AnimeOneProducts = ({
 
   useEffect(() => {
     (async function anyNameFunction() {
-      if (chooseAnime) {
+      if (chooseAnime || (discovery == true && pageNum == 1)) {
         await getIniProducts();
       }
     })();
-  }, [chooseAnime]);
+  }, [chooseAnime, discovery]);
 
   useEffect(() => {
     getProductArr();

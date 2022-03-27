@@ -96,11 +96,12 @@ const AnimeOneVideo = ({
 
   useEffect(() => {
     (async function anyNameFunction() {
-      if (chooseAnime) {
+      if (chooseAnime || (discovery == true && pageNum == 1)) {
         await getIniVideos();
       }
     })();
-  }, [chooseAnime]);
+    console.log(discovery);
+  }, [chooseAnime, discovery]);
 
   const getIniVideos = async () => {
     setLoading(true);
