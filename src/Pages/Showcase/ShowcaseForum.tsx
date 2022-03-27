@@ -18,6 +18,7 @@ import {
   ReplyDiv,
   ReplySecondBox,
   ShowAvatarDiv,
+  ShowCaseCreateImage,
   ShowcaseEditAndDeleteDiv,
   ShowcaseEditDiv,
   ShowcaseImage,
@@ -31,6 +32,7 @@ import {
   ShowImg,
   ShowName,
   ShowTime,
+  TagSelect,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import {
   ShowCaseReply,
@@ -62,7 +64,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReactQuillCss } from "../../cssJs/fullTextEditor";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import TextArea from "antd/lib/input/TextArea";
-import { Spin } from "antd";
+import { Button, Input, Spin } from "antd";
 import arrows from "../../files/arrows.svg";
 import forumMore from "../../files/forumMore.png";
 import ShareDiv from "../../components/ShareDiv";
@@ -80,6 +82,7 @@ import {
 import { cloneDeep } from "lodash";
 import { getWidth } from "../../helperFns/widthFn";
 import { useHistory } from "react-router-dom";
+import ImageUpload, { ImageBody } from "../../components/ImageUpload";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -471,6 +474,60 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     setUpdate(update + 1);
   };
 
+  //edit source
+  const editShowcaseSource = (index: number, text: string) => {
+    const newShowcases = allShowCases;
+    newShowcases[index].source = text;
+    setAllShowCases(newShowcases);
+    setUpdate(update + 1);
+  };
+
+  //edit tag
+  const editShowcaseTag = (index: number, tags: string[]) => {
+    let newTagArr: string[] = [];
+    tags.forEach((item) => {
+      const arr = item.split("#");
+      newTagArr = newTagArr.concat(arr);
+    });
+    const returnTagArr: string[] = [];
+    newTagArr.forEach((item) => {
+      if (item != "") {
+        returnTagArr.push(`#${item}`);
+      }
+    });
+
+    const id = new Date().valueOf().toString();
+    const newShowcases = allShowCases;
+    (newShowcases[index].tags = newTagArr.map((tag, index) => {
+      return {
+        _id: id + index,
+        text: tag,
+        num: -1,
+      };
+    })),
+      setAllShowCases(newShowcases);
+    setUpdate(update + 1);
+  };
+  //edit images
+  const deleteImg = (index: number, imageIndex: number) => {
+    const newShowcases = allShowCases;
+    const imgArr = newShowcases[index].imageArr;
+    imgArr.splice(imageIndex, 1);
+    newShowcases[index].imageArr = imgArr;
+    setAllShowCases(newShowcases);
+    setUpdate(update + 1);
+  };
+
+  const setNewImage = (imageBody: ImageBody, index: number) => {
+    const newShowcases = allShowCases;
+    const imgArr = newShowcases[index].imageArr;
+
+    imgArr.push(imageBody.imgBase64);
+    newShowcases[index].imageArr = imgArr;
+    setAllShowCases(newShowcases);
+    setUpdate(update + 1);
+  };
+
   //edit text
   const editShowcaseText = (index: number, text: string) => {
     const newShowcases = allShowCases;
@@ -515,6 +572,9 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
     const updateResult = await showCaseUpdate({
       _id: allShowCases[index]._id,
       text: allShowCases[index].text,
+      source: allShowCases[index].source,
+      tags: allShowCases[index].tags,
+      imageArr: allShowCases[index].imageArr,
     });
     dispatch({
       payload: LoadingType.CLOSE,
@@ -702,25 +762,58 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
             />
             <ShowTime>{_getDate(date)}</ShowTime>
           </ShowAvatarDiv>
-          {showcase.imageArr.map((image: string, index: number) => {
-            return (
-              <ShowcaseImage
-                key={index}
-                src={image}
-                style={{
-                  width: "100%",
-                  paddingLeft: getWidth() > 600 ? "" : "8px",
-                }}
-              />
-            );
-          })}
           {showcase.edit ? (
             <ShowcaseEditDiv>
+              {showcase.imageArr.map((image, imageIndex) => {
+                return (
+                  <ShowCaseCreateImage key={imageIndex}>
+                    <div>
+                      <img src={image} style={{ maxWidth: "1170px" }} />
+                    </div>
+                    <div>
+                      <Button onClick={() => deleteImg(index, imageIndex)}>
+                        Delete
+                      </Button>
+                    </div>
+                  </ShowCaseCreateImage>
+                );
+              })}
+              <ImageUpload
+                width={"240px"}
+                height={"240px"}
+                textColor={"black"}
+                backGroundColor={"#F6F6F6"}
+                border={"1px solid #F6F6F6"}
+                text={""}
+                setImg={(value: ImageBody) => setNewImage(value, index)}
+                imageAdd={false}
+                margin={"20px auto"}
+              />
               <TextArea
                 style={{ height: "200px" }}
                 value={showcase.text}
                 onChange={(e) => editShowcaseText(index, e.target.value)}
               />
+              <div>
+                Source: Original from{" "}
+                <Input
+                  value={showcase.source}
+                  onChange={(e) => editShowcaseSource(index, e.target.value)}
+                />
+              </div>
+              <div>
+                Tag:
+                <TagSelect
+                  mode="tags"
+                  value={
+                    showcase.tags.length > 0
+                      ? showcase.tags.map((item) => item.text)
+                      : []
+                  }
+                  onChange={(e) => editShowcaseTag(index, e as string[])}
+                  dropdownStyle={{ display: "none" }}
+                ></TagSelect>
+              </div>
               <AnimeButton
                 para=""
                 text={`Save`}
@@ -744,6 +837,18 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
             </ShowcaseEditDiv>
           ) : (
             <>
+              {showcase.imageArr.map((image: string, index: number) => {
+                return (
+                  <ShowcaseImage
+                    key={index}
+                    src={image}
+                    style={{
+                      width: "100%",
+                      paddingLeft: getWidth() > 600 ? "" : "8px",
+                    }}
+                  />
+                );
+              })}
               <ReactQuillCss
                 style={{
                   marginTop: "16px",

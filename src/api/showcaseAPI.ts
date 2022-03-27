@@ -6,6 +6,7 @@ import {
   ShowCaseType,
   ShowSecondCaseReply,
 } from "../types/showCaseType";
+import { TagType } from "../types/tagType";
 
 const basicURL = backEndLink;
 
@@ -170,6 +171,9 @@ export const showCaseFollowAllGetByArr = async (
 export const showCaseUpdate = async (showcaseBody: {
   _id: string;
   text: string;
+  source: string;
+  tags: TagType[];
+  imageArr: string[];
 }): Promise<number | null> => {
   const endpoint = basicURL + "showCaseUpdate";
   return Axios.put(endpoint, { showCase: showcaseBody })
