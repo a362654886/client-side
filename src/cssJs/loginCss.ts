@@ -259,3 +259,13 @@ export const AvatarChooseUploadImg = styled.div`
     border-radius: 50%;
   }
 `;
+
+export const LogInHeaderImg = styled.div`
+  width: 100%;
+  img {
+    margin: 0px 106.5px;
+    height: 76px;
+    width: 76px;
+    border-radius: 50%;
+  }
+`;

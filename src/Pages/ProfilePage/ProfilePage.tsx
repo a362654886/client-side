@@ -9,6 +9,7 @@ import {
   ContactInfoContext,
   ContactInfoDiv,
   InfoDiv,
+  LevelPic,
   LineDiv,
   NameDiv,
   NameIdDiv,
@@ -40,6 +41,7 @@ import profileLink from "../../files/profileLink.png";
 import { followByGetByUserId } from "../../api/followByAPI";
 import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import arrows from "../../files/arrows.svg";
+import level1 from "../../files/level1.png";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import { MarketFollow } from "../../cssJs/MarketPage/MarketPlaceCss";
@@ -250,6 +252,7 @@ const ProfilePage = (): JSX.Element => {
   return (
     <ProfileBox>
       <ProfileDiv>
+        <LevelPic src={level1} />
         <NamePic src={getNameImg()} />
         <NameDiv>
           <NameSetting>

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import AnimeButton from "../../components/Button";
 import SettingImg from "../../components/SettingImg";
 import {
+  LevelPic,
   NameDiv,
   NameIdDiv,
   NamePic,
@@ -18,6 +19,7 @@ import { Avatar, User } from "../../types/User";
 import ProfileAccountPage from "./component/ProfileAccountPage";
 import ProfileContactPage from "./component/ProfileContactPage";
 import avatarSetting from "../../files/avatarSetting.png";
+import level1 from "../../files/level1.png";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 
@@ -111,6 +113,7 @@ const ProfileSettingPage = (): JSX.Element => {
   return (
     <ProfileSettingBox>
       <ProfileDiv>
+        <LevelPic src={level1} />
         <NamePic src={getImage()} />
         <NameDiv>
           <NameSetting>

@@ -6,9 +6,11 @@ import { useHistory } from "react-router-dom";
 import { userAuth } from "../../api/userApi";
 import AnimeButton from "../../components/Button";
 import {
+  AvatarChooseUploadImg,
   EmailInput,
   LoginBox,
   LoginClickButton,
+  LogInHeaderImg,
   SignUpButtons,
 } from "../../cssJs/loginCss";
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
@@ -17,6 +19,7 @@ import { LoadingType, LoginType } from "../../types/EnumTypes";
 import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { PROFILE_USER_UPDATE } from "../../redux/profileUser";
+import avatarUpload from "../../files/avatarUpload.png";
 
 const LoginPage = (): JSX.Element => {
   const history = useHistory();
@@ -86,6 +89,9 @@ const LoginPage = (): JSX.Element => {
         color={ColorType.ERROR}
         show={ifLoadingAlert}
       />
+      <LogInHeaderImg>
+        <img src={avatarUpload} />
+      </LogInHeaderImg>
       <SignUpButtons>
         <AnimeButton
           para=""

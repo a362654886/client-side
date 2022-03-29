@@ -99,6 +99,14 @@ export const NamePic = styled.img`
   width: 80px;
   height: 80px;
   cursor: point;
+  border-radius: 40px;
+`;
+
+export const LevelPic = styled.img`
+  width: 60px;
+  height: 60px;
+  margin-top: 10px;
+  margin-right: 8px;
 `;
 
 export const NameText = styled.p`
@@ -357,4 +365,75 @@ export const ProfileReply = styled.p`
   cursor: pointer;
   font-weight: bold;
   color: #4ba3c3;
+`;
+
+export const ProfileLevelBox = styled.div`
+  height: auto;
+  max-width: 840px;
+  margin: auto;
+`;
+
+export const ProfileLevelDiv = styled.div`
+  height: 112px;
+  width: 332px;
+  margin: 0px auto;
+  margin-top: 8px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  display: flex;
+  div {
+    display: inline;
+  }
+`;
+
+export const ProfileLevelAwesome = styled.div`
+  display: flex;
+  width: 200px;
+  margin: 0px auto;
+  height: 64px;
+  padding: 16px 0px;
+  h6 {
+    margin-left: 5px;
+  }
+`;
+
+export const ProfileLevelH2 = styled.h2`
+  width: 100%;
+  margin: 0px auto;
+  text-align: center;
+  font-size: 24px;
+  line-height: 32px;
+  padding: 8px 0px;
+`;
+
+export const ProfileLevelImgBox = styled.div`
+  width: 248px;
+`;
+
+export const ProfileLevelImgDiv = styled.div`
+  width: 248px;
+  div {
+    display: flex;
+  }
+  p {
+    line-height: 36px;
+    margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
+    max-width: 200px;
+    background-color: #f6f6f6;
+    border-radius: 20px;
+    color: #ef392a;
+    font-weight: bold;
+  }
+`;
+
+export const ProfileImgDiv = styled.div`
+  width: 80px;
+  margin: 0px auto;
+`;
+
+export const ProfileLevelMainDiv = styled.div`
+  max-width: 640px;
+  margin: 0px auto;
 `;
