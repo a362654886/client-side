@@ -87,9 +87,10 @@ const MainPage = (): JSX.Element => {
       history.location.pathname == "/mainPage" ||
       history.location.pathname.indexOf("/mainPage") == -1
     ) {
-      history.push({
+      /*history.push({
         pathname: "/mainPage/home",
-      });
+      });*/
+      window.location.href = "www.animepark.com/mainPage/home";
     } else {
       console.log(history.location.pathname);
     }
