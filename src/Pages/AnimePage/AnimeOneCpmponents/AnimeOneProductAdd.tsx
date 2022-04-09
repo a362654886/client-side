@@ -21,6 +21,7 @@ import {
   openNotification,
   popUpAPIResult,
 } from "../../../helperFns/popUpAlert";
+import { urlCheck } from "../../../helperFns/urlCheckFn";
 import { getWidth } from "../../../helperFns/widthFn";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
@@ -66,6 +67,15 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
+    console.log(urlCheck(link));
+    if (!urlCheck(link)) {
+      openNotification(
+        "Please enter a valid link starting with http or https",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
+      return;
+    }
     if (loginUser) {
       const product: Product = {
         _id: `${loginUser?._id}${new Date().valueOf()}`,

@@ -360,7 +360,7 @@ const AnimeOneVideo = ({
             <></>
           )}
         </>
-      ) : (
+      ) : videos.length > 0 ? (
         <>
           <MiddleBiggerDiv>
             <MoreRight onClick={() => (toVideo ? toVideo(1) : {})}>
@@ -369,6 +369,8 @@ const AnimeOneVideo = ({
             </MoreRight>
           </MiddleBiggerDiv>
         </>
+      ) : (
+        <>Welcome the first one.</>
       )}
       <br />
     </AnimOneVideo>

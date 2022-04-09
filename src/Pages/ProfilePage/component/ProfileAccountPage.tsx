@@ -67,7 +67,7 @@ const ProfileAccountPage = (): JSX.Element => {
 
   const getAvatars = async () => {
     //get all plate
-    const avatars: Avatar[] | null = await avatarsGet();
+    const avatars: Avatar[] | null = await avatarsGet(false);
     setAvatars(avatars);
   };
 
@@ -203,6 +203,22 @@ const ProfileAccountPage = (): JSX.Element => {
       followUsers: loginUser?.followUsers ? loginUser?.followUsers : [],
       followMarket: loginUser?.followMarket ? loginUser?.followMarket : [],
       awesomeNum: loginUser?.awesomeNum ? loginUser?.awesomeNum : 0,
+      interactionAwesome:
+        loginUser != undefined ? loginUser?.interactionAwesome : false,
+      interactionComments:
+        loginUser != undefined ? loginUser?.interactionComments : false,
+      interactionBids:
+        loginUser != undefined ? loginUser?.interactionBids : false,
+      interactionNewFollowers:
+        loginUser != undefined ? loginUser?.interactionNewFollowers : false,
+      interactionMessages:
+        loginUser != undefined ? loginUser?.interactionMessages : false,
+      interactionFirstAnimeNews:
+        loginUser != undefined ? loginUser?.interactionFirstAnimeNews : false,
+      shipAddress: loginUser?.shipAddress ? loginUser?.shipAddress : "",
+      shipCity: loginUser?.shipCity ? loginUser?.shipCity : "",
+      shipSuburb: loginUser?.shipSuburb ? loginUser?.shipSuburb : "",
+      postCode: loginUser?.postCode ? loginUser?.postCode : "",
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);
@@ -261,7 +277,13 @@ const ProfileAccountPage = (): JSX.Element => {
               })}
             </Select>
           </PasswordInput>
-          <AvatarBox>{getAvatarBox()}</AvatarBox>
+          <AvatarBox
+            style={{
+              height: avatarArr ? ` ${(avatarArr[0].length + 1) * 60}px` : 0,
+            }}
+          >
+            {getAvatarBox()}
+          </AvatarBox>
           <SubmitButtonDiv>
             <AnimeButton
               para=""

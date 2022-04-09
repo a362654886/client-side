@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { designHistoryPost } from "../../api/designHistoryAPI";
 import { emailPost } from "../../api/emailAPI";
 import { mallCustomerAPI } from "../../api/mallCustomeAPI";
 import { AnimeButton, MiddleDiv } from "../../components/Button";
@@ -11,20 +12,18 @@ import { UploadButton } from "../../cssJs/AnimePage/AnimeOne/AnimeOneProductCss"
 import {
   ButtonDiv,
   MallCustomerEmailInput,
-  MallCustomerInput,
   MallCustomerInputTitle,
   MallCustomHeader,
   MallCustomHeaderDiv,
   MallCustomImgDiv,
   MallCustomInsideBackImg,
   MallCustomInsideImgDiv,
-  MallCustomPillowInsideInnerImg,
-  MallCustomScrollInsideInnerImg,
   MallCustomTitle,
 } from "../../cssJs/MallPage/MallCustom";
 import { MallDisplayText } from "../../cssJs/MallPage/MallPageCss";
 import { IStoreState } from "../../types/IStoreState";
 import { MallCustomType } from "../../types/mallCustomType";
+import { DesignHistory } from "../../types/designHistoryType";
 import { User } from "../../types/User";
 import MallPhone from "./MallCustomSelect/MallPhone";
 import MallPillow from "./MallCustomSelect/MallPillow";
@@ -75,7 +74,29 @@ const MallCustom = (): JSX.Element => {
     setLoadImg(value.imgBase64);
   };
 
-  const sendEmail = async () => await emailPost(email, attributes);
+  const sendEmail = async () =>
+    await emailPost(
+      `animewebnz@gmail.com`,
+      `
+    email:${email},
+    attributes:${attributes}
+  `
+    );
+
+  const sendDesignHistory = async () => {
+    const today = new Date();
+    const body: DesignHistory = {
+      _id: `${loginUser ? loginUser._id : ""}${today.valueOf()}`,
+      uploadTime: `${today.getDate()}-${
+        today.getMonth() + 1
+      }-${today.getFullYear()}`,
+      type: chooseIndex,
+      imageString: resizeUploadImg,
+      value: attributes,
+      userId: `${loginUser ? loginUser._id : ""}`,
+    };
+    await designHistoryPost(body);
+  };
 
   const getAttributeEle = () => {
     switch (chooseIndex) {
@@ -185,7 +206,10 @@ const MallCustom = (): JSX.Element => {
               textColor="white"
               backGroundColor="#FFC300"
               borderColor="#FFC300"
-              buttonClick={() => sendEmail()}
+              buttonClick={() => {
+                sendEmail();
+                sendDesignHistory();
+              }}
             />
           </MiddleDiv>
         </ButtonDiv>

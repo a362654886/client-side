@@ -388,7 +388,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/mainPage/marketplace/show");
+                    toProfile("/mainPage/marketplace/show/null");
                   }}
                 >
                   Marketplace

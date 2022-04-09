@@ -839,14 +839,15 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
             <>
               {showcase.imageArr.map((image: string, index: number) => {
                 return (
-                  <ShowcaseImage
+                  <div
                     key={index}
-                    src={image}
                     style={{
                       width: "100%",
                       paddingLeft: getWidth() > 600 ? "" : "8px",
                     }}
-                  />
+                  >
+                    <ShowcaseImage src={image} />
+                  </div>
                 );
               })}
               <ReactQuillCss

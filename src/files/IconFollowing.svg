@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon-Following</title>
+    <g id="Icon-Following" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <path d="M16,1 C20.141875,1 23.8918653,2.67907887 26.6063932,5.39360678 C29.3209211,8.1081347 31,11.858125 31,16 C31,20.141875 29.3209211,23.8918653 26.6063932,26.6063932 C23.8918653,29.3209211 20.141875,31 16,31 C11.858125,31 8.1081347,29.3209211 5.39360678,26.6063932 C2.67907887,23.8918653 1,20.141875 1,16 C1,11.858125 2.67907887,8.1081347 5.39360678,5.39360678 C8.1081347,2.67907887 11.858125,1 16,1 Z" id="Background" stroke="#302D46" stroke-width="2" fill="#263E7D" fill-rule="nonzero"></path>
+            <path d="M16,4 C9.37066667,4 4,9.37333333 4,16 C4,22.6266667 9.37066667,28 16,28 C22.624,28 28,22.6266667 28,16 C28,9.37333333 22.624,4 16,4 L16,4 Z" id="Path" fill="#AAFFC9"></path>
+            <polygon id="Path" fill="#263E7D" points="7 17.1083357 9.78061792 14.1740107 13.7494999 18.13135 22.2113803 9 25 11.9301151 13.7535008 24"></polygon>
+        </g>
+        <g id="Shape" transform="translate(4.000000, 4.000000)"></g>
+    </g>
+</svg>

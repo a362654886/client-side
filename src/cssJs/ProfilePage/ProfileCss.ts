@@ -14,13 +14,13 @@ export const ProfileFollowBox = styled.div`
 
 export const ProfileSettingBox = styled.div`
   height: auto;
-  max-width: 320px;
+  max-width: 840px;
   margin: auto;
 `;
 
 export const ProfileDiv = styled.div`
   height: 112px;
-  width: 332px;
+  width: 432px;
   margin-top: 8px;
   padding-top: 16px;
   padding-bottom: 16px;
@@ -32,7 +32,7 @@ export const ProfileDiv = styled.div`
 
 export const ProfileFollowDiv = styled.div`
   height: 112px;
-  width: 332px;
+  width: 432px;
   margin: 8px auto;
   padding-top: 16px;
   padding-bottom: 16px;
@@ -375,7 +375,7 @@ export const ProfileLevelBox = styled.div`
 
 export const ProfileLevelDiv = styled.div`
   height: 112px;
-  width: 332px;
+  width: 432px;
   margin: 0px auto;
   margin-top: 8px;
   padding-top: 16px;
@@ -436,4 +436,24 @@ export const ProfileImgDiv = styled.div`
 export const ProfileLevelMainDiv = styled.div`
   max-width: 640px;
   margin: 0px auto;
+`;
+
+export const ProfileDesignHistory = styled.h2`
+  height: 56px;
+  padding: 8px 0px;
+  margin-bottom: 0px;
+  line-height: 40px;
+  font-weight: bold;
+`;
+
+export const ProfileDesignTime = styled.p`
+  height: 32px;
+  line-height: 32px;
+  font-size: 14px;
+`;
+
+export const ProfileDesignAttribute = styled.p`
+  height: 32px;
+  line-height: 32px;
+  font-size: 16px;
 `;

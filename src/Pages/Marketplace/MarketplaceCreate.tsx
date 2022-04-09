@@ -27,6 +27,7 @@ import { marketAdd } from "../../api/marketAPI";
 import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
 import Flag from "react-flagkit";
 import CropImgBodyDiv from "../../components/CropImgBodyDiv";
+import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -35,6 +36,7 @@ const MarketplaceCreate = (): JSX.Element => {
     (state: IStoreState) => state.loginUserState
   );
 
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState<string>("");
@@ -108,7 +110,10 @@ const MarketplaceCreate = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    await marketAdd(marketBody);
+    const r = await marketAdd(marketBody);
+    if (r == 200) {
+      history.push("/mainPage/marketplace/show/null");
+    }
     dispatch({
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,
@@ -285,6 +290,7 @@ const MarketplaceCreate = (): JSX.Element => {
           }}
           visible={showCropper}
           setVisibleFalse={() => setShowCropper(false)}
+          cube={false}
         />
       </div>
       <div className="col-xl-3 col-md-3 col-sm-3 col-3">side</div>

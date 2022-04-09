@@ -1,7 +1,184 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { designHistoryGetById } from "../../../api/designHistoryAPI";
+import {
+  ButtonsDiv,
+  ProfileAddButtonDiv,
+  ProfileDesignAttribute,
+  ProfileDesignHistory,
+  ProfileSubDiv,
+} from "../../../cssJs/ProfilePage/ProfileCss";
+import { DesignHistory } from "../../../types/designHistoryType";
+import { IStoreState } from "../../../types/IStoreState";
+import { User } from "../../../types/User";
+import stateAvailable from "../../../files/stateAvailable.png";
+import stateSoldOut from "../../../files/stateSoldOut.png";
+import { getWidth } from "../../../helperFns/widthFn";
+import AnimeButton from "../../../components/Button";
+import { mallCustomerAPI } from "../../../api/mallCustomeAPI";
+import { MallCustomType } from "../../../types/mallCustomType";
+import { MallCustomInsideBackImg } from "../../../cssJs/MallPage/MallCustom";
+import loadingImg from "../../../files/loading.gif";
+
+const buttonsColor = [
+  {
+    text: "Design History",
+    color: "#4BA3C3",
+    backColor: "white",
+  },
+  {
+    text: "Redeem",
+    color: "#4BA3C3",
+    backColor: "white",
+  },
+];
 
 const ProfileMallPage = (): JSX.Element => {
-  return <>Mall</>;
+  const history = useHistory();
+
+  const profileUser: User | null = useSelector(
+    (state: IStoreState) => state.profileUserState
+  );
+
+  const [allDesignHistories, setAllDesignHistories] = useState<
+    DesignHistory[] | null
+  >(null);
+  const [chooseButton, setChooseButton] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [mallCustomer, setMallCustomer] = useState<MallCustomType[]>([]);
+
+  const changeButton = (index: number) => setChooseButton(index);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      const mallCustomerResult = await mallCustomerAPI();
+      if (mallCustomerResult) {
+        setMallCustomer(mallCustomerResult);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      await getDesignHistory();
+    })();
+  }, [chooseButton]);
+
+  const getDesignHistory = async () => {
+    if (profileUser) {
+      setLoading(true);
+      const result = await designHistoryGetById(profileUser?.userEmail, 1, 2);
+      if (result) {
+        result.designHistories
+          ? setAllDesignHistories(result.designHistories)
+          : "";
+      }
+      setLoading(false);
+    }
+  };
+
+  const getButtons = () => {
+    return buttonsColor.map(
+      (
+        button: {
+          text: string;
+          color: string;
+          backColor: string;
+        },
+        index: number
+      ) => {
+        if (index == chooseButton) {
+          return (
+            <ProfileSubDiv onClick={() => changeButton(index)}>
+              <img src={stateAvailable} />
+              <h6>{button.text}</h6>
+            </ProfileSubDiv>
+          );
+        } else {
+          return (
+            <ProfileSubDiv onClick={() => changeButton(index)}>
+              <img src={stateSoldOut} />
+              <h6>{button.text}</h6>
+            </ProfileSubDiv>
+          );
+        }
+      }
+    );
+  };
+
+  const getShowcaseDiv = () => {
+    switch (chooseButton) {
+      case 0:
+        return (
+          <>
+            <ProfileAddButtonDiv>
+              <AnimeButton
+                para=""
+                text={"Create a sample"}
+                width="200px"
+                height="36px"
+                textColor="white"
+                backGroundColor="#FFC300"
+                borderColor="white"
+                buttonClick={() => {
+                  history.push({
+                    pathname: "/mainPage/mall/custom",
+                  });
+                }}
+              />
+            </ProfileAddButtonDiv>
+            <ProfileDesignHistory>Completion history</ProfileDesignHistory>
+            <div>
+              {allDesignHistories?.map((item) => {
+                return (
+                  <>
+                    <p>{item.uploadTime}</p>
+                    <MallCustomInsideBackImg
+                      src={
+                        mallCustomer[item.type]
+                          ? mallCustomer[item.type].imgURL
+                          : ""
+                      }
+                      style={{
+                        backgroundImage: `url(${item.imageString})`,
+                        backgroundSize: "contain",
+                        backgroundRepeat: "no-repeat",
+                      }}
+                    />
+                    <ProfileDesignAttribute>
+                      {item.value}
+                    </ProfileDesignAttribute>
+                  </>
+                );
+              })}
+            </div>
+          </>
+        );
+      case 1:
+        return <></>;
+      default:
+        return <></>;
+    }
+  };
+
+  return (
+    <>
+      {getWidth() > 700 ? (
+        <ButtonsDiv>{getButtons()}</ButtonsDiv>
+      ) : (
+        <div>{getButtons()}</div>
+      )}
+      {loading ? (
+        <div>
+          <img src={loadingImg} />
+        </div>
+      ) : (
+        <>{getShowcaseDiv()}</>
+      )}
+    </>
+  );
 };
 
 export default ProfileMallPage;

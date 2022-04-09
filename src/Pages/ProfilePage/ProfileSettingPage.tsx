@@ -6,6 +6,7 @@ import AnimeButton from "../../components/Button";
 import SettingImg from "../../components/SettingImg";
 import {
   LevelPic,
+  LineDiv,
   NameDiv,
   NameIdDiv,
   NamePic,
@@ -22,6 +23,8 @@ import avatarSetting from "../../files/avatarSetting.png";
 import level1 from "../../files/level1.png";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
+import ProfileNotificationPage from "./component/ProfileNotificationPage";
+import ProfileShippingAddressPage from "./component/ProfileShippingAddressPage";
 
 const ProfileSettingPage = (): JSX.Element => {
   const history = useHistory();
@@ -37,6 +40,16 @@ const ProfileSettingPage = (): JSX.Element => {
       color: "black",
       backColor: "white",
     },
+    {
+      text: "Notification",
+      color: "black",
+      backColor: "white",
+    },
+    {
+      text: "Shipping address",
+      color: "black",
+      backColor: "white",
+    },
   ];
 
   const loginUser: User | null = useSelector(
@@ -44,21 +57,17 @@ const ProfileSettingPage = (): JSX.Element => {
   );
 
   const [chooseButton, setChooseButton] = useState<number>(0);
-  const [account, setAccount] = useState<boolean>(true);
+  const [buttonType, setButtonType] = useState<number>(0);
 
   useEffect(() => {
     //
-  }, [account]);
+  }, [buttonType]);
 
   const toPage = (url: string) => history.push(url);
 
   const changeButton = (index: number) => {
     setChooseButton(index);
-    if (index == 0) {
-      setAccount(false);
-    } else {
-      setAccount(true);
-    }
+    setButtonType(index);
   };
 
   const getButtons = () => {
@@ -76,7 +85,7 @@ const ProfileSettingPage = (): JSX.Element => {
             <AnimeButton
               para=""
               text={button.text}
-              width="120px"
+              width="200px"
               height="32px"
               textColor="black"
               backGroundColor="#AAFFC9"
@@ -89,7 +98,7 @@ const ProfileSettingPage = (): JSX.Element => {
             <AnimeButton
               para=""
               text={button.text}
-              width="120px"
+              width="200px"
               height="32px"
               textColor="black"
               backGroundColor="white "
@@ -102,8 +111,18 @@ const ProfileSettingPage = (): JSX.Element => {
     );
   };
 
-  const getPart = () =>
-    account ? <ProfileContactPage /> : <ProfileAccountPage />;
+  const getPart = () => {
+    switch (buttonType) {
+      case 0:
+        return <ProfileAccountPage />;
+      case 1:
+        return <ProfileContactPage />;
+      case 2:
+        return <ProfileNotificationPage />;
+      case 3:
+        return <ProfileShippingAddressPage />;
+    }
+  };
 
   const getImage = () => {
     const imageArr = loginUser ? loginUser.avatarImage : null;
@@ -140,8 +159,13 @@ const ProfileSettingPage = (): JSX.Element => {
           <NameIdDiv>(ID: 202201)</NameIdDiv>
         </NameDiv>
       </ProfileDiv>
-      <SettingButtonsDiv>{getButtons()}</SettingButtonsDiv>
-      {getPart()}
+      <LineDiv></LineDiv>
+      <div style={{ display: "flex" }}>
+        <div style={{ width: "233px" }}>
+          <SettingButtonsDiv>{getButtons()}</SettingButtonsDiv>
+        </div>
+        {getPart()}
+      </div>
     </ProfileSettingBox>
   );
 };

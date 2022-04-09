@@ -46,6 +46,7 @@ import { flagGet, flagGetName } from "../../helperFns/flag";
 import { _getDate } from "../../helperFns/timeFn";
 import marketFollow from "../../files/marketFollow.png";
 import marketMessage from "../../files/marketMessage.png";
+import IconFollowing from "../../files/IconFollowing.svg";
 import editIcon from "../../files/editIcon.svg";
 import deleteIcon from "../../files/deleteIcon.svg";
 import moreRightImg from "../../files/moreRightArrow.png";
@@ -300,7 +301,7 @@ const MarketplaceShowOne = (): JSX.Element => {
         marketArr.splice(index, 1);
       }
     }
-    console.log(marketArr)
+    console.log(marketArr);
     //update user
     const readyUpdateUser: User = loginUser as User;
     readyUpdateUser.followMarket = marketArr;
@@ -446,6 +447,7 @@ const MarketplaceShowOne = (): JSX.Element => {
                     updateFollowMarket(marketState?._id as string, false)
                   }
                 >
+                  <img src={IconFollowing} />
                   <p>Following</p>
                 </div>
               )}
@@ -485,7 +487,11 @@ const MarketplaceShowOne = (): JSX.Element => {
           )}
           <MarketViewMore
             onClick={() => {
-              history.push("/mainPage/marketplace/show");
+              history.push(
+                `/mainPage/marketplace/show/${
+                  marketState ? marketState.userId : ""
+                }`
+              );
             }}
           >
             <img src={moreRightImg} />
@@ -497,7 +503,7 @@ const MarketplaceShowOne = (): JSX.Element => {
             up to the seller.`}
           </WishBidsContext>
           <PriceInput>
-            <p>+$</p>
+            <p>$</p>
             <Input
               onChange={(e) => {
                 const price = e.target.value;

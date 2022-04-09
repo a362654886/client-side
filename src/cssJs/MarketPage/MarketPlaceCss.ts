@@ -526,6 +526,7 @@ export const PriceInput = styled.div`
   height: 48px;
   margin: 0px auto;
   width: 346px;
+  margin-bottom: 24px;
   input {
     height: 32px;
     width: 80px;

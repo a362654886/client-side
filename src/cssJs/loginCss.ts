@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import styled from "styled-components";
 
 export const LoginBox = styled.div`
@@ -97,7 +98,7 @@ export const LoginClickButton = styled.div`
 // signup
 
 export const SignUpBox = styled.div`
-  height: 1354px;
+  height: auto;
   width: 289px;
   margin: auto;
   margin-top: 23px;
@@ -268,4 +269,11 @@ export const LogInHeaderImg = styled.div`
     width: 76px;
     border-radius: 50%;
   }
+`;
+
+export const VitrifyButton = styled(Button)`
+  margin-left: 10px;
+  background-color: #302d46;
+  color: white;
+  width: 140px;
 `;

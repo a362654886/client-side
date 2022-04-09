@@ -1,4 +1,4 @@
-import { Input, Select } from "antd";
+import { Button, Input, Select } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -18,6 +18,7 @@ import {
   SignUpBox,
   SignUpButtons,
   SubmitClickButton,
+  VitrifyButton,
 } from "../../cssJs/loginCss";
 import { Avatar, User } from "../../types/User";
 import { userAdd } from "../../api/userApi";
@@ -36,6 +37,7 @@ import CropImgDiv from "../../components/CropImgDiv";
 import { ImageBody } from "../../components/ImageUpload";
 import AUpload from "../../components/AUpload";
 import avatarUpload from "../../files/avatarUpload.png";
+import { emailPost } from "../../api/emailAPI";
 
 const { Option } = Select;
 
@@ -59,6 +61,10 @@ const SignUpPage = (): JSX.Element => {
   const [showCropper, setShowCropper] = useState<boolean>(false);
   const [imgName, setImgName] = useState<string>("");
 
+  const [vitrifyGenerateCode, setVitrifyGenerateCode] = useState<string>("");
+  const [vitrifyCode, setVitrifyCode] = useState<string>("");
+  const [time, setTime] = useState<number>(0);
+
   useEffect(() => {
     (async function anyNameFunction() {
       dispatch({
@@ -74,21 +80,49 @@ const SignUpPage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    setChooseAvatarIndex(avatarArr ? avatarArr[0][0] : null);
+    //setChooseAvatarIndex(avatarArr ? avatarArr[0][0] : null);
     getAvatarArr();
   }, [avatars]);
 
   useEffect(() => {
-    //
-  }, [uploadImg]);
+    console.log(time);
+  }, [uploadImg, time, chooseAvatar]);
 
   const getAvatars = async () => {
     //get all plate
-    const avatars: Avatar[] | null = await avatarsGet();
+    const avatars: Avatar[] | null = await avatarsGet(true);
     setAvatars(avatars);
   };
 
   const toPage = (url: string) => history.push(url);
+
+  const sendVitrifyEmail = async () => {
+    if (email.trim() !== "") {
+      const vitrifyCode = Math.random().toFixed(6).slice(-6);
+      setVitrifyGenerateCode(vitrifyCode);
+      await emailPost(
+        email,
+        `
+        your vitrify code is : ${vitrifyCode}
+      `
+      );
+      let localTime = 0;
+      const sixtyInterval = setInterval(() => {
+        localTime = localTime + 1;
+        setTime(localTime);
+        if (localTime == 60) {
+          setTime(0);
+          clearInterval(sixtyInterval);
+        }
+      }, 1000);
+    } else {
+      openNotification(
+        "please input email",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
+    }
+  };
 
   const onChange = (e: React.ChangeEvent<Element>): void => {
     const type = (e.target as HTMLInputElement).placeholder;
@@ -116,6 +150,15 @@ const SignUpPage = (): JSX.Element => {
 
   const submit = async () => {
     setLoadingAlert(false);
+    if (vitrifyGenerateCode !== vitrifyCode || vitrifyGenerateCode === "") {
+      openNotification(
+        "your vitrify code is wrong",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
+      setLoadingAlert(true);
+      return;
+    }
     if (
       password !== confirmPassword ||
       password.trim() == "" ||
@@ -180,6 +223,16 @@ const SignUpPage = (): JSX.Element => {
       followUsers: [],
       followMarket: [],
       awesomeNum: 0,
+      interactionAwesome: false,
+      interactionComments: false,
+      interactionBids: false,
+      interactionNewFollowers: false,
+      interactionMessages: false,
+      interactionFirstAnimeNews: false,
+      shipAddress: "",
+      shipCity: "",
+      shipSuburb: "",
+      postCode: "",
     };
     const r = await userAdd(user);
     dispatch({
@@ -256,6 +309,13 @@ const SignUpPage = (): JSX.Element => {
       _id: new Date().valueOf().toString(),
       imageName: imgName,
       imageUrl: value,
+      privateAvatar: true,
+    });
+    setChooseAvatarIndex({
+      _id: new Date().valueOf().toString(),
+      imageName: imgName,
+      imageUrl: value,
+      privateAvatar: true,
     });
     await getAvatars();
     dispatch({
@@ -310,6 +370,22 @@ const SignUpPage = (): JSX.Element => {
           placeholder={"confirm"}
           onChange={onChange}
         ></Input.Password>
+      </PasswordInput>
+      <PasswordInput>
+        <h3>
+          Vitrify Code:
+          <VitrifyButton
+            disabled={time > 0 ? true : false}
+            onClick={() => sendVitrifyEmail()}
+          >
+            {time > 0 ? 60 - time : `Send Vitrify Email`}
+          </VitrifyButton>
+        </h3>
+        <Input
+          value={vitrifyCode}
+          placeholder={"confirm"}
+          onChange={(e) => setVitrifyCode(e.target.value)}
+        ></Input>
       </PasswordInput>
       <NameInput>
         <h3>Name:</h3>

@@ -16,12 +16,12 @@ const ContactUs = (): JSX.Element => {
   const sendEmail = async () => {
     await popUpAPIResult<Promise<number | null>>(
       emailPost(
-        `leolupersonal@gmail.com`,
+        `362654886qq@gmail.com`,
         `
-        name: ${name},
+        <div>name: ${name},
         email:${email},
         title:${title},
-        message:${message}
+        message:${message}</div>
       `
       ),
       "send email fail",

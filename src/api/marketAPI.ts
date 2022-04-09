@@ -43,7 +43,7 @@ export const marketAllGet = async (
 } | null> => {
   const endpoint =
     basicURL +
-    `marketsGet?city=${city}&country=${country}&priceLow=${priceLow}&priceHeight=${priceHeight}&sortType=${sortType}&page=${page}&pageSize=${pageSize}`;
+    `marketsGet?value=${value}&city=${city}&country=${country}&priceLow=${priceLow}&priceHeight=${priceHeight}&sortType=${sortType}&page=${page}&pageSize=${pageSize}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

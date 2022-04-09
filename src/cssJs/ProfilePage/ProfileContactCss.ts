@@ -73,13 +73,14 @@ export const SocialDiv = styled.div`
 
 export const LogoInput = styled.div`
   img {
-    margin-top: 16px;
+    margin-top: -8px;
     height: 24px;
     width: 24px;
+    margin-right: 8px;
   }
   Input {
     margin-top: 8px;
-    width: 320px;
+    width: 290px;
     height: 32px;
   }
 `;

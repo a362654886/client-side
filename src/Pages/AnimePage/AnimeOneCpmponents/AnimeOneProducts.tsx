@@ -376,7 +376,7 @@ const AnimeOneProducts = ({
             <></>
           )}
         </>
-      ) : (
+      ) : products.length > 0 ? (
         <>
           <MiddleBiggerDiv>
             <MoreRight onClick={() => (toProduct ? toProduct(2) : {})}>
@@ -385,6 +385,8 @@ const AnimeOneProducts = ({
             </MoreRight>
           </MiddleBiggerDiv>
         </>
+      ) : (
+        <>Welcome the first one.</>
       )}
       <br />
     </AnimOneProduct>

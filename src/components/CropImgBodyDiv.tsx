@@ -10,6 +10,7 @@ interface IProps {
   setLoadImg: (imgString: ImageBody) => void;
   visible: boolean;
   setVisibleFalse: () => void;
+  cube: boolean;
 }
 
 const CropImgBodyDiv = ({
@@ -17,6 +18,7 @@ const CropImgBodyDiv = ({
   setLoadImg,
   visible,
   setVisibleFalse,
+  cube,
 }: IProps): JSX.Element => {
   const ImgCorpRef = useRef<Cropper>(null);
 
@@ -28,9 +30,7 @@ const CropImgBodyDiv = ({
 
   const reSize = () => {
     if (typeof cropper !== "undefined") {
-      const imgString = cropper
-        .getCroppedCanvas({ width: 240, height: 240 })
-        .toDataURL();
+      const imgString = cropper.getCroppedCanvas().toDataURL();
       uploadImg.imgBase64 = imgString;
       setLoadImg(uploadImg);
     }
@@ -40,26 +40,46 @@ const CropImgBodyDiv = ({
     <>
       <Modal footer={[]} onCancel={() => setVisibleFalse()} visible={visible}>
         <div style={{ marginTop: "30px", textAlign: "center" }}>
-          <Cropper
-            src={uploadImg.imgBase64}
-            style={{ height: "100%", width: "100%" }}
-            // Cropper.js options
-            initialAspectRatio={1 / 1}
-            /* eslint-disable @typescript-eslint/no-explicit-any */
-            ref={ImgCorpRef as any}
-            zoomTo={0.5}
-            viewMode={1}
-            aspectRatio={1}
-            minCropBoxHeight={10}
-            minCropBoxWidth={10}
-            background={false}
-            responsive={true}
-            autoCropArea={1}
-            cropBoxResizable={true}
-            onInitialized={(instance) => {
-              setCropper(instance);
-            }}
-          />
+          {cube ? (
+            <Cropper
+              src={uploadImg.imgBase64}
+              style={{ height: "100%", width: "100%" }}
+              // Cropper.js options
+              initialAspectRatio={1 / 1}
+              /* eslint-disable @typescript-eslint/no-explicit-any */
+              ref={ImgCorpRef as any}
+              zoomTo={0.5}
+              viewMode={1}
+              aspectRatio={1}
+              minCropBoxHeight={10}
+              minCropBoxWidth={10}
+              background={false}
+              responsive={true}
+              autoCropArea={1}
+              cropBoxResizable={true}
+              onInitialized={(instance) => {
+                setCropper(instance);
+              }}
+            />
+          ) : (
+            <Cropper
+              src={uploadImg.imgBase64}
+              style={{ height: "100%", width: "100%" }}
+              // Cropper.js options
+              initialAspectRatio={1 / 1}
+              /* eslint-disable @typescript-eslint/no-explicit-any */
+              ref={ImgCorpRef as any}
+              minCropBoxHeight={10}
+              minCropBoxWidth={10}
+              background={false}
+              responsive={true}
+              autoCropArea={1}
+              cropBoxResizable={true}
+              onInitialized={(instance) => {
+                setCropper(instance);
+              }}
+            />
+          )}
           <Button
             style={{
               right: "0px",

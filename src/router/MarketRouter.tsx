@@ -9,7 +9,10 @@ const MarketRouter = (): JSX.Element => {
   return (
     <>
       <Switch>
-        <Route component={MarketplaceShow} path="/mainPage/marketplace/show" />
+        <Route
+          component={MarketplaceShow}
+          path="/mainPage/marketplace/show/:id"
+        />
         <Route
           component={MarketplaceCreate}
           path="/mainPage/marketplace/create"

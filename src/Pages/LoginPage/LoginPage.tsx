@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { userAuth } from "../../api/userApi";
 import AnimeButton from "../../components/Button";
 import {
-  AvatarChooseUploadImg,
   EmailInput,
   LoginBox,
   LoginClickButton,

@@ -12,7 +12,6 @@ import { LoadingType } from "../../../types/EnumTypes";
 import { Avatar } from "../../../types/User";
 
 const AvatarSetting = (): JSX.Element => {
-  
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -31,7 +30,7 @@ const AvatarSetting = (): JSX.Element => {
   const getAvatars = async () => {
     //get all plate
     setLoading(true);
-    const avatars: Avatar[] | null = await avatarsGet();
+    const avatars: Avatar[] | null = await avatarsGet(false);
     setAvatars(avatars);
     setLoading(false);
   };
@@ -55,6 +54,7 @@ const AvatarSetting = (): JSX.Element => {
       _id: new Date().valueOf().toString(),
       imageName: value.imgName,
       imageUrl: value.imgBase64,
+      privateAvatar: false,
     });
     await getAvatars();
     setLoading(false);

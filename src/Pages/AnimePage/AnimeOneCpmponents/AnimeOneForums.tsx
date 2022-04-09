@@ -1295,7 +1295,7 @@ const AnimeOneForum = ({
             <></>
           )}
         </>
-      ) : (
+      ) : forums.length > 0 ? (
         <>
           <MiddleBiggerDiv>
             <MoreRight onClick={() => (toForum ? toForum(3) : {})}>
@@ -1304,6 +1304,8 @@ const AnimeOneForum = ({
             </MoreRight>
           </MiddleBiggerDiv>
         </>
+      ) : (
+        <>Welcome the first one.</>
       )}
     </AnimOneForum>
   );

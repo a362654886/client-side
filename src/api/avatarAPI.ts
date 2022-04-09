@@ -15,8 +15,10 @@ export const avatarAdd = async (avatar: Avatar): Promise<number | null> => {
     });
 };
 
-export const avatarsGet = async (): Promise<Avatar[] | null> => {
-  const endpoint = basicURL + "avatarsGet";
+export const avatarsGet = async (
+  privateAvatar: boolean
+): Promise<Avatar[] | null> => {
+  const endpoint = basicURL + `avatarsGet?privateAvatar=${privateAvatar}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

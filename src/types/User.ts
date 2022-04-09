@@ -20,6 +20,16 @@ export type User = {
   followUsers: string[];
   followMarket: string[];
   awesomeNum: number;
+  interactionAwesome: boolean;
+  interactionComments: boolean;
+  interactionBids: boolean;
+  interactionNewFollowers: boolean;
+  interactionMessages: boolean;
+  interactionFirstAnimeNews: boolean;
+  shipAddress: string;
+  shipCity: string;
+  shipSuburb: string;
+  postCode: string;
 };
 
 export type UserRate = {
@@ -31,4 +41,5 @@ export type Avatar = {
   _id: string;
   imageName: string;
   imageUrl: string;
+  privateAvatar: boolean;
 };

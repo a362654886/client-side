@@ -89,6 +89,22 @@ const ProfileContactPage = (): JSX.Element => {
       followUsers: loginUser?.followUsers ? loginUser?.followUsers : [],
       followMarket: loginUser?.followMarket ? loginUser?.followMarket : [],
       awesomeNum: loginUser?.awesomeNum ? loginUser?.awesomeNum : 0,
+      interactionAwesome:
+        loginUser != undefined ? loginUser?.interactionAwesome : false,
+      interactionComments:
+        loginUser != undefined ? loginUser?.interactionComments : false,
+      interactionBids:
+        loginUser != undefined ? loginUser?.interactionBids : false,
+      interactionNewFollowers:
+        loginUser != undefined ? loginUser?.interactionNewFollowers : false,
+      interactionMessages:
+        loginUser != undefined ? loginUser?.interactionMessages : false,
+      interactionFirstAnimeNews:
+        loginUser != undefined ? loginUser?.interactionFirstAnimeNews : false,
+      shipAddress: loginUser?.shipAddress ? loginUser?.shipAddress : "",
+      shipCity: loginUser?.shipCity ? loginUser?.shipCity : "",
+      shipSuburb: loginUser?.shipSuburb ? loginUser?.shipSuburb : "",
+      postCode: loginUser?.postCode ? loginUser?.postCode : "",
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);

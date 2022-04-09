@@ -31,6 +31,7 @@ import {
 } from "../../helperFns/popUpAlert";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import CropImgBodyDiv from "../../components/CropImgBodyDiv";
 
 const ShowcaseCreate = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -50,6 +51,14 @@ const ShowcaseCreate = (): JSX.Element => {
   const [sourceValue, setSourceValue] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+
+  const [uploadImg, setLoadImg] = useState<ImageBody>({
+    width: 0,
+    height: 0,
+    imgBase64: "",
+    imgName: "",
+  });
+  const [showCropper, setShowCropper] = useState<boolean>(false);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
@@ -175,15 +184,13 @@ const ShowcaseCreate = (): JSX.Element => {
   const onSourceChange = (e: RadioChangeEvent) => setSourceType(e.target.value);
 
   const getImageUpload = () => {
+    console.log(imgArr);
     if (showCaseType !== ShowCaseEnum.Manga) {
       return (
         <>
           {imgArr.map((image, index) => {
             return (
-              <ShowCaseCreateImage
-                key={index}
-                style={{ height: `${image.height + 48}px` }}
-              >
+              <ShowCaseCreateImage key={index} style={{ height: `auto` }}>
                 <div>
                   <img src={image.imgBase64} style={{ maxWidth: "1170px" }} />
                 </div>
@@ -200,7 +207,10 @@ const ShowcaseCreate = (): JSX.Element => {
             backGroundColor={"#F6F6F6"}
             border={"1px solid #F6F6F6"}
             text={""}
-            setImg={(value: ImageBody) => setNewImage(value)}
+            setImg={(value: ImageBody) => {
+              setLoadImg(value);
+              setShowCropper(true);
+            }}
             imageAdd={false}
             margin={"20px auto"}
           />
@@ -228,7 +238,10 @@ const ShowcaseCreate = (): JSX.Element => {
             backGroundColor={"#F6F6F6"}
             border={"1px solid #F6F6F6"}
             text={"Change the Cover Image"}
-            setImg={(value: ImageBody) => replaceNewImage(value)}
+            setImg={(value: ImageBody) => {
+              setLoadImg(value);
+              setShowCropper(true);
+            }}
             margin={"20px auto"}
           />
         </>
@@ -325,6 +338,20 @@ const ShowcaseCreate = (): JSX.Element => {
           />
         </CancelButton>
       </ShowcaseTextInput>
+      <CropImgBodyDiv
+        uploadImg={uploadImg}
+        setLoadImg={(imageBody: ImageBody) => {
+          if (showCaseType !== ShowCaseEnum.Manga) {
+            setNewImage(imageBody);
+          } else {
+            replaceNewImage(imageBody);
+          }
+          setShowCropper(false);
+        }}
+        visible={showCropper}
+        setVisibleFalse={() => setShowCropper(false)}
+        cube={false}
+      />
     </>
   );
 };

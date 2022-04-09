@@ -81,6 +81,36 @@ export const userUpdate = async (updateUser: User): Promise<string | null> => {
     });
 };
 
+export const userUpdateNotification = async (
+  updateUser: User
+): Promise<string | null> => {
+  const endpoint = basicURL + "userUpdateNotification";
+  return Axios.put(endpoint, {
+    user: updateUser,
+  })
+    .then(() => {
+      return "success";
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const userUpdateShipAddress = async (
+  updateUser: User
+): Promise<string | null> => {
+  const endpoint = basicURL + "userUpdateShipAddress";
+  return Axios.put(endpoint, {
+    user: updateUser,
+  })
+    .then(() => {
+      return "success";
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const userUpdateLike = async (
   userId: string,
   likeArr: string[]

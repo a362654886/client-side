@@ -25,9 +25,9 @@ import {
   StringBar,
   StringClear,
 } from "../../cssJs/MarketPage/MarketPlaceCss";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { MarketType } from "../../types/MarketType";
-import { marketAllGet } from "../../api/marketAPI";
+import { marketAllGet, marketAllGetByArr } from "../../api/marketAPI";
 import marketSort from "../../files/marketSort.png";
 import marketFilter from "../../files/marketFilter.png";
 import iconSelect from "../../files/Icon-Selected.svg";
@@ -43,7 +43,13 @@ export enum FilterEnum {
   PriceHeight = "PriceHeight",
 }
 
+interface Para {
+  id: string;
+}
+
 const MarketplaceShow = (): JSX.Element => {
+  const para: Para = useParams();
+
   const history = useHistory();
 
   const [value, setValue] = useState<string>("");
@@ -60,10 +66,12 @@ const MarketplaceShow = (): JSX.Element => {
   const [searchString, setSearchString] = useState<string>("");
   const [filterType, setFilterType] = useState<FilterEnum>(FilterEnum.Latest);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
-  const pageSize = 4;
+  const [searchUser, setSearchUser] = useState<boolean>(true);
+  const pageSize = 24;
 
   useEffect(() => {
     (async function anyNameFunction() {
+      setSearchUser(true);
       await search("");
     })();
   }, []);
@@ -72,12 +80,34 @@ const MarketplaceShow = (): JSX.Element => {
     //console.log(searchString);
   }, [searchString, page]);
 
+  useEffect(() => {
+    (async function anyNameFunction() {
+      setSearchUser(false);
+      await search("");
+    })();
+  }, [filterType, searchString]);
+
   const search = async (value: string) => {
+    console.log(para.id);
+    console.log(searchUser);
+    if (para.id != "null" && searchUser) {
+      await searchByUser(para.id);
+    } else {
+      await searchBySearchValue(value);
+    }
+  };
+
+  const getMore = async () => {
+    await searchBySearchValue("");
+    setPage(page + 1);
+  };
+
+  const searchBySearchValue = async (value: string) => {
     setLoading(true);
     const marketResult = await marketAllGet(
       value,
       1,
-      2,
+      pageSize,
       city,
       country,
       priceFrom,
@@ -92,24 +122,15 @@ const MarketplaceShow = (): JSX.Element => {
     setLoading(false);
   };
 
-  const getMore = async () => {
-    setLoadingMore(true);
-    const marketResult = await marketAllGet(
-      "",
-      page + 1,
-      2,
-      city,
-      country,
-      priceFrom,
-      priceTo,
-      filterType
-    );
+  const searchByUser = async (userId: string) => {
+    setLoading(true);
+    const marketResult = await marketAllGetByArr(userId, page, pageSize, 0);
     if (marketResult) {
-      setAllMarket(allMarket.concat(marketResult.markets));
+      //setAllMarket(allMarket.concat(marketResult.markets));
+      setAllMarket(marketResult.markets);
       setCount(marketResult.count);
     }
-    setLoadingMore(false);
-    setPage(page + 1);
+    setLoading(false);
   };
 
   const chooseMarket = (market: MarketType) => {
@@ -201,6 +222,7 @@ const MarketplaceShow = (): JSX.Element => {
             backGroundColor="white"
             borderColor="black"
             buttonClick={() => {
+              setSearchUser(false);
               setSortByVisible(false);
               setSearch();
             }}
@@ -224,7 +246,7 @@ const MarketplaceShow = (): JSX.Element => {
         <MarketFilterPriceLatest
           onClick={() => setFilterType(FilterEnum.PriceLowest)}
         >
-          Price Lowest
+          Price Highest
           {filterType == FilterEnum.PriceLowest ? (
             <img src={iconSelect} />
           ) : (
@@ -234,7 +256,7 @@ const MarketplaceShow = (): JSX.Element => {
         <MarketFilterPriceHighest
           onClick={() => setFilterType(FilterEnum.PriceHeight)}
         >
-          Price Highest
+          Price Lowest
           {filterType == FilterEnum.PriceHeight ? (
             <img src={iconSelect} />
           ) : (
@@ -312,12 +334,16 @@ const MarketplaceShow = (): JSX.Element => {
           )}
         </MarketShowBox>
         {getLoading()}
-        <MoreButtonDiv onClick={() => getMore()}>
-          <div>
-            <img src={`${getMoreImg}`} />
-            <p>Load More</p>
-          </div>
-        </MoreButtonDiv>
+        {count >= allMarket.length ? (
+          <></>
+        ) : (
+          <MoreButtonDiv onClick={() => getMore()}>
+            <div>
+              <img src={`${getMoreImg}`} />
+              <p>Load More</p>
+            </div>
+          </MoreButtonDiv>
+        )}
       </MarketBodyDiv>
     </div>
   );
