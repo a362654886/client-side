@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LoadingType } from "../types/EnumTypes";
+import { LoadingType, LoginType } from "../types/EnumTypes";
 import { IStoreState } from "../types/IStoreState";
 import avatar from "../files/avatar.png";
 import titleTextWhite from "../files/titleTextWhite.png";
@@ -45,9 +45,12 @@ import Flag from "react-flagkit";
 import { flagGet } from "../helperFns/flag";
 import logOut from "../files/logOut.png";
 import ProfileWrapperDiv from "../components/ProfileWrapperDiv";
-import { LOGIN_USER_NONE } from "../redux/loginUser";
+import { LOGIN_USER_ADD, LOGIN_USER_NONE } from "../redux/loginUser";
 import LOGOMobile from "../files/LOGO-Mobile.svg";
 import menuPng from "../files/menuPng.png";
+import { LOADING_OPEN } from "../redux/loading";
+import { userAuth } from "../api/userApi";
+import { PROFILE_USER_UPDATE } from "../redux/profileUser";
 
 const MainPage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -68,8 +71,24 @@ const MainPage = (): JSX.Element => {
   const history = useHistory();
 
   useEffect(() => {
-    //
+    const userEmail = localStorage.getItem("userEmail");
+    const password = localStorage.getItem("password");
+    if (userEmail !== null && password !== null && loginUser == null) {
+      login(userEmail, password);
+    }
   }, [loginUser]);
+
+  const login = async (email: string, password: string) => {
+    const user = await userAuth(email, password);
+    dispatch({
+      payload: user,
+      type: PROFILE_USER_UPDATE,
+    });
+    dispatch({
+      payload: user,
+      type: LOGIN_USER_ADD,
+    });
+  };
 
   const onResize = React.useCallback(() => {
     setSize({

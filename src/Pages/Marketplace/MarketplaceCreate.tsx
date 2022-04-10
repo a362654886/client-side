@@ -69,9 +69,12 @@ const MarketplaceCreate = (): JSX.Element => {
       })
       .indexOf(imageBody.imgName);
     if (exist == -1) {
-      const newArr = [];
+      const newArr: (string | ImageBody)[] = [];
       imgArr.forEach((image) => newArr.push(image));
       newArr.unshift(imageBody);
+      if (newArr.length >= 5 && newArr.indexOf("add") !== -1) {
+        newArr.pop();
+      }
       setImgArr(newArr);
     }
   };
@@ -79,6 +82,9 @@ const MarketplaceCreate = (): JSX.Element => {
   const deleteImg = (index: number) => {
     const newImgArr = imgArr;
     newImgArr.splice(index, 1);
+    if (newImgArr.length < 4 && newImgArr.indexOf("add") == -1) {
+      newImgArr.push("add");
+    }
     setImgArr(lodash.cloneDeep(newImgArr));
   };
 
@@ -137,36 +143,22 @@ const MarketplaceCreate = (): JSX.Element => {
                       position: "absolute",
                       left: (index + 1) % 2 == 0 ? "300px" : "0px",
                       top: index <= 1 ? "0px" : "320px",
-                      width: "250px",
-                      height: "250px",
-                      backgroundColor: "#F6F6F6",
                       marginLeft: "40px",
-                      paddingTop: "71px",
-                      paddingLeft: "75px",
-                      display: "flex",
-                      borderRadius: "20px",
                     }}
                   >
-                    <img
-                      style={{
-                        height: "25px",
-                        width: "25px",
-                        marginTop: "40px",
-                      }}
-                      src={`${add}`}
-                    />
                     <ImageUpload
-                      width={"60px"}
-                      height={"36px"}
+                      width={"240px"}
+                      height={"240px"}
                       textColor={"black"}
                       backGroundColor={"#F6F6F6"}
                       border={"1px solid #F6F6F6"}
                       text={"Image"}
-                      margin={"15px 0px 0px 0px"}
                       setImg={(value: ImageBody) => {
                         setLoadImg(value);
                         setShowCropper(true);
                       }}
+                      margin={"15px 0px 0px 0px"}
+                      imageAdd={false}
                     />
                   </div>
                 );
@@ -293,7 +285,7 @@ const MarketplaceCreate = (): JSX.Element => {
           cube={false}
         />
       </div>
-      <div className="col-xl-3 col-md-3 col-sm-3 col-3">side</div>
+      <div className="col-xl-3 col-md-3 col-sm-3 col-3"></div>
     </>
   );
 };

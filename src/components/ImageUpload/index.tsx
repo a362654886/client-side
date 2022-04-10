@@ -125,60 +125,62 @@ const ImageUpload = ({
   const getBody = () => {
     if (imageAdd == undefined || imageAdd == true) {
       return (
-        <Upload
+        <UploadButtons
           style={{
             width: width,
+            height: height,
+            color: textColor,
+            backgroundColor: backGroundColor,
+            borderRadius: imageAdd && imageAdd == true ? "4px" : "20px",
+            border: border,
+            fontWeight: "bold",
+            fontSize: " 14px",
+            textAlign: "center",
+            margin: margin,
           }}
-          showUploadList={false}
-          onChange={(e) => handleChange(e)}
         >
-          <p
-            style={{
-              color: textColor,
-              lineHeight: height,
-              width: width,
-            }}
-          >
-            {text}
-          </p>
-        </Upload>
+          <Upload showUploadList={false} onChange={(e) => handleChange(e)}>
+            <p
+              style={{
+                color: textColor,
+                lineHeight: height,
+                width: width,
+              }}
+            >
+              {text}
+            </p>
+          </Upload>
+        </UploadButtons>
       );
     } else {
       return (
-        <Upload
-          style={{
-            width: width,
-          }}
-          showUploadList={false}
-          onChange={(e) => handleChange(e)}
-        >
-          <ImageAddButtonDiv>
-            <img src={add} />
-            <p>Image</p>
+        <Upload showUploadList={false} onChange={(e) => handleChange(e)}>
+          <ImageAddButtonDiv
+            style={{
+              width: width,
+              height: height,
+              color: textColor,
+              backgroundColor: backGroundColor,
+              borderRadius: imageAdd && imageAdd == true ? "4px" : "20px",
+              border: border,
+              fontWeight: "bold",
+              fontSize: " 14px",
+              textAlign: "center",
+              margin: margin,
+            }}
+          >
+            <img
+              style={{ marginLeft: "83.5px", marginTop: "104px" }}
+              src={add}
+            />
+            <p style={{ marginTop: "104px" }}>Image</p>
           </ImageAddButtonDiv>
         </Upload>
       );
     }
   };
 
-  return (
-    <UploadButtons
-      style={{
-        width: width,
-        height: height,
-        color: textColor,
-        backgroundColor: backGroundColor,
-        borderRadius: imageAdd && imageAdd == true ? "4px" : "20px",
-        border: border,
-        fontWeight: "bold",
-        fontSize: " 14px",
-        textAlign: "center",
-        margin: margin,
-      }}
-    >
-      {loading ? <Spin /> : getBody()}
-    </UploadButtons>
-  );
+  return <>{loading ? <Spin /> : getBody()}</>;
 };
 
 export default ImageUpload;

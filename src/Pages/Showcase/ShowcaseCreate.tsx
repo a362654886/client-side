@@ -184,7 +184,6 @@ const ShowcaseCreate = (): JSX.Element => {
   const onSourceChange = (e: RadioChangeEvent) => setSourceType(e.target.value);
 
   const getImageUpload = () => {
-    console.log(imgArr);
     if (showCaseType !== ShowCaseEnum.Manga) {
       return (
         <>
@@ -200,20 +199,24 @@ const ShowcaseCreate = (): JSX.Element => {
               </ShowCaseCreateImage>
             );
           })}
-          <ImageUpload
-            width={"240px"}
-            height={"240px"}
-            textColor={"black"}
-            backGroundColor={"#F6F6F6"}
-            border={"1px solid #F6F6F6"}
-            text={""}
-            setImg={(value: ImageBody) => {
-              setLoadImg(value);
-              setShowCropper(true);
-            }}
-            imageAdd={false}
-            margin={"20px auto"}
-          />
+          <div style={{ width: "100%" }}>
+            <div style={{ width: "240px", margin: "0px auto" }}>
+              <ImageUpload
+                width={"240px"}
+                height={"240px"}
+                textColor={"black"}
+                backGroundColor={"#F6F6F6"}
+                border={"1px solid #F6F6F6"}
+                text={""}
+                setImg={(value: ImageBody) => {
+                  setLoadImg(value);
+                  setShowCropper(true);
+                }}
+                imageAdd={false}
+                margin={"20px auto"}
+              />
+            </div>
+          </div>
         </>
       );
     } else {
