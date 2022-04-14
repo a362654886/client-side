@@ -100,11 +100,13 @@ const SignUpPage = (): JSX.Element => {
     if (email.trim() !== "") {
       const vitrifyCode = Math.random().toFixed(6).slice(-6);
       setVitrifyGenerateCode(vitrifyCode);
+      console.log(email);
       await emailPost(
         email,
         `
         your vitrify code is : ${vitrifyCode}
-      `
+      `,
+        "AnimePark verify code      "
       );
       let localTime = 0;
       const sixtyInterval = setInterval(() => {

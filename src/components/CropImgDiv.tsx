@@ -10,6 +10,7 @@ interface IProps {
   visible: boolean;
   setVisibleFalse: () => void;
   mall?: boolean;
+  radio?: number;
 }
 
 const CropImgDiv = ({
@@ -18,6 +19,7 @@ const CropImgDiv = ({
   visible,
   setVisibleFalse,
   mall,
+  radio,
 }: IProps): JSX.Element => {
   const ImgCorpRef = useRef<Cropper>(null);
 
@@ -37,7 +39,6 @@ const CropImgDiv = ({
   };
 
   const getCropper = () => {
-    console.log(mall)
     return mall ? (
       <Cropper
         src={uploadImg}
@@ -59,9 +60,7 @@ const CropImgDiv = ({
         // Cropper.js options
         initialAspectRatio={1 / 1}
         ref={ImgCorpRef as any}
-        zoomTo={0.5}
-        viewMode={1}
-        aspectRatio={1}
+        aspectRatio={radio}
         minCropBoxHeight={10}
         minCropBoxWidth={10}
         background={false}

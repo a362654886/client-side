@@ -213,9 +213,11 @@ const MainPage = (): JSX.Element => {
                         toProfile(`/mainPage/profilePage/${loginUser._id}`)
                       }
                     >
-                      <p>{`${loginUser.firstName}.${loginUser.lastName
-                        .substring(0, 1)
-                        .toUpperCase()}`}</p>
+                      <p>{`${loginUser ? loginUser.firstName : ""}.${
+                        loginUser
+                          ? loginUser.lastName.substring(0, 1).toUpperCase()
+                          : ""
+                      }`}</p>
                     </LoginBox>
                     <LoginCountry>
                       <Flag

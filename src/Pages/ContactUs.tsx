@@ -22,7 +22,8 @@ const ContactUs = (): JSX.Element => {
         email:${email},
         title:${title},
         message:${message}</div>
-      `
+      `,
+        "contact us"
       ),
       "send email fail",
       () => {

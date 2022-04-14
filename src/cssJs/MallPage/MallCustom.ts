@@ -29,6 +29,7 @@ export const MallCustomHeader = styled.div`
 
 export const MallCustomImgDiv = styled.div`
   width: 100%;
+  position: relative;
 `;
 
 export const MallCustomInsideImgDiv = styled.div`
@@ -38,8 +39,6 @@ export const MallCustomInsideImgDiv = styled.div`
 `;
 
 export const MallCustomInsideBackImg = styled.img`
-  height: 600px;
-  width: 600px;
   margin: 0px auto;
   text-align: center;
 `;
@@ -101,4 +100,19 @@ export const MallCustomerEmailInput = styled(Input)`
 
 export const ButtonDiv = styled.div`
   margin-bottom: 40px;
+`;
+
+export const MallCustomerTshirtImg = styled.img`
+  position: absolute;
+  top: 150px;
+  left: 120px;
+  height: 180px;
+  width: 120px;
+`;
+export const MallCustomerScrollImg = styled.img`
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  height: 360px;
+  width: 230px;
 `;

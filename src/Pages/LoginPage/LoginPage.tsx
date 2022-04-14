@@ -48,7 +48,6 @@ const LoginPage = (): JSX.Element => {
       });
       setLoadingAlert(true);
     } else {
-      console.log("Asfd")
       localStorage.setItem("userEmail", email);
       localStorage.setItem("password", password);
       dispatch({

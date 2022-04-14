@@ -13,6 +13,8 @@ import {
   ButtonDiv,
   MallCustomerEmailInput,
   MallCustomerInputTitle,
+  MallCustomerScrollImg,
+  MallCustomerTshirtImg,
   MallCustomHeader,
   MallCustomHeaderDiv,
   MallCustomImgDiv,
@@ -29,6 +31,41 @@ import MallPhone from "./MallCustomSelect/MallPhone";
 import MallPillow from "./MallCustomSelect/MallPillow";
 import MallScroll from "./MallCustomSelect/MallScroll";
 import MallTShirt from "./MallCustomSelect/MallTShirt";
+import mallPhoneBack from "../../files/mallPhoneBack.svg";
+import mallPillowBack from "../../files/mallPillowBack.svg";
+import mallTshirtBack from "../../files/mallTshirtBack.svg";
+import mallWallBack from "../../files/mallWallBack.svg";
+
+const customerTypes: MallCustomType[] = [
+  {
+    name: "phone",
+    imgURL: mallPhoneBack,
+    height: "400px",
+    width: "200px",
+    radio: 2 / 4,
+  },
+  {
+    name: "tshirt",
+    imgURL: mallTshirtBack,
+    height: "480px",
+    width: "360px",
+    radio: 36 / 48,
+  },
+  {
+    name: "pillow",
+    imgURL: mallPillowBack,
+    height: "400px",
+    width: "300px",
+    radio: 3 / 4,
+  },
+  {
+    name: "wall",
+    imgURL: mallWallBack,
+    height: "400px",
+    width: "350px",
+    radio: 23 / 36,
+  },
+];
 
 const MallCustom = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -39,36 +76,22 @@ const MallCustom = (): JSX.Element => {
   );
 
   const [mallCustomerLoading, setMallCustomerLoading] = useState(false);
-  const [mallCustomer, setMallCustomer] = useState<MallCustomType[]>([]);
   const [chooseIndex, setChooseIndex] = useState<number>(0);
   const [attributes, setAttributes] = useState<string>("");
   const [email, setContactEmail] = useState<string>("");
   const [uploadImg, setLoadImg] = useState<string>("");
   const [showCropper, setShowCropper] = useState<boolean>(false);
   const [resizeUploadImg, setResizeUploadImg] = useState<string>("");
+  const [mallCustomer, setMallCustomer] =
+    useState<MallCustomType[]>(customerTypes);
 
   useEffect(() => {
-    (async function anyNameFunction() {
-      await getMallCustomer();
-    })();
-  }, []);
-
-  useEffect(() => {
-    console.log(mallCustomer);
-  }, [mallCustomer, chooseIndex]);
+    //
+  }, [chooseIndex]);
 
   useEffect(() => {
     console.log(attributes);
   }, [attributes]);
-
-  const getMallCustomer = async () => {
-    setMallCustomerLoading(true);
-    const mallCustomerResult = await mallCustomerAPI();
-    if (mallCustomerResult) {
-      setMallCustomer(mallCustomerResult);
-    }
-    setMallCustomerLoading(false);
-  };
 
   const setUploadImg = (value: ImageBody) => {
     setLoadImg(value.imgBase64);
@@ -76,11 +99,12 @@ const MallCustom = (): JSX.Element => {
 
   const sendEmail = async () =>
     await emailPost(
-      `animewebnz@gmail.com`,
+      email,
       `
     email:${email},
     attributes:${attributes}
-  `
+  `,
+      "mall"
     );
 
   const sendDesignHistory = async () => {
@@ -96,6 +120,15 @@ const MallCustom = (): JSX.Element => {
       userId: `${loginUser ? loginUser._id : ""}`,
     };
     await designHistoryPost(body);
+  };
+
+  const getUploadImage = () => {
+    if (chooseIndex == 1) {
+      return <MallCustomerTshirtImg src={resizeUploadImg} />;
+    }
+    if (chooseIndex == 3) {
+      return <MallCustomerScrollImg src={resizeUploadImg} />;
+    }
   };
 
   const getAttributeEle = () => {
@@ -154,16 +187,17 @@ const MallCustom = (): JSX.Element => {
       <MallCustomImgDiv>
         <MallCustomInsideImgDiv>
           <MallCustomInsideBackImg
-            src={
-              mallCustomer[chooseIndex] ? mallCustomer[chooseIndex].imgURL : ""
-            }
+            src={mallCustomer[chooseIndex].imgURL}
             style={{
               backgroundImage: `url(${resizeUploadImg})`,
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
+              height: mallCustomer[chooseIndex].height,
+              width: mallCustomer[chooseIndex].width,
             }}
           />
         </MallCustomInsideImgDiv>
+        {getUploadImage()}
       </MallCustomImgDiv>
       <UploadButton>
         <ImageUpload
@@ -214,16 +248,58 @@ const MallCustom = (): JSX.Element => {
           </MiddleDiv>
         </ButtonDiv>
       </div>
-      <CropImgDiv
-        uploadImg={uploadImg}
-        setLoadImg={(image: string) => {
-          setResizeUploadImg(image);
-          setShowCropper(false);
-        }}
-        visible={showCropper}
-        setVisibleFalse={() => setShowCropper(false)}
-        mall={true}
-      />
+      {mallCustomer[chooseIndex].radio == 2 / 4 && (
+        <CropImgDiv
+          uploadImg={uploadImg}
+          setLoadImg={(image: string) => {
+            setResizeUploadImg(image);
+            setShowCropper(false);
+          }}
+          visible={showCropper}
+          setVisibleFalse={() => setShowCropper(false)}
+          mall={false}
+          radio={mallCustomer[chooseIndex].radio}
+        />
+      )}
+      {mallCustomer[chooseIndex].radio == 36 / 48 && (
+        <CropImgDiv
+          uploadImg={uploadImg}
+          setLoadImg={(image: string) => {
+            setResizeUploadImg(image);
+            setShowCropper(false);
+          }}
+          visible={showCropper}
+          setVisibleFalse={() => setShowCropper(false)}
+          mall={false}
+          radio={mallCustomer[chooseIndex].radio}
+        />
+      )}
+      {mallCustomer[chooseIndex].radio == 3 / 4 && (
+        <CropImgDiv
+          uploadImg={uploadImg}
+          setLoadImg={(image: string) => {
+            setResizeUploadImg(image);
+            setShowCropper(false);
+          }}
+          visible={showCropper}
+          setVisibleFalse={() => setShowCropper(false)}
+          mall={false}
+          radio={mallCustomer[chooseIndex].radio}
+        />
+      )}
+      {mallCustomer[chooseIndex].radio == 23 / 36 && (
+        <CropImgDiv
+          uploadImg={uploadImg}
+          setLoadImg={(image: string) => {
+            setResizeUploadImg(image);
+            setShowCropper(false);
+          }}
+          visible={showCropper}
+          setVisibleFalse={() => setShowCropper(false)}
+          mall={false}
+          radio={mallCustomer[chooseIndex].radio}
+        />
+      )}
     </>
   );
 };
