@@ -488,9 +488,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           <MarketViewMore
             onClick={() => {
               history.push(
-                `/mainPage/marketplace/show/${
-                  marketState ? marketState.userId : ""
-                }`
+                `/mainPage/profilePage/${marketState ? marketState.userId : ""}`
               );
             }}
           >

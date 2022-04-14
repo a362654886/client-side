@@ -1026,21 +1026,29 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                   <ShowcaseReply>{reply.text}</ShowcaseReply>
                 </>
               )}
-              {!reply.edit ? (
-                <ShowcaseEditAndDeleteDiv>
-                  <div onClick={() => editShowcaseReply(index, secondIndex)}>
-                    <img src={`${editIcon}`} />
-                    <p>Edit</p>
-                    <img
-                      style={{ width: "20px" }}
-                      onClick={() => {
-                        console.log("deleteIcon");
-                      }}
-                      src={`${deleteIcon}`}
-                    />
-                    <p>Delete</p>
-                  </div>
-                </ShowcaseEditAndDeleteDiv>
+              {loginUser?._id == reply.userId ? (
+                <>
+                  {!reply.edit ? (
+                    <ShowcaseEditAndDeleteDiv>
+                      <div
+                        onClick={() => editShowcaseReply(index, secondIndex)}
+                      >
+                        <img src={`${editIcon}`} />
+                        <p>Edit</p>
+                        <img
+                          style={{ width: "20px" }}
+                          onClick={() => {
+                            console.log("deleteIcon");
+                          }}
+                          src={`${deleteIcon}`}
+                        />
+                        <p>Delete</p>
+                      </div>
+                    </ShowcaseEditAndDeleteDiv>
+                  ) : (
+                    <></>
+                  )}
+                </>
               ) : (
                 <></>
               )}
@@ -1184,24 +1192,36 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                     <ShowcaseReply>{showcaseSecondReply.text}</ShowcaseReply>
                   </>
                 )}
-                <ShowcaseEditAndDeleteDiv>
-                  <div
-                    onClick={() =>
-                      editShowcaseSecondReply(index, secondIndex, thirdIndex)
+                {loginUser?._id == showcaseSecondReply.userId ? (
+                  <>
+                    {
+                      <ShowcaseEditAndDeleteDiv>
+                        <div
+                          onClick={() =>
+                            editShowcaseSecondReply(
+                              index,
+                              secondIndex,
+                              thirdIndex
+                            )
+                          }
+                        >
+                          <img src={`${editIcon}`} />
+                          <p>Edit</p>
+                          <img
+                            style={{ width: "20px" }}
+                            onClick={() => {
+                              console.log("deleteIcon");
+                            }}
+                            src={`${deleteIcon}`}
+                          />
+                          <p>Delete</p>
+                        </div>
+                      </ShowcaseEditAndDeleteDiv>
                     }
-                  >
-                    <img src={`${editIcon}`} />
-                    <p>Edit</p>
-                    <img
-                      style={{ width: "20px" }}
-                      onClick={() => {
-                        console.log("deleteIcon");
-                      }}
-                      src={`${deleteIcon}`}
-                    />
-                    <p>Delete</p>
-                  </div>
-                </ShowcaseEditAndDeleteDiv>
+                  </>
+                ) : (
+                  <></>
+                )}
                 <ReplyAddDiv>
                   <AnimeButton
                     para=""

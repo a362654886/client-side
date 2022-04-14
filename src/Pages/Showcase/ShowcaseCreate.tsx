@@ -157,7 +157,13 @@ const ShowcaseCreate = (): JSX.Element => {
     });
     if (TagCheck(tags)) {
       const r = await showCaseAdd(showCase);
-      history.push("/mainPage/showcase/showCollection");
+      if (showCaseType == ShowCaseEnum.Collections) {
+        history.push("/mainPage/showcase/showCollection");
+      } else if (showCaseType == ShowCaseEnum.Illustrations) {
+        history.push("/mainPage/showcase/showIllustrations");
+      } else {
+        history.push("/mainPage/showcase/showManga");
+      }
     } else {
       openNotification(
         "please add # before tag",

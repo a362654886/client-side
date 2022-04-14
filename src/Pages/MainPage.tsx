@@ -73,7 +73,13 @@ const MainPage = (): JSX.Element => {
   useEffect(() => {
     const userEmail = localStorage.getItem("userEmail");
     const password = localStorage.getItem("password");
-    if (userEmail !== null && password !== null && loginUser == null) {
+    if (
+      userEmail !== null &&
+      password !== null &&
+      userEmail !== "null" &&
+      password !== "null" &&
+      loginUser == null
+    ) {
       login(userEmail, password);
     }
   }, [loginUser]);
@@ -273,6 +279,8 @@ const MainPage = (): JSX.Element => {
               <MobileLoginOutImg
                 src={logOut}
                 onClick={() => {
+                  localStorage.setItem("userEmail", "null");
+                  localStorage.setItem("password", "null");
                   dispatch({
                     payload: null,
                     type: LOGIN_USER_NONE,

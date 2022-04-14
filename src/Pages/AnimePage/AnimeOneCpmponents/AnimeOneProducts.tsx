@@ -105,7 +105,6 @@ const AnimeOneProducts = ({
 
   const getProducts = async () => {
     setLoading(true);
-    console.log(chooseAnime);
     const productsResult = await productAllGet(
       discovery ? "" : chooseAnime ? chooseAnime._id : "",
       pageNum,
@@ -120,7 +119,6 @@ const AnimeOneProducts = ({
 
   const getIniProducts = async () => {
     setLoading(true);
-    console.log(chooseAnime);
     const productsResult = await productAllGet(
       discovery ? "" : chooseAnime ? chooseAnime._id : "",
       pageNum,
@@ -206,7 +204,12 @@ const AnimeOneProducts = ({
             }}
             key={index}
           >
-            <ProductImgDiv src={product.productImg} />
+            <ProductImgDiv
+              onClick={() => {
+                window.open(product.link, "_blank");
+              }}
+              src={product.productImg}
+            />
             <LinkP
               onClick={() => {
                 window.open(product.link, "_blank");

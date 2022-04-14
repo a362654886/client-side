@@ -82,7 +82,9 @@ const ProfileMarketplacePage = (): JSX.Element => {
   };
 
   const chooseMarket = (marketId: string) => {
-    history.push(`marketplace/showOne/${marketId}`);
+    console.log(history)
+    history.location.pathname = "/mainPage/"
+    history.replace(`marketplace/showOne/${marketId}`);
   };
 
   const getButtons = () => {

@@ -4,6 +4,7 @@ import {
   AweSomeDiv,
   ShowAvatarDiv,
   ShowcaseImage,
+  ShowcaseMangaDescription,
   ShowcaseMangaHeader,
   ShowcaseMangaHeaderP,
   ShowcaseMangaHeaderTitle,
@@ -198,7 +199,9 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
             </ShowAvatarDiv>
           </ShowcaseMangaHeader>
           <p>Updated to Episode 33</p>
-          <p>{showcase.description ? showcase.description : ""}</p>
+          <ShowcaseMangaDescription>
+            {showcase.description ? showcase.description : ""}
+          </ShowcaseMangaDescription>
           <div style={{ display: "flex" }}>
             {showcase.tags.map((tag, index) => {
               return (

@@ -123,6 +123,7 @@ export const ProductHeader = styled.p`
 export const ProductImgDiv = styled.img`
   height: 240px;
   width: 240px;
+  cursor: pointer;
 `;
 
 export const LinkP = styled.p`

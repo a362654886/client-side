@@ -461,6 +461,12 @@ export const ShowcaseMangaHeader = styled.div`
   display: flex;
 `;
 
+export const ShowcaseMangaDescription = styled.p`
+  width: 100%;
+  max-width: 866px;
+  word-wrap: break-word;
+`;
+
 export const ShowcaseMangaHeaderTitle = styled.h2`
   font-family: "Arial";
   line-height: 40px;

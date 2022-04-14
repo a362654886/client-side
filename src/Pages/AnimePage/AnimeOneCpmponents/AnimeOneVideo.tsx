@@ -100,7 +100,6 @@ const AnimeOneVideo = ({
         await getIniVideos();
       }
     })();
-    console.log(discovery);
   }, [chooseAnime, discovery]);
 
   const getIniVideos = async () => {
@@ -111,7 +110,6 @@ const AnimeOneVideo = ({
       pageSize
     );
     if (videoResult) {
-      console.log(videoResult);
       setVideos(videoResult.result);
       setCount(videoResult.count);
     }
@@ -259,6 +257,7 @@ const AnimeOneVideo = ({
             linkWithEmbed(video, index)
           ) : (
             <h2
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 toOther(video.link);
               }}
