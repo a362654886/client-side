@@ -40,6 +40,7 @@ export const AnimeButton = ({
         fontSize: " 16px",
         textAlign: "center",
         padding: padding,
+        lineHeight: "22px",
       }}
       onClick={() => buttonClick(para)}
     >

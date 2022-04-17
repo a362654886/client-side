@@ -31,6 +31,7 @@ import { IfLoginCheck } from "../../helperFns/loginCheck";
 import { User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";
 import { getWidth } from "../../helperFns/widthFn";
+import { getShowCasePage } from "../../helperFns/getPage";
 
 const ShowcaseShowIllustrations = (): JSX.Element => {
   const history = useHistory();
@@ -41,12 +42,13 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
 
   const [loading, setLoading] = useState(false);
   const [typeLoading, setTypeLoading] = useState(false);
-  const [pageNum, setPageNum] = useState<number>(1);
+  const [pageNum, setPageNum] = useState<number>(0);
   const [allShowCases, setAllShowCases] = useState<ShowCaseType[]>([]);
   const [count, setCount] = useState<number>(0);
   const [showCaseType] = useState<ShowCaseEnum>(ShowCaseEnum.Illustrations);
   const [ifNew, setIfNew] = useState<boolean>(true);
   const [searchValue, SetSearchValue] = useState<string>("");
+  const [iniState, SetIniState] = useState<boolean>(true);
 
   const pageSize = 3;
 
@@ -69,20 +71,33 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
   ];
 
   useEffect(() => {
-    (async function anyNameFunction() {
-      await searchType(showCaseType);
-    })();
-  }, [showCaseType]);
+    const { search } = history.location;
+    const propPage = getShowCasePage(search);
+    setPageNum(parseInt(propPage));
+    SetIniState(true);
+  }, []);
 
   useEffect(() => {
-    if (pageNum == 1) {
-      (async function anyNameFunction() {
-        await searchType(showCaseType);
-      })();
-    } else {
-      setPageNum(1);
+    //console.log(loading);
+  }, [loading]);
+
+  useEffect(() => {
+    if (iniState == false) {
+      //setAllShowCases([]);
+      searchPage(1);
     }
   }, [ifNew]);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      await searchPage();
+      SetIniState(false);
+    })();
+  }, [pageNum]);
+
+  useEffect(() => {
+    //console.log(allShowCases);
+  }, [allShowCases, searchValue]);
 
   const toPage = (url: string) => history.push(url);
 
@@ -119,8 +134,8 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
               buttonClick={() => {
                 toPage(
                   index == 0
-                    ? `/mainPage/showcase/showCollection`
-                    : "/mainPage/showcase/showManga"
+                    ? `/mainPage/showcase/showCollection?page=1`
+                    : "/mainPage/showcase/showManga?page=1"
                 );
               }}
             />
@@ -160,54 +175,29 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
     );
   };
 
-  useEffect(() => {
-    if (pageNum > 1) {
-      (async function anyNameFunction() {
-        await searchPage();
-      })();
+  const searchPage = async (searchPage?: number) => {
+    if (pageNum > 0) {
+      setLoading(true);
+      const _pageNum = searchPage != undefined ? searchPage : pageNum;
+      const showcaseResult = await showCaseAllGet(
+        showCaseType,
+        ifNew ? "new" : "hot",
+        _pageNum,
+        pageSize,
+        "",
+        searchValue,
+        searchValue
+      );
+      if (showcaseResult) {
+        setAllShowCases(
+          _pageNum !== 1
+            ? allShowCases.concat(showcaseResult.result)
+            : showcaseResult.result
+        );
+        setCount(showcaseResult.count);
+      }
+      setLoading(false);
     }
-  }, [pageNum]);
-
-  useEffect(() => {
-    //console.log(allShowCases);
-  }, [allShowCases, searchValue]);
-
-  const searchType = async (type: ShowCaseEnum) => {
-    setTypeLoading(true);
-    const showcaseResult = await showCaseAllGet(
-      type,
-      ifNew ? "new" : "hot",
-      pageNum,
-      pageSize,
-      "",
-      searchValue,
-      searchValue
-    );
-    if (showcaseResult) {
-      //setAllShowCases(allShowCases.concat(showcaseResult.result));
-      setAllShowCases(showcaseResult.result);
-      setCount(showcaseResult.count);
-    }
-    setTypeLoading(false);
-  };
-
-  const searchPage = async () => {
-    setLoading(true);
-    const showcaseResult = await showCaseAllGet(
-      showCaseType,
-      ifNew ? "new" : "hot",
-      pageNum,
-      pageSize,
-      "",
-      searchValue,
-      searchValue
-    );
-    if (showcaseResult) {
-      setAllShowCases(allShowCases.concat(showcaseResult.result));
-      //setAllShowCases(showcaseResult.result);
-      setCount(showcaseResult.count);
-    }
-    setLoading(false);
   };
 
   const getMore = () => {
@@ -221,7 +211,7 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
         <img src={`${loadingImg}`} />
       </LoadingImgDiv>
     ) : (
-      <></>
+      <>{getShowcaseForums()}</>
     );
 
   const getShowcaseForums = () => {
@@ -235,10 +225,7 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
             }}
           />
           <ShowcaseSearch>
-            <img
-              onClick={() => searchType(showCaseType)}
-              src={`${searchImg}`}
-            />
+            <img onClick={() => searchPage(1)} src={`${searchImg}`} />
           </ShowcaseSearch>
         </ShowcaseSearchInputDiv>
         <AnimTwoButtons>
@@ -263,11 +250,12 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
           </LoadingImgDiv>
         ) : (
           <>
-            <ShowcaseForum showcases={allShowCases} />
+            <ShowcaseForum showcases={allShowCases} editLink={true} />
           </>
         )}
-        {getLoading()}
-        {allShowCases.length < count ? (
+        {allShowCases.length +
+          parseInt(getShowCasePage(history.location.search)) * pageSize <
+        count ? (
           <MoreButtonDiv onClick={() => getMore()}>
             <div>
               <img src={`${getMoreImg}`} />
@@ -307,7 +295,7 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
             {getButtons()}
           </AnimeButtonsDiv>
           {getHeader()}
-          {getShowcaseForums()}
+          {getLoading()}
         </ShowCaseDiv>
         <div
           style={{

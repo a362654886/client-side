@@ -40,8 +40,7 @@ const ShowcaseSide = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(users);
-    console.log(allTags);
+    //
   }, [users, allTags]);
 
   useEffect(() => {

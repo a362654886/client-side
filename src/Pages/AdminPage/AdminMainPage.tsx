@@ -5,12 +5,13 @@ import { useHistory } from "react-router-dom";
 import {
   AdminLeftMenuDiv,
   AdminPageDiv,
-  AdminText,
-  LogoutButton,
 } from "../../cssJs/AdminPage/adminCss";
 import {
   AdminLogoutDiv,
+  AdminMainDiv,
   AdminMenuDiv,
+  AdminText,
+  LogoutButton,
   MenuButton,
   MenuChooseButton,
 } from "../../cssJs/AdminPage/adminManagementCss";
@@ -53,11 +54,14 @@ const AdminMainPage = (): JSX.Element => {
 
   const toPage = (url: string) => history.push(url);
   const menu = [
+    "Home Page",
     "News",
-    "Anime",
-    "Redeem Levels",
-    "Custom Design",
-    "Sys Setting",
+    "Anime Library",
+    "Awesome Levels",
+    "Redeem Products",
+    "Avatars",
+    "Content Management",
+    "Data",
   ];
 
   const getMenu = () => {
@@ -98,7 +102,7 @@ const AdminMainPage = (): JSX.Element => {
   };
 
   return (
-    <>
+    <AdminMainDiv>
       {loginUser !== null ? (
         <>
           <LoadingBox>
@@ -106,12 +110,12 @@ const AdminMainPage = (): JSX.Element => {
               <img src={`${loadingImg}`} />
             </div>
           </LoadingBox>
+          <AdminLogoutDiv>
+            <AdminText>{loginUser?.userEmail}</AdminText>
+            <LogoutButton onClick={() => logOut()}>Log out</LogoutButton>
+          </AdminLogoutDiv>
           <AdminPageDiv>
             <AdminLeftMenuDiv>
-              <AdminLogoutDiv>
-                <AdminText>{loginUser?.userEmail}</AdminText>
-                <LogoutButton onClick={() => logOut()}>Log out</LogoutButton>
-              </AdminLogoutDiv>
               <AdminMenuDiv>{getMenu()}</AdminMenuDiv>
             </AdminLeftMenuDiv>
             <AdminPageRouter />
@@ -120,7 +124,7 @@ const AdminMainPage = (): JSX.Element => {
       ) : (
         <AdminPage />
       )}
-    </>
+    </AdminMainDiv>
   );
 };
 

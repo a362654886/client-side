@@ -3,60 +3,56 @@ import styled from "styled-components";
 
 export const AdminPageDiv = styled.div`
   display: flex;
-  width: 1170px;
+  width: 100%;
+  height: calc(100vh);
   margin: 0 auto;
   display: flex;
 `;
 
 export const AdminLeftMenuDiv = styled.div`
   width: 273px;
-  height: 1030px;
-  background-color: #f6f6f6;
+  height: 834px;
+  border: 1px solid black;
 `;
 
 export const AdminRightMenuDiv = styled.div`
   height: calc(100vh);
 `;
 
-export const AdminTitle = styled.p`
+export const AdminTitle = styled.h1`
   color: #302d46;
   font-weight: Bold;
-  margin-top: 169px;
-  margin-left: 195px;
+  width: 100%;
+  height: 52px;
+  line-height: 52px;
+  margin-bottom: 0px;
+  font-size: 32px;
+  text-align: center;
+`;
+
+export const AdminLoginDiv = styled.p`
+  width: 395px;
+  height: 268px;
+  margin: auto;
 `;
 
 export const EmailInput = styled(Input)`
   width: 239px;
+  margin-left: 78px;
+  margin-right: 78px;
   margin-top: 32px;
-  margin-left: 157px;
-  margin-right: 200px;
 `;
 
 export const PasswordInput = styled(Input)`
   width: 239px;
-  margin-top: 44px;
-  margin-left: 157px;
-  margin-left: 157px;
+  margin-left: 78px;
+  margin-right: 78px;
+  margin-top: 32px;
 `;
 
 export const SubmitButton = styled.div`
-  width: 239px;
-  margin-top: 69px;
-  margin-left: 279px;
-`;
-
-export const AdminText = styled.p`
-  width: 168px;
-  height: 22px;
-  color: #4a4a4a;
-  margin-top: 55px;
-  margin-left: 68px;
-`;
-
-export const LogoutButton = styled(Button)`
   width: 120px;
-  height: 32px;
-  margin-left: 68px;
-  margin-top: 19px;
-  font-weight: bold;
+  margin-left: 138px;
+  margin-right: 138px;
+  margin-top: 32px;
 `;

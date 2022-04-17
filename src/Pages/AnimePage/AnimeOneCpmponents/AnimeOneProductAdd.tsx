@@ -67,7 +67,6 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    console.log(urlCheck(link));
     if (!urlCheck(link)) {
       openNotification(
         "Please enter a valid link starting with http or https",

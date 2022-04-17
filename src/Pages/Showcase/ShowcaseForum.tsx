@@ -86,9 +86,10 @@ import { formatName } from "../../helperFns/nameFn";
 
 interface IProps {
   showcases: ShowCaseType[];
+  editLink: boolean;
 }
 
-const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
+const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -898,9 +899,21 @@ const ShowcaseForum = ({ showcases }: IProps): JSX.Element => {
                 <div>
                   <img
                     src={`${editIcon}`}
-                    onClick={() => editShowcase(index)}
+                    onClick={() => {
+                      editLink
+                        ? toPage(`showcaseCollectionOne/${showcase._id}`)
+                        : editShowcase(index);
+                    }}
                   />
-                  <p onClick={() => editShowcase(index)}>Edit</p>
+                  <p
+                    onClick={() => {
+                      editLink
+                        ? toPage(`showcaseCollectionOne/${showcase._id}`)
+                        : editShowcase(index);
+                    }}
+                  >
+                    Edit
+                  </p>
                   <DeleteWrapperDiv
                     element={
                       <AnimeEditAndDeleteDiv>

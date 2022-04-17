@@ -26,6 +26,7 @@ import {
   ShowCaseDiv,
   ShowcaseEditDiv,
   ShowcaseImage,
+  ShowcaseMangaDescription,
   ShowcaseMangaHeader,
   ShowcaseMangaHeaderP,
   ShowcaseMangaHeaderTitle,
@@ -352,7 +353,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
       type: LOADING_OPEN,
     });
     await showCaseMangaDelete(manga ? manga._id : "");
-    history.push("/mainPage/showcase/showManga");
+    history.push("/mainPage/showcase/showManga?page=1");
     dispatch({
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,
@@ -394,7 +395,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
           </ShowAvatarDiv>
         </ShowcaseMangaHeader>
         <p>Updated to Episode 33</p>
-        <p>{showCase ? showCase.description : ""}</p>
+        <ShowcaseMangaDescription>
+          {showCase ? showCase.description : ""}
+        </ShowcaseMangaDescription>
         {editShowCaseManga ? (
           <>
             <TextArea
@@ -1060,7 +1063,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               borderColor="#4BA3C3"
               buttonClick={() => {
                 history.push({
-                  pathname: "/mainPage/showcase/showCollection",
+                  pathname: "/mainPage/showcase/showCollection?page=1",
                   state: `Collections`,
                 });
               }}
@@ -1075,7 +1078,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               borderColor="#4BA3C3"
               buttonClick={() => {
                 history.push({
-                  pathname: "/mainPage/showcase/showIllustrations",
+                  pathname: "/mainPage/showcase/showIllustrations?page=1",
                   state: `Illustrations`,
                 });
               }}

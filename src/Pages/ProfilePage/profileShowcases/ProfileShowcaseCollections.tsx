@@ -145,7 +145,7 @@ const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
           </LoadingImgDiv>
         ) : (
           <>
-            <ShowcaseForum showcases={allShowCases} />
+            <ShowcaseForum showcases={allShowCases} editLink={false} />
           </>
         )}
         {getLoading()}

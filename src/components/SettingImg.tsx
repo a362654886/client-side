@@ -51,7 +51,7 @@ const SettingImg = ({
   const [messageValue, setMessageValue] = useState("");
 
   useEffect(() => {
-    console.log(userId);
+    //console.log(userId);
   }, [userId]);
 
   const content = () => {

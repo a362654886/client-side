@@ -461,7 +461,7 @@ const HomePage = (): JSX.Element => {
               <MiddleBiggerDiv>
                 <MoreRight
                   onClick={() =>
-                    history.push("/mainPage/showcase/showCollection")
+                    history.push("/mainPage/showcase/showCollection?page=1")
                   }
                 >
                   <img src={moreRightImg} />
@@ -486,7 +486,7 @@ const HomePage = (): JSX.Element => {
               <MiddleBiggerDiv>
                 <MarketPlaceMore
                   onClick={() =>
-                    history.push("/mainPage/showcase/showCollection")
+                    history.push("/mainPage/showcase/showCollection?page=1")
                   }
                 >
                   <img src={moreRightImg} />

@@ -158,11 +158,11 @@ const ShowcaseCreate = (): JSX.Element => {
     if (TagCheck(tags)) {
       const r = await showCaseAdd(showCase);
       if (showCaseType == ShowCaseEnum.Collections) {
-        history.push("/mainPage/showcase/showCollection");
+        history.push("/mainPage/showcase/showCollection?page=1");
       } else if (showCaseType == ShowCaseEnum.Illustrations) {
-        history.push("/mainPage/showcase/showIllustrations");
+        history.push("/mainPage/showcase/showIllustrations?page=1");
       } else {
-        history.push("/mainPage/showcase/showManga");
+        history.push("/mainPage/showcase/showManga?page=1");
       }
     } else {
       openNotification(

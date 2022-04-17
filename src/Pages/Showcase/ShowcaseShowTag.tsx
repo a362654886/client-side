@@ -100,11 +100,11 @@ const ShowcaseShowTag = (): JSX.Element => {
             borderColor="#4BA3C3"
             buttonClick={() => {
               if (index == 0) {
-                toPage(`/mainPage/showcase/showCollection`);
+                toPage(`/mainPage/showcase/showCollection?page=1`);
               } else if (index == 1) {
-                toPage(`/mainPage/showcase/showIllustrations`);
+                toPage(`/mainPage/showcase/showIllustrations?page=1`);
               } else {
-                toPage(`/mainPage/showcase/showManga`);
+                toPage(`/mainPage/showcase/showManga?page=1`);
               }
             }}
           />
@@ -219,7 +219,7 @@ const ShowcaseShowTag = (): JSX.Element => {
             <img src={`${loadingImg}`} />
           </LoadingImgDiv>
         ) : (
-          <ShowcaseForum showcases={allShowCases} />
+          <ShowcaseForum showcases={allShowCases} editLink={true} />
         )}
         {getLoading()}
         {allShowCases.length < count ? (

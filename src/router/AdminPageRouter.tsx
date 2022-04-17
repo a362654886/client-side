@@ -1,9 +1,12 @@
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 import AdminAnimePage from "../Pages/AdminPage/AdminAnimePage";
-import AdminCustomDesignPage from "../Pages/AdminPage/AdminCustomDesignPage";
+import AdminAwesomeLevelsPage from "../Pages/AdminPage/AdminAwesomeLevelsPage";
+import AdminContentManagementPage from "../Pages/AdminPage/AdminContentManagementPage";
+import AdminDataPage from "../Pages/AdminPage/AdminDataPage";
+import AdminHomePage from "../Pages/AdminPage/AdminHomePage";
 import AdminNewsPage from "../Pages/AdminPage/AdminNewsPage";
-import AdminRedeemLevelsPage from "../Pages/AdminPage/AdminRedeemLevelsPage";
+import AdminRedeemProductPage from "../Pages/AdminPage/AdminRedeemProductPage";
 import AdminSysSetting from "../Pages/AdminPage/AdminSysSetting";
 
 const AdminPageRouter = (): JSX.Element => {
@@ -11,19 +14,29 @@ const AdminPageRouter = (): JSX.Element => {
     <>
       <Switch>
         <Route component={AdminNewsPage} path="/adminManagement/News" />
-        <Route component={AdminAnimePage} path="/adminManagement/Anime" />
+        <Route component={AdminHomePage} path="/adminManagement/Home Page" />
         <Route
-          component={AdminRedeemLevelsPage}
-          path="/adminManagement/Redeem Levels"
+          component={AdminAnimePage}
+          path="/adminManagement/Anime Library"
         />
         <Route
-          component={AdminCustomDesignPage}
-          path="/adminManagement/Custom Design"
+          component={AdminAnimePage}
+          path="/adminManagement/Anime Library"
         />
         <Route
-          component={AdminSysSetting}
-          path="/adminManagement/Sys Setting"
+          component={AdminAwesomeLevelsPage}
+          path="/adminManagement/Awesome Levels"
         />
+        <Route
+          component={AdminRedeemProductPage}
+          path="/adminManagement/Redeem Products"
+        />
+        <Route component={AdminSysSetting} path="/adminManagement/Avatars" />
+        <Route
+          component={AdminContentManagementPage}
+          path="/adminManagement/Content Management"
+        />
+        <Route component={AdminDataPage} path="/adminManagement/Data" />
       </Switch>
     </>
   );

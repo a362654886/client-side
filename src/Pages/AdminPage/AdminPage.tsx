@@ -8,6 +8,7 @@ import AnimeButton from "../../components/Button";
 import LoadingDiv from "../../components/LoadingDiv";
 import {
   AdminLeftMenuDiv,
+  AdminLoginDiv,
   AdminPageDiv,
   AdminTitle,
   EmailInput,
@@ -17,13 +18,8 @@ import {
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { LoginType } from "../../types/EnumTypes";
-import { IStoreState } from "../../types/IStoreState";
-import { User } from "../../types/User";
-import AdminMainPage from "./AdminMainPage";
 
 const AdminPage = (): JSX.Element => {
-
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const [email, setUserEmail] = useState<string>("");
@@ -41,8 +37,6 @@ const AdminPage = (): JSX.Element => {
         break;
     }
   };
-
-  const toPage = (url: string) => history.push(url);
 
   const login = async () => {
     setLoading(true);
@@ -105,11 +99,10 @@ const AdminPage = (): JSX.Element => {
 
   return (
     <AdminPageDiv>
-      <AdminLeftMenuDiv />
-      <div style={{ display: "inline" }}>
+      <AdminLoginDiv>
         <AdminTitle>Animepark.com-Admin</AdminTitle>
         {loadingShow()}
-      </div>
+      </AdminLoginDiv>
     </AdminPageDiv>
   );
 };

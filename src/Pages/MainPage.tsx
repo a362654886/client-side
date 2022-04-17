@@ -167,7 +167,7 @@ const MainPage = (): JSX.Element => {
         </p>
         <p
           onClick={() => {
-            toProfile("/mainPage/showcase/showCollection");
+            toProfile("/mainPage/showcase/showCollection?page=1");
           }}
         >
           Showcase
@@ -221,7 +221,9 @@ const MainPage = (): JSX.Element => {
                     >
                       <p>{`${loginUser ? loginUser.firstName : ""}.${
                         loginUser
-                          ? loginUser.lastName.substring(0, 1).toUpperCase()
+                          ? loginUser.lastName
+                            ? loginUser.lastName.substring(0, 1).toUpperCase()
+                            : ""
                           : ""
                       }`}</p>
                     </LoginBox>
@@ -236,6 +238,8 @@ const MainPage = (): JSX.Element => {
               <LoginOutImg
                 src={logOut}
                 onClick={() => {
+                  localStorage.setItem("userEmail", "null");
+                  localStorage.setItem("password", "null");
                   dispatch({
                     payload: null,
                     type: LOGIN_USER_NONE,
@@ -409,7 +413,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/mainPage/showcase/showCollection");
+                    toProfile("/mainPage/showcase/showCollection?page=1");
                   }}
                 >
                   Showcase
