@@ -8,8 +8,11 @@ export const emailPost = async (
   text: string,
   subject: string
 ): Promise<number | null> => {
-  const endpoint = basicURL + "emailPost";
-  return Axios.post(endpoint, { to: toEmail, subject: subject, text: text })
+  /* eslint-disable no-useless-escape */
+  const sendString = `{\"to\":\"${toEmail}\",\"subject\":\"${subject}\",\"text\":\"${text}\"}`;
+  const endpoint =
+    "https://buwf1faqv4.execute-api.us-east-1.amazonaws.com/dev/awsSendEmail";
+  return Axios.post(endpoint, { body: sendString })
     .then((response) => {
       return response.status;
     })

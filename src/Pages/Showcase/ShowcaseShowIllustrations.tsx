@@ -49,6 +49,7 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
   const [ifNew, setIfNew] = useState<boolean>(true);
   const [searchValue, SetSearchValue] = useState<string>("");
   const [iniState, SetIniState] = useState<boolean>(true);
+  const [allLoading, SetAllLoading] = useState<boolean>(false);
 
   const pageSize = 3;
 
@@ -201,14 +202,16 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
   };
 
   const getMore = () => {
+    SetAllLoading(true);
     const newPage = pageNum + 1;
+    toPage(`showIllustrations?page=${newPage}`);
     setPageNum(newPage);
   };
 
   const getLoading = () =>
     loading ? (
       <>
-        {getShowcaseForums()}
+        {allLoading ? getShowcaseForums() : <></>}
         <LoadingImgDiv>
           <img src={`${loadingImg}`} />
         </LoadingImgDiv>
@@ -257,7 +260,7 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
           </>
         )}
         {allShowCases.length +
-          parseInt(getShowCasePage(history.location.search)) * pageSize <
+          (parseInt(getShowCasePage(history.location.search)) - 1) * pageSize <
         count ? (
           <MoreButtonDiv onClick={() => getMore()}>
             <div>

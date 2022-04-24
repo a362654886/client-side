@@ -86,6 +86,7 @@ export const ShowcaseRadioDiv = styled.div`
 
 export const ShowcaseSearch = styled.div`
   img {
+    cursor: pointer;
     height: 40px;
     width: 40px;
   }

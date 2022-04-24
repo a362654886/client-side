@@ -83,6 +83,7 @@ import { getWidth } from "../../helperFns/widthFn";
 import { useHistory } from "react-router-dom";
 import ImageUpload, { ImageBody } from "../../components/ImageUpload";
 import { formatName } from "../../helperFns/nameFn";
+import { openNewWindow } from "../../helperFns/windowsFn";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -901,14 +902,14 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                     src={`${editIcon}`}
                     onClick={() => {
                       editLink
-                        ? toPage(`showcaseCollectionOne/${showcase._id}`)
+                        ? openNewWindow(`showcaseCollectionOne/${showcase._id}`)
                         : editShowcase(index);
                     }}
                   />
                   <p
                     onClick={() => {
                       editLink
-                        ? toPage(`showcaseCollectionOne/${showcase._id}`)
+                        ? openNewWindow(`showcaseCollectionOne/${showcase._id}`)
                         : editShowcase(index);
                     }}
                   >

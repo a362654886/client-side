@@ -536,7 +536,6 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
   const sendNewSecondReply = (e: string, secondIndex: number) => {
     const newSecondReplyHtmls = newSecondReplyHtml;
-    console.log(newSecondReplyHtmls);
     newSecondReplyHtmls[secondIndex] = e;
     setNewSecondReplyHtml(newSecondReplyHtmls);
   };

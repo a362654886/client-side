@@ -33,6 +33,7 @@ import { User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";
 import { getWidth } from "../../helperFns/widthFn";
 import { getShowCasePage } from "../../helperFns/getPage";
+import { openNewWindow } from "../../helperFns/windowsFn";
 
 const ShowcaseShowManga = (): JSX.Element => {
   const history = useHistory();
@@ -50,6 +51,7 @@ const ShowcaseShowManga = (): JSX.Element => {
   const [ifNew, setIfNew] = useState<boolean>(true);
   const [searchValue, SetSearchValue] = useState<string>("");
   const [iniState, SetIniState] = useState<boolean>(true);
+  const [allLoading, SetAllLoading] = useState<boolean>(false);
 
   const pageSize = 3;
 
@@ -197,14 +199,16 @@ const ShowcaseShowManga = (): JSX.Element => {
   };
 
   const getMore = () => {
+    SetAllLoading(true);
     const newPage = pageNum + 1;
+    toPage(`showManga?page=${newPage}`);
     setPageNum(newPage);
   };
 
   const getLoading = () =>
     loading ? (
       <>
-        <>{getShowcaseForums()}</>
+        {allLoading ? getShowcaseForums() : <></>}
         <LoadingImgDiv>
           <img src={`${loadingImg}`} />
         </LoadingImgDiv>
@@ -213,9 +217,8 @@ const ShowcaseShowManga = (): JSX.Element => {
       <>{getShowcaseForums()}</>
     );
 
-  const toManga = (index: number) => {
-    history.push(`/mainPage/showcase/Manga/${allShowCases[index]._id}`);
-  };
+  const toManga = (index: number) =>
+    openNewWindow(`/mainPage/showcase/Manga/${allShowCases[index]._id}`);
 
   const getShowcaseForums = () => {
     return (
