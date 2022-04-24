@@ -5,6 +5,7 @@ import AnimeShowPage from "../Pages/AnimePage/AnimeShowPage";
 import ContactUs from "../Pages/ContactUs";
 import Discovery from "../Pages/Discovery/Discovery";
 import HomePage from "../Pages/HomePage/HomePage";
+import ForgetPage from "../Pages/LoginPage/forgotPage";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import SignUpPage from "../Pages/LoginPage/SignUpPage";
 import Mall from "../Pages/Mall/Mall";
@@ -22,6 +23,7 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={HomePage} path="/mainPage/home" />
         <Route component={LoginPage} path="/mainPage/login" />
         <Route component={SignUpPage} path="/mainPage/signUpPage" />
+        <Route component={ForgetPage} path="/mainPage/forgetPasswordPage" />
         <Route component={ProfilePage} path="/mainPage/profilePage/:id" />
         <Route component={AnimeShowPage} path="/mainPage/animeShowPage" />
         <Route component={AnimeOne} path="/mainPage/oneAnime" />

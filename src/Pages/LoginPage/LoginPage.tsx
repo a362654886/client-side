@@ -10,6 +10,7 @@ import {
   LoginBox,
   LoginClickButton,
   LogInHeaderImg,
+  PasswordForget,
   SignUpButtons,
 } from "../../cssJs/loginCss";
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
@@ -123,6 +124,9 @@ const LoginPage = (): JSX.Element => {
         <h3>Password:</h3>
         <Input placeholder={"password"} onChange={onChange}></Input>
       </EmailInput>
+      <PasswordForget onClick={() => toPage("/mainPage/forgetPasswordPage")}>
+        Forget Password?
+      </PasswordForget>
       <LoginClickButton>
         <AnimeButton
           para=""

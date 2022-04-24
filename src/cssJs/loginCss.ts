@@ -72,6 +72,25 @@ export const PasswordInput = styled.div`
   }
 `;
 
+export const PasswordForget = styled.h3`
+  height: 32px;
+  font-size: 16px;
+  line-height: 32px;
+  color: #4ba3c3;
+  cursor: pointer;
+  font-weight: bold;
+`;
+
+export const PasswordForgetGoBack = styled.p`
+  height: 32px;
+  font-size: 16px;
+  line-height: 32px;
+  color: #4ba3c3;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 8px;
+`;
+
 export const NameInput = styled.div`
   height: 158px;
   h3 {
