@@ -12,7 +12,7 @@ const AdminNewsCreatePage = (): JSX.Element => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editNew, setEditNew] = useState<NewType | null>(null);
 
-  const menu = ["Create", "Search"];
+  const menu = ["Create", "Manage"];
 
   useEffect(() => {
     setEdit(false);
@@ -45,8 +45,8 @@ const AdminNewsCreatePage = (): JSX.Element => {
               width="120px"
               height="32px"
               textColor="black"
-              backGroundColor="#F6F6F6"
-              borderColor="white"
+              backGroundColor="#AAFFC9"
+              borderColor="#AAFFC9"
               buttonClick={() => tabButton(menu[index])}
             />
           </div>

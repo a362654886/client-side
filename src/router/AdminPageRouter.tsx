@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 import AdminAnimePage from "../Pages/AdminPage/AdminAnimePage";
-import AdminAwesomeLevelsPage from "../Pages/AdminPage/AdminAwesomeLevelsPage";
+import AdminAwesomeLevelPage from "../Pages/AdminPage/AdminAwesomeLevelPage";
 import AdminContentManagementPage from "../Pages/AdminPage/AdminContentManagementPage";
 import AdminDataPage from "../Pages/AdminPage/AdminDataPage";
 import AdminHomePage from "../Pages/AdminPage/AdminHomePage";
 import AdminNewsPage from "../Pages/AdminPage/AdminNewsPage";
 import AdminRedeemProductPage from "../Pages/AdminPage/AdminRedeemProductPage";
-import AdminSysSetting from "../Pages/AdminPage/AdminSysSetting";
+import AvatarSetting from "../Pages/AdminPage/sysSettingComponent/AvatarSetting";
 
 const AdminPageRouter = (): JSX.Element => {
   return (
@@ -24,14 +24,14 @@ const AdminPageRouter = (): JSX.Element => {
           path="/adminManagement/Anime Library"
         />
         <Route
-          component={AdminAwesomeLevelsPage}
+          component={AdminAwesomeLevelPage}
           path="/adminManagement/Awesome Levels"
         />
         <Route
           component={AdminRedeemProductPage}
           path="/adminManagement/Redeem Products"
         />
-        <Route component={AdminSysSetting} path="/adminManagement/Avatars" />
+        <Route component={AvatarSetting} path="/adminManagement/Avatars" />
         <Route
           component={AdminContentManagementPage}
           path="/adminManagement/Content Management"

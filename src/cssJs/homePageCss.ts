@@ -32,19 +32,67 @@ export const HomePageHeaderRightDiv = styled.div`
 
 //NEWS
 
-export const HomePageNewDiv = styled.div`
-  text-align: left;
-  height: 182px;
-  margin: 16px 18px 0px 12px;
-  h2 {
-    color: #f5a623;
-    font-size: 24px;
-    line-height: 32px;
-    font-family: bold;
-    font-family: Arial;
+export const HomePageHeadlineDiv = styled.div`
+  height: 400px;
+  width: 640px;
+  margin: 0px auto;
+  img {
+    height: 320px;
+    width: 640px;
   }
-  button {
-    margin-top: 16px;
+
+  .ant-carousel {
+    width: 640px;
+    margin: 0px auto;
+  }
+  .slick-list,
+  .slick-slider,
+  .slick-initialized {
+    margin: 0px auto;
+    width: 640px;
+  }
+  p {
+    width: 640px;
+    height: 88px;
+    font-size: 20px;
+    color: white;
+    background-color: #0c0e2e;
+    line-height: 32px;
+    padding-top: 10px;
+    text-align: center;
+    margin-bottom: 0px;
+  }
+`;
+
+export const HomePageMobileHeadlineDiv = styled.div`
+  height: 220px;
+  width: 320px;
+  margin: 0px auto;
+  img {
+    height: 160px;
+    width: 320px;
+  }
+
+  .ant-carousel {
+    width: 320px;
+    margin: 0px auto;
+  }
+  .slick-list,
+  .slick-slider,
+  .slick-initialized {
+    margin: 0px auto;
+    width: 320px;
+  }
+  p {
+    width: 320px;
+    height: 66px;
+    font-size: 20px;
+    color: white;
+    background-color: #0c0e2e;
+    line-height: 32px;
+    padding-top: 2px;
+    text-align: center;
+    margin-bottom: 0px;
   }
 `;
 
@@ -75,6 +123,67 @@ export const HomePageAnimeDiv = styled.div`
     line-height: 24px;
     font-weight: bold;
     font-family: Arial;
+  }
+  .ant-carousel {
+    width: 280px;
+    margin: 0px auto;
+  }
+  .slick-list {
+    width: 260px;
+  }
+  .slick-slider,
+  .slick-initialized {
+    height: 490px;
+  }
+`;
+
+export const HomePageShowcaseDiv = styled.div`
+  margin-top: 40px;
+  text-align: center;
+  .ant-carousel {
+    width: 280px;
+    margin: 0px auto;
+  }
+  .slick-list {
+    width: 260px;
+  }
+  .slick-slider,
+  .slick-initialized {
+    height: 300px;
+  }
+`;
+
+export const HomePageMarketPlaceDiv = styled.div`
+  margin-top: 40px;
+  text-align: center;
+  .ant-carousel {
+    width: 260px;
+    margin: 0px auto;
+  }
+  .slick-list {
+    width: 240px;
+  }
+  .slick-slider,
+  .slick-initialized {
+    width: 260px;
+    height: 400px;
+  }
+`;
+
+export const HomePageProductPlaceDiv = styled.div`
+  margin-top: 40px;
+  text-align: center;
+  .ant-carousel {
+    width: 280px;
+    margin: 0px auto;
+  }
+  .slick-list {
+    width: 260px;
+  }
+  .slick-slider,
+  .slick-initialized {
+    width: 280px;
+    height: 550px;
   }
 `;
 

@@ -890,7 +890,7 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                 <p>Awesome!</p>
                 <h6>{showcase.aweSome}</h6>
               </AweSomeDiv>
-              <ShareDiv marginTop={"0px"} />
+              <ShareDiv marginTop={"16px"} marginBottom={16} />
             </>
           )}
           {loginUser?._id == showcase.userId ? (

@@ -206,9 +206,12 @@ const ShowcaseShowCollection = (): JSX.Element => {
 
   const getLoading = () =>
     loading ? (
-      <LoadingImgDiv>
-        <img src={`${loadingImg}`} />
-      </LoadingImgDiv>
+      <>
+        {getShowcaseForums()}
+        <LoadingImgDiv>
+          <img src={`${loadingImg}`} />
+        </LoadingImgDiv>
+      </>
     ) : (
       <>{getShowcaseForums()}</>
     );

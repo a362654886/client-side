@@ -12,9 +12,10 @@ import {
 
 interface IProps {
   marginTop: string;
+  marginBottom?: number;
 }
 
-const ShareDiv = ({ marginTop }: IProps): JSX.Element => {
+const ShareDiv = ({ marginTop, marginBottom }: IProps): JSX.Element => {
   const shareToTwitter = (url: string, title: string) => {
     return window.open(
       "http://twitter.com/share?url=" +
@@ -48,7 +49,12 @@ const ShareDiv = ({ marginTop }: IProps): JSX.Element => {
 
   return (
     <>
-      <AnimOneIcons style={{ marginTop: marginTop }}>
+      <AnimOneIcons
+        style={{
+          marginTop: marginTop,
+          marginBottom: `${marginBottom ? marginBottom : 0}px`,
+        }}
+      >
         <img
           onClick={() => {
             shareToFaceBook("https://anime.come", "share to twitter");

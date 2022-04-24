@@ -80,29 +80,6 @@ const ProfilePage = (): JSX.Element => {
   const [messageVisible, setMessageVisible] = useState(false);
   const [messageValue, setMessageValue] = useState("");
 
-  const buttonsColor = [
-    {
-      text: "Showcase",
-      color: "#4BA3C3",
-      backColor: "white",
-    },
-    {
-      text: "Marketplace",
-      color: "#4BA3C3",
-      backColor: "white",
-    },
-    {
-      text: "Mall",
-      color: "#4BA3C3",
-      backColor: "white",
-    },
-    {
-      text: "Likes",
-      color: "#4BA3C3",
-      backColor: "white",
-    },
-  ];
-
   const profileUser: User | null = useSelector(
     (state: IStoreState) => state.profileUserState
   );
@@ -126,6 +103,51 @@ const ProfilePage = (): JSX.Element => {
     //
   }, [profileUser]);
 
+  const buttonsColor = () => {
+    if (loginUser && profileUser && loginUser._id == profileUser._id) {
+      return [
+        {
+          text: "Showcase",
+          color: "#4BA3C3",
+          backColor: "white",
+        },
+        {
+          text: "Marketplace",
+          color: "#4BA3C3",
+          backColor: "white",
+        },
+        {
+          text: "Mall",
+          color: "#4BA3C3",
+          backColor: "white",
+        },
+        {
+          text: "Likes",
+          color: "#4BA3C3",
+          backColor: "white",
+        },
+      ];
+    } else {
+      return [
+        {
+          text: "Showcase",
+          color: "#4BA3C3",
+          backColor: "white",
+        },
+        {
+          text: "Marketplace",
+          color: "#4BA3C3",
+          backColor: "white",
+        },
+        {
+          text: "Likes",
+          color: "#4BA3C3",
+          backColor: "white",
+        },
+      ];
+    }
+  };
+
   const getFollowers = async (userId: string) => {
     const followerResult = await followByGetByUserId(userId, 1, 1, 1);
     setFollow(followerResult ? followerResult.count : 0);
@@ -137,7 +159,7 @@ const ProfilePage = (): JSX.Element => {
   const changeButton = (index: number) => setChooseButton(index);
 
   const getButtons = () => {
-    return buttonsColor.map(
+    return buttonsColor().map(
       (
         button: {
           text: string;

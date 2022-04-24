@@ -4,12 +4,18 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { avatarAdd, avatarDelete, avatarsGet } from "../../../api/avatarAPI";
 import AnimeButton from "../../../components/Button";
-import ImageUpload, { ImageBody } from "../../../components/ImageUpload";
+import { ImageBody } from "../../../components/ImageUpload";
 import { AvatarDeleteDiv } from "../../../cssJs/AdminPage/adminNewsCss";
-import { AdminSysAvatarDiv } from "../../../cssJs/AdminPage/adminSysSettingCss";
+import {
+  AdminSysAvatarDiv,
+  AvatarButtonsDiv,
+  AvatarUpload,
+  ButtonsDiv,
+} from "../../../cssJs/AdminPage/adminSysSettingCss";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { LoadingType } from "../../../types/EnumTypes";
 import { Avatar } from "../../../types/User";
+import ImageUpload from "../ImageUpload";
 
 const AvatarSetting = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -80,16 +86,18 @@ const AvatarSetting = (): JSX.Element => {
             </AvatarDeleteDiv>
           );
         })}
-        <ImageUpload
-          width={"120px"}
-          height={"32px"}
-          textColor={"black"}
-          backGroundColor={"white"}
-          border={"1px solid #D1D2D3"}
-          text={"Upload"}
-          setImg={(value: ImageBody) => setImg(value)}
-          margin={"0px"}
-        />
+        <AvatarUpload>
+          <ImageUpload
+            width={"120px"}
+            height={"32px"}
+            textColor={"black"}
+            backGroundColor={"white"}
+            border={"1px solid #D1D2D3"}
+            text={"Add an Avatar (80 x 80 px)"}
+            setImg={(value: ImageBody) => setImg(value)}
+            margin={"0px"}
+          />
+        </AvatarUpload>
       </>
     ) : (
       <></>
@@ -97,7 +105,23 @@ const AvatarSetting = (): JSX.Element => {
   };
 
   return (
-    <AdminSysAvatarDiv>{loading ? <Spin /> : getBody()}</AdminSysAvatarDiv>
+    <AdminSysAvatarDiv>
+      <AvatarButtonsDiv>
+        <AnimeButton
+          para=""
+          text={"Avatars"}
+          width="120px"
+          height="32px"
+          textColor="black"
+          backGroundColor="#AAFFC9"
+          borderColor="#AAFFC9"
+          buttonClick={() => {
+            //
+          }}
+        />
+      </AvatarButtonsDiv>
+      {loading ? <Spin /> : getBody()}
+    </AdminSysAvatarDiv>
   );
 };
 

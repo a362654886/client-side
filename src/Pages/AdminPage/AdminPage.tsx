@@ -1,13 +1,10 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-import { Route } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { userAuth } from "../../api/userApi";
 import AnimeButton from "../../components/Button";
 import LoadingDiv from "../../components/LoadingDiv";
 import {
-  AdminLeftMenuDiv,
   AdminLoginDiv,
   AdminPageDiv,
   AdminTitle,

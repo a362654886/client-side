@@ -203,9 +203,12 @@ const ShowcaseShowManga = (): JSX.Element => {
 
   const getLoading = () =>
     loading ? (
-      <LoadingImgDiv>
-        <img src={`${loadingImg}`} />
-      </LoadingImgDiv>
+      <>
+        <>{getShowcaseForums()}</>
+        <LoadingImgDiv>
+          <img src={`${loadingImg}`} />
+        </LoadingImgDiv>
+      </>
     ) : (
       <>{getShowcaseForums()}</>
     );
@@ -255,7 +258,7 @@ const ShowcaseShowManga = (): JSX.Element => {
           />
         )}
         {allShowCases.length +
-          parseInt(getShowCasePage(history.location.search)) * pageSize <
+          (parseInt(getShowCasePage(history.location.search)) - 1) * pageSize <
         count ? (
           <MoreButtonDiv onClick={() => getMore()}>
             <div>

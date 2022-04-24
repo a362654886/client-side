@@ -3,20 +3,20 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { animeAllGet, animeDelete } from "../../../api/animeAPI";
-import AnimeButton from "../../../components/Button";
-import { PaginationDiv } from "../../../components/Pagination";
+import AnimeButton, { MoreButtonDiv } from "../../../components/Button";
 import {
   AnimeTableElement,
   AnimeTableItem,
-  AnimeTableTitle,
   SearchDiv,
   SearchTableDiv,
   ViewButton,
-  ViewButtonText,
 } from "../../../cssJs/AdminPage/animeSearchCss";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
 import { LoadingType } from "../../../types/EnumTypes";
+import editIcon from "../../../files/editIcon.svg";
+import deleteIcon from "../../../files/deleteIcon.svg";
+import getMoreImg from "../../../files/getMore.png";
 
 interface IProps {
   editAnime: (anime: Anime) => void;
@@ -29,7 +29,7 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
   const [count, setCount] = useState<number>(0);
-  const pageSize = 10;
+  const pageSize = 2;
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -46,8 +46,6 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
     }
   };
 
-  const newPage = async (page: number) => setPage(page);
-
   const search = async () => {
     dispatch({
       payload: LoadingType.OPEN,
@@ -59,9 +57,12 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
       page,
       pageSize
     );
+    console.log(page);
     if (animeResult) {
-      setAllAnime(animeResult.result);
-      setCount(Math.ceil(animeResult.count / pageSize));
+      setAllAnime(
+        page == 1 ? animeResult.result : allAnime.concat(animeResult.result)
+      );
+      setCount(animeResult.count);
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -90,27 +91,30 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
     }
   };
 
-  const getTable = () =>
-    allAnime.map((anime, index) => (
-      <AnimeTableElement key={index}>
-        <AnimeTableItem>{anime.title}</AnimeTableItem>
-        <ViewButton onClick={() => editAnime(anime)}>edit</ViewButton>
-        <ViewButton onClick={() => deleteAnime(anime._id)}>delete</ViewButton>
-      </AnimeTableElement>
-    ));
-
   const getTableFn = () => (
     <>
-      <AnimeTableTitle>
-        <AnimeTableItem>
-          <h6>title</h6>
-        </AnimeTableItem>
-        <ViewButtonText>Edit</ViewButtonText>
-        <ViewButtonText>Delete</ViewButtonText>
-      </AnimeTableTitle>
-      {getTable()}
+      {allAnime.map((anime, index) => (
+        <AnimeTableElement key={index}>
+          <AnimeTableItem>{anime.title}</AnimeTableItem>
+          <div>
+            <ViewButton onClick={() => editAnime(anime)}>
+              <img src={editIcon} />
+              <p>Edit</p>
+            </ViewButton>
+            <ViewButton onClick={() => deleteAnime(anime._id)}>
+              <img src={deleteIcon} />
+              <p>Delete</p>
+            </ViewButton>
+          </div>
+        </AnimeTableElement>
+      ))}
     </>
   );
+
+  const getMore = () => {
+    const newPage = page + 1;
+    setPage(newPage);
+  };
 
   return (
     <>
@@ -124,13 +128,22 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="white"
-          buttonClick={() => search()}
+          buttonClick={() => {
+            setPage(1);
+          }}
         />
       </SearchDiv>
-      <SearchTableDiv>
-        {getTableFn()}
-        <PaginationDiv pageSize={pageSize} propFn={newPage} count={count} />
-      </SearchTableDiv>
+      <SearchTableDiv>{getTableFn()}</SearchTableDiv>
+      {allAnime.length < count ? (
+        <MoreButtonDiv onClick={() => getMore()}>
+          <div>
+            <img src={`${getMoreImg}`} />
+            <p>Load More</p>
+          </div>
+        </MoreButtonDiv>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

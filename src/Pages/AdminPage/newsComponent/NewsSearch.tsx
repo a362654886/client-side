@@ -1,8 +1,8 @@
 import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { newAllGet } from "../../../api/newsAPI";
-import AnimeButton from "../../../components/Button";
+import { newAllGet, newDelete } from "../../../api/newsAPI";
+import AnimeButton, { MoreButtonDiv } from "../../../components/Button";
 import LoadingDiv from "../../../components/LoadingDiv";
 import { PaginationDiv } from "../../../components/Pagination";
 import {
@@ -14,12 +14,20 @@ import {
   ViewButton,
 } from "../../../cssJs/AdminPage/animeSearchCss";
 import { NewType } from "../../../types/NewsType";
+import editIcon from "../../../files/editIcon.svg";
+import deleteIcon from "../../../files/deleteIcon.svg";
+import getMoreImg from "../../../files/getMore.png";
+import { useDispatch } from "react-redux";
+import { LoadingType } from "../../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 
 interface IProps {
   editNew: (news: NewType) => void;
 }
 
 const NewsSearch = ({ editNew }: IProps): JSX.Element => {
+  const dispatch = useDispatch();
+
   const [searchValue, setSearchValue] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
@@ -42,8 +50,6 @@ const NewsSearch = ({ editNew }: IProps): JSX.Element => {
     }
   };
 
-  const newPage = async (page: number) => setPage(page);
-
   const search = async () => {
     setLoading(true);
     const animeResult = await newAllGet(searchValue, page, pageSize);
@@ -54,13 +60,26 @@ const NewsSearch = ({ editNew }: IProps): JSX.Element => {
     setLoading(false);
   };
 
-  const getTable = () =>
-    allNews.map((newBody, index) => (
-      <AnimeTableElement key={index}>
-        <AnimeTableItem>{newBody.header}</AnimeTableItem>
-        <ViewButton onClick={() => editNew(newBody)}>edit</ViewButton>
-      </AnimeTableElement>
-    ));
+  const deleteAnime = async (id: string) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const r = await newDelete(id);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+    if (r == 200) {
+      const newAnimeArr: NewType[] = [];
+      allNews.map((oneNew) => {
+        if (oneNew._id != id) {
+          newAnimeArr.push(oneNew);
+        }
+      });
+      setAllNews(newAnimeArr as NewType[]);
+    }
+  };
 
   const getTableFn = () => {
     if (loading) {
@@ -68,15 +87,29 @@ const NewsSearch = ({ editNew }: IProps): JSX.Element => {
     } else {
       return (
         <>
-          <AnimeTableTitle>
-            <AnimeTableItem>
-              <h6>title</h6>
-            </AnimeTableItem>
-          </AnimeTableTitle>
-          {getTable()}
+          {allNews.map((newBody, index) => (
+            <AnimeTableElement key={index}>
+              <AnimeTableItem>{newBody.header}</AnimeTableItem>
+              <div>
+                <ViewButton onClick={() => editNew(newBody)}>
+                  <img src={editIcon} />
+                  <p>Edit</p>
+                </ViewButton>
+                <ViewButton onClick={() => deleteAnime(newBody._id)}>
+                  <img src={deleteIcon} />
+                  <p>Delete</p>
+                </ViewButton>
+              </div>
+            </AnimeTableElement>
+          ))}
         </>
       );
     }
+  };
+
+  const getMore = () => {
+    const newPage = page + 1;
+    setPage(newPage);
   };
 
   return (
@@ -94,10 +127,17 @@ const NewsSearch = ({ editNew }: IProps): JSX.Element => {
           buttonClick={() => search()}
         />
       </SearchDiv>
-      <SearchTableDiv>
-        {getTableFn()}
-        <PaginationDiv pageSize={pageSize} propFn={newPage} count={count} />
-      </SearchTableDiv>
+      <SearchTableDiv>{getTableFn()}</SearchTableDiv>
+      {allNews.length < count ? (
+        <MoreButtonDiv onClick={() => getMore()}>
+          <div>
+            <img src={`${getMoreImg}`} />
+            <p>Load More</p>
+          </div>
+        </MoreButtonDiv>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

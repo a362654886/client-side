@@ -12,26 +12,24 @@ import {
 } from "../../cssJs/AnimePage/AnimeShowCss";
 import {
   CustomerProductBottomImg,
-  HomeNewsBodyDiv,
   HomePageAnimeDiv,
   HomePageBodyDiv,
   HomePageDiv,
-  HomePageHeaderDiv,
-  HomePageHeaderLeftDiv,
-  HomePageHeaderRightDiv,
+  HomePageHeadlineDiv,
+  HomePageMarketPlaceDiv,
+  HomePageMobileHeadlineDiv,
   HomePageMobileShowcaseDiv,
-  HomePageNewDiv,
+  HomePageProductPlaceDiv,
+  HomePageShowcaseDiv,
   LoadingImgDiv,
   MarketContextDiv,
   MarketHomeBox,
   MarketPlaceMore,
   MarketPlaceTitle,
-  MobileHeaderDiv,
   ProductContextDiv,
   ProductDealerDiv,
   ShowCaseImgDiv,
 } from "../../cssJs/homePageCss";
-import mainPagePic from "../../files/mainPagePic.jpg";
 import showCaseImg from "../../files/showCase.jpg";
 import starBorder from "../../files/Star-border.svg";
 import starFill from "../../files/Star-filled.svg";
@@ -67,6 +65,8 @@ import { MarketType } from "../../types/MarketType";
 import { MarketBox } from "../../cssJs/MarketPage/MarketPlaceCss";
 import { ShowCaseEnum, ShowCaseType } from "../../types/showCaseType";
 import { showCaseAllGet } from "../../api/showcaseAPI";
+import { headlineAllGet } from "../../api/headlineAPI";
+import { HeadLineType } from "../../types/headLine";
 
 const HomePage = (): JSX.Element => {
   const history = useHistory();
@@ -77,6 +77,7 @@ const HomePage = (): JSX.Element => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [allMarkets, setAllMarkets] = useState<MarketType[]>([]);
   const [allShowcases, setAllShowcases] = useState<ShowCaseType[]>([]);
+  const [allHeadlines, setAllHeadlines] = useState<HeadLineType[]>([]);
   const [newLoading, setNewLoading] = useState<boolean>(false);
   const [animeLoading, setAnimeLoading] = useState<boolean>(false);
   const [showcaseLoading, setShowcaseLoading] = useState<boolean>(false);
@@ -105,23 +106,18 @@ const HomePage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    //
+  }, [newLoading]);
+
+  useEffect(() => {
     (async function anyNameFunction() {
-      await getNews();
+      await getHeadlines();
       await getAnimes();
       await getProducts();
       await getMarkets();
       await getShowcases();
     })();
   }, []);
-
-  const getNews = async () => {
-    setNewLoading(true);
-    const animeResult = await newAllGet("", 1, 2);
-    if (animeResult) {
-      setAllNews(animeResult.result);
-    }
-    setNewLoading(false);
-  };
 
   const getShowcases = async () => {
     setShowcaseLoading(true);
@@ -149,8 +145,15 @@ const HomePage = (): JSX.Element => {
     setAnimeLoading(false);
   };
 
+  const getHeadlines = async () => {
+    setNewLoading(true);
+    const headlinesResult = await headlineAllGet();
+    setAllHeadlines(headlinesResult ? headlinesResult : []);
+    setNewLoading(false);
+  };
+
   const getProducts = async () => {
-    const productsResult = await productAllGet("", 1, 3);
+    const productsResult = await productAllGet("", 1, 4);
     if (productsResult) {
       setAllProducts(productsResult.result);
     }
@@ -185,35 +188,6 @@ const HomePage = (): JSX.Element => {
       pathname: "/mainPage/marketplace/showOne/null",
       state: `${market._id}`,
     });
-  };
-
-  const getNewDiv = () => {
-    return newLoading ? (
-      <LoadingImgDiv>
-        <img src={`${loadingImg}`} />
-      </LoadingImgDiv>
-    ) : (
-      allNews.map((news, index) => (
-        <HomePageNewDiv key={index}>
-          <h2>{news.header}</h2>
-          <HomeNewsBodyDiv
-            dangerouslySetInnerHTML={{ __html: news.html }}
-          ></HomeNewsBodyDiv>
-          <AnimeButton
-            para=""
-            text="See All"
-            width="120px"
-            height="36px"
-            textColor="#4BA3C3"
-            backGroundColor="#302D46"
-            borderColor="#4BA3C3"
-            buttonClick={() => {
-              console.log("");
-            }}
-          />
-        </HomePageNewDiv>
-      ))
-    );
   };
 
   const getStar = (rate: RateBody) => {
@@ -302,6 +276,25 @@ const HomePage = (): JSX.Element => {
     );
   };
 
+  const getHeadlineDiv = () => {
+    return newLoading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      allHeadlines.map((headline, index) => (
+        <div
+          className={"headlineImg"}
+          key={index}
+          style={{ cursor: "pointer" }}
+        >
+          <img src={`${headline.image}`} />
+          <p>{headline.title}</p>
+        </div>
+      ))
+    );
+  };
+
   const getShowcaseMobileDiv = () => {
     return showcaseLoading ? (
       <LoadingImgDiv>
@@ -364,7 +357,7 @@ const HomePage = (): JSX.Element => {
         </ProductBox>
       );
     });
-    result.push(
+    /*result.push(
       <ProductDealerDiv>
         <h2>If you are Dealers</h2>
         <p>
@@ -375,7 +368,7 @@ const HomePage = (): JSX.Element => {
         <h2>Who are In</h2>
         <img src={productDealer} />
       </ProductDealerDiv>
-    );
+    );*/
     return result;
   };
 
@@ -395,28 +388,20 @@ const HomePage = (): JSX.Element => {
     <HomePageDiv>
       <HomePageBodyDiv>
         {size.width > 700 ? (
-          <HomePageHeaderDiv className="row">
-            <HomePageHeaderLeftDiv className="col-xl-6 col-md-6 col-sm-6">
-              <img src={mainPagePic} />
-            </HomePageHeaderLeftDiv>
-            <HomePageHeaderRightDiv className="col-xl-6 col-md-6 col-sm-6">
-              {getNewDiv()}
-            </HomePageHeaderRightDiv>
-          </HomePageHeaderDiv>
+          <>
+            <HomePageHeadlineDiv>
+              <Carousel dots={true} style={{ margin: "auto 0px" }}>
+                {getHeadlineDiv()}
+              </Carousel>
+            </HomePageHeadlineDiv>
+          </>
         ) : (
           <>
-            <div style={{ display: "inline" }}>
-              <Carousel>
-                {allNews.map((item, index) => {
-                  return (
-                    <MobileHeaderDiv key={index}>
-                      <img src={mainPagePic} />
-                      <p>{item.header}</p>
-                    </MobileHeaderDiv>
-                  );
-                })}
+            <HomePageMobileHeadlineDiv>
+              <Carousel dots={true} style={{ margin: "auto 0px" }}>
+                {getHeadlineDiv()}
               </Carousel>
-            </div>
+            </HomePageMobileHeadlineDiv>
           </>
         )}
         <HomePageAnimeDiv>
@@ -432,7 +417,7 @@ const HomePage = (): JSX.Element => {
               </div>
             </>
           ) : (
-            <Carousel style={{ marginLeft: "10px" }} dots={false}>
+            <Carousel style={{ marginLeft: "10px" }} dots={true}>
               {getAnimeMobileDiv()}
             </Carousel>
           )}
@@ -479,9 +464,11 @@ const HomePage = (): JSX.Element => {
                 Rewards by your Awesome pictures!
               </h3>
             </HomePageMobileShowcaseDiv>
-            <Carousel style={{ marginLeft: "10px" }} dots={false}>
-              {getShowcaseMobileDiv()}
-            </Carousel>
+            <HomePageShowcaseDiv>
+              <Carousel style={{ marginLeft: "10px" }} dots={true}>
+                {getShowcaseMobileDiv()}
+              </Carousel>
+            </HomePageShowcaseDiv>
             <CenterDiv>
               <MiddleBiggerDiv>
                 <MarketPlaceMore
@@ -514,9 +501,11 @@ const HomePage = (): JSX.Element => {
             <MarketPlaceTitle>
               <h2>Marketplace</h2>
             </MarketPlaceTitle>
-            <Carousel style={{ marginLeft: "10px" }} dots={false}>
-              {getMarketsDiv()}
-            </Carousel>
+            <HomePageMarketPlaceDiv>
+              <Carousel style={{ marginLeft: "10px" }} dots={true}>
+                {getMarketsDiv()}
+              </Carousel>
+            </HomePageMarketPlaceDiv>
             <CenterDiv>
               <MiddleBiggerDiv>
                 <MarketPlaceMore
@@ -547,9 +536,11 @@ const HomePage = (): JSX.Element => {
             <MarketPlaceTitle>
               <h2>Anime Products</h2>
             </MarketPlaceTitle>
-            <Carousel style={{ marginLeft: "10px" }} dots={false}>
-              {getProductDiv()}
-            </Carousel>
+            <HomePageProductPlaceDiv>
+              <Carousel style={{ marginLeft: "10px" }} dots={true}>
+                {getProductDiv()}
+              </Carousel>
+            </HomePageProductPlaceDiv>
             <CenterDiv>
               <MiddleBiggerDiv>
                 <MarketPlaceMore

@@ -8,8 +8,8 @@ export const AdminAnimeDiv = styled.div`
 `;
 
 export const ButtonsDiv = styled.div`
-  margin-left: 56px;
-  margin-top: 66px;
+  margin-left: 8px;
+  margin-top: 8px;
   height: 32px;
   display: flex;
   button {
