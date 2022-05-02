@@ -16,6 +16,7 @@ import { newAdd } from "../../../api/newsAPI";
 const NewsCreatComponent = (): JSX.Element => {
   const [title, setTitle] = useState<string>("");
   const [html, setHtml] = useState<string>("");
+  const [source, setSource] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   const onChange = (e: React.ChangeEvent<Element> | RadioChangeEvent): void => {
@@ -33,9 +34,13 @@ const NewsCreatComponent = (): JSX.Element => {
       _id: title,
       header: title,
       html: html,
-      time: new Date()
+      source: source,
+      time: new Date(),
     };
     await newAdd(newNew);
+    setTitle("")
+    setHtml("")
+    setSource("")
     setLoading(false);
   };
 
@@ -61,6 +66,8 @@ const NewsCreatComponent = (): JSX.Element => {
               }}
             />
           </FullTextEditDiv>
+          <p>Source:</p>
+          <Input value={source} onChange={(e) => setSource(e.target.value)} />
           <AnimeCreateSubmitButton>
             <AnimeButton
               para=""

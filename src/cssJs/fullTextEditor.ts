@@ -15,4 +15,7 @@ export const ReactQuillCss = styled.div`
     width: 100%;
     word-wrap: break-word;
   }
+  img {
+    max-width: 100%;
+  }
 `;

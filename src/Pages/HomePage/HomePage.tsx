@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { animeAllGet } from "../../api/animeAPI";
-import { newAllGet } from "../../api/newsAPI";
-import { AnimeButton, MiddleBiggerDiv } from "../../components/Button";
+import { MiddleBiggerDiv } from "../../components/Button";
 import {
   AnimeBox,
   CenterDiv,
@@ -21,13 +20,14 @@ import {
   HomePageMobileShowcaseDiv,
   HomePageProductPlaceDiv,
   HomePageShowcaseDiv,
+  HomeShowcaseDiv,
   LoadingImgDiv,
   MarketContextDiv,
   MarketHomeBox,
   MarketPlaceMore,
   MarketPlaceTitle,
   ProductContextDiv,
-  ProductDealerDiv,
+  ShowcaseHomeBox,
   ShowCaseImgDiv,
 } from "../../cssJs/homePageCss";
 import showCaseImg from "../../files/showCase.jpg";
@@ -38,10 +38,9 @@ import { NewType } from "../../types/NewsType";
 import loadingImg from "../../files/loading.gif";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ANIME_ADD, ANIME_NONE } from "../../redux/anime";
+import { ANIME_NONE } from "../../redux/anime";
 import { MoreRight } from "../../cssJs/basicCss";
 import moreRightImg from "../../files/moreRightArrow.png";
-import productDealer from "../../files/productDealer.png";
 import { productAllGet } from "../../api/productAPI";
 import { Product } from "../../types/ProductType";
 import {
@@ -59,14 +58,22 @@ import { flagGet } from "../../helperFns/flag";
 import SettingImg from "../../components/SettingImg";
 import { TimeText } from "../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import animeProduct from "../../files/animeProduct.png";
-import { Button, Carousel } from "antd";
+import { Carousel } from "antd";
 import { marketAllGet } from "../../api/marketAPI";
 import { MarketType } from "../../types/MarketType";
-import { MarketBox } from "../../cssJs/MarketPage/MarketPlaceCss";
 import { ShowCaseEnum, ShowCaseType } from "../../types/showCaseType";
 import { showCaseAllGet } from "../../api/showcaseAPI";
 import { headlineAllGet } from "../../api/headlineAPI";
 import { HeadLineType } from "../../types/headLine";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "../HomePage/slider.css";
+import "swiper/swiper.min.css";
+import "swiper/components/pagination/pagination.min.css";
+
+// import required modules
+import { Pagination } from "swiper";
 
 const HomePage = (): JSX.Element => {
   const history = useHistory();
@@ -283,6 +290,46 @@ const HomePage = (): JSX.Element => {
       </LoadingImgDiv>
     ) : (
       allHeadlines.map((headline, index) => (
+        <SwiperSlide
+          key={index}
+          style={{ cursor: "pointer", display: "inline", height: "400px" }}
+        >
+          <div style={{ cursor: "pointer", display: "flex", height: "400px" }}>
+            <div style={{ width: "25%" }}>
+              <img
+                style={{ width: "320px" }}
+                src={`${allHeadlines[index - 1 == -1 ? 2 : index - 1].image}`}
+              />
+              <p style={{ width: "320px", textAlign: "left" }}>{`${
+                allHeadlines[index - 1 == -1 ? 2 : index - 1].title
+              }`}</p>
+            </div>
+            <div>
+              <img src={`${headline.image}`} />
+              <p>{headline.title}</p>
+            </div>
+            <div style={{ width: "25%" }}>
+              <img
+                style={{ width: "320px" }}
+                src={`${allHeadlines[index + 1 == 3 ? 0 : index + 1].image}`}
+              />
+              <p style={{ width: "320px", textAlign: "right" }}>{`${
+                allHeadlines[index + 1 == 3 ? 0 : index + 1].title
+              }`}</p>
+            </div>
+          </div>
+        </SwiperSlide>
+      ))
+    );
+  };
+
+  const getHeadlineMobileDiv = () => {
+    return newLoading ? (
+      <LoadingImgDiv>
+        <img src={`${loadingImg}`} />
+      </LoadingImgDiv>
+    ) : (
+      allHeadlines.map((headline, index) => (
         <div
           className={"headlineImg"}
           key={index}
@@ -384,22 +431,48 @@ const HomePage = (): JSX.Element => {
     });
   };
 
+  const getShowcasesDiv = () => {
+    return allShowcases.map((showcase, index) => {
+      return (
+        <ShowcaseHomeBox key={index}>
+          <img src={`${showcase.imageArr[0]}`} />
+        </ShowcaseHomeBox>
+      );
+    });
+  };
+
   return (
     <HomePageDiv>
       <HomePageBodyDiv>
         {size.width > 700 ? (
           <>
             <HomePageHeadlineDiv>
-              <Carousel dots={true} style={{ margin: "auto 0px" }}>
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={30}
+                pagination={{
+                  clickable: true,
+                }}
+                scrollbar={{
+                  hide: true,
+                }}
+                className="mySwiper"
+              >
+                {getHeadlineDiv()}
+              </Swiper>
+
+              {/**
+               * <Carousel dots={true} style={{ margin: "auto 0px" }}>
                 {getHeadlineDiv()}
               </Carousel>
+               */}
             </HomePageHeadlineDiv>
           </>
         ) : (
           <>
             <HomePageMobileHeadlineDiv>
               <Carousel dots={true} style={{ margin: "auto 0px" }}>
-                {getHeadlineDiv()}
+                {getHeadlineMobileDiv()}
               </Carousel>
             </HomePageMobileHeadlineDiv>
           </>
@@ -434,14 +507,14 @@ const HomePage = (): JSX.Element => {
         </CenterDiv>
         {size.width > 700 ? (
           <>
-            <HomePageAnimeDiv>
+            <HomeShowcaseDiv>
               <h1>Show your anime world</h1>
               <h3>
                 Display your collections and anime drawing talents. Redeem
                 Rewards by your Awesome pictures!
               </h3>
-              <ShowCaseImgDiv src={showCaseImg} />
-            </HomePageAnimeDiv>
+              <MarketContextDiv>{getShowcasesDiv()}</MarketContextDiv>
+            </HomeShowcaseDiv>
             <CenterDiv>
               <MiddleBiggerDiv>
                 <MoreRight
@@ -553,7 +626,10 @@ const HomePage = (): JSX.Element => {
             </CenterDiv>
           </>
         )}
-        <CustomerProductBottomImg src={animeProduct} />
+        <CustomerProductBottomImg
+          onClick={() => history.push("/mainPage/mall/custom")}
+          src={animeProduct}
+        />
       </HomePageBodyDiv>
     </HomePageDiv>
   );

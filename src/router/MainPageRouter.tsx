@@ -32,7 +32,7 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={Marketplace} path="/mainPage/marketplace" />
         <Route component={Mall} path="/mainPage/mall" />
         <Route component={NewsPage} path="/mainPage/news" />
-        <Route component={NewOnePage} path="/mainPage/oneNew" />
+        <Route component={NewOnePage} path="/mainPage/oneNew/:id" />
         <Route component={Report} path="/mainPage/report" />
         <Route component={ContactUs} path="/mainPage/contactUs" />
       </Switch>

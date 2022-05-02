@@ -15,7 +15,9 @@ import {
   HeaderContainer,
   HeaderContext,
   HeaderImg,
+  HeaderMobileButtons,
   HeaderMobileHeader,
+  HeaderMobileImg,
   HeaderSmallImg,
   HeaderTitle,
   LoadingBox,
@@ -48,13 +50,13 @@ import ProfileWrapperDiv from "../components/ProfileWrapperDiv";
 import { LOGIN_USER_ADD, LOGIN_USER_NONE } from "../redux/loginUser";
 import LOGOMobile from "../files/LOGO-Mobile.svg";
 import menuPng from "../files/menuPng.png";
-import { LOADING_OPEN } from "../redux/loading";
 import { userAuth } from "../api/userApi";
 import { PROFILE_USER_UPDATE } from "../redux/profileUser";
 
 const MainPage = (): JSX.Element => {
   const dispatch = useDispatch();
 
+  const [mobileMenu, setMobileMenu] = useState(false);
   const [size, setSize] = useState({
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
@@ -83,6 +85,10 @@ const MainPage = (): JSX.Element => {
       login(userEmail, password);
     }
   }, [loginUser]);
+
+  useEffect(() => {
+    console.log(mobileMenu);
+  }, [mobileMenu]);
 
   const login = async (email: string, password: string) => {
     const user = await userAuth(email, password);
@@ -147,55 +153,6 @@ const MainPage = (): JSX.Element => {
   );*/
 
   const toProfile = (url: string) => history.push(url);
-
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <p
-          onClick={() => {
-            toProfile("/mainPage/discovery");
-          }}
-        >
-          Discovery
-        </p>
-        <p
-          onClick={() => {
-            toProfile("/mainPage/animeShowPage");
-          }}
-        >
-          Anime
-        </p>
-        <p
-          onClick={() => {
-            toProfile("/mainPage/showcase/showCollection?page=1");
-          }}
-        >
-          Showcase
-        </p>
-        <p
-          onClick={() => {
-            toProfile("/mainPage/marketplace");
-          }}
-        >
-          Marketplace
-        </p>
-        <p
-          onClick={() => {
-            toProfile("/mainPage/mall");
-          }}
-        >
-          Mall
-        </p>
-        <p
-          onClick={() => {
-            toProfile("/mainPage/news");
-          }}
-        >
-          News
-        </p>
-      </Menu.Item>
-    </Menu>
-  );
 
   const getProfile = () => {
     if (loginUser) {
@@ -446,15 +403,70 @@ const MainPage = (): JSX.Element => {
               <ProfileDiv>{getProfile()}</ProfileDiv>
             </>
           ) : (
-            <HeaderMobileHeader>
-              <HeaderImg src={LOGOMobile} />
-              {getProfile()}
-              <div style={{ right: "20px", position: "absolute" }}>
-                <Dropdown overlay={menu} placement="bottomRight">
+            <>
+              <HeaderMobileHeader>
+                <HeaderMobileImg src={LOGOMobile} />
+                {getProfile()}
+                <div
+                  onClick={() => setMobileMenu(!mobileMenu)}
+                  style={{ right: "20px", position: "absolute" }}
+                >
                   <HeaderImg src={menuPng} />
-                </Dropdown>
-              </div>
-            </HeaderMobileHeader>
+                </div>
+              </HeaderMobileHeader>
+              {mobileMenu && (
+                <HeaderMobileButtons>
+                  <div>
+                    <p
+                      onClick={() => {
+                        toProfile("/mainPage/discovery");
+                      }}
+                    >
+                      Discovery
+                    </p>
+                    <p
+                      onClick={() => {
+                        toProfile("/mainPage/marketplace/show/null");
+                      }}
+                    >
+                      Marketplace
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      onClick={() => {
+                        toProfile("/mainPage/animeShowPage");
+                      }}
+                    >
+                      Anime
+                    </p>
+                    <p
+                      onClick={() => {
+                        toProfile("/mainPage/mall");
+                      }}
+                    >
+                      Mall
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      onClick={() => {
+                        toProfile("/mainPage/showcase/showCollection?page=1");
+                      }}
+                    >
+                      Showcase
+                    </p>
+                    <p
+                      onClick={() => {
+                        toProfile("/mainPage/news");
+                      }}
+                    >
+                      News
+                    </p>
+                  </div>
+                </HeaderMobileButtons>
+              )}
+            </>
           )}
         </HeaderContainer>
       </Header>

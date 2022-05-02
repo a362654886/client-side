@@ -44,7 +44,7 @@ import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
 import Flag from "react-flagkit";
 import { flagGet, flagGetName } from "../../helperFns/flag";
 import { _getDate } from "../../helperFns/timeFn";
-import marketFollow from "../../files/marketFollow.png";
+import marketFollow from "../../files/Icon-Follow.svg";
 import marketMessage from "../../files/marketMessage.png";
 import IconFollowing from "../../files/IconFollowing.svg";
 import editIcon from "../../files/editIcon.svg";
@@ -115,8 +115,7 @@ const MarketplaceShowOne = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    //
-    console.log(loginUser);
+    //console.log(loginUser);
   }, [
     title,
     price,
@@ -459,7 +458,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           ) : (
             <></>
           )}
-          <ShareDiv marginTop={"0px"} />
+          <ShareDiv marginTop={"16px"} />
           {marketState && marketState.userId == loginUser?._id ? (
             <MarketEditAndDeleteDiv>
               <div
@@ -497,8 +496,8 @@ const MarketplaceShowOne = (): JSX.Element => {
           </MarketViewMore>
           <WishBids>Wish Bids</WishBids>
           <WishBidsContext>
-            {`Your bid is for the seller's reference only. The final decision is
-            up to the seller.`}
+            <p>{`Your bid is for the seller's reference only. The final decision is
+            up to the seller.`}</p>
           </WishBidsContext>
           <PriceInput>
             <p>$</p>

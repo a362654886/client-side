@@ -513,12 +513,16 @@ export const MarketViewMore = styled.div`
   }
 `;
 
-export const WishBidsContext = styled.p`
-  background-color: #c1eeff;
-  margin-top: 16px;
-  line-height: 48px;
-  height: 48px;
-  padding-left: 28px;
+export const WishBidsContext = styled.div`
+  p {
+    background-color: #c1eeff;
+    margin-top: 16px;
+    line-height: 48px;
+    height: 48px;
+    font-size: 16px;
+    padding-left: 28px;
+    margin-bottom: 0px;
+  }
 `;
 
 export const PriceInput = styled.div`

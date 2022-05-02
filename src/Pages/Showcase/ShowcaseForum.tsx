@@ -18,12 +18,10 @@ import {
   ReplyDiv,
   ReplySecondBox,
   ShowAvatarDiv,
-  ShowCaseCreateImage,
   ShowcaseEditAndDeleteDiv,
   ShowcaseEditDiv,
   ShowcaseImage,
   ShowcaseMoreButtonDiv,
-  ShowcasePointerText,
   ShowcaseReply,
   ShowcaseSource,
   ShowcaseTaDiv,
@@ -32,7 +30,6 @@ import {
   ShowImg,
   ShowName,
   ShowTime,
-  TagSelect,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import {
   ShowCaseReply,
@@ -81,7 +78,6 @@ import {
 import { cloneDeep } from "lodash";
 import { getWidth } from "../../helperFns/widthFn";
 import { useHistory } from "react-router-dom";
-import ImageUpload, { ImageBody } from "../../components/ImageUpload";
 import { formatName } from "../../helperFns/nameFn";
 import { openNewWindow } from "../../helperFns/windowsFn";
 
@@ -476,68 +472,6 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
     setUpdate(update + 1);
   };
 
-  //edit source
-  const editShowcaseSource = (index: number, text: string) => {
-    const newShowcases = allShowCases;
-    newShowcases[index].source = text;
-    setAllShowCases(newShowcases);
-    setUpdate(update + 1);
-  };
-
-  //edit tag
-  const editShowcaseTag = (index: number, tags: string[]) => {
-    let newTagArr: string[] = [];
-    tags.forEach((item) => {
-      const arr = item.split("#");
-      newTagArr = newTagArr.concat(arr);
-    });
-    const returnTagArr: string[] = [];
-    newTagArr.forEach((item) => {
-      if (item != "") {
-        returnTagArr.push(`#${item}`);
-      }
-    });
-
-    const id = new Date().valueOf().toString();
-    const newShowcases = allShowCases;
-    (newShowcases[index].tags = newTagArr.map((tag, index) => {
-      return {
-        _id: id + index,
-        text: tag,
-        num: -1,
-      };
-    })),
-      setAllShowCases(newShowcases);
-    setUpdate(update + 1);
-  };
-  //edit images
-  const deleteImg = (index: number, imageIndex: number) => {
-    const newShowcases = allShowCases;
-    const imgArr = newShowcases[index].imageArr;
-    imgArr.splice(imageIndex, 1);
-    newShowcases[index].imageArr = imgArr;
-    setAllShowCases(newShowcases);
-    setUpdate(update + 1);
-  };
-
-  const setNewImage = (imageBody: ImageBody, index: number) => {
-    const newShowcases = allShowCases;
-    const imgArr = newShowcases[index].imageArr;
-
-    imgArr.push(imageBody.imgBase64);
-    newShowcases[index].imageArr = imgArr;
-    setAllShowCases(newShowcases);
-    setUpdate(update + 1);
-  };
-
-  //edit text
-  const editShowcaseText = (index: number, text: string) => {
-    const newShowcases = allShowCases;
-    newShowcases[index].text = text;
-    setAllShowCases(newShowcases);
-    setUpdate(update + 1);
-  };
-
   const editShowcaseReplyText = (
     index: number,
     secondIndex: number,
@@ -764,136 +698,61 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
             />
             <ShowTime>{_getDate(date)}</ShowTime>
           </ShowAvatarDiv>
-          {showcase.edit ? (
-            <ShowcaseEditDiv>
-              {showcase.imageArr.map((image, imageIndex) => {
-                return (
-                  <ShowCaseCreateImage key={imageIndex}>
-                    <div>
-                      <img src={image} style={{ maxWidth: "1170px" }} />
-                    </div>
-                    <div>
-                      <Button onClick={() => deleteImg(index, imageIndex)}>
-                        Delete
-                      </Button>
-                    </div>
-                  </ShowCaseCreateImage>
-                );
-              })}
-              <ImageUpload
-                width={"240px"}
-                height={"240px"}
-                textColor={"black"}
-                backGroundColor={"#F6F6F6"}
-                border={"1px solid #F6F6F6"}
-                text={""}
-                setImg={(value: ImageBody) => setNewImage(value, index)}
-                imageAdd={false}
-                margin={"20px auto"}
-              />
-              <TextArea
-                style={{ height: "200px" }}
-                value={showcase.text}
-                onChange={(e) => editShowcaseText(index, e.target.value)}
-              />
-              <div>
-                Source: Original from{" "}
-                <Input
-                  value={showcase.source}
-                  onChange={(e) => editShowcaseSource(index, e.target.value)}
-                />
-              </div>
-              <div>
-                Tag:
-                <TagSelect
-                  mode="tags"
-                  value={
-                    showcase.tags.length > 0
-                      ? showcase.tags.map((item) => item.text)
-                      : []
-                  }
-                  onChange={(e) => editShowcaseTag(index, e as string[])}
-                  dropdownStyle={{ display: "none" }}
-                ></TagSelect>
-              </div>
-              <AnimeButton
-                para=""
-                text={`Save`}
-                width="120px"
-                height="32px"
-                textColor="black"
-                backGroundColor="white"
-                borderColor="black"
-                buttonClick={() => updateShowcase(index)}
-              />
-              <AnimeButton
-                para=""
-                text={`Cancel`}
-                width="120px"
-                height="32px"
-                textColor="black"
-                backGroundColor="white"
-                borderColor="black"
-                buttonClick={() => editShowcase(index)}
-              />
-            </ShowcaseEditDiv>
-          ) : (
-            <>
-              {showcase.imageArr.map((image: string, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      width: "100%",
-                      paddingLeft: getWidth() > 600 ? "" : "8px",
-                    }}
-                  >
-                    <ShowcaseImage src={image} />
-                  </div>
-                );
-              })}
-              <ReactQuillCss
+          {showcase.imageArr.map((image: string, index: number) => {
+            return (
+              <div
+                key={index}
                 style={{
-                  marginTop: "16px",
                   width: "100%",
+                  paddingLeft: getWidth() > 600 ? "" : "8px",
                 }}
-                dangerouslySetInnerHTML={{ __html: showcase.text }}
-              ></ReactQuillCss>
-              <ShowcaseSource>
-                <p>{`Source: Original from ${showcase.source}`}</p>
-              </ShowcaseSource>
-              {showcase.tags.length > 0 ? (
-                <ShowcaseTaDiv>
-                  {showcase.tags.map((tag, index) => {
-                    return (
-                      <ShowcaseTag key={index}>
-                        <ShowcasePointerText
-                          onClick={() => {
-                            toPage(
-                              `/mainPage/showcase/showTag?tag=${tag.text.replace(
-                                "#",
-                                ""
-                              )}`
-                            );
-                          }}
-                        >
-                          {tag.text}
-                        </ShowcasePointerText>
-                      </ShowcaseTag>
-                    );
-                  })}
-                </ShowcaseTaDiv>
-              ) : (
-                <></>
-              )}
-              <AweSomeDiv>
-                {getAwesomeButton(`${showcase._id}`, index)}
-                <p>Awesome!</p>
-                <h6>{showcase.aweSome}</h6>
-              </AweSomeDiv>
-              <ShareDiv marginTop={"16px"} marginBottom={16} />
-            </>
+              >
+                <ShowcaseImage src={image} />
+              </div>
+            );
+          })}
+          <ReactQuillCss
+            style={{
+              marginTop: "16px",
+              width: "100%",
+            }}
+            dangerouslySetInnerHTML={{ __html: showcase.text }}
+          ></ReactQuillCss>
+          <ShowcaseSource>
+            <p>{`Source: Original from ${showcase.source}`}</p>
+          </ShowcaseSource>
+          {showcase.tags.length > 0 ? (
+            <ShowcaseTaDiv
+              style={{ display: getWidth() > 600 ? "flex" : "inline" }}
+            >
+              {showcase.tags.map((tag, index) => {
+                return (
+                  <ShowcaseTag key={index}>
+                    <p
+                      onClick={() => {
+                        toPage(
+                          `/mainPage/showcase/showTag?tag=${tag.text.replace(
+                            "#",
+                            ""
+                          )}`
+                        );
+                      }}
+                    >
+                      {tag.text}
+                    </p>
+                  </ShowcaseTag>
+                );
+              })}
+            </ShowcaseTaDiv>
+          ) : (
+            <></>
           )}
+          <AweSomeDiv>
+            {getAwesomeButton(`${showcase._id}`, index)}
+            <p>Awesome!</p>
+            <h6>{showcase.aweSome}</h6>
+          </AweSomeDiv>
+          <ShareDiv marginTop={"16px"} marginBottom={16} />
           {loginUser?._id == showcase.userId ? (
             <ShowcaseEditAndDeleteDiv>
               {!showcase.edit ? (

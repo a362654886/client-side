@@ -57,7 +57,6 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
       page,
       pageSize
     );
-    console.log(page);
     if (animeResult) {
       setAllAnime(
         page == 1 ? animeResult.result : allAnime.concat(animeResult.result)

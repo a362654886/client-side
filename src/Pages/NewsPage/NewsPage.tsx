@@ -21,7 +21,6 @@ const NewsPage = (): JSX.Element => {
 
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState<number>(1);
-  //const [count, setCount] = useState<number>(0);
   const [allNews, setAllNews] = useState<NewType[]>([]);
   const pageSize = 1;
 
@@ -37,16 +36,16 @@ const NewsPage = (): JSX.Element => {
     if (animeResult) {
       setAllNews(allNews.concat(animeResult.result));
       //setCount(animeResult.count);
+      dispatch({
+        payload: animeResult.count,
+        type: NEW_ADD,
+      });
     }
     setLoading(false);
   };
 
   const setNew = (newBody: NewType) => {
-    dispatch({
-      payload: newBody,
-      type: NEW_ADD,
-    });
-    history.push("oneNew");
+    history.push(`oneNew/${newBody._id}`);
   };
 
   const getExistNews = () =>

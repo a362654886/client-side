@@ -8,7 +8,7 @@ export interface IStoreState {
   authState: LoginType;
   loginUserState: User | null;
   animeState: Anime | null;
-  newState: NewType | null;
+  newState: number | null;
   loadingState: LoadingType;
   mangaState: ShowCaseType | null;
   profileUserState: User | null;

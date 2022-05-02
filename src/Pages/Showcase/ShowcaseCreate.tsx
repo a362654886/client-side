@@ -156,14 +156,8 @@ const ShowcaseCreate = (): JSX.Element => {
       type: LOADING_OPEN,
     });
     if (TagCheck(tags)) {
-      const r = await showCaseAdd(showCase);
-      if (showCaseType == ShowCaseEnum.Collections) {
-        history.push("/mainPage/showcase/showCollection?page=1");
-      } else if (showCaseType == ShowCaseEnum.Illustrations) {
-        history.push("/mainPage/showcase/showIllustrations?page=1");
-      } else {
-        history.push("/mainPage/showcase/showManga?page=1");
-      }
+      await showCaseAdd(showCase);
+      backToShowcasePage();
     } else {
       openNotification(
         "please add # before tag",
@@ -175,6 +169,16 @@ const ShowcaseCreate = (): JSX.Element => {
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,
     });
+  };
+
+  const backToShowcasePage = () => {
+    if (showCaseType == ShowCaseEnum.Collections) {
+      history.push("/mainPage/showcase/showCollection?page=1");
+    } else if (showCaseType == ShowCaseEnum.Illustrations) {
+      history.push("/mainPage/showcase/showIllustrations?page=1");
+    } else {
+      history.push("/mainPage/showcase/showManga?page=1");
+    }
   };
 
   const TagCheck = (tags: string[]) => {
@@ -341,9 +345,7 @@ const ShowcaseCreate = (): JSX.Element => {
             textColor="black"
             backGroundColor="white"
             borderColor="#302D46"
-            buttonClick={() => {
-              console.log("console");
-            }}
+            buttonClick={() => backToShowcasePage()}
           />
         </CancelButton>
       </ShowcaseTextInput>

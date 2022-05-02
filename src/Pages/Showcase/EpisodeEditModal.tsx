@@ -57,7 +57,7 @@ const EpisodeEditModal = ({
       <EpisodeSelectDiv>
         <Select
           defaultValue={"Episodes"}
-          onSelect={(e) => setEpisode(e as string)}
+          onSelect={(e: string) => setEpisode(e as string)}
           style={{ width: 200 }}
         >
           <Option key={"Episodes"} value={"Episodes"}>

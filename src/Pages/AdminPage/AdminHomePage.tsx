@@ -110,7 +110,6 @@ const AdminHomePage = (): JSX.Element => {
         <AdminHomeLinePage
           headLine={chooseHeadLine}
           editHeadline={(headline: HeadLineType, ifNew: boolean) => {
-            console.log(ifNew);
             ifNew ? saveNewOne(headline) : editOne(headline);
           }}
           num={headlineNum}

@@ -398,7 +398,7 @@ const SignUpPage = (): JSX.Element => {
         <h3>Country:</h3>
         <Select
           style={{ width: "100%" }}
-          onSelect={(e) => setCountry(e as string)}
+          onSelect={(e: string) => setCountry(e as string)}
         >
           {flagArr.map((value, index) => {
             return (

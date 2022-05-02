@@ -88,12 +88,12 @@ const InputBox = ({
           </>
         );
       case InputBoxType.SELECT:
-        return (
+        return onSelectChange ? (
           <InputDiv>
             <Label>{Title}</Label>
             <SelectBody
               defaultValue={value ? value : selectOptions[0]}
-              onSelect={onSelectChange}
+              onSelect={(e: any) => onSelectChange(e)}
             >
               {selectOptions.map(
                 (value: string, index: number): JSX.Element => {
@@ -106,16 +106,18 @@ const InputBox = ({
               )}
             </SelectBody>
           </InputDiv>
+        ) : (
+          <></>
         );
       case InputBoxType.MULTIPLE_SELECT:
-        return (
+        return onMultipleSelectChange ? (
           <InputDiv>
             <Label>{Title}</Label>
             <SelectBody
               mode="multiple"
               allowClear
               defaultValue={selectOptions}
-              onChange={onMultipleSelectChange}
+              onChange={(e: any) => onMultipleSelectChange(e)}
             >
               {selectOptions.map(
                 (value: string, index: number): JSX.Element => {
@@ -128,12 +130,14 @@ const InputBox = ({
               )}
             </SelectBody>
           </InputDiv>
+        ) : (
+          <></>
         );
       case InputBoxType.DATE_PICKER:
         return (
           <InputDiv>
             <Label>{Title}</Label>
-            <DatePickerBody onChange={onChange} value={date}/>
+            <DatePickerBody onChange={onChange} value={date} />
           </InputDiv>
         );
       default:

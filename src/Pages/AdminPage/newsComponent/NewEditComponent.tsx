@@ -20,6 +20,7 @@ interface IProps {
 const NewEditComponent = ({ newBody }: IProps): JSX.Element => {
   const [title, setTitle] = useState<string>(newBody.header);
   const [html, setHtml] = useState<string>(newBody.html);
+  const [source, setSource] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -40,7 +41,8 @@ const NewEditComponent = ({ newBody }: IProps): JSX.Element => {
       _id: newBody._id,
       header: title,
       html: html,
-      time: newBody.time
+      source: source,
+      time: newBody.time,
     };
     setLoading(true);
     await newUpdate(updateNew);
@@ -73,6 +75,8 @@ const NewEditComponent = ({ newBody }: IProps): JSX.Element => {
               }}
             />
           </FullTextEditDiv>
+          <p>Source:</p>
+          <Input value={source} onChange={(e) => setSource(e.target.value)} />
           <AnimeCreateSubmitButton>
             <AnimeButton
               para=""

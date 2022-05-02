@@ -188,6 +188,13 @@ export const LineDiv = styled.div`
   border-bottom: 1px solid #aaffc9;
 `;
 
+export const LineProfileDiv = styled.div`
+  height: 31px;
+  width: 100%;
+  max-width: 896px;
+  border-bottom: 1px solid #aaffc9;
+`;
+
 export const ProfileCollectionDiv = styled.div`
   margin-top: 32px;
 `;
@@ -226,7 +233,7 @@ export const SettingIconDiv = styled.div`
   img{
     height: 24px;
     width:24px;
-    margin-top:4px;
+    margin-top:4px
   }
   p{
     margin-left:8px;

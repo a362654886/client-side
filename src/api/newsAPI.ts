@@ -34,6 +34,17 @@ export const newAllGet = async (
     });
 };
 
+export const newGet = async (id: string): Promise<NewType | null> => {
+  const endpoint = basicURL + `newGet?id=${id}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const newUpdate = async (news: NewType): Promise<number | null> => {
   const endpoint = basicURL + "newUpdate";
   return Axios.put(endpoint, { newBody: news })

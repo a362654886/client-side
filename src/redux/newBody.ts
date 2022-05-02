@@ -1,4 +1,4 @@
-import { NewType } from "../types/NewsType";
+
 import { createReducer } from "./reducers/reducerFn";
 
 //actions
@@ -18,7 +18,7 @@ export interface NewNoneAction {
 }
 
 export interface NewAddAction {
-  payload: NewType;
+  payload: number;
   type: typeof NEW_ADD;
 }
 export type NewAction = NewNoneAction | NewAddAction;
@@ -29,7 +29,7 @@ export const actions = {
     payload,
     type: NEW_NONE,
   }),
-  newAddAction: (payload: NewType): NewAddAction => ({
+  newAddAction: (payload: number): NewAddAction => ({
     payload,
     type: NEW_ADD,
   }),
@@ -37,11 +37,11 @@ export const actions = {
 
 //reducer
 const handlers = {
-  NEW_NONE: (state: NewType | null, action: NewNoneAction) => action.payload,
-  NEW_ADD: (state: NewType | null, action: NewAddAction) => action.payload
+  NEW_NONE: (state: number | null, action: NewNoneAction) => action.payload,
+  NEW_ADD: (state: number | null, action: NewAddAction) => action.payload
 };
 
 export const newState = (
-  state: NewType | null = null,
+  state: number | null = null,
   action: NewAction
-): NewType | null => createReducer<NewType | null>(state, action, handlers);
+): number | null => createReducer<number | null>(state, action, handlers);

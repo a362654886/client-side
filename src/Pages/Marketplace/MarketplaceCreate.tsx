@@ -219,7 +219,7 @@ const MarketplaceCreate = (): JSX.Element => {
           </MarketLocationInputDiv>
           <Select
             style={{ width: "320px" }}
-            onSelect={(e) => setCountry(e as string)}
+            onSelect={(e: string) => setCountry(e as string)}
           >
             {flagArr.map((value, index) => {
               return (
@@ -282,7 +282,7 @@ const MarketplaceCreate = (): JSX.Element => {
           }}
           visible={showCropper}
           setVisibleFalse={() => setShowCropper(false)}
-          cube={false}
+          cube={true}
         />
       </div>
       <div className="col-xl-3 col-md-3 col-sm-3 col-3"></div>

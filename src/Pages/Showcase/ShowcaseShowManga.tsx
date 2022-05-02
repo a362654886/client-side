@@ -18,8 +18,7 @@ import { ShowCaseEnum, ShowCaseType } from "../../types/showCaseType";
 import loadingImg from "../../files/loading.gif";
 import searchImg from "../../files/search.svg";
 import ShowcaseManga from "./ShowcaseMaga";
-import { useDispatch, useSelector } from "react-redux";
-import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
+import { useSelector } from "react-redux";
 import ShowcaseSide from "./ShowcaseSide";
 import {
   AnimTapButton,
@@ -289,6 +288,7 @@ const ShowcaseShowManga = (): JSX.Element => {
             width:
               getWidth() > 1200 ? "100%" : getWidth() > 600 ? "896px" : "100%",
             paddingLeft: getWidth() > 600 ? "" : "8px",
+            paddingRight: getWidth() > 600 ? "" : "8px",
           }}
         >
           <ShowCaseTitleDiv>

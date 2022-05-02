@@ -60,7 +60,31 @@ export const OneNewTime = styled.p`
 
 export const OneNewText = styled.div`
   margin-bottom: 32px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 26px;
   color: #4a4a4a;
+`;
+
+export const OneNewSource = styled.div`
+  h6 {
+    height: 48px;
+    font-size: 16px;
+    line-height: 48px;
+  }
+  p {
+    height: 32px;
+    font-size: 14px;
+    line-height: 32px;
+    color: blue;
+    cursor: pointer;
+  }
+`;
+
+export const OneNewButtons = styled.div`
+  display: flex;
+  margin-top: 16px;
+  margin-bottom: 31px;
+  Button {
+    margin-right: 20px;
+  }
 `;

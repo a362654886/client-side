@@ -8,7 +8,6 @@ export const Header = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
-  padding-left: 20px;
   display: flex;
   margin: auto;
   position: relative;
@@ -18,6 +17,32 @@ export const HeaderImg = styled.img`
   height: 32px;
   width: 32px;
   margin-top: 4px;
+  cursor: pointer;
+`;
+
+export const HeaderMobileImg = styled.img`
+  margin-left: 20px;
+  height: 32px;
+  width: 32px;
+  margin-top: 4px;
+  cursor: pointer;
+`;
+
+export const HeaderMobileButtons = styled.div`
+  height: 184px;
+  width: 100%;
+  background-color: #ecf9fe;
+  padding: 16px 39px;
+  div {
+    display: flex;
+  }
+  p {
+    width: 50%;
+    margin-bottom: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
 `;
 
 export const FootContainer = styled.div`

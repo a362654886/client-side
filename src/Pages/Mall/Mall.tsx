@@ -18,11 +18,11 @@ const MallPage = (): JSX.Element => {
   const [chooseButton, setChooseButton] = useState<number>(0);
 
   const buttonsColor = [
-    {
+    /*{
       text: "Redeem",
       color: "#4BA3C3",
       backColor: "white",
-    },
+    },*/
     {
       text: "Custom",
       color: "#4BA3C3",
@@ -32,9 +32,10 @@ const MallPage = (): JSX.Element => {
 
   const changeButton = (index: number) => {
     setChooseButton(index);
-    index == 0
+    /* index == 0
       ? toPage("/mainPage/mall/redeem")
-      : toPage("/mainPage/mall/custom");
+      : toPage("/mainPage/mall/custom");*/
+    toPage("/mainPage/mall/custom");
   };
 
   const toPage = (url: string) => history.push(url);

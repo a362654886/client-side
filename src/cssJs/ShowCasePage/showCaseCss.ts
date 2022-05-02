@@ -154,7 +154,7 @@ export const ShowcaseSource = styled.div`
 `;
 
 export const ShowcaseTaDiv = styled.div`
-  height: 56px;
+  height: auto;
   padding-top: 8px;
   padding-bottom: 8px;
   display: flex;
@@ -204,6 +204,7 @@ export const ShowcaseReply = styled.div`
 
 export const ShowcaseTag = styled.div`
   margin-top: 8px;
+  height: 40px;
   margin-bottom: 8px;
   margin-right: 16px;
   p {
@@ -214,17 +215,20 @@ export const ShowcaseTag = styled.div`
     line-height: 32px;
     font-size: 16px;
     font-family: "Arial MT";
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 `;
 
 export const ShowcasePostDiv = styled.div`
   width: 100%;
-  height: 128px;
+  height: auto;
   margin-top: 16px;
   margin-bottom: 16px;
   p {
     background-color: #c1eeff;
-    height: 48px;
+    height: auto;
     padding: 8px 21px;
     line-height: 32px;
     margin-bottom: 0px;
@@ -291,7 +295,7 @@ export const TitleInput = styled(Input)`
 `;
 
 export const DescriptionInput = styled(TextArea)`
-  height: 200px;
+  height: 300px !important;
   margin-bottom: 16px;
 `;
 
@@ -407,7 +411,7 @@ export const ReplyDiv = styled.div`
     padding: 0px;
   }
   img {
-    margin-top: 4px;
+    margin-left: 4px;
     height: 24px;
     weight: 24px;
   }
@@ -764,10 +768,6 @@ export const ShowcaseSideNum = styled.p`
   border-radius: 20px;
   font-weight: bold;
   color: #ef392a;
-`;
-
-export const ShowcasePointerText = styled.p`
-  cursor: pointer;
 `;
 
 export const ShowcaseTagText = styled.h2`

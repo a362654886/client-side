@@ -63,7 +63,6 @@ const MarketplaceEdit = (): JSX.Element => {
   useEffect(() => {
     (async function anyNameFunction() {
       const market = await marketGet(para.id);
-      console.log(market);
       if (market) {
         if (market.imageArr.length >= 4) {
           setImgArr(market.imageArr);
@@ -83,7 +82,7 @@ const MarketplaceEdit = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(imgArr);
+    //console.log(imgArr);
   }, [imgArr, state]);
 
   const setResizeUploadImg = (imageBody: ImageBody) => {
@@ -247,7 +246,7 @@ const MarketplaceEdit = (): JSX.Element => {
           <Select
             value={country}
             style={{ width: "320px" }}
-            onSelect={(e) => setCountry(e as string)}
+            onSelect={(e: string) => setCountry(e as string)}
           >
             {flagArr.map((value, index) => {
               return (

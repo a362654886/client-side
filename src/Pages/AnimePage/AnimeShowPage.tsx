@@ -139,10 +139,25 @@ const AnimeShowPage = (): JSX.Element => {
   const getAnimeDiv = (animeArr: Anime[] | null) => {
     if (animeArr) {
       return animeArr.map((anime: Anime, index: number) => {
-        return (
+        return getWidth() > 600 ? (
           <div
             className="col-xl-3 col-md-4 col-sm-6"
             style={{ marginBottom: "24px" }}
+            key={index}
+            onClick={() => chooseAnime(anime)}
+          >
+            <AnimeBox>
+              <img src={`${anime.headImage}`} />
+              <h6>{anime.title}</h6>
+            </AnimeBox>
+            <LikeDiv>
+              <StarDiv>{getStar(anime.rate)}</StarDiv>
+              <p>{anime.likes} Fans</p>
+            </LikeDiv>
+          </div>
+        ) : (
+          <div
+            style={{ margin: "0px auto", marginBottom: "24px" }}
             key={index}
             onClick={() => chooseAnime(anime)}
           >

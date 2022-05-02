@@ -11,6 +11,7 @@ import {
   InfoDiv,
   LevelPic,
   LineDiv,
+  LineProfileDiv,
   NameDiv,
   NameIdDiv,
   NamePic,
@@ -32,7 +33,6 @@ import ProfileLikesPage from "./component/ProfileLikesPage";
 import ProfileMallPage from "./component/ProfileMallPage";
 import ProfileMarketplacePage from "./profileMarketPlace/ProfileMarketplacePage";
 import ProfileShowcasePage from "./component/ProfileShowcasePage";
-import avatarSetting from "../../files/avatarSetting.png";
 import IconSettings from "../../files/IconSettings.svg";
 import IconInbox from "../../files/IconInbox.svg";
 import facebook from "../../files/facebook.svg";
@@ -45,7 +45,7 @@ import level1 from "../../files/level1.png";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import { MarketFollow } from "../../cssJs/MarketPage/MarketPlaceCss";
-import marketFollow from "../../files/marketFollow.png";
+import marketFollow from "../../files/Icon-Follow.svg";
 import marketMessage from "../../files/marketMessage.png";
 import { MessageDiv, MessageModal } from "../../cssJs/settingImgCss";
 import TextArea from "antd/lib/input/TextArea";
@@ -100,7 +100,7 @@ const ProfilePage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    //
+    console.log(profileUser);
   }, [profileUser]);
 
   const buttonsColor = () => {
@@ -294,7 +294,9 @@ const ProfilePage = (): JSX.Element => {
               userName={`${profileUser ? profileUser.firstName : ""}.${
                 profileUser ? profileUser.lastName : ""
               }`}
-              userImg={avatarSetting}
+              userImg={`https://animeimagebucket.s3.amazonaws.com/${
+                profileUser ? profileUser.avatar : ""
+              }`}
               marginTop="4px"
             />
           </NameSetting>
@@ -408,7 +410,7 @@ const ProfilePage = (): JSX.Element => {
       ) : (
         <div>{getButtons()}</div>
       )}
-      <LineDiv></LineDiv>
+      <LineProfileDiv></LineProfileDiv>
       <ProfileChildDiv>{getProfileDiv()}</ProfileChildDiv>
       <MessageModal
         footer={[]}

@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import { newAllGet, newDelete } from "../../../api/newsAPI";
 import AnimeButton, { MoreButtonDiv } from "../../../components/Button";
 import LoadingDiv from "../../../components/LoadingDiv";
-import { PaginationDiv } from "../../../components/Pagination";
 import {
   AnimeTableElement,
   AnimeTableItem,
-  AnimeTableTitle,
   SearchDiv,
   SearchTableDiv,
   ViewButton,

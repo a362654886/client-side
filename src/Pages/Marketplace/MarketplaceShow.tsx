@@ -88,8 +88,6 @@ const MarketplaceShow = (): JSX.Element => {
   }, [filterType, searchString]);
 
   const search = async (value: string) => {
-    console.log(para.id);
-    console.log(searchUser);
     if (para.id != "null" && searchUser) {
       await searchByUser(para.id);
     } else {

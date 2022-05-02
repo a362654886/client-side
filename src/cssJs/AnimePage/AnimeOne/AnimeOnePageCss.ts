@@ -136,6 +136,7 @@ export const VideoDiv = styled.div`
   margin-bottom: 24px;
   background-color: #f6f6f6;
   text-align: center;
+  padding-top:16px;
 `;
 
 export const VideoShortDiv = styled.div`

@@ -90,7 +90,7 @@ const MallCustom = (): JSX.Element => {
   }, [chooseIndex]);
 
   useEffect(() => {
-    console.log(attributes);
+    //console.log(attributes);
   }, [attributes]);
 
   const setUploadImg = (value: ImageBody) => {

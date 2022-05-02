@@ -25,7 +25,7 @@ const CropImgBodyDiv = ({
   const [cropper, setCropper] = useState<Cropper>();
 
   useEffect(() => {
-    console.log(visible);
+    //console.log(visible);
   }, [visible]);
 
   const reSize = () => {

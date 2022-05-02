@@ -119,6 +119,11 @@ const SettingImg = ({
       if (r && r < 300) {
         setMessageVisible(false);
         setMessageValue("");
+        openNotification(
+          "send success",
+          NotificationColor.Success,
+          NotificationTitle.Success
+        );
       }
     } else {
       openNotification(

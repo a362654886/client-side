@@ -21,7 +21,7 @@ import { IStoreState } from "../../types/IStoreState";
 import { User } from "../../types/User";
 import avatarSetting from "../../files/avatarSetting.png";
 import ingfollow from "../../files/ingfollow.png";
-import marketFollow from "../../files/marketFollow.png";
+import marketFollow from "../../files/Icon-Follow.svg";
 import AnimeButton from "../../components/Button";
 import {
   FollowBottomDiv,
@@ -57,6 +57,10 @@ const ProfileFollowPage = (): JSX.Element => {
     (state: IStoreState) => state.loginUserState
   );
 
+  const profileUser: User | null = useSelector(
+    (state: IStoreState) => state.profileUserState
+  );
+
   const [chooseButton, setChooseButton] = useState<number>(0);
   const [followIng, setFollowing] = useState<User[] | null>([]);
   const [followIngCount, setFollowIngCount] = useState<number>(0);
@@ -72,7 +76,7 @@ const ProfileFollowPage = (): JSX.Element => {
 
   useEffect(() => {
     console.log(loginUser);
-    console.log(followers)
+    console.log(followers);
   }, [
     followers,
     followersCount,
@@ -80,6 +84,7 @@ const ProfileFollowPage = (): JSX.Element => {
     followIngCount,
     chooseButton,
     loginUser,
+    profileUser,
   ]);
 
   const getFollowers = async (userId: string) => {
@@ -95,7 +100,9 @@ const ProfileFollowPage = (): JSX.Element => {
   };
 
   const getImage = () => {
-    const imageArr = loginUser ? loginUser.avatarImage : null;
+    const user =
+      (loginUser ? loginUser._id : "") == para.id ? loginUser : profileUser;
+    const imageArr = user ? user.avatarImage : null;
     return imageArr ? imageArr[0].imageUrl : "";
   };
 
@@ -120,7 +127,9 @@ const ProfileFollowPage = (): JSX.Element => {
           return (
             <AnimeButton
               para=""
-              text={`${button.text} ${followIngCount}`}
+              text={`${button.text} ${
+                button.text == "Following" ? followIngCount : followersCount
+              }`}
               width="120px"
               height="32px"
               textColor="black"
@@ -133,7 +142,9 @@ const ProfileFollowPage = (): JSX.Element => {
           return (
             <AnimeButton
               para=""
-              text={`${button.text} ${followersCount}`}
+              text={`${button.text} ${
+                button.text == "Following" ? followIngCount : followersCount
+              }`}
               width="120px"
               height="32px"
               textColor="black"
@@ -253,27 +264,27 @@ const ProfileFollowPage = (): JSX.Element => {
     }
   };
 
-  return (
-    <ProfileFollowBox>
+  const getTitleUser = () => {
+    const user =
+      (loginUser ? loginUser._id : "") == para.id ? loginUser : profileUser;
+    return (
       <ProfileFollowDiv>
         <NamePic src={getImage()} />
         <NameDiv>
           <NameSetting>
             <p>
-              {`${loginUser ? loginUser.firstName : ""}.${
-                loginUser
-                  ? loginUser.lastName.substring(0, 1).toUpperCase()
-                  : ""
+              {`${user ? user.firstName : ""}.${
+                user ? user.lastName.substring(0, 1).toUpperCase() : ""
               }`}
               <Flag
                 style={{ marginLeft: "5px" }}
-                country={flagGet(loginUser ? loginUser.country : "")}
+                country={flagGet(user ? user.country : "")}
               />
             </p>
             <SettingImg
-              userId={loginUser ? loginUser._id : ""}
-              userName={`${loginUser ? loginUser.firstName : ""}.${
-                loginUser ? loginUser.lastName : ""
+              userId={user ? user._id : ""}
+              userName={`${user ? user.firstName : ""}.${
+                user ? user.lastName : ""
               }`}
               userImg={avatarSetting}
               marginTop="4px"
@@ -282,6 +293,12 @@ const ProfileFollowPage = (): JSX.Element => {
           <NameIdDiv>(ID: 202201)</NameIdDiv>
         </NameDiv>
       </ProfileFollowDiv>
+    );
+  };
+
+  return (
+    <ProfileFollowBox>
+      {getTitleUser()}
       <FollowButtonsDiv>{getButtons()}</FollowButtonsDiv>
       <LineDiv></LineDiv>
       <div style={{ margin: "0px auto" }} className="row">

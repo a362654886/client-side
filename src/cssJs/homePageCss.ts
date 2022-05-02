@@ -34,21 +34,10 @@ export const HomePageHeaderRightDiv = styled.div`
 
 export const HomePageHeadlineDiv = styled.div`
   height: 400px;
-  width: 640px;
+  width: 100%;
   margin: 0px auto;
   img {
     height: 320px;
-    width: 640px;
-  }
-
-  .ant-carousel {
-    width: 640px;
-    margin: 0px auto;
-  }
-  .slick-list,
-  .slick-slider,
-  .slick-initialized {
-    margin: 0px auto;
     width: 640px;
   }
   p {
@@ -150,6 +139,37 @@ export const HomePageShowcaseDiv = styled.div`
   .slick-slider,
   .slick-initialized {
     height: 300px;
+  }
+`;
+
+export const HomeShowcaseDiv = styled.div`
+  margin-top: 40px;
+  text-align: center;
+  min-height: 330px;
+  h1 {
+    color: #f5a623;
+    font-size: 36px;
+    line-height: 44px;
+    font-weight: bold;
+    font-family: Arial;
+  }
+  h3 {
+    color: #fae7d5;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: bold;
+    font-family: Arial;
+  }
+  .ant-carousel {
+    width: 280px;
+    margin: 0px auto;
+  }
+  .slick-list {
+    width: 260px;
+  }
+  .slick-slider,
+  .slick-initialized {
+    height: 490px;
   }
 `;
 
@@ -264,6 +284,7 @@ export const CustomerProductBottomImg = styled.img`
   width: 100%;
   max-height: 500px;
   margin-bottom: 56px;
+  cursor: pointer;
 `;
 
 export const ProductDealerDiv = styled.div`
@@ -304,6 +325,36 @@ export const MarketContextDiv = styled.div`
 export const MarketHomeBox = styled.div`
   width: 240px !important;
   height: 360px;
+  margin-right: 60px;
+  padding: 0px;
+  img {
+    width: 240px;
+    height: 240px;
+  }
+  h6 {
+    height: 40px;
+    line-height: 40px;
+    color: #f5a623;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 0px;
+    background-color: white;
+    padding-left: 8px;
+  }
+  p {
+    margin-bottom: 0px;
+    font-size: 16px;
+    line-height: 32px;
+    margin-top: 0px;
+    word-break: break-all;
+    background-color: white;
+    padding-left: 8px;
+  }
+`;
+
+export const ShowcaseHomeBox = styled.div`
+  width: 240px !important;
+  height: 260px;
   margin-right: 60px;
   padding: 0px;
   img {

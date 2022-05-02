@@ -31,7 +31,6 @@ const ShowcaseCollectionOne = (): JSX.Element => {
     (async function anyNameFunction() {
       await getShowCase(para.id);
     })();
-    console.log(para.id);
   }, []);
 
   const getShowCase = async (id: string) => {

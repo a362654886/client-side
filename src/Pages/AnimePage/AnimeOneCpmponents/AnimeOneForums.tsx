@@ -176,7 +176,6 @@ const AnimeOneForum = ({
       pageNum,
       pageSize
     );
-    console.log(forumResult?forumResult.result:"")
     if (forumResult) {
       setForums(forumResult.result);
       setCount(forumResult.count);
@@ -276,6 +275,7 @@ const AnimeOneForum = ({
       if (r && r < 300) {
         forums.unshift(forum);
         setForums(forums);
+        setHtml("");
       }
     } else {
       openNotification(
@@ -296,7 +296,6 @@ const AnimeOneForum = ({
       type: LOADING_OPEN,
     });
     if (loginUser) {
-      console.log(forums[index]);
       const length = forums[index].items ? forums[index].items?.length : 0;
       const forumItem: ForumItem = {
         _id: `${
@@ -737,7 +736,6 @@ const AnimeOneForum = ({
     const newForums = forums;
     const id = forums[index]._id;
     const r = await forumDelete(id);
-    console.log(r);
     const deleteIndex = newForums.findIndex((x) => x.forumId == id);
     newForums.splice(deleteIndex, 1);
     setForums(newForums);
@@ -756,7 +754,6 @@ const AnimeOneForum = ({
     const newForums = forums;
     const id = (forums[index].items as ForumItem[])[secondIndex]._id;
     const r = await forumItemDelete(id);
-    console.log(r);
     const deleteIndex = (newForums[index].items as ForumItem[])
       .map((x) => x.forumItemId)
       .indexOf(id);
@@ -784,7 +781,6 @@ const AnimeOneForum = ({
         .secondItems as ForumSecondItem[]
     )[thirdIndex]._id;
     const r = await forumSecondDelete(id);
-    console.log(r);
     const deleteIndex = (
       (newForums[index].items as ForumItem[])[secondIndex]
         .secondItems as ForumSecondItem[]

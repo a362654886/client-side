@@ -83,7 +83,7 @@ const AnimeOneVideo = ({
   const pageSize = pageSizeSetting;
 
   useEffect(() => {
-    console.log(videos);
+    //console.log(videos);
   }, [videos, update]);
 
   useEffect(() => {

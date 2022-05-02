@@ -49,7 +49,7 @@ const AUpload = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(margin);
+   // console.log(margin);
   }, []);
 
   const fileCheck = (file: RcFile | undefined) => {

@@ -8,7 +8,7 @@ export const AnimOneProduct = styled.div`
 
 export const SubtitleDiv = styled.div`
   width: 100%;
-  height: 48px;
+  height: auto;
   font-size: 14px;
   line-height: 22px;
   color: #4a4a4a;
@@ -19,7 +19,7 @@ export const SubtitleDiv = styled.div`
   p {
     padding: 8px 21px;
     margin-bottom: 0px;
-    height: 32px;
+    height: auto;
     line-height: 32px;
     color: black;
   }

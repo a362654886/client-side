@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
-  ShowcasePointerText,
   ShowcaseSideDiv,
   ShowcaseSideDivHeader,
   ShowcaseSideDivTagHeader,
@@ -129,7 +128,7 @@ const ShowcaseSide = (): JSX.Element => {
         {allTags.map((tag, index) => {
           return (
             <ShowcaseSideTag key={index}>
-              <ShowcasePointerText
+              <p
                 onClick={() => {
                   toPage(
                     `/mainPage/showcase/showTag?tag=${tag.text.replace(
@@ -140,7 +139,7 @@ const ShowcaseSide = (): JSX.Element => {
                 }}
               >
                 {tag.text}
-              </ShowcasePointerText>
+              </p>
             </ShowcaseSideTag>
           );
         })}

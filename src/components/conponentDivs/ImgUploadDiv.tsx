@@ -31,7 +31,6 @@ interface IProps {
 
 const fileCheck = (file: File | undefined | null) => {
   if (file === undefined || file === null) {
-    console.log("file dont exist!");
     return false;
   }
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
