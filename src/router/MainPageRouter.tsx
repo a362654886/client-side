@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useParams } from "react-router-dom";
 import AnimeOne from "../Pages/AnimePage/AnimeOne";
 import AnimeShowPage from "../Pages/AnimePage/AnimeShowPage";
 import ContactUs from "../Pages/ContactUs";
 import Discovery from "../Pages/Discovery/Discovery";
+import ForgetPassword from "../Pages/ForgetPassword";
 import HomePage from "../Pages/HomePage/HomePage";
 import ForgetPage from "../Pages/LoginPage/forgotPage";
 import LoginPage from "../Pages/LoginPage/LoginPage";
@@ -35,6 +36,10 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={NewOnePage} path="/mainPage/oneNew/:id" />
         <Route component={Report} path="/mainPage/report" />
         <Route component={ContactUs} path="/mainPage/contactUs" />
+        <Route
+          component={ForgetPassword}
+          path="/mainPage/forgetPassword/:email"
+        />
       </Switch>
     </>
   );

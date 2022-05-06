@@ -53,6 +53,10 @@ export const EmailInput = styled.div`
   Select {
     width: 100%;
   }
+  p {
+    color: red;
+    margin-top: 5px;
+  }
 `;
 
 export const PasswordInput = styled.div`
@@ -214,6 +218,7 @@ export const AvatarInput = styled.div`
 export const SubmitClickButton = styled.div`
   margin-left: 92px;
   margin-top: 48px;
+  margin-bottom: 20px;
 `;
 
 export const AvatarBox1 = styled.div`

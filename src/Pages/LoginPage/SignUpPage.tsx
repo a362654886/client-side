@@ -21,7 +21,7 @@ import {
   VitrifyButton,
 } from "../../cssJs/loginCss";
 import { Avatar, User } from "../../types/User";
-import { userAdd } from "../../api/userApi";
+import { userAdd, userGet } from "../../api/userApi";
 import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
@@ -65,6 +65,8 @@ const SignUpPage = (): JSX.Element => {
   const [vitrifyCode, setVitrifyCode] = useState<string>("");
   const [time, setTime] = useState<number>(0);
 
+  const [emailCheck, setEmailCheck] = useState<string | boolean>(false);
+
   useEffect(() => {
     (async function anyNameFunction() {
       dispatch({
@@ -85,8 +87,8 @@ const SignUpPage = (): JSX.Element => {
   }, [avatars]);
 
   useEffect(() => {
-    console.log(time);
-  }, [uploadImg, time, chooseAvatar]);
+    //
+  }, [uploadImg, time, chooseAvatar, emailCheck]);
 
   const getAvatars = async () => {
     //get all plate
@@ -126,6 +128,21 @@ const SignUpPage = (): JSX.Element => {
     }
   };
 
+  const validateEmail = (email: string) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const emailCheckFn = async () => {
+    const checkEmail = validateEmail(email);
+    if (!checkEmail) {
+      setEmailCheck("please input valid email address");
+    } else {
+      const user = await userGet(email);
+      setEmailCheck(user !== null ? "this email already exist" : false);
+    }
+  };
+
   const onChange = (e: React.ChangeEvent<Element>): void => {
     const type = (e.target as HTMLInputElement).placeholder;
     switch (type) {
@@ -152,6 +169,15 @@ const SignUpPage = (): JSX.Element => {
 
   const submit = async () => {
     setLoadingAlert(false);
+    if (emailCheck !== "") {
+      openNotification(
+        emailCheck.toString(),
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
+      setLoadingAlert(true);
+      return;
+    }
     if (vitrifyGenerateCode !== vitrifyCode || vitrifyGenerateCode === "") {
       openNotification(
         "your vitrify code is wrong",
@@ -357,7 +383,14 @@ const SignUpPage = (): JSX.Element => {
       </SignUpButtons>
       <EmailInput>
         <h3>Account Email:</h3>
-        <Input placeholder={"email"} onChange={onChange}></Input>
+        <Input
+          onBlur={() => {
+            emailCheckFn();
+          }}
+          placeholder={"email"}
+          onChange={onChange}
+        ></Input>
+        <p>{emailCheck ? emailCheck : ""}</p>
       </EmailInput>
       <PasswordInput>
         <h3>Password:</h3>
@@ -386,7 +419,7 @@ const SignUpPage = (): JSX.Element => {
         <Input
           value={vitrifyCode}
           placeholder={"confirm"}
-          onChange={(e) => setVitrifyCode(e.target.value)}
+          onChange={(e: any) => setVitrifyCode(e.target.value)}
         ></Input>
       </PasswordInput>
       <NameInput>

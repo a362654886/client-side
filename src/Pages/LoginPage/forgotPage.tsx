@@ -1,18 +1,16 @@
 import { Input } from "antd";
 import * as React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { emailPost } from "../../api/emailAPI";
 import AnimeButton from "../../components/Button";
 import {
   EmailInput,
   LoginBox,
-  LoginClickButton,
   LogInHeaderImg,
   PasswordForgetGoBack,
   SignUpButtons,
 } from "../../cssJs/loginCss";
-import AlertBox, { ColorType } from "../../components/AlertBox";
 import avatarUpload from "../../files/avatarUpload.png";
 
 const ForgetPage = (): JSX.Element => {
@@ -31,8 +29,8 @@ const ForgetPage = (): JSX.Element => {
     }
   };
 
-  const send = () => {
-    console.log("forget");
+  const send = async () => {
+    await emailPost(window.btoa(email), "reset password", "", "forget");
   };
 
   return (
