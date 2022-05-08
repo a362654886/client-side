@@ -50,6 +50,7 @@ import {
   NotificationTitle,
   openNotification,
 } from "../../helperFns/popUpAlert";
+import { getWidth } from "../../helperFns/widthFn";
 
 const ProfileMessagePage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -290,7 +291,12 @@ const ProfileMessagePage = (): JSX.Element => {
 
   return (
     <>
-      <ProfileBox>
+      <ProfileBox
+        style={{
+          marginLeft: getWidth() > 600 ? "" : "8px",
+          marginRight: getWidth() > 600 ? "" : "8px",
+        }}
+      >
         <ProfileDiv>
           <NamePic
             src={

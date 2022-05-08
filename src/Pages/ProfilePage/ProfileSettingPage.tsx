@@ -25,6 +25,7 @@ import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import ProfileNotificationPage from "./component/ProfileNotificationPage";
 import ProfileShippingAddressPage from "./component/ProfileShippingAddressPage";
+import { getWidth } from "../../helperFns/widthFn";
 
 const ProfileSettingPage = (): JSX.Element => {
   const history = useHistory();
@@ -130,8 +131,17 @@ const ProfileSettingPage = (): JSX.Element => {
   };
 
   return (
-    <ProfileSettingBox>
-      <ProfileDiv>
+    <ProfileSettingBox
+      style={{
+        marginLeft: getWidth() > 600 ? "" : "8px",
+        marginRight: getWidth() > 600 ? "" : "8px",
+      }}
+    >
+      <ProfileDiv
+        style={{
+          display: getWidth() > 600 ? "flex" : "inline",
+        }}
+      >
         <LevelPic src={level1} />
         <NamePic src={getImage()} />
         <NameDiv>
@@ -160,7 +170,7 @@ const ProfileSettingPage = (): JSX.Element => {
         </NameDiv>
       </ProfileDiv>
       <LineDiv></LineDiv>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: getWidth() > 600 ? "flex" : "inline" }}>
         <div style={{ width: "233px" }}>
           <SettingButtonsDiv>{getButtons()}</SettingButtonsDiv>
         </div>

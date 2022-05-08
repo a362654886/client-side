@@ -48,7 +48,7 @@ const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
   }, [pageNum]);
 
   useEffect(() => {
-    console.log(allShowCases);
+    //console.log(allShowCases);
   }, [allShowCases]);
 
   const searchType = async () => {

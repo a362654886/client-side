@@ -12,6 +12,7 @@ import {
   LevelPic,
   LineDiv,
   LineProfileDiv,
+  MobileButtonsDiv,
   NameDiv,
   NameIdDiv,
   NamePic,
@@ -100,7 +101,7 @@ const ProfilePage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(profileUser);
+    //console.log(profileUser);
   }, [profileUser]);
 
   const buttonsColor = () => {
@@ -272,8 +273,17 @@ const ProfilePage = (): JSX.Element => {
   };
 
   return (
-    <ProfileBox>
-      <ProfileDiv>
+    <ProfileBox
+      style={{
+        marginLeft: getWidth() > 600 ? "" : "8px",
+        marginRight: getWidth() > 600 ? "" : "8px",
+      }}
+    >
+      <ProfileDiv
+        style={{
+          display: getWidth() > 600 ? "flex" : "inline",
+        }}
+      >
         <LevelPic
           onClick={() => toPage("/mainPage/profileLevel")}
           src={level1}
@@ -411,7 +421,7 @@ const ProfilePage = (): JSX.Element => {
       {getWidth() > 700 ? (
         <ButtonsDiv>{getButtons()}</ButtonsDiv>
       ) : (
-        <div>{getButtons()}</div>
+        <MobileButtonsDiv>{getButtons()}</MobileButtonsDiv>
       )}
       <LineProfileDiv></LineProfileDiv>
       <ProfileChildDiv>{getProfileDiv()}</ProfileChildDiv>

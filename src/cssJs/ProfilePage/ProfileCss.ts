@@ -20,7 +20,7 @@ export const ProfileSettingBox = styled.div`
 
 export const ProfileDiv = styled.div`
   height: 112px;
-  width: 432px;
+  max-width: 432px;
   margin-top: 8px;
   padding-top: 16px;
   padding-bottom: 16px;
@@ -179,6 +179,14 @@ export const ButtonsDiv = styled.div`
   }
 `;
 
+export const MobileButtonsDiv = styled.div`
+  margin-top: 16px;
+  button {
+    margin-right: 8px;
+    margin-top: 8px;
+  }
+`;
+
 export const ProfileChildDiv = styled.div`
   //margin-top: 38px;
 `;
@@ -317,7 +325,7 @@ export const ContactInfoDiv = styled.div`
 
 export const ContactInfoContext = styled.div`
   height: 384px;
-  width: 840px;
+  max-width: 840px;
   padding: 8px;
   background-color: #e2f6fe;
 `;
@@ -333,10 +341,11 @@ export const ProfileMessageButtons = styled.div`
 
 export const ProfileMessageBox = styled.div`
   height: 264px;
-  width: 840px;
+  max-width: 840px;
   background-color: #ecf9fe;
   margin-top: 8px;
   position: relative;
+  padding: 0px 8px;
 `;
 
 export const ProfileMessageMore = styled.div`
