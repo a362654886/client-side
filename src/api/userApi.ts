@@ -81,6 +81,23 @@ export const userUpdate = async (updateUser: User): Promise<string | null> => {
     });
 };
 
+export const userUpdatePassword = async (
+  email: string,
+  password: string
+): Promise<string | null> => {
+  const endpoint = basicURL + "userUpdatePassword";
+  return Axios.put(endpoint, {
+    email: email,
+    password: password,
+  })
+    .then(() => {
+      return "success";
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const userUpdateNotification = async (
   updateUser: User
 ): Promise<string | null> => {

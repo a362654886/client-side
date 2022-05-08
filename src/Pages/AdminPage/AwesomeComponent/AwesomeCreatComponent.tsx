@@ -10,7 +10,6 @@ import {
 import { AvatarUpload } from "../../../cssJs/AdminPage/adminSysSettingCss";
 import ImageUpload, { ImageBody } from "../ImageUpload";
 import AnimeButton from "../../../components/Button";
-import { avatarAdd } from "../../../api/avatarAPI";
 import { awesomeLevelAdd } from "../../../api/awesomeLevelAPI";
 import {
   NotificationColor,

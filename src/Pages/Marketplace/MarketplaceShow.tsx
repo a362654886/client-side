@@ -36,6 +36,7 @@ import iconClear from "../../files/Icon-Clear.svg";
 import loadingImg from "../../files/loading.gif";
 import getMoreImg from "../../files/getMore.png";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
+import { getWidth } from "../../helperFns/widthFn";
 
 export enum FilterEnum {
   Latest = "Latest",
@@ -266,7 +267,13 @@ const MarketplaceShow = (): JSX.Element => {
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <div
+      style={{
+        width: "100%",
+        paddingLeft: getWidth() > 600 ? "" : "8px",
+        paddingRight: getWidth() > 600 ? "" : "8px",
+      }}
+    >
       <MarketPlaceTitleDiv>
         <MarketPlaceTitle>Marketplace</MarketPlaceTitle>
         <AnimeButton
@@ -322,7 +329,7 @@ const MarketplaceShow = (): JSX.Element => {
             <p>Clear</p>
           </StringClear>
         </StringBar>
-        <MarketShowBox className="row">
+        <MarketShowBox className={getWidth() > 600 ? "row" : ""}>
           {loading ? (
             <div>
               <img src={loadingImg} />

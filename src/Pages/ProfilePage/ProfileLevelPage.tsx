@@ -9,7 +9,6 @@ import {
   NameIdDiv,
   NamePic,
   NameSetting,
-  ProfileDiv,
   ProfileImgDiv,
   ProfileLevelAwesome,
   ProfileLevelBox,
@@ -25,10 +24,12 @@ import Flag from "react-flagkit";
 import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import { flagGet } from "../../helperFns/flag";
 import level1 from "../../files/level1.png";
+import { useEffect, useState } from "react";
+import { awesomeLevelAllGet } from "../../api/awesomeLevelAPI";
+import { AwesomeLevelType } from "../../types/awesomeLevel";
+import { Slider } from "antd";
 
 const ProfileLevelPage = (): JSX.Element => {
-  const history = useHistory();
-
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
   );
@@ -37,9 +38,33 @@ const ProfileLevelPage = (): JSX.Element => {
     (state: IStoreState) => state.profileUserState
   );
 
+  const [allLevels, setAllLevels] = useState<AwesomeLevelType[]>([]);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      const _allLevels = await awesomeLevelAllGet();
+      setAllLevels(_allLevels);
+    })();
+  }, []);
+
   const getImage = () => {
     const imageArr = loginUser ? loginUser.avatarImage : null;
     return imageArr ? imageArr[0].imageUrl : "";
+  };
+
+  const moveToLevel = () => {
+    let levelTo = "";
+    let find = false;
+    allLevels.forEach((level) => {
+      if (
+        find == false &&
+        level.awesomeRequire > (profileUser ? profileUser.awesomeNum : 0)
+      ) {
+        find = true;
+        levelTo = level._id;
+      }
+    });
+    return levelTo;
   };
 
   return (
@@ -79,63 +104,38 @@ const ProfileLevelPage = (): JSX.Element => {
         </p>
         <h6>{profileUser ? profileUser.awesomeNum : 0}</h6>
       </ProfileLevelAwesome>
-      <ProfileLevelH2>You are moving onto Level 3</ProfileLevelH2>
+      <ProfileLevelH2>You are moving onto Level {moveToLevel()}</ProfileLevelH2>
       <LineDiv></LineDiv>
       <ProfileLevelMainDiv className="row">
-        <ProfileLevelImgDiv className="col-xl-6 col-md-6 col-sm-6">
-          <ProfileImgDiv>
-            <img src={level1} />
-          </ProfileImgDiv>
-          <div>
-            <img src={showCaseAwesomeClick} style={{ marginRight: "4px" }} />
-            <p>1k</p>
-          </div>
-        </ProfileLevelImgDiv>
-        <ProfileLevelImgDiv className="col-xl-6 col-md-6 col-sm-6">
-          <ProfileImgDiv>
-            <img src={level1} />
-          </ProfileImgDiv>
-          <div>
-            <img src={showCaseAwesomeClick} style={{ marginRight: "4px" }} />
-            <p>1k</p>
-          </div>
-        </ProfileLevelImgDiv>
-        <ProfileLevelImgDiv className="col-xl-6 col-md-6 col-sm-6">
-          <ProfileImgDiv>
-            <img src={level1} />
-          </ProfileImgDiv>
-          <div>
-            <img src={showCaseAwesomeClick} style={{ marginRight: "4px" }} />
-            <p>1k</p>
-          </div>
-        </ProfileLevelImgDiv>
-        <ProfileLevelImgDiv className="col-xl-6 col-md-6 col-sm-6">
-          <ProfileImgDiv>
-            <img src={level1} />
-          </ProfileImgDiv>
-          <div>
-            <img src={showCaseAwesomeClick} style={{ marginRight: "4px" }} />
-            <p>1k</p>
-          </div>
-        </ProfileLevelImgDiv>
-        <ProfileLevelImgDiv className="col-xl-6 col-md-6 col-sm-6">
-          <ProfileImgDiv>
-            <img src={level1} />
-          </ProfileImgDiv>
-          <div>
-            <img src={showCaseAwesomeClick} style={{ marginRight: "4px" }} />
-            <p>1k</p>
-          </div>
-        </ProfileLevelImgDiv>
-        <ProfileLevelImgDiv className="col-xl-6 col-md-6 col-sm-6">
-          <ProfileImgDiv>
-            <img src={level1} />
-          </ProfileImgDiv>
-          <div>
-            <img src={showCaseAwesomeClick} style={{ marginRight: "4px" }} />
-            <p>1k</p>
-          </div>
-        </ProfileLevelImgDiv>
+        {allLevels.map((item, index) => {
+          return (
+            <ProfileLevelImgDiv
+              key={index}
+              className="col-xl-6 col-md-6 col-sm-6"
+            >
+              <h6>{`Level ${index + 1}`}</h6>
+              <ProfileImgDiv>
+                <img src={item.image} />
+              </ProfileImgDiv>
+              <div style={{ position: "relative" }}>
+                <img
+                  src={showCaseAwesomeClick}
+                  style={{ marginRight: "4px" }}
+                />
+                <p>{item.awesomeRequire}</p>
+                <Slider
+                  style={{ width: "100%" }}
+                  defaultValue={
+                    ((profileUser ? profileUser.awesomeNum : 0) /
+                      item.awesomeRequire) *
+                    100
+                  }
+                  disabled={true}
+                ></Slider>
+              </div>
+            </ProfileLevelImgDiv>
+          );
+        })}
       </ProfileLevelMainDiv>
     </ProfileLevelBox>
   );

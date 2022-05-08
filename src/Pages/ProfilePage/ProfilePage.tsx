@@ -274,7 +274,10 @@ const ProfilePage = (): JSX.Element => {
   return (
     <ProfileBox>
       <ProfileDiv>
-        <LevelPic src={level1} />
+        <LevelPic
+          onClick={() => toPage("/mainPage/profileLevel")}
+          src={level1}
+        />
         <NamePic src={getNameImg()} />
         <NameDiv>
           <NameSetting>

@@ -106,7 +106,13 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
     return buttonsColor.map((button, index) => {
       if (index == 1) {
         return (
-          <div key={index}>
+          <div
+            key={index}
+            style={{ marginTop: getWidth() > 800 ? "0px" : "8px" }}
+            className={
+              getWidth() > 800 ? "" : "col-xl-4 col-md-4 col-sm-6 col-6"
+            }
+          >
             <AnimeButton
               para=""
               text={button.text}
@@ -123,7 +129,13 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
         );
       } else {
         return (
-          <div key={index}>
+          <div
+            key={index}
+            style={{ marginTop: getWidth() > 800 ? "0px" : "8px" }}
+            className={
+              getWidth() > 800 ? "" : "col-xl-4 col-md-4 col-sm-6 col-6"
+            }
+          >
             <AnimeButton
               para=""
               text={button.text}
@@ -296,8 +308,9 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
           </ShowCaseTitleDiv>
           <AnimeButtonsDiv
             style={{
-              display: getWidth() > 800 ? "flex" : "inline",
+              display: getWidth() > 800 ? "flex" : "",
             }}
+            className={getWidth() > 800 ? "" : "row"}
           >
             {getButtons()}
           </AnimeButtonsDiv>

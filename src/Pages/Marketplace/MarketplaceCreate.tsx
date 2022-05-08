@@ -28,6 +28,7 @@ import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
 import Flag from "react-flagkit";
 import CropImgBodyDiv from "../../components/CropImgBodyDiv";
 import { useHistory } from "react-router-dom";
+import { getWidth } from "../../helperFns/widthFn";
 
 const { Option } = Select;
 
@@ -127,24 +128,39 @@ const MarketplaceCreate = (): JSX.Element => {
   };
 
   return (
-    <>
+    <div
+      style={{
+        paddingLeft: getWidth() > 600 ? "" : "8px",
+        paddingRight: getWidth() > 600 ? "" : "8px",
+        width: getWidth() > 600 ? "1140px" : "",
+      }}
+    >
       <div className="col-xl-9 col-md-9 col-sm-9 col-9">
         <MarketPlaceTitleDiv>
           <MarketPlaceTitle>Marketplace</MarketPlaceTitle>
         </MarketPlaceTitleDiv>
         <MarketBodyDiv>
           <p>publish an Item to trade at the marketplace</p>
-          <MarketImgDiv>
+          <MarketImgDiv
+            style={{
+              width: getWidth() > 600 ? "610px" : "300px",
+              height: getWidth() > 600 ? "650px" : "1300px",
+            }}
+          >
             {imgArr.map((image, index) => {
               if (image == "add") {
                 return (
                   <div
-                    style={{
-                      position: "absolute",
-                      left: (index + 1) % 2 == 0 ? "300px" : "0px",
-                      top: index <= 1 ? "0px" : "320px",
-                      marginLeft: "40px",
-                    }}
+                    style={
+                      getWidth() > 600
+                        ? {
+                            position: "absolute",
+                            left: (index + 1) % 2 == 0 ? "300px" : "0px",
+                            top: index <= 1 ? "0px" : "320px",
+                            marginLeft: "40px",
+                          }
+                        : {}
+                    }
                   >
                     <ImageUpload
                       width={"240px"}
@@ -166,11 +182,15 @@ const MarketplaceCreate = (): JSX.Element => {
                 return (
                   <MarketUploadImage
                     key={index}
-                    style={{
-                      position: "absolute",
-                      left: (index + 1) % 2 == 0 ? "300px" : "0px",
-                      top: index <= 1 ? "0px" : "320px",
-                    }}
+                    style={
+                      getWidth() > 600
+                        ? {
+                            position: "absolute",
+                            left: (index + 1) % 2 == 0 ? "300px" : "0px",
+                            top: index <= 1 ? "0px" : "320px",
+                          }
+                        : {}
+                    }
                   >
                     <div>
                       <img
@@ -285,8 +305,8 @@ const MarketplaceCreate = (): JSX.Element => {
           cube={true}
         />
       </div>
-      <div className="col-xl-3 col-md-3 col-sm-3 col-3"></div>
-    </>
+      <div className="col-xl-3 col-md-3 col-sm-1 col-1"></div>
+    </div>
   );
 };
 

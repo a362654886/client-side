@@ -32,6 +32,7 @@ import {
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import CropImgBodyDiv from "../../components/CropImgBodyDiv";
+import { getWidth } from "../../helperFns/widthFn";
 
 const ShowcaseCreate = (): JSX.Element => {
   const loginUser: User | null = useSelector(
@@ -263,7 +264,12 @@ const ShowcaseCreate = (): JSX.Element => {
   };
 
   return (
-    <>
+    <div
+      style={{
+        paddingLeft: getWidth() > 600 ? "" : "8px",
+        paddingRight: getWidth() > 600 ? "" : "8px",
+      }}
+    >
       <ShowCaseTitleDiv>
         <ShowCaseTitle>{getHeader()}</ShowCaseTitle>
       </ShowCaseTitleDiv>
@@ -363,7 +369,7 @@ const ShowcaseCreate = (): JSX.Element => {
         setVisibleFalse={() => setShowCropper(false)}
         cube={false}
       />
-    </>
+    </div>
   );
 };
 

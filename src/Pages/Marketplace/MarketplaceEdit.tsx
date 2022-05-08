@@ -28,6 +28,7 @@ import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
 import Flag from "react-flagkit";
 import CropImgBodyDiv from "../../components/CropImgBodyDiv";
 import { useHistory, useParams } from "react-router-dom";
+import { getWidth } from "../../helperFns/widthFn";
 
 const { Option } = Select;
 
@@ -160,7 +161,12 @@ const MarketplaceEdit = (): JSX.Element => {
         </MarketPlaceTitleDiv>
         <MarketBodyDiv>
           <p>publish an Item to trade at the marketplace</p>
-          <MarketImgDiv>
+          <MarketImgDiv
+            style={{
+              width: getWidth() > 600 ? "610px" : "300px",
+              height: getWidth() > 600 ? "650px" : "1300px",
+            }}
+          >
             {imgArr.map((image, index) => {
               if (image == "add") {
                 return (

@@ -1,9 +1,18 @@
 import { Input } from "antd";
 import * as React from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { userUpdatePassword } from "../api/userApi";
 import AnimeButton from "../components/Button";
 import { ContactUsDiv, InputDiv } from "../cssJs/contactUs";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../helperFns/popUpAlert";
+import { LOADING_CLOSE, LOADING_OPEN } from "../redux/loading";
+import { LoadingType } from "../types/EnumTypes";
 
 interface Para {
   email: string;
@@ -11,13 +20,36 @@ interface Para {
 
 const ForgetPassword = (): JSX.Element => {
   const para: Para = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const sendEmail = async () => {
-    console.log(password);
-    console.log(confirmPassword);
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const r = await userUpdatePassword(window.atob(para.email), password);
+    if (r == "success") {
+      openNotification(
+        "update success",
+        NotificationColor.Success,
+        NotificationTitle.Success
+      );
+      history.push("/mainPage/login");
+    } else {
+      openNotification(
+        "update fail,please contact administer ",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
+    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   return (

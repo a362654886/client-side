@@ -275,10 +275,10 @@ export const TagRadioInput = styled(Radio)`
       line-height: 30px;
     }
     input {
-      margin-left: 16px;
+      margin-left: 0px;
       height: 30px;
       min-height: 30px;
-      width: 820px;
+      min-width: 250px;
       z-index: 1000;
     }
   }

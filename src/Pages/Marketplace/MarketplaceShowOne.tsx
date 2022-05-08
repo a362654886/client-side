@@ -69,6 +69,7 @@ import {
 import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { MARKET_FOLLOW_ARR } from "../../redux/marketFollow";
+import { getWidth } from "../../helperFns/widthFn";
 
 interface Para {
   id: string;
@@ -319,7 +320,9 @@ const MarketplaceShowOne = (): JSX.Element => {
 
   return (
     <>
-      <div className="col-xl-9 col-md-9 col-sm-9 col-9">
+      <div
+        className={getWidth() > 600 ? "col-xl-9 col-md-9 col-sm-9 col-9" : ""}
+      >
         <MarketPlaceTitleDiv>
           <MarketPlaceTitle>Marketplace</MarketPlaceTitle>
           <AnimeButton
@@ -335,22 +338,31 @@ const MarketplaceShowOne = (): JSX.Element => {
         </MarketPlaceTitleDiv>
         <MarketBodyDiv>
           <MarketShowOneTitle>{title}</MarketShowOneTitle>
-          <MarketImgDiv>
+          <MarketImgDiv
+            style={{
+              width: getWidth() > 600 ? "610px" : "300px",
+              height: getWidth() > 600 ? "650px" : "1300px",
+            }}
+          >
             {imgArr.map((image, index) => {
               return (
                 <div
                   key={index}
-                  style={{
-                    position: "absolute",
-                    left: (index + 1) % 2 == 0 ? "300px" : "0px",
-                    top: index <= 1 ? "0px" : "320px",
-                    width: "250px",
-                    height: "250px",
-                    backgroundColor: "#F6F6F6",
-                    marginLeft: "40px",
-                    display: "flex",
-                    borderRadius: "20px",
-                  }}
+                  style={
+                    getWidth() > 600
+                      ? {
+                          position: "absolute",
+                          left: (index + 1) % 2 == 0 ? "300px" : "0px",
+                          top: index <= 1 ? "0px" : "320px",
+                          width: "250px",
+                          height: "250px",
+                          backgroundColor: "#F6F6F6",
+                          marginLeft: "40px",
+                          display: "flex",
+                          borderRadius: "20px",
+                        }
+                      : { marginTop: "10px" }
+                  }
                 >
                   <img
                     style={{
@@ -429,7 +441,9 @@ const MarketplaceShowOne = (): JSX.Element => {
             }`}</p>
           </MarketLocation>
           {loginUser ? (
-            <MarketFollow>
+            <MarketFollow
+              style={{ display: getWidth() > 600 ? "flex" : "inline" }}
+            >
               {loginUser.followMarket.indexOf(marketState?._id as string) ==
               -1 ? (
                 <div
@@ -499,15 +513,21 @@ const MarketplaceShowOne = (): JSX.Element => {
             <p>{`Your bid is for the seller's reference only. The final decision is
             up to the seller.`}</p>
           </WishBidsContext>
-          <PriceInput>
-            <p>$</p>
-            <Input
-              onChange={(e) => {
-                const price = e.target.value;
-                setBidPrice(Number(price));
-              }}
-            />
-            <p>(NZD)</p>
+          <PriceInput
+            style={{
+              display: getWidth() > 600 ? "flex" : "inline",
+            }}
+          >
+            <div style={{ display: "flex", marginLeft: "16px" }}>
+              <p>$</p>
+              <Input
+                onChange={(e) => {
+                  const price = e.target.value;
+                  setBidPrice(Number(price));
+                }}
+              />
+              <p>(NZD)</p>
+            </div>
             <button
               style={{
                 width: "156px",

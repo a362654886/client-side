@@ -1,8 +1,10 @@
 import { Input } from "antd";
 import * as React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { emailPost } from "../../api/emailAPI";
+import { userGet } from "../../api/userApi";
 import AnimeButton from "../../components/Button";
 import {
   EmailInput,
@@ -12,9 +14,17 @@ import {
   SignUpButtons,
 } from "../../cssJs/loginCss";
 import avatarUpload from "../../files/avatarUpload.png";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import { LoadingType } from "../../types/EnumTypes";
 
 const ForgetPage = (): JSX.Element => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [email, setUserEmail] = useState<string>("");
 
@@ -29,8 +39,34 @@ const ForgetPage = (): JSX.Element => {
     }
   };
 
+  const checkEmailExist = async () => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    if (email.trim() !== "") {
+      const user = await userGet(email);
+      return user == null ? "this email don't exist" : true;
+    } else {
+      return "please input an email";
+    }
+  };
+
   const send = async () => {
-    await emailPost(window.btoa(email), "reset password", "", "forget");
+    const r = await checkEmailExist();
+    if (r !== true) {
+      openNotification(
+        r.toString(),
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
+    } else {
+      await emailPost(window.btoa(email), "reset password", "", "forget");
+    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   return (

@@ -1,5 +1,10 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../helperFns/popUpAlert";
 
 const basicURL = backEndLink;
 
@@ -17,9 +22,19 @@ export const emailPost = async (
     type: type ? type : "",
   })
     .then((response) => {
+      openNotification(
+        "email send success",
+        NotificationColor.Success,
+        NotificationTitle.Success
+      );
       return response.status;
     })
     .catch(() => {
+      openNotification(
+        "email send fail",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
       return null;
     });
 };

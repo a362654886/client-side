@@ -107,6 +107,7 @@ export const LevelPic = styled.img`
   height: 60px;
   margin-top: 10px;
   margin-right: 8px;
+  cursor: pointer;
 `;
 
 export const NameText = styled.p`
@@ -422,21 +423,48 @@ export const ProfileLevelImgDiv = styled.div`
   div {
     display: flex;
   }
+  h6 {
+    height: 40px;
+    line-height: 40px;
+    font-size: 24px;
+    font-weight: "bold";
+  }
   p {
+    position: absolute;
     line-height: 36px;
     margin-bottom: 0px;
-    width: 100%;
-    text-align: center;
-    max-width: 200px;
-    background-color: #f6f6f6;
-    border-radius: 20px;
     color: #ef392a;
     font-weight: bold;
+    right: 120px;
+    z-index: 10000;
+  }
+  .ant-slider,
+  .ant-slider-disabled {
+    height: 32px;
+    margin: 0px;
+    background-color: #f6f6f6;
+    border-radius: 0px 20px 20px 0px;
+  }
+  .ant-slider-track {
+    top: -1px;
+    height: 32px;
+    margin: 0px;
+    background-color: #ffdf00 !important;
+    border-radius: 20px 20px 20px 20px;
+  }
+  .ant-slider-step {
+    height: 0px;
+  }
+  .ant-slider-handle {
+    height: 0px;
+    width: 0px;
+    border: 0px solid white;
   }
 `;
 
 export const ProfileImgDiv = styled.div`
   width: 80px;
+  height: 100px;
   margin: 0px auto;
 `;
 

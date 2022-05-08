@@ -106,14 +106,12 @@ export const MarketUploadImage = styled.div`
 
 export const MarketImgDiv = styled.div`
   position: relative;
-  width: 610px;
-  height: 650px;
   margin: 0 auto;
   margin-top: 56px;
 `;
 
 export const MarketImgLimitDiv = styled.div`
-  width: 610px;
+  max-width: 610px;
   margin: 0 auto;
   p {
     background-color: #c1eeff;
@@ -438,8 +436,7 @@ export const MarketLocation = styled.div`
 
 export const MarketFollow = styled.div`
   margin-top: 8px;
-  display: flex;
-  width: 380px;
+  max-width: 380px;
   height: 64px;
   div {
     width: 180px;
@@ -518,7 +515,7 @@ export const WishBidsContext = styled.div`
     background-color: #c1eeff;
     margin-top: 16px;
     line-height: 48px;
-    height: 48px;
+    height: auto;
     font-size: 16px;
     padding-left: 28px;
     margin-bottom: 0px;
@@ -526,10 +523,9 @@ export const WishBidsContext = styled.div`
 `;
 
 export const PriceInput = styled.div`
-  display: flex;
   height: 48px;
   margin: 0px auto;
-  width: 346px;
+  max-width: 346px;
   margin-bottom: 24px;
   input {
     height: 32px;
@@ -568,7 +564,7 @@ export const LoadingBidImg = styled.div`
 export const MarketPriceContextDiv = styled.div`
   display: flex;
   margin: 0px auto;
-  width: 517px;
+  max-width: 517px;
   height: 72px;
 `;
 
