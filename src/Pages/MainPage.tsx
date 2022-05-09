@@ -41,7 +41,7 @@ import {
   FooterText4,
 } from "../cssJs/footerCss";
 import loadingImg from "../files/loading.gif";
-import { Dropdown, Menu, notification } from "antd";
+import { Drawer, Dropdown, Menu, notification } from "antd";
 import Flag from "react-flagkit";
 import { flagGet } from "../helperFns/flag";
 import logOut from "../files/logOut.png";
@@ -51,6 +51,7 @@ import LOGOMobile from "../files/LOGO-Mobile.svg";
 import menuPng from "../files/menuPng.png";
 import { userAuth } from "../api/userApi";
 import { PROFILE_USER_UPDATE } from "../redux/profileUser";
+import { CookieDiv } from "../cssJs/homePageCss";
 
 const MainPage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ const MainPage = (): JSX.Element => {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
   });
+  const [cookie, setCookie] = useState(true);
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
@@ -122,6 +124,10 @@ const MainPage = (): JSX.Element => {
       });
     } else {
       console.log(history.location.pathname);
+    }
+    const cookieState = localStorage.getItem("cookieAlert");
+    if (cookieState && cookieState == "true") {
+      setCookie(false);
     }
   }, []);
 
@@ -519,6 +525,23 @@ const MainPage = (): JSX.Element => {
           </div>
         )}
       </Footer>
+      <CookieDiv
+        placement="bottom"
+        onClose={() => {
+          setCookie(false);
+          localStorage.setItem("cookieAlert", "true");
+        }}
+        visible={cookie}
+        height={132}
+      >
+        <p>
+          We and <a style={{ color: "blue" }}>our partners</a> use cookies to
+          personalize your experience, to navigate between pages efficiently,
+          and for measurement and analytics purposes. By using our website and
+          services, you agree to our use of cookies as described in our{" "}
+          <a style={{ color: "blue" }}>Cookie Policy</a>.
+        </p>
+      </CookieDiv>
     </div>
   );
 };

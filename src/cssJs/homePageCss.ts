@@ -1,3 +1,4 @@
+import { Drawer } from "antd";
 import styled from "styled-components";
 
 export const HomePageDiv = styled.div`
@@ -394,5 +395,22 @@ export const MobileHeaderDiv = styled.div`
     height: 64px;
     color: white;
     margin-left: 4px;
+  }
+`;
+
+//cookie
+export const CookieDiv = styled(Drawer)`
+  .ant-drawer-wrapper-body {
+    height: 132px;
+  }
+  .ant-drawer-body {
+    background-color: #ecf9fe;
+    height: 132px;
+  }
+  p {
+    margin-top: 36px;
+    margin: 0px 120px;
+    font-size: 16px;
+    line-height: 32px;
   }
 `;

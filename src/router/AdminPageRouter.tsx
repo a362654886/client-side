@@ -4,6 +4,7 @@ import AdminAnimePage from "../Pages/AdminPage/AdminAnimePage";
 import AdminAwesomeLevelPage from "../Pages/AdminPage/AdminAwesomeLevelPage";
 import AdminContentManagementPage from "../Pages/AdminPage/AdminContentManagementPage";
 import AdminDataPage from "../Pages/AdminPage/AdminDataPage";
+import AdminEmailPage from "../Pages/AdminPage/AdminEmailPage";
 import AdminHomePage from "../Pages/AdminPage/AdminHomePage";
 import AdminNewsPage from "../Pages/AdminPage/AdminNewsPage";
 import AdminRedeemProductPage from "../Pages/AdminPage/AdminRedeemProductPage";
@@ -37,6 +38,7 @@ const AdminPageRouter = (): JSX.Element => {
           path="/adminManagement/Content Management"
         />
         <Route component={AdminDataPage} path="/adminManagement/Data" />
+        <Route component={AdminEmailPage} path="/adminManagement/Mass Email" />
       </Switch>
     </>
   );

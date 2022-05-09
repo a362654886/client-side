@@ -136,7 +136,7 @@ export const VideoDiv = styled.div`
   margin-bottom: 24px;
   background-color: #f6f6f6;
   text-align: center;
-  padding-top:16px;
+  padding-top: 16px;
 `;
 
 export const VideoShortDiv = styled.div`
@@ -170,7 +170,7 @@ export const VideoIframeDiv = styled.div`
 
 export const VideoBottom = styled.div`
   display: flex;
-  width: 403px;
+  max-width: 403px;
   margin: 8px auto;
   height: 72px;
 `;
@@ -187,7 +187,7 @@ export const TimeText = styled.p`
   font-family: "Arial MT";
   font-size: 14px;
   line-height: 32px;
-  width: 72px;
+  max-width: 72px;
   margin: 0px 5px;
   margin-top: 20px;
 `;

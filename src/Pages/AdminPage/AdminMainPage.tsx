@@ -2,10 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {
-  AdminLeftMenuDiv,
-  AdminPageDiv,
-} from "../../cssJs/AdminPage/adminCss";
+import { AdminLeftMenuDiv, AdminPageDiv } from "../../cssJs/AdminPage/adminCss";
 import {
   AdminLogoutDiv,
   AdminMainDiv,
@@ -62,6 +59,7 @@ const AdminMainPage = (): JSX.Element => {
     "Avatars",
     "Content Management",
     "Data",
+    "Mass Email",
   ];
 
   const getMenu = () => {

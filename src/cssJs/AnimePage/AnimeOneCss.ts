@@ -46,7 +46,7 @@ export const AnimOneSide = styled.div`
 
 export const AnimOneSideTwo = styled.div`
   background-color: #f6f6f6;
-  padding: 23px 16px;
+  padding: 8px;
   margin: 23px 16px;
   p {
     margin-top: 16px;
