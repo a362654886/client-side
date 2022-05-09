@@ -12,6 +12,7 @@ import {
   NewHeaderTitle,
   NewMainBox,
 } from "../../cssJs/newsCss";
+import { getWidth } from "../../helperFns/widthFn";
 import { NEW_ADD } from "../../redux/newBody";
 import { NewType } from "../../types/NewsType";
 
@@ -80,7 +81,12 @@ const NewsPage = (): JSX.Element => {
   };
 
   return (
-    <NewMainBox>
+    <NewMainBox
+      style={{
+        paddingLeft: getWidth() > 600 ? "" : "8px",
+        paddingRight: getWidth() > 600 ? "" : "8px",
+      }}
+    >
       <NewHeaderTitle>
         <h1>News</h1>
       </NewHeaderTitle>

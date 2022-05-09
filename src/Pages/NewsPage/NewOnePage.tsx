@@ -15,6 +15,7 @@ import {
   OneNewText,
   OneNewTime,
 } from "../../cssJs/newsCss";
+import { getWidth } from "../../helperFns/widthFn";
 import { IStoreState } from "../../types/IStoreState";
 import { NewType } from "../../types/NewsType";
 
@@ -119,7 +120,12 @@ const NewOnePage = (): JSX.Element => {
   };
 
   return (
-    <NewMainBox>
+    <NewMainBox
+      style={{
+        paddingLeft: getWidth() > 600 ? "" : "8px",
+        paddingRight: getWidth() > 600 ? "" : "8px",
+      }}
+    >
       <NewHeaderTitle>
         <h1>News</h1>
       </NewHeaderTitle>

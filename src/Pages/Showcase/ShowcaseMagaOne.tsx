@@ -128,14 +128,19 @@ const ShowcaseMangaOne = (): JSX.Element => {
   const [description, setDescription] = useState<string>(
     showCase ? (showCase.description ? showCase.description : "") : ""
   );
+  const [episodePage, setEpisodePage] = useState<number>(0);
 
   useEffect(() => {
     (async function anyNameFunction() {
       await getManga(para.id);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
       await getEpisode();
     })();
-    console.log(showCase);
-  }, []);
+  }, [showCase]);
 
   useEffect(() => {
     setShowCase(manga);
@@ -335,9 +340,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
     //update user
     const readyUpdateUser: User = loginUser as User;
-    console.log(readyUpdateUser);
     readyUpdateUser.likeShowcase = awesomeArr;
-    console.log(readyUpdateUser);
     setAwesomeArrState(awesomeArr);
     setUpdate(update + 1);
 
@@ -431,40 +434,46 @@ const ShowcaseMangaOne = (): JSX.Element => {
     );
   };
 
-  const getEpisodesPage = () =>
-    Array.from({ length: episodeNum + 1 }, (v, k) => k).map((n, index) => {
-      if (index == episodeNum) {
+  const getEpisodesPage = (page: number) => {
+    return Array.from({ length: 2 }, (v, k) => k).map((n, index) => {
+      const pageNum = page * 2 + index + 1;
+      if (pageNum <= episodeNum) {
         return (
           <>
-            {loginUser ? (
-              <EpisodesAddButton
-                onClick={() => {
-                  history.push("/mainPage/showcase/episodeAdd");
-                }}
-              >
-                <img src={`${add}`} />
-                <p>Add</p>
-              </EpisodesAddButton>
+            <EpisodesGeneralButton
+              key={index}
+              onClick={() => {
+                history.push({
+                  pathname: "/episodeShow",
+                  state: `${manga?._id}Episode${index + 1}`,
+                });
+              }}
+            >
+              <p>{`${pageNum}`}</p>
+            </EpisodesGeneralButton>
+            {`${pageNum}` == episodeNum.toString() ? (
+              <>
+                {loginUser ? (
+                  <EpisodesAddButton
+                    onClick={() => {
+                      history.push("/mainPage/showcase/episodeAdd");
+                    }}
+                  >
+                    <img src={`${add}`} />
+                    <p>Add</p>
+                  </EpisodesAddButton>
+                ) : (
+                  <></>
+                )}
+              </>
             ) : (
               <></>
             )}
           </>
         );
       }
-      return (
-        <EpisodesGeneralButton
-          key={index}
-          onClick={() => {
-            history.push({
-              pathname: "/episodeShow",
-              state: `${manga?._id}Episode${index + 1}`,
-            });
-          }}
-        >
-          <p>{index + 1}</p>
-        </EpisodesGeneralButton>
-      );
     });
+  };
 
   //forums
 
@@ -1103,22 +1112,33 @@ const ShowcaseMangaOne = (): JSX.Element => {
             Episodes
           </EpisodesText>
           <ShowMangaIframeEpisodesButtons>
-            <AnimeButton
-              para=""
-              text={`1-50`}
-              width="120px"
-              height="32px"
-              textColor="white"
-              backGroundColor="#892E2F"
-              borderColor="#892E2F"
-              buttonClick={() => {
-                console.log("1-50");
-              }}
-            />
+            {Array.from(
+              { length: Math.floor((episodeNum + 1) / 2) },
+              (v, k) => k
+            ).map((n, index) => {
+              const start = 2 * (n + 1) - 1;
+              const end = 2 * (n + 1);
+              return (
+                <div key={index} style={{ marginRight: "8px" }}>
+                  <AnimeButton
+                    para=""
+                    text={`${start}-${end}`}
+                    width="120px"
+                    height="32px"
+                    textColor="white"
+                    backGroundColor="#892E2F"
+                    borderColor="#892E2F"
+                    buttonClick={() => {
+                      setEpisodePage(index);
+                    }}
+                  />
+                </div>
+              );
+            })}
           </ShowMangaIframeEpisodesButtons>
           <ShowMangaButtons className="row">
             {addLoading ? <Spin /> : <></>}
-            {getEpisodesPage()}
+            {getEpisodesPage(episodePage)}
           </ShowMangaButtons>
           {loginUser && loginUser?._id == manga?.userId ? (
             <EpisodesEditDiv>

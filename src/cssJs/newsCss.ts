@@ -72,7 +72,7 @@ export const OneNewSource = styled.div`
     line-height: 48px;
   }
   p {
-    height: 32px;
+    height: auto;
     font-size: 14px;
     line-height: 32px;
     color: blue;
