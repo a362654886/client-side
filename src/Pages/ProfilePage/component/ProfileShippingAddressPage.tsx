@@ -80,6 +80,7 @@ const ProfileShippingAddressPage = (): JSX.Element => {
       shipCity: city,
       shipSuburb: suburb,
       postCode: postCode,
+      link: loginUser?.link ? loginUser?.link : "",
     };
     setLoading(true);
     const r = await userUpdateShipAddress(readyUpdateUser);

@@ -30,6 +30,7 @@ export type User = {
   shipCity: string;
   shipSuburb: string;
   postCode: string;
+  link: string;
 };
 
 export type UserRate = {

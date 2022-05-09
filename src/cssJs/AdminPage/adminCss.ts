@@ -56,3 +56,54 @@ export const SubmitButton = styled.div`
   margin-right: 138px;
   margin-top: 32px;
 `;
+
+export const AdminEmailPageDiv = styled.div`
+  width: 100%;
+  height: calc(100vh);
+  margin-left: 16px;
+`;
+
+export const AdminEmailPageHeader = styled.div`
+  display: flex;
+  h6 {
+    height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 8px;
+    margin-bottom: 0px;
+    line-height: 32px;
+  }
+`;
+
+export const AdminEmailPageReceiveAddress = styled.div`
+  display: flex;
+  margin-top: 16px;
+  h6 {
+    width: 143px;
+    height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 8px;
+    margin-bottom: 0px;
+    line-height: 32px;
+  }
+  div {
+    margin-top: 56px;
+    display: inline;
+    .ant-checkbox-wrapper {
+      width: 100%;
+      margin-left: 0px;
+    }
+  }
+  p {
+    height: 32px;
+    font-size: 16px;
+    margin-right: 8px;
+    margin-bottom: 0px;
+    line-height: 32px;
+  }
+  button {
+    margin-left: 25px;
+    margin-top: 8px;
+  }
+`;

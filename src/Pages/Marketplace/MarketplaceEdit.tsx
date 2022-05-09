@@ -118,9 +118,16 @@ const MarketplaceEdit = (): JSX.Element => {
 
   const getArr = () => {
     const arr: string[] = [];
+    console.log(imgArr);
     imgArr.forEach((item) => {
       if (item !== "Add" && typeof item !== "string") {
         arr.push(item.imgBase64);
+      }
+      if (
+        typeof item === "string" &&
+        item.indexOf("https://animeimagebucket.s3.amazonaws.com/") != -1
+      ) {
+        arr.push(item);
       }
     });
     return arr;

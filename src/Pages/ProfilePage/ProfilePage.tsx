@@ -207,9 +207,9 @@ const ProfilePage = (): JSX.Element => {
       case 1:
         return <ProfileMarketplacePage />;
       case 2:
-        return <ProfileMallPage />;
-      case 3:
         return <ProfileLikesPage />;
+      case 3:
+        return <ProfileMallPage />;
       default:
         return <></>;
     }

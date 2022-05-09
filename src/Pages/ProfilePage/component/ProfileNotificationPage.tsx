@@ -74,6 +74,7 @@ const ProfileNotificationPage = (): JSX.Element => {
       shipCity: loginUser?.shipCity ? loginUser?.shipCity : "",
       shipSuburb: loginUser?.shipSuburb ? loginUser?.shipSuburb : "",
       postCode: loginUser?.postCode ? loginUser?.postCode : "",
+      link: loginUser ? loginUser.link : "",
     };
     setLoading(true);
     const r = await userUpdateNotification(readyUpdateUser);
@@ -102,7 +103,7 @@ const ProfileNotificationPage = (): JSX.Element => {
           <NotificationCheckBox>
             <h6>Interactions</h6>
             <Checkbox
-              checked={true}
+              checked={awesome}
               onClick={(e) => {
                 setAwesome((e.target as any).checked);
               }}

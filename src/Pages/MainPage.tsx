@@ -52,6 +52,7 @@ import menuPng from "../files/menuPng.png";
 import { userAuth } from "../api/userApi";
 import { PROFILE_USER_UPDATE } from "../redux/profileUser";
 import { CookieDiv } from "../cssJs/homePageCss";
+import cookie from "react-cookies";
 
 const MainPage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -61,7 +62,7 @@ const MainPage = (): JSX.Element => {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
   });
-  const [cookie, setCookie] = useState(true);
+  const [cookieValue, setCookieValue] = useState(true);
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
@@ -125,9 +126,9 @@ const MainPage = (): JSX.Element => {
     } else {
       console.log(history.location.pathname);
     }
-    const cookieState = localStorage.getItem("cookieAlert");
+    const cookieState = cookie.load("cookieAlert");
     if (cookieState && cookieState == "true") {
-      setCookie(false);
+      setCookieValue(false);
     }
   }, []);
 
@@ -528,10 +529,10 @@ const MainPage = (): JSX.Element => {
       <CookieDiv
         placement="bottom"
         onClose={() => {
-          setCookie(false);
-          localStorage.setItem("cookieAlert", "true");
+          setCookieValue(false);
+          cookie.save("cookieAlert", "true", { path: "/" });
         }}
-        visible={cookie}
+        visible={cookieValue}
         height={132}
       >
         <p>

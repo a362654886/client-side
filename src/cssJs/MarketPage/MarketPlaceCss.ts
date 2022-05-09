@@ -437,6 +437,7 @@ export const MarketLocation = styled.div`
 export const MarketFollow = styled.div`
   margin-top: 8px;
   max-width: 380px;
+  display: flex;
   height: 64px;
   div {
     width: 180px;

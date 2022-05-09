@@ -260,6 +260,7 @@ const SignUpPage = (): JSX.Element => {
       shipCity: "",
       shipSuburb: "",
       postCode: "",
+      link: "",
     };
     const r = await userAdd(user);
     dispatch({

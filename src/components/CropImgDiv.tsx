@@ -11,6 +11,7 @@ interface IProps {
   setVisibleFalse: () => void;
   mall?: boolean;
   radio?: number;
+  cube?: boolean;
 }
 
 const CropImgDiv = ({
@@ -20,13 +21,14 @@ const CropImgDiv = ({
   setVisibleFalse,
   mall,
   radio,
+  cube,
 }: IProps): JSX.Element => {
   const ImgCorpRef = useRef<Cropper>(null);
 
   const [cropper, setCropper] = useState<Cropper>();
 
   useEffect(() => {
-   // console.log(visible);
+    // console.log(visible);
   }, [visible]);
 
   const reSize = () => {
@@ -39,6 +41,30 @@ const CropImgDiv = ({
   };
 
   const getCropper = () => {
+    if (cube) {
+      return (
+        <Cropper
+          src={uploadImg}
+          style={{ height: "100%", width: "100%" }}
+          // Cropper.js options
+          initialAspectRatio={1 / 1}
+          /* eslint-disable @typescript-eslint/no-explicit-any */
+          ref={ImgCorpRef as any}
+          zoomTo={0.5}
+          viewMode={1}
+          aspectRatio={1}
+          minCropBoxHeight={10}
+          minCropBoxWidth={10}
+          background={false}
+          responsive={true}
+          autoCropArea={1}
+          cropBoxResizable={true}
+          onInitialized={(instance) => {
+            setCropper(instance);
+          }}
+        />
+      );
+    }
     return mall ? (
       <Cropper
         src={uploadImg}

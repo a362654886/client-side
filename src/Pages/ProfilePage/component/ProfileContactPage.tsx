@@ -64,6 +64,9 @@ const ProfileContactPage = (): JSX.Element => {
       case ins:
         setIns((e.target as HTMLInputElement).value);
         break;
+      case link:
+        setLink((e.target as HTMLInputElement).value);
+        break;
     }
   };
 
@@ -105,6 +108,7 @@ const ProfileContactPage = (): JSX.Element => {
       shipCity: loginUser?.shipCity ? loginUser?.shipCity : "",
       shipSuburb: loginUser?.shipSuburb ? loginUser?.shipSuburb : "",
       postCode: loginUser?.postCode ? loginUser?.postCode : "",
+      link: link,
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);

@@ -164,6 +164,7 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
         }}
         visible={showCropper}
         setVisibleFalse={() => setShowCropper(false)}
+        cube={true}
       />
     </AnimOneVideo>
   );

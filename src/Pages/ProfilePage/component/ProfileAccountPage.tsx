@@ -219,6 +219,7 @@ const ProfileAccountPage = (): JSX.Element => {
       shipCity: loginUser?.shipCity ? loginUser?.shipCity : "",
       shipSuburb: loginUser?.shipSuburb ? loginUser?.shipSuburb : "",
       postCode: loginUser?.postCode ? loginUser?.postCode : "",
+      link: loginUser?.link ? loginUser?.link : "",
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);
