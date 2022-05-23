@@ -11,8 +11,10 @@ import {
   NameIdDiv,
   NamePic,
   NameSetting,
+  ProfileAwesomePic,
   ProfileDiv,
   ProfileSettingBox,
+  ProfileSlider,
 } from "../../cssJs/ProfilePage/ProfileCss";
 import { SettingButtonsDiv } from "../../cssJs/ProfilePage/ProfileSettingCss";
 import { IStoreState } from "../../types/IStoreState";
@@ -26,6 +28,10 @@ import { flagGet } from "../../helperFns/flag";
 import ProfileNotificationPage from "./component/ProfileNotificationPage";
 import ProfileShippingAddressPage from "./component/ProfileShippingAddressPage";
 import { getWidth } from "../../helperFns/widthFn";
+import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
+import { getLevel } from "../../helperFns/profileFn";
+import { AwesomeLevelType } from "../../types/awesomeLevel";
+import { Slider } from "antd";
 
 const ProfileSettingPage = (): JSX.Element => {
   const history = useHistory();
@@ -59,6 +65,10 @@ const ProfileSettingPage = (): JSX.Element => {
 
   const [chooseButton, setChooseButton] = useState<number>(0);
   const [buttonType, setButtonType] = useState<number>(0);
+
+  const allLevels: AwesomeLevelType[] | null = useSelector(
+    (state: IStoreState) => state.allLevelState
+  );
 
   useEffect(() => {
     //
@@ -130,6 +140,8 @@ const ProfileSettingPage = (): JSX.Element => {
     return imageArr ? imageArr[0].imageUrl : "";
   };
 
+  const getOneLevel = getLevel(allLevels, loginUser ? loginUser.awesomeNum : 0);
+
   return (
     <ProfileSettingBox
       style={{
@@ -137,37 +149,60 @@ const ProfileSettingPage = (): JSX.Element => {
         marginRight: getWidth() > 600 ? "" : "8px",
       }}
     >
-      <ProfileDiv
-        style={{
-          display: getWidth() > 600 ? "flex" : "inline",
-        }}
-      >
-        <LevelPic src={level1} />
-        <NamePic src={getImage()} />
-        <NameDiv>
-          <NameSetting>
-            <p>
-              {`${loginUser ? loginUser.firstName : ""}.${
-                loginUser
-                  ? loginUser.lastName.substring(0, 1).toUpperCase()
-                  : ""
-              }`}
-              <Flag
-                style={{ marginLeft: "5px" }}
-                country={flagGet(loginUser ? loginUser.country : "")}
+      <ProfileDiv>
+        <div style={{ display: "flex" }}>
+          <NamePic src={getImage()} />
+          <NameDiv>
+            <NameSetting>
+              <p>
+                {`${loginUser ? loginUser.firstName : ""}.${
+                  loginUser
+                    ? loginUser.lastName.substring(0, 1).toUpperCase()
+                    : ""
+                }`}
+                <Flag
+                  style={{ marginLeft: "5px" }}
+                  country={flagGet(loginUser ? loginUser.country : "")}
+                />
+              </p>
+              <SettingImg
+                userId={loginUser ? loginUser._id : ""}
+                userName={`${loginUser ? loginUser.firstName : ""}.${
+                  loginUser ? loginUser.lastName : ""
+                }`}
+                userImg={avatarSetting}
+                marginTop="4px"
+                type={null}
+                contextId={null}
               />
-            </p>
-            <SettingImg
-              userId={loginUser ? loginUser._id : ""}
-              userName={`${loginUser ? loginUser.firstName : ""}.${
-                loginUser ? loginUser.lastName : ""
-              }`}
-              userImg={avatarSetting}
-              marginTop="4px"
-            />
-          </NameSetting>
-          <NameIdDiv>(ID: 202201)</NameIdDiv>
-        </NameDiv>
+            </NameSetting>
+            <NameIdDiv>{`(ID: ${loginUser ? loginUser._id : ""})`}</NameIdDiv>
+          </NameDiv>
+        </div>
+        <div style={{ display: "flex" }}>
+          <LevelPic
+            onClick={() => toPage("/profileLevel")}
+            src={getOneLevel.image}
+          />
+          <ProfileAwesomePic
+            src={showCaseAwesomeClick}
+            style={{ marginRight: "4px" }}
+          />
+          <ProfileSlider style={{ display: "flex" }}>
+            <p>{`${loginUser ? loginUser.awesomeNum : ""}/${
+              getOneLevel.awesomeRequire
+            }`}</p>
+            <Slider
+              defaultValue={
+                ((loginUser ? loginUser.awesomeNum : 0) /
+                  getOneLevel.awesomeRequire) *
+                100
+              }
+              style={{ width: "200px" }}
+              disabled={true}
+            ></Slider>
+          </ProfileSlider>
+        </div>
       </ProfileDiv>
       <LineDiv></LineDiv>
       <div style={{ display: getWidth() > 600 ? "flex" : "inline" }}>

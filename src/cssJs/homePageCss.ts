@@ -328,6 +328,7 @@ export const MarketHomeBox = styled.div`
   height: 360px;
   margin-right: 60px;
   padding: 0px;
+  cursor: pointer;
   img {
     width: 240px;
     height: 240px;
@@ -355,12 +356,11 @@ export const MarketHomeBox = styled.div`
 
 export const ShowcaseHomeBox = styled.div`
   width: 240px !important;
-  height: 260px;
+  height: auto;
   margin-right: 60px;
   padding: 0px;
   img {
     width: 240px;
-    height: 240px;
   }
   h6 {
     height: 40px;

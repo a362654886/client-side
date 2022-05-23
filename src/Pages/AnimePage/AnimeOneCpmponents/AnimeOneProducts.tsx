@@ -46,6 +46,7 @@ import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
 import { IfLoginCheck } from "../../../helperFns/loginCheck";
 import { getWidth } from "../../../helperFns/widthFn";
 import { formatName } from "../../../helperFns/nameFn";
+import { ReportContextType } from "../../../types/blockType";
 
 interface IProps {
   anime: Anime | null;
@@ -241,6 +242,8 @@ const AnimeOneProducts = ({
                 userName={product.userName}
                 userImg={product.userAvatar}
                 marginTop="24px"
+                type={ReportContextType.PRODUCT}
+                contextId={product._id}
               />
             </ProductAvatarDiv>
             <TimeMiddleText>{`${date.getDate()}-${

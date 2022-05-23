@@ -8,6 +8,7 @@ import {
   showCaseReplyGet,
   showCaseReplyUpdate,
   showCaseSecondReplyAdd,
+  showCaseSecondReplyGet,
   showCaseSecondReplyUpdate,
 } from "../../api/showcaseAPI";
 import {
@@ -30,6 +31,7 @@ import {
   ShowcaseMangaHeader,
   ShowcaseMangaHeaderP,
   ShowcaseMangaHeaderTitle,
+  ShowcaseMoreButtonDiv,
   ShowcaseReply,
   ShowcaseTag,
   ShowCaseTitle,
@@ -88,6 +90,9 @@ import {
 } from "../../redux/showcaseAwesome";
 import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
 import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
+import { cloneDeep } from "lodash";
+import forumMore from "../../files/forumMore.png";
+import { ReportContextType } from "../../types/blockType";
 
 interface Para {
   id: string;
@@ -115,8 +120,12 @@ const ShowcaseMangaOne = (): JSX.Element => {
   const [followArr, setFollowArr] = useState<string[]>(
     loginUser?.followManga ? loginUser?.followManga : []
   );
+  const [showcasePage, setShowcasePage] = useState<number>(1);
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [itemLoading, setItemLoading] = useState<boolean>(false);
+  const [secondItemLoading, setSecondItemLoading] = useState<boolean>(false);
+
   const [addLoading, setAddLoading] = useState<boolean>(false);
   const [addFollowLoading, setAddFollowLoading] = useState<boolean>(false);
   const [commentShow, setCommentShow] = useState<boolean>(false);
@@ -148,7 +157,8 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
   useEffect(() => {
     //setShowCase(manga);
-  }, [episodeNum, loading]);
+    console.log(newSecondReplyHtml);
+  }, [episodeNum, loading, newReplyHtml, newSecondReplyHtml]);
 
   const getManga = async (id: string) => {
     const manga = await showCaseOneMangaGet(id);
@@ -356,7 +366,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
       type: LOADING_OPEN,
     });
     await showCaseMangaDelete(manga ? manga._id : "");
-    history.push("/mainPage/showcase/showManga?page=1");
+    history.push("/showcase/showManga?page=1");
     dispatch({
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,
@@ -394,10 +404,12 @@ const ShowcaseMangaOne = (): JSX.Element => {
               userName={showCase ? showCase.userName : ""}
               userImg={showCase ? showCase.userAvatar : ""}
               marginTop="8px"
+              type={ReportContextType.SHOWCASE_REPLY}
+              contextId={showCase ? showCase._id : ""}
             />
           </ShowAvatarDiv>
         </ShowcaseMangaHeader>
-        <p>Updated to Episode 33</p>
+        <p>{`Updated to Episode ${episodeNum}`}</p>
         <ShowcaseMangaDescription>
           {showCase ? showCase.description : ""}
         </ShowcaseMangaDescription>
@@ -420,7 +432,15 @@ const ShowcaseMangaOne = (): JSX.Element => {
           {showCase?.tags.map((tag, index) => {
             return (
               <ShowcaseTag key={index}>
-                <p>{tag.text}</p>
+                <p
+                  onClick={() => {
+                    history.push(
+                      `/showcase/showTag?tag=${tag.text.replace("#", "")}`
+                    );
+                  }}
+                >
+                  {tag.text}
+                </p>
               </ShowcaseTag>
             );
           })}
@@ -456,7 +476,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 {loginUser ? (
                   <EpisodesAddButton
                     onClick={() => {
-                      history.push("/mainPage/showcase/episodeAdd");
+                      history.push("/showcase/episodeAdd");
                     }}
                   >
                     <img src={`${add}`} />
@@ -558,6 +578,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
       type: LOADING_OPEN,
     });
     if (loginUser) {
+      console.log(showcase);
       const secondShowcase: ShowSecondCaseReply = {
         _id: `${showcase._id}${
           showcase.secondReplies ? showcase.secondReplies.length + 1 : 1
@@ -574,7 +595,11 @@ const ShowcaseMangaOne = (): JSX.Element => {
       };
       const r = await showCaseSecondReplyAdd(secondShowcase);
       if (r && r < 300) {
+        console.log("23");
         addSecondShowcaseToState(secondShowcase, secondIndex);
+        const newSecondItems = cloneDeep(newSecondReplyHtml);
+        newSecondItems[secondIndex] = "";
+        setNewSecondReplyHtml(newSecondItems);
       }
     } else {
       openNotification(
@@ -593,11 +618,17 @@ const ShowcaseMangaOne = (): JSX.Element => {
     showcaseReply: ShowSecondCaseReply,
     secondIndex: number
   ) => {
-    if (showCase && showCase.replies) {
-      const replies = showCase.replies;
-      replies[secondIndex].secondReplies?.push(showcaseReply);
-      showCase.replies = replies;
-      setShowCase(showCase);
+    const _showCase = cloneDeep(showCase);
+    if (_showCase && _showCase.replies) {
+      const replies = _showCase.replies;
+      if (replies[secondIndex].secondReplies) {
+        replies[secondIndex].secondReplies?.push(showcaseReply);
+      } else {
+        replies[secondIndex].secondReplies = [];
+        replies[secondIndex].secondReplies?.push(showcaseReply);
+      }
+      _showCase.replies = replies;
+      setShowCase(_showCase);
     }
   };
 
@@ -608,6 +639,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
     <div style={{ marginTop: "16px" }}>
       <TextInput>
         <TextArea
+          value={newSecondReplyHtml[secondIndex]}
           onChange={(e) => {
             IfLoginCheck(loginUser)
               ? sendNewSecondReply(e.target.value, secondIndex)
@@ -661,6 +693,8 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 userName={reply.userName}
                 userImg={reply.userAvatar}
                 marginTop="8px"
+                type={ReportContextType.SHOWCASE_REPLY}
+                contextId={showCase ? showCase._id : ""}
               />
               <ShowTime>{`${date.getDate()}-${
                 date.getMonth() + 1
@@ -757,6 +791,22 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 ) : (
                   <></>
                 )}
+                {secondItemLoading ? (
+                  <Spin />
+                ) : (
+                  <ShowcaseMoreButtonDiv
+                    onClick={() =>
+                      getMoreSecondItem(
+                        reply.showCaseId,
+                        reply.replyId,
+                        reply.page
+                      )
+                    }
+                  >
+                    <img src={forumMore} />
+                    <p>More</p>
+                  </ShowcaseMoreButtonDiv>
+                )}
               </div>
             </div>
           </ReplyBox>
@@ -791,6 +841,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
         addShowcaseToState(showcaseReply);
+        setNewReplyHtml("");
       }
     } else {
       openNotification(
@@ -806,10 +857,60 @@ const ShowcaseMangaOne = (): JSX.Element => {
   };
 
   const addShowcaseToState = (showcaseReply: ShowCaseReply) => {
-    const newShowCase = showCase;
+    const newShowCase = cloneDeep(showCase);
     if (newShowCase) {
       newShowCase.replies?.push(showcaseReply);
       setShowCase(newShowCase);
+    }
+  };
+
+  const getMoreItem = async (showCaseId: string, page: number | undefined) => {
+    if (page) {
+      setItemLoading(true);
+      const showcaseResult = await showCaseReplyGet(showCaseId, page + 1, 1);
+
+      //set
+      const newShowCase = cloneDeep(showCase);
+      if (newShowCase && showcaseResult) {
+        newShowCase.replies = (newShowCase.replies as ShowCaseReply[]).concat(
+          showcaseResult.result
+        );
+      }
+      setShowCase(newShowCase);
+      setShowcasePage(page + 1);
+
+      setUpdate(update + 1);
+      setItemLoading(false);
+    }
+  };
+
+  const getMoreSecondItem = async (
+    showcaseId: string,
+    replyId: string,
+    page: number | undefined
+  ) => {
+    if (page && showcaseId) {
+      setSecondItemLoading(true);
+      const showcaseResult = await showCaseSecondReplyGet(replyId, page + 1, 3);
+
+      //set
+      const newShowCase = cloneDeep(showCase);
+      if (newShowCase && showcaseResult) {
+        newShowCase.replies = (newShowCase.replies as ShowCaseReply[]).concat(
+          showcaseResult.result
+        );
+        const secondIndex = (newShowCase.replies as ShowCaseReply[]).findIndex(
+          (item) => item._id == replyId
+        );
+        newShowCase.replies[secondIndex].secondReplies = newShowCase.replies[
+          secondIndex
+        ].secondReplies?.concat(showcaseResult.result);
+        const secondPage = newShowCase.replies[secondIndex].page;
+        newShowCase.replies[secondIndex].page = secondPage ? secondPage + 1 : 1;
+        setShowCase(newShowCase);
+        setUpdate(update + 1);
+      }
+      setSecondItemLoading(false);
     }
   };
 
@@ -874,6 +975,8 @@ const ShowcaseMangaOne = (): JSX.Element => {
                   userName={showcaseSecondReply.userName}
                   userImg={showcaseSecondReply.userAvatar}
                   marginTop="8px"
+                  type={ReportContextType.SHOWCASE_SECOND_REPLY}
+                  contextId={showcaseSecondReply._id}
                 />
                 <ShowTime>{`${date.getDate()}-${
                   date.getMonth() + 1
@@ -1071,7 +1174,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               borderColor="#4BA3C3"
               buttonClick={() => {
                 history.push({
-                  pathname: "/mainPage/showcase/showCollection?page=1",
+                  pathname: "/showcase/showCollection?page=1",
                   state: `Collections`,
                 });
               }}
@@ -1086,7 +1189,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               borderColor="#4BA3C3"
               buttonClick={() => {
                 history.push({
-                  pathname: "/mainPage/showcase/showIllustrations?page=1",
+                  pathname: "/showcase/showIllustrations?page=1",
                   state: `Illustrations`,
                 });
               }}
@@ -1200,6 +1303,18 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 )
               ) : (
                 <></>
+              )}
+              {itemLoading ? (
+                <Spin />
+              ) : (
+                <ShowcaseMoreButtonDiv
+                  onClick={() =>
+                    getMoreItem(showCase ? showCase._id : "", showcasePage)
+                  }
+                >
+                  <img src={forumMore} />
+                  <p>More</p>
+                </ShowcaseMoreButtonDiv>
               )}
             </>
           ) : (

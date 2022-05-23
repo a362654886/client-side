@@ -1,4 +1,5 @@
 import { $CombinedState, MiddlewareAPI } from "@reduxjs/toolkit";
+import { AllLevel } from "../redux/allLevels";
 import { AnimeAction } from "../redux/anime";
 import { AuthUser } from "../redux/auth";
 import { LoadingAction } from "../redux/loading";
@@ -34,6 +35,7 @@ export type actionBody =
   | ProfileUser
   | ShowcaseAwesomeAction
   | ReportUser
-  | MarketFollowAction;
+  | MarketFollowAction
+  | AllLevel;
 
 export type nextAction = (action: actionBody) => void;

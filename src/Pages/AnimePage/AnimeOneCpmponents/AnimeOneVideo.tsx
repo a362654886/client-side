@@ -46,6 +46,7 @@ import { getWidth } from "../../../helperFns/widthFn";
 import ReactPlayer from "react-player";
 import { cloneDeep } from "lodash";
 import { formatName } from "../../../helperFns/nameFn";
+import { ReportContextType } from "../../../types/blockType";
 
 interface IProps {
   anime: Anime | null;
@@ -205,6 +206,8 @@ const AnimeOneVideo = ({
             userName={video.userName}
             userImg={video.userAvatar}
             marginTop="24px"
+            type={ReportContextType.VIDEO}
+            contextId={video._id}
           />
         </VideoBottom>
         {discovery ? <></> : getDeleteButton(video)}

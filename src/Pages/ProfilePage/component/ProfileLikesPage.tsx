@@ -45,7 +45,7 @@ const ProfileLikesPage = (): JSX.Element => {
   const getAnimes = async () => {
     if (profileUser) {
       setLoading(true);
-      const animeResult = await userGetUserLikes(profileUser?.userEmail, 1, 24);
+      const animeResult = await userGetUserLikes(profileUser?._id, 1, 24);
       setAllAnime(animeResult);
       setLoading(false);
     }

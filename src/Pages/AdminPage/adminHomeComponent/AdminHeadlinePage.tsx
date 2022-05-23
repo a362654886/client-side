@@ -40,10 +40,11 @@ const AdminHomeLinePage = ({
 
   useEffect(() => {
     setIniHeadline();
+    console.log(headLine)
   }, [headLine, num]);
 
   useEffect(() => {
-    //console.log(localHeadLine);
+    console.log(localHeadLine);
   }, [localHeadLine]);
 
   const setIniHeadline = () => {

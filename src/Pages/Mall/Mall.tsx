@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AnimeButton } from "../../components/Button";
 import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
@@ -30,12 +30,16 @@ const MallPage = (): JSX.Element => {
     },
   ];
 
+  useEffect(()=>{
+    toPage("/mall/custom");
+  },[])
+
   const changeButton = (index: number) => {
     setChooseButton(index);
     /* index == 0
-      ? toPage("/mainPage/mall/redeem")
-      : toPage("/mainPage/mall/custom");*/
-    toPage("/mainPage/mall/custom");
+      ? toPage("/mall/redeem")
+      : toPage("/mall/custom");*/
+    toPage("/mall/custom");
   };
 
   const toPage = (url: string) => history.push(url);

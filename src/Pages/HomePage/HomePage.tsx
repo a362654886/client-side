@@ -74,6 +74,7 @@ import "swiper/components/pagination/pagination.min.css";
 
 // import required modules
 import { Pagination } from "swiper";
+import { ReportContextType } from "../../types/blockType";
 
 const HomePage = (): JSX.Element => {
   const history = useHistory();
@@ -192,7 +193,7 @@ const HomePage = (): JSX.Element => {
 
   const chooseMarket = (market: MarketType) => {
     history.push({
-      pathname: "/mainPage/marketplace/showOne/null",
+      pathname: "/marketplace/showOne/null",
       state: `${market._id}`,
     });
   };
@@ -395,6 +396,8 @@ const HomePage = (): JSX.Element => {
               userName={product.userName}
               userImg={product.userAvatar}
               marginTop="24px"
+              type={ReportContextType.PRODUCT}
+              contextId={product._id}
             />
           </ProductAvatarDiv>
           <TimeText>{`${date.getDate()}-${
@@ -422,7 +425,12 @@ const HomePage = (): JSX.Element => {
   const getMarketsDiv = () => {
     return allMarkets.map((market, index) => {
       return (
-        <MarketHomeBox key={index}>
+        <MarketHomeBox
+          onClick={() => {
+            history.push(`marketplace/showOne/${market._id}`);
+          }}
+          key={index}
+        >
           <img src={`${market.imageArr[0]}`} />
           <h6>{`$ ${market.price}`}</h6>
           <p>{`Item Title - ${market.title}`}</p>
@@ -497,9 +505,7 @@ const HomePage = (): JSX.Element => {
         </HomePageAnimeDiv>
         <CenterDiv>
           <MiddleBiggerDiv>
-            <MarketPlaceMore
-              onClick={() => history.push("/mainPage/animeShowPage")}
-            >
+            <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
               <img src={moreRightImg} />
               <p>View All</p>
             </MarketPlaceMore>
@@ -519,7 +525,7 @@ const HomePage = (): JSX.Element => {
               <MiddleBiggerDiv>
                 <MoreRight
                   onClick={() =>
-                    history.push("/mainPage/showcase/showCollection?page=1")
+                    history.push("/showcase/showCollection?page=1")
                   }
                 >
                   <img src={moreRightImg} />
@@ -546,7 +552,7 @@ const HomePage = (): JSX.Element => {
               <MiddleBiggerDiv>
                 <MarketPlaceMore
                   onClick={() =>
-                    history.push("/mainPage/showcase/showCollection?page=1")
+                    history.push("/showcase/showCollection?page=1")
                   }
                 >
                   <img src={moreRightImg} />
@@ -560,9 +566,7 @@ const HomePage = (): JSX.Element => {
           <>
             <MarketPlaceTitle>
               <h2>Marketplace</h2>
-              <MarketPlaceMore
-                onClick={() => history.push("/mainPage/animeShowPage")}
-              >
+              <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
                 <img src={moreRightImg} />
                 <p>View All</p>
               </MarketPlaceMore>
@@ -581,9 +585,7 @@ const HomePage = (): JSX.Element => {
             </HomePageMarketPlaceDiv>
             <CenterDiv>
               <MiddleBiggerDiv>
-                <MarketPlaceMore
-                  onClick={() => history.push("/mainPage/animeShowPage")}
-                >
+                <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
                   <img src={moreRightImg} />
                   <p>View All</p>
                 </MarketPlaceMore>
@@ -595,9 +597,7 @@ const HomePage = (): JSX.Element => {
           <>
             <MarketPlaceTitle>
               <h2>Anime Products</h2>
-              <MarketPlaceMore
-                onClick={() => history.push("/mainPage/animeShowPage")}
-              >
+              <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
                 <img src={moreRightImg} />
                 <p>View All</p>
               </MarketPlaceMore>
@@ -616,9 +616,7 @@ const HomePage = (): JSX.Element => {
             </HomePageProductPlaceDiv>
             <CenterDiv>
               <MiddleBiggerDiv>
-                <MarketPlaceMore
-                  onClick={() => history.push("/mainPage/animeShowPage")}
-                >
+                <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
                   <img src={moreRightImg} />
                   <p>View All</p>
                 </MarketPlaceMore>
@@ -627,7 +625,7 @@ const HomePage = (): JSX.Element => {
           </>
         )}
         <CustomerProductBottomImg
-          onClick={() => history.push("/mainPage/mall/custom")}
+          onClick={() => history.push("/mall/custom")}
           src={animeProduct}
         />
       </HomePageBodyDiv>

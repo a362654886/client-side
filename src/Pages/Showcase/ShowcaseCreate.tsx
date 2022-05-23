@@ -174,11 +174,11 @@ const ShowcaseCreate = (): JSX.Element => {
 
   const backToShowcasePage = () => {
     if (showCaseType == ShowCaseEnum.Collections) {
-      history.push("/mainPage/showcase/showCollection?page=1");
+      history.push("/showcase/showCollection?page=1");
     } else if (showCaseType == ShowCaseEnum.Illustrations) {
-      history.push("/mainPage/showcase/showIllustrations?page=1");
+      history.push("/showcase/showIllustrations?page=1");
     } else {
-      history.push("/mainPage/showcase/showManga?page=1");
+      history.push("/showcase/showManga?page=1");
     }
   };
 

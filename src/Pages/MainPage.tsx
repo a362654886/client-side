@@ -5,7 +5,6 @@ import { LoadingType, LoginType } from "../types/EnumTypes";
 import { IStoreState } from "../types/IStoreState";
 import avatar from "../files/avatar.png";
 import titleTextWhite from "../files/titleTextWhite.png";
-import MainPageRouter from "../router/MainPageRouter";
 import { useHistory } from "react-router-dom";
 import { User } from "../types/User";
 import {
@@ -53,6 +52,10 @@ import { userAuth } from "../api/userApi";
 import { PROFILE_USER_UPDATE } from "../redux/profileUser";
 import { CookieDiv } from "../cssJs/homePageCss";
 import cookie from "react-cookies";
+import MainPageRouter from "../router/MainPageRouter";
+import { AwesomeLevelType } from "../types/awesomeLevel";
+import { awesomeLevelAllGet } from "../api/awesomeLevelAPI";
+import { ALL_LEVELS_UPDATE } from "../redux/allLevels";
 
 const MainPage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -68,11 +71,27 @@ const MainPage = (): JSX.Element => {
     (state: IStoreState) => state.loginUserState
   );
 
+  const allLevels: AwesomeLevelType[] | null = useSelector(
+    (state: IStoreState) => state.allLevelState
+  );
+
   const loading: LoadingType = useSelector(
     (state: IStoreState) => state.loadingState
   );
 
   const history = useHistory();
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      if (!allLevels) {
+        const _allLevels = await awesomeLevelAllGet();
+        dispatch({
+          payload: _allLevels,
+          type: ALL_LEVELS_UPDATE,
+        });
+      }
+    })();
+  }, [allLevels]);
 
   useEffect(() => {
     const userEmail = localStorage.getItem("userEmail");
@@ -117,11 +136,11 @@ const MainPage = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      history.location.pathname == "/mainPage" ||
-      history.location.pathname.indexOf("/mainPage") == -1
+      history.location.pathname == "/" ||
+      history.location.pathname.indexOf("/") == -1
     ) {
       history.push({
-        pathname: "/mainPage/home",
+        pathname: "/home",
       });
     } else {
       console.log(history.location.pathname);
@@ -141,11 +160,11 @@ const MainPage = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      history.location.pathname == "/mainPage" ||
-      history.location.pathname.indexOf("/mainPage") == -1
+      history.location.pathname == "/" ||
+      history.location.pathname.indexOf("/") == -1
     ) {
       history.push({
-        pathname: "/mainPage/home",
+        pathname: "/home",
       });
     }
   }, []);
@@ -178,9 +197,7 @@ const MainPage = (): JSX.Element => {
                       }
                     />
                     <LoginBox
-                      onClick={() =>
-                        toProfile(`/mainPage/profilePage/${loginUser._id}`)
-                      }
+                      onClick={() => toProfile(`/profilePage/${loginUser._id}`)}
                     >
                       <p>{`${loginUser ? loginUser.firstName : ""}.${
                         loginUser
@@ -224,9 +241,7 @@ const MainPage = (): JSX.Element => {
                       }
                     />
                     <MobileLoginBox
-                      onClick={() =>
-                        toProfile(`/mainPage/profilePage/${loginUser._id}`)
-                      }
+                      onClick={() => toProfile(`/profilePage/${loginUser._id}`)}
                     >
                       <p>{`${loginUser.firstName.slice(
                         0,
@@ -272,7 +287,7 @@ const MainPage = (): JSX.Element => {
                       "url",
                       `${history.location.pathname}${history.location.search}`
                     );
-                    toProfile("/mainPage/login");
+                    toProfile("/login");
                   }}
                 >
                   Log In
@@ -280,7 +295,7 @@ const MainPage = (): JSX.Element => {
                 <p>|</p>
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
-                  onClick={() => toProfile("/mainPage/signUpPage")}
+                  onClick={() => toProfile("/signUpPage")}
                 >
                   Sign up
                 </p>
@@ -297,7 +312,7 @@ const MainPage = (): JSX.Element => {
                       "url",
                       `${history.location.pathname}${history.location.search}`
                     );
-                    toProfile("/mainPage/login");
+                    toProfile("/login");
                   }}
                 >
                   Log In
@@ -305,7 +320,7 @@ const MainPage = (): JSX.Element => {
                 <p>|</p>
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
-                  onClick={() => toProfile("/mainPage/signUpPage")}
+                  onClick={() => toProfile("/signUpPage")}
                 >
                   Sign up
                 </p>
@@ -343,7 +358,7 @@ const MainPage = (): JSX.Element => {
                 >
                   <AnimeParkImg
                     onClick={() => {
-                      toProfile("/mainPage/home");
+                      toProfile("/home");
                     }}
                     src={titleTextWhite}
                   />
@@ -351,7 +366,7 @@ const MainPage = (): JSX.Element => {
               ) : (
                 <HeaderSmallImg
                   onClick={() => {
-                    toProfile("/mainPage/home");
+                    toProfile("/home");
                   }}
                   src={LOGOMobile}
                 />
@@ -360,7 +375,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/mainPage/discovery");
+                    toProfile("/discovery");
                   }}
                 >
                   Explore
@@ -368,7 +383,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/mainPage/animeShowPage");
+                    toProfile("/animeShowPage");
                   }}
                 >
                   Anime
@@ -376,7 +391,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/mainPage/showcase/showCollection?page=1");
+                    toProfile("/showcase/showCollection?page=1");
                   }}
                 >
                   Showcase
@@ -384,7 +399,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/mainPage/marketplace/show/null");
+                    toProfile("/marketplace/show/null");
                   }}
                 >
                   Marketplace
@@ -392,7 +407,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/mainPage/mall");
+                    toProfile("/mall");
                   }}
                 >
                   Mall
@@ -400,7 +415,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/mainPage/news");
+                    toProfile("/news");
                   }}
                 >
                   News
@@ -425,14 +440,14 @@ const MainPage = (): JSX.Element => {
                   <div>
                     <p
                       onClick={() => {
-                        toProfile("/mainPage/discovery");
+                        toProfile("/discovery");
                       }}
                     >
                       Discovery
                     </p>
                     <p
                       onClick={() => {
-                        toProfile("/mainPage/marketplace/show/null");
+                        toProfile("/marketplace/show/null");
                       }}
                     >
                       Marketplace
@@ -441,14 +456,14 @@ const MainPage = (): JSX.Element => {
                   <div>
                     <p
                       onClick={() => {
-                        toProfile("/mainPage/animeShowPage");
+                        toProfile("/animeShowPage");
                       }}
                     >
                       Anime
                     </p>
                     <p
                       onClick={() => {
-                        toProfile("/mainPage/mall");
+                        toProfile("/mall");
                       }}
                     >
                       Mall
@@ -457,14 +472,14 @@ const MainPage = (): JSX.Element => {
                   <div>
                     <p
                       onClick={() => {
-                        toProfile("/mainPage/showcase/showCollection?page=1");
+                        toProfile("/showcase/showCollection?page=1");
                       }}
                     >
                       Showcase
                     </p>
                     <p
                       onClick={() => {
-                        toProfile("/mainPage/news");
+                        toProfile("/news");
                       }}
                     >
                       News
@@ -497,7 +512,7 @@ const MainPage = (): JSX.Element => {
               <FooterText4
                 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4"
                 onClick={() => {
-                  toProfile("/mainPage/contactUs");
+                  toProfile("/contactUs");
                 }}
               >
                 Contact us
@@ -518,7 +533,7 @@ const MainPage = (): JSX.Element => {
             <FooterText4
               className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4"
               onClick={() => {
-                toProfile("/mainPage/contactUs");
+                toProfile("/contactUs");
               }}
             >
               Contact us

@@ -131,7 +131,7 @@ const ShowcaseSide = (): JSX.Element => {
               <p
                 onClick={() => {
                   toPage(
-                    `/mainPage/showcase/showTag?tag=${tag.text.replace(
+                    `/showcase/showTag?tag=${tag.text.replace(
                       "#",
                       ""
                     )}`

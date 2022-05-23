@@ -21,24 +21,24 @@ const MainPageRouter = (): JSX.Element => {
   return (
     <>
       <Switch>
-        <Route component={HomePage} path="/mainPage/home" />
-        <Route component={LoginPage} path="/mainPage/login" />
-        <Route component={SignUpPage} path="/mainPage/signUpPage" />
-        <Route component={ForgetPage} path="/mainPage/forgetPasswordPage" />
-        <Route component={ProfilePage} path="/mainPage/profilePage/:id" />
-        <Route component={AnimeShowPage} path="/mainPage/animeShowPage" />
-        <Route component={AnimeOne} path="/mainPage/oneAnime" />
-        <Route component={Discovery} path="/mainPage/discovery" />
-        <Route component={Showcase} path="/mainPage/showcase" />
-        <Route component={Marketplace} path="/mainPage/marketplace" />
-        <Route component={Mall} path="/mainPage/mall" />
-        <Route component={NewsPage} path="/mainPage/news" />
-        <Route component={NewOnePage} path="/mainPage/oneNew/:id" />
-        <Route component={Report} path="/mainPage/report" />
-        <Route component={ContactUs} path="/mainPage/contactUs" />
+        <Route component={HomePage} path="/home" />
+        <Route component={LoginPage} path="/login" />
+        <Route component={SignUpPage} path="/signUpPage" />
+        <Route component={ForgetPage} path="/forgetPasswordPage" />
+        <Route component={ProfilePage} path="/profilePage/:id" />
+        <Route component={AnimeShowPage} path="/animeShowPage" />
+        <Route component={AnimeOne} path="/oneAnime" />
+        <Route component={Discovery} path="/discovery" />
+        <Route component={Showcase} path="/showcase" />
+        <Route component={Marketplace} path="/marketplace" />
+        <Route component={Mall} path="/mall" />
+        <Route component={NewsPage} path="/news" />
+        <Route component={NewOnePage} path="/oneNew/:id" />
+        <Route component={Report} path="/report" />
+        <Route component={ContactUs} path="/contactUs" />
         <Route
           component={ForgetPassword}
-          path="/mainPage/forgetPassword/:email"
+          path="/forgetPassword/:email"
         />
       </Switch>
     </>

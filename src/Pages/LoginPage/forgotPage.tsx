@@ -83,7 +83,7 @@ const ForgetPage = (): JSX.Element => {
           textColor="#4BA3C3"
           backGroundColor="white"
           borderColor="#4BA3C3"
-          buttonClick={() => toPage("/mainPage/signUpPage")}
+          buttonClick={() => toPage("/signUpPage")}
         />
         <AnimeButton
           para=""
@@ -93,7 +93,7 @@ const ForgetPage = (): JSX.Element => {
           textColor="black"
           backGroundColor="#AAFFC9"
           borderColor="white"
-          buttonClick={() => toPage("/mainPage/login")}
+          buttonClick={() => toPage("/login")}
         />
       </SignUpButtons>
       <EmailInput>
@@ -110,7 +110,7 @@ const ForgetPage = (): JSX.Element => {
         borderColor="#FFC300"
         buttonClick={() => send()}
       />
-      <PasswordForgetGoBack onClick={() => toPage("/mainPage/login")}>
+      <PasswordForgetGoBack onClick={() => toPage("/login")}>
         Go and try logging in again
       </PasswordForgetGoBack>
     </LoginBox>

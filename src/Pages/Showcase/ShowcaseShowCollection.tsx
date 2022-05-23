@@ -135,8 +135,8 @@ const ShowcaseShowCollection = (): JSX.Element => {
               buttonClick={() =>
                 toPage(
                   index == 1
-                    ? `/mainPage/showcase/showIllustrations?page=1`
-                    : "/mainPage/showcase/showManga?page=1"
+                    ? `/showcase/showIllustrations?page=1`
+                    : "/showcase/showManga?page=1"
                 )
               }
             />
@@ -165,7 +165,7 @@ const ShowcaseShowCollection = (): JSX.Element => {
             buttonClick={() => {
               IfLoginCheck(loginUser)
                 ? history.push({
-                    pathname: "/mainPage/showcase/create",
+                    pathname: "/showcase/create",
                     state: { type: ShowCaseEnum.Collections },
                   })
                 : "";

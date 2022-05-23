@@ -526,7 +526,7 @@ export const WishBidsContext = styled.div`
 export const PriceInput = styled.div`
   height: 48px;
   margin: 0px auto;
-  max-width: 346px;
+  max-width: 366px;
   margin-bottom: 24px;
   input {
     height: 32px;

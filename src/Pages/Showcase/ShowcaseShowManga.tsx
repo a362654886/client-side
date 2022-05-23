@@ -146,8 +146,8 @@ const ShowcaseShowManga = (): JSX.Element => {
               buttonClick={() => {
                 toPage(
                   index == 0
-                    ? `/mainPage/showcase/showCollection?page=1`
-                    : "/mainPage/showcase/showIllustrations?page=1"
+                    ? `/showcase/showCollection?page=1`
+                    : "/showcase/showIllustrations?page=1"
                 );
               }}
             />
@@ -173,7 +173,7 @@ const ShowcaseShowManga = (): JSX.Element => {
             buttonClick={() => {
               IfLoginCheck(loginUser)
                 ? history.push({
-                    pathname: "/mainPage/showcase/create",
+                    pathname: "/showcase/create",
                     state: { type: ShowCaseEnum.Manga },
                   })
                 : "";
@@ -229,7 +229,7 @@ const ShowcaseShowManga = (): JSX.Element => {
     );
 
   const toManga = (index: number) =>
-    openNewWindow(`/mainPage/showcase/Manga/${allShowCases[index]._id}`);
+    openNewWindow(`/showcase/Manga/${allShowCases[index]._id}`);
 
   const getShowcaseForums = () => {
     return (

@@ -132,7 +132,7 @@ const ProfileShowcaseIllustration = ({ profile }: IProps): JSX.Element => {
             borderColor="white"
             buttonClick={() => {
               history.push({
-                pathname: "/mainPage/showcase/create",
+                pathname: "/showcase/create",
                 state: { type: ShowCaseEnum.Illustrations },
               });
             }}

@@ -6,7 +6,7 @@ const MagaRouter = (): JSX.Element => {
   return (
     <>
       <Switch>
-        <Route component={ShowcaseMangaOne} path="/mainPage/showcase/show/Manga" />
+        <Route component={ShowcaseMangaOne} path="/showcase/show/Manga" />
       </Switch>
     </>
   );

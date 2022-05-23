@@ -138,7 +138,8 @@ const SignUpPage = (): JSX.Element => {
       setEmailCheck("please input valid email address");
     } else {
       const user = await userGet(email);
-      setEmailCheck(user !== null ? "this email already exist" : false);
+      console.log(user);
+      setEmailCheck(user !== null ? "this email already exist" : "");
     }
   };
 
@@ -167,6 +168,8 @@ const SignUpPage = (): JSX.Element => {
   };
 
   const submit = async () => {
+    console.log("345");
+    console.log(emailCheck);
     setLoadingAlert(false);
     if (emailCheck !== "") {
       openNotification(
@@ -177,6 +180,7 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
+    console.log("ASf");
     if (vitrifyGenerateCode !== vitrifyCode || vitrifyGenerateCode === "") {
       openNotification(
         "your vitrify code is wrong",
@@ -186,6 +190,7 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
+    console.log("ASf");
     if (
       password !== confirmPassword ||
       password.trim() == "" ||
@@ -199,6 +204,7 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
+    console.log("ASf");
     if (email.trim() == "") {
       openNotification(
         "please input email",
@@ -208,6 +214,7 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
+    console.log("ASf");
     if (firstName.trim() == "") {
       openNotification(
         "please input first name",
@@ -217,6 +224,7 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
+    console.log("ASf");
     if (lastName.trim() == "") {
       openNotification(
         "please input first name",
@@ -226,6 +234,7 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
+    console.log("ASf");
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
@@ -261,6 +270,7 @@ const SignUpPage = (): JSX.Element => {
       shipSuburb: "",
       postCode: "",
       link: "",
+      block: false,
     };
     const r = await userAdd(user);
     dispatch({
@@ -268,7 +278,7 @@ const SignUpPage = (): JSX.Element => {
       type: LOADING_CLOSE,
     });
     if (r) {
-      toPage("/mainPage/login");
+      toPage("/login");
     }
     if (r == null) {
       setErrorText("add new account wrong, please connect manager");
@@ -368,7 +378,7 @@ const SignUpPage = (): JSX.Element => {
           textColor="black"
           backGroundColor="#AAFFC9"
           borderColor="white"
-          buttonClick={() => toPage("/mainPage/signUpPage")}
+          buttonClick={() => toPage("/signUpPage")}
         />
         <AnimeButton
           para=""
@@ -378,7 +388,7 @@ const SignUpPage = (): JSX.Element => {
           textColor="#4BA3C3"
           backGroundColor="white"
           borderColor="#4BA3C3"
-          buttonClick={() => toPage("/mainPage/login")}
+          buttonClick={() => toPage("/login")}
         />
       </SignUpButtons>
       <EmailInput>

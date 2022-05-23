@@ -72,7 +72,7 @@ const EpisodeCreate = (): JSX.Element => {
       imageArr: imgArr.map((image) => image.imgBase64),
     };
     await episodeAdd(newEpisode);
-    history.push(`/mainPage/showcase/Manga/${manga?._id}`);
+    history.push(`/showcase/Manga/${manga?._id}`);
   };
 
   return (

@@ -135,25 +135,25 @@ const MallCustom = (): JSX.Element => {
     switch (chooseIndex) {
       case 0:
         return (
-          <MallTShirt
+          <MallPhone
             changeAttributes={(value: string) => setAttributes(value)}
           />
         );
       case 1:
         return (
-          <MallPillow
+          <MallTShirt
             changeAttributes={(value: string) => setAttributes(value)}
           />
         );
       case 2:
         return (
-          <MallScroll
+          <MallPillow
             changeAttributes={(value: string) => setAttributes(value)}
           />
         );
       case 3:
         return (
-          <MallPhone
+          <MallScroll
             changeAttributes={(value: string) => setAttributes(value)}
           />
         );

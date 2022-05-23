@@ -15,7 +15,7 @@ const ProfileWrapperDiv = ({ userId, element }: IProps): JSX.Element => {
       style={{}}
       onClick={() => {
         history.push({
-          pathname: `/mainPage/profilePage/${userId}`,
+          pathname: `/profilePage/${userId}`,
         });
       }}
     >

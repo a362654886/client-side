@@ -38,7 +38,7 @@ const ForgetPassword = (): JSX.Element => {
         NotificationColor.Success,
         NotificationTitle.Success
       );
-      history.push("/mainPage/login");
+      history.push("/login");
     } else {
       openNotification(
         "update fail,please contact administer ",

@@ -125,7 +125,7 @@ const ProfileShowcaseManga = ({ profile }: IProps): JSX.Element => {
       payload: allShowCases[index],
       type: SHOWCASE_MANGA_ADD,
     });
-    history.push("/mainPage/showcase/Manga");
+    history.push("/showcase/Manga");
   };
 
   const getShocaseForums = () => {
@@ -142,7 +142,7 @@ const ProfileShowcaseManga = ({ profile }: IProps): JSX.Element => {
             borderColor="white"
             buttonClick={() => {
               history.push({
-                pathname: "/mainPage/showcase/create",
+                pathname: "/showcase/create",
                 state: { type: ShowCaseEnum.Manga },
               });
             }}

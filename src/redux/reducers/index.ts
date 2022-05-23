@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { allLevelState } from "../allLevels";
 import { animeState } from "../anime";
 import { authState } from "../auth";
 import { loadingState } from "../loading";
@@ -21,4 +22,5 @@ export default combineReducers({
   showcaseAwesomeState,
   reportUserState,
   marketFollowState,
+  allLevelState,
 });

@@ -25,12 +25,15 @@ import { messageAdd } from "../api/messageAPI";
 import { LOGIN_USER_UPDATE_FOLLOW } from "../redux/loginUser";
 import { REPORT_USER_UPDATE } from "../redux/reportUser";
 import { useHistory } from "react-router-dom";
+import { ReportContextType } from "../types/blockType";
 
 interface IProps {
   userId: string;
   userName: string;
   userImg: string;
   marginTop: string;
+  type: ReportContextType | null;
+  contextId: string | null;
 }
 
 const SettingImg = ({
@@ -38,6 +41,8 @@ const SettingImg = ({
   userName,
   userImg,
   marginTop,
+  type,
+  contextId,
 }: IProps): JSX.Element => {
   const dispatch = useDispatch();
 
@@ -58,17 +63,29 @@ const SettingImg = ({
     if (loginUser) {
       const exist = loginUser?.followUsers.indexOf(userId);
       return (
-        <SettingPopUpDiv>
+        <SettingPopUpDiv
+          style={{
+            height: type == null && contextId == null ? "100px" : "145px",
+          }}
+        >
           <p onClick={() => followUser()}>
             {exist == -1 ? `Follow` : "Following"}
           </p>
           <p onClick={() => setMessageVisible(true)}>Message</p>
-          <p onClick={() => reportUser(userId)}>Report</p>
+          {type == null && contextId == null ? (
+            <></>
+          ) : (
+            <p onClick={() => reportUser(userId, type, contextId)}>Report</p>
+          )}
         </SettingPopUpDiv>
       );
     } else {
       return (
-        <SettingPopUpDiv>
+        <SettingPopUpDiv
+          style={{
+            height: type == null && contextId == null ? "100px" : "145px",
+          }}
+        >
           <p
             onClick={() => {
               openNotification(
@@ -81,7 +98,11 @@ const SettingImg = ({
             Follow
           </p>
           <p onClick={() => setMessageVisible(true)}>Message</p>
-          <p>Report</p>
+          {type == null && contextId == null ? (
+            <></>
+          ) : (
+            <p onClick={() => reportUser(userId, type, contextId)}>Report</p>
+          )}
         </SettingPopUpDiv>
       );
     }
@@ -94,12 +115,17 @@ const SettingImg = ({
     });
   };
 
-  const reportUser = (id: string) => {
+  const reportUser = (
+    id: string,
+    type: ReportContextType | null,
+    contextId: string | null
+  ) => {
     dispatch({
       payload: id,
       type: REPORT_USER_UPDATE,
     });
-    history.push("/mainPage/report");
+    const url = `/report?forumUserId=${id}&reportUserId=${loginUser?._id}&type=${type}&contextId=${contextId}`;
+    history.push(url);
   };
 
   const sendMessage = async () => {

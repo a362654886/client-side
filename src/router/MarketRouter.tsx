@@ -11,19 +11,19 @@ const MarketRouter = (): JSX.Element => {
       <Switch>
         <Route
           component={MarketplaceShow}
-          path="/mainPage/marketplace/show/:id"
+          path="/marketplace/show/:id"
         />
         <Route
           component={MarketplaceCreate}
-          path="/mainPage/marketplace/create"
+          path="/marketplace/create"
         />
         <Route
           component={MarketplaceShowOne}
-          path="/mainPage/marketplace/showOne/:id"
+          path="/marketplace/showOne/:id"
         />
         <Route
           component={MarketplaceEdit}
-          path="/mainPage/marketplace/edit/:id"
+          path="/marketplace/edit/:id"
         />
       </Switch>
     </>

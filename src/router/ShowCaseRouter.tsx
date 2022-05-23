@@ -14,30 +14,30 @@ const ShowCaseRouter = (): JSX.Element => {
   return (
     <>
       <Switch>
-        <Route component={ShowcaseCreate} path="/mainPage/showcase/create" />
+        <Route component={ShowcaseCreate} path="/showcase/create" />
         <Route
           component={ShowcaseShowCollection}
-          path="/mainPage/showcase/showCollection"
+          path="/showcase/showCollection"
         />
         <Route
           component={ShowcaseShowIllustrations}
-          path="/mainPage/showcase/showIllustrations"
+          path="/showcase/showIllustrations"
         />
         <Route
           component={ShowcaseShowManga}
-          path="/mainPage/showcase/showManga"
+          path="/showcase/showManga"
         />
-        <Route component={ShowcaseShowTag} path="/mainPage/showcase/showTag" />
-        <Route component={EpisodeCreate} path="/mainPage/showcase/episodeAdd" />
+        <Route component={ShowcaseShowTag} path="/showcase/showTag" />
+        <Route component={EpisodeCreate} path="/showcase/episodeAdd" />
         <Route
           component={ShowcaseMangaOne}
-          path="/mainPage/showcase/Manga/:id"
+          path="/showcase/Manga/:id"
         />
         <Route
           component={ShowcaseCollectionOne}
-          path="/mainPage/showcase/showcaseCollectionOne/:id"
+          path="/showcase/showcaseCollectionOne/:id"
         />
-        <Route component={EpisodeEdit} path="/mainPage/showcase/episodeEdit" />
+        <Route component={EpisodeEdit} path="/showcase/episodeEdit" />
       </Switch>
     </>
   );

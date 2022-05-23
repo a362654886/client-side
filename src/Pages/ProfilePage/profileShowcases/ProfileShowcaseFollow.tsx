@@ -98,7 +98,7 @@ const ProfileShowcaseFollow = (): JSX.Element => {
       payload: allShowCases[index],
       type: SHOWCASE_MANGA_ADD,
     });
-    history.push("/mainPage/showcase/Manga");
+    history.push("/showcase/Manga");
   };
 
   const getShocaseForums = () => {

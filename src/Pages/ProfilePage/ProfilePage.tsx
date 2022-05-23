@@ -10,16 +10,17 @@ import {
   ContactInfoDiv,
   InfoDiv,
   LevelPic,
-  LineDiv,
   LineProfileDiv,
   MobileButtonsDiv,
   NameDiv,
   NameIdDiv,
   NamePic,
   NameSetting,
+  ProfileAwesomePic,
   ProfileBox,
   ProfileChildDiv,
   ProfileDiv,
+  ProfileSlider,
   SettingAwesomeDiv,
   SettingFollowDiv,
   SettingFollowerDiv,
@@ -64,6 +65,9 @@ import { useParams } from "react-router-dom";
 import { userGet } from "../../api/userApi";
 import { PROFILE_USER_UPDATE } from "../../redux/profileUser";
 import { getWidth } from "../../helperFns/widthFn";
+import { Slider } from "antd";
+import { AwesomeLevelType } from "../../types/awesomeLevel";
+import { getLevel } from "../../helperFns/profileFn";
 
 interface Para {
   id: string;
@@ -87,6 +91,10 @@ const ProfilePage = (): JSX.Element => {
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
+  );
+
+  const allLevels: AwesomeLevelType[] | null = useSelector(
+    (state: IStoreState) => state.allLevelState
   );
 
   useEffect(() => {
@@ -118,12 +126,12 @@ const ProfilePage = (): JSX.Element => {
           backColor: "white",
         },
         {
-          text: "Mall",
+          text: "Likes",
           color: "#4BA3C3",
           backColor: "white",
         },
         {
-          text: "Likes",
+          text: "Mall",
           color: "#4BA3C3",
           backColor: "white",
         },
@@ -272,6 +280,11 @@ const ProfilePage = (): JSX.Element => {
       : "";
   };
 
+  const getOneLevel = getLevel(
+    allLevels,
+    profileUser ? profileUser.awesomeNum : 0
+  );
+
   return (
     <ProfileBox
       style={{
@@ -279,50 +292,67 @@ const ProfilePage = (): JSX.Element => {
         marginRight: getWidth() > 600 ? "" : "8px",
       }}
     >
-      <ProfileDiv
-        style={{
-          display: getWidth() > 600 ? "flex" : "inline",
-        }}
-      >
-        <LevelPic
-          onClick={() => toPage("/mainPage/profileLevel")}
-          src={level1}
-        />
-        <NamePic src={getNameImg()} />
-        <NameDiv>
-          <NameSetting>
-            <p>
-              {`${profileUser ? profileUser.firstName : ""}.${
-                profileUser
-                  ? profileUser.lastName.substring(0, 1).toUpperCase()
-                  : ""
-              }`}
-              <Flag
-                style={{ marginLeft: "5px" }}
-                country={flagGet(profileUser ? profileUser.country : "")}
+      <ProfileDiv>
+        <div style={{ display: "flex" }}>
+          <NamePic src={getNameImg()} />
+          <NameDiv>
+            <NameSetting>
+              <p>
+                {`${profileUser ? profileUser.firstName : ""}.${
+                  profileUser
+                    ? profileUser.lastName.substring(0, 1).toUpperCase()
+                    : ""
+                }`}
+                <Flag
+                  style={{ marginLeft: "5px" }}
+                  country={flagGet(profileUser ? profileUser.country : "")}
+                />
+              </p>
+              <SettingImg
+                userId={profileUser ? profileUser._id : ""}
+                userName={`${profileUser ? profileUser.firstName : ""}.${
+                  profileUser ? profileUser.lastName : ""
+                }`}
+                userImg={`https://animeimagebucket.s3.amazonaws.com/${
+                  profileUser ? profileUser.avatar : ""
+                }`}
+                marginTop="4px"
+                type={null}
+                contextId={null}
               />
-            </p>
-            <SettingImg
-              userId={profileUser ? profileUser._id : ""}
-              userName={`${profileUser ? profileUser.firstName : ""}.${
-                profileUser ? profileUser.lastName : ""
-              }`}
-              userImg={`https://animeimagebucket.s3.amazonaws.com/${
-                profileUser ? profileUser.avatar : ""
-              }`}
-              marginTop="4px"
-            />
-          </NameSetting>
-          <NameIdDiv>(ID: 202201)</NameIdDiv>
-        </NameDiv>
+            </NameSetting>
+            <NameIdDiv>{`(ID: ${
+              profileUser ? profileUser._id : ""
+            })`}</NameIdDiv>
+          </NameDiv>
+        </div>
+        <div style={{ display: "flex" }}>
+          <LevelPic onClick={() => toPage("/profileLevel")} src={getOneLevel.image} />
+          <ProfileAwesomePic
+            src={showCaseAwesomeClick}
+            style={{ marginRight: "4px" }}
+          />
+          <ProfileSlider style={{ display: "flex" }}>
+            <p>{`${profileUser ? profileUser.awesomeNum : ""}/${getOneLevel.awesomeRequire}`}</p>
+            <Slider
+              defaultValue={
+                ((profileUser ? profileUser.awesomeNum : 0) /
+                  getOneLevel.awesomeRequire) *
+                100
+              }
+              style={{ width: "200px" }}
+              disabled={true}
+            ></Slider>
+          </ProfileSlider>
+        </div>
       </ProfileDiv>
       {loginUser && profileUser && loginUser._id == profileUser._id ? (
         <SettingIconsDiv>
-          <SettingIconDiv onClick={() => toPage("/mainPage/ProfileSetting")}>
+          <SettingIconDiv onClick={() => toPage("/ProfileSetting")}>
             <img src={IconSettings} />
             <p>Profile</p>
           </SettingIconDiv>
-          <SettingIconDiv onClick={() => toPage("/mainPage/ProfileMessage")}>
+          <SettingIconDiv onClick={() => toPage("/ProfileMessage")}>
             <img src={IconInbox} />
             <p>Inbox</p>
           </SettingIconDiv>
@@ -333,7 +363,7 @@ const ProfilePage = (): JSX.Element => {
       <SettingFollowDiv>
         <SettingFollowingDiv
           onClick={() => {
-            toPage(`/mainPage/profileFollow/${profileUser?._id}`);
+            toPage(`/profileFollow/${profileUser?._id}`);
           }}
         >
           <h6>
@@ -347,19 +377,12 @@ const ProfilePage = (): JSX.Element => {
         </SettingFollowingDiv>
         <SettingFollowerDiv
           onClick={() => {
-            toPage(`/mainPage/profileFollow/${profileUser?._id}`);
+            toPage(`/profileFollow/${profileUser?._id}`);
           }}
         >
           <h6>{follow}</h6>
           <p>Followers</p>
         </SettingFollowerDiv>
-        <SettingAwesomeDiv>
-          <h6>{profileUser ? profileUser.awesomeNum : 0}</h6>
-          <p>
-            <img src={showCaseAwesomeClick} style={{ marginRight: "4px" }} />
-            Awesome!
-          </p>
-        </SettingAwesomeDiv>
       </SettingFollowDiv>
       {loginUser?._id !== profileUser?._id ? (
         <MarketFollow>

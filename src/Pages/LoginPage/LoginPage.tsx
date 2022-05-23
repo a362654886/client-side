@@ -64,7 +64,7 @@ const LoginPage = (): JSX.Element => {
         type: LOGIN_USER_ADD,
       });
       const url = localStorage.getItem("url");
-      url ? toPage(url) : toPage("/mainPage/home");
+      url ? toPage(url) : toPage("/home");
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -103,7 +103,7 @@ const LoginPage = (): JSX.Element => {
           textColor="#4BA3C3"
           backGroundColor="white"
           borderColor="#4BA3C3"
-          buttonClick={() => toPage("/mainPage/signUpPage")}
+          buttonClick={() => toPage("/signUpPage")}
         />
         <AnimeButton
           para=""
@@ -113,7 +113,7 @@ const LoginPage = (): JSX.Element => {
           textColor="black"
           backGroundColor="#AAFFC9"
           borderColor="white"
-          buttonClick={() => toPage("/mainPage/login")}
+          buttonClick={() => toPage("/login")}
         />
       </SignUpButtons>
       <EmailInput>
@@ -124,7 +124,7 @@ const LoginPage = (): JSX.Element => {
         <h3>Password:</h3>
         <Input placeholder={"password"} onChange={onChange}></Input>
       </EmailInput>
-      <PasswordForget onClick={() => toPage("/mainPage/forgetPasswordPage")}>
+      <PasswordForget onClick={() => toPage("/forgetPasswordPage")}>
         Forget Password?
       </PasswordForget>
       <LoginClickButton>

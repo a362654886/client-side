@@ -214,7 +214,7 @@ const EpisodeShow = (): JSX.Element => {
         <EpisodeShowHeader>
           <EpisodeShowHeaderLeft
             style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
-            onClick={() => history.push("/mainPage/showcase/Manga")}
+            onClick={() => history.push("/showcase/Manga")}
           >
             Back
           </EpisodeShowHeaderLeft>

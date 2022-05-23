@@ -71,6 +71,7 @@ import { flagGet } from "../../../helperFns/flag";
 import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
 import { IfLoginCheck } from "../../../helperFns/loginCheck";
 import { getWidth } from "../../../helperFns/widthFn";
+import { ReportContextType } from "../../../types/blockType";
 
 interface IProps {
   anime: Anime | null;
@@ -829,6 +830,8 @@ const AnimeOneForum = ({
               userName={forum.userName}
               userImg={forum.userAvatar}
               marginTop="24px"
+              type={ReportContextType.FORUM_ITEM}
+              contextId={forum._id}
             />
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
@@ -952,6 +955,8 @@ const AnimeOneForum = ({
                 userName={forum.userName}
                 userImg={forum.userAvatar}
                 marginTop="24px"
+                type={ReportContextType.FORUM_ITEM}
+                contextId={forum._id}
               />
               <ForumTime>{_getDate(date)}</ForumTime>
             </div>
@@ -1107,6 +1112,8 @@ const AnimeOneForum = ({
                   userName={forum.userName}
                   userImg={forum.userAvatar}
                   marginTop="24px"
+                  type={ReportContextType.FORUM_SECOND_ITEM}
+                  contextId={forum._id}
                 />
                 <ForumTime>{_getDate(date)}</ForumTime>
               </div>

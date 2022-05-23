@@ -5,7 +5,6 @@ import reducer from "./redux/reducers";
 import { createStore, applyMiddleware } from "redux";
 import "./index.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import MainPage from "./Pages/MainPage";
 import thunk from "redux-thunk";
 import "../src/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +18,7 @@ import { loginUserMiddleware } from "./redux/middleWares/loginUserMiddleware";
 import { animeMiddleware } from "./redux/middleWares/animeMiddleware";
 import { showcaseAwesomeMiddleware } from "./redux/middleWares/showcaseAwesomeMiddleware";
 import { marketFollowMiddleware } from "./redux/middleWares/marketFollowMiddleware";
+import MainPage from "./Pages/MainPage";
 
 const persistConfig = {
   key: "root",
@@ -45,7 +45,6 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route path="/mainPage" component={MainPage} />
         <Route path="/episodeShow" component={EpisodeShow} />
         <Route path="/adminManagement" component={AdminMainPage} />
         <Route path="/" component={MainPage} />

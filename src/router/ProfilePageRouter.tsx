@@ -9,13 +9,13 @@ const ProfilePageRouter = (): JSX.Element => {
   return (
     <>
       <Switch>
-        <Route component={ProfileMessagePage} path="/mainPage/ProfileMessage" />
-        <Route component={ProfileSettingPage} path="/mainPage/ProfileSetting" />
+        <Route component={ProfileMessagePage} path="/ProfileMessage" />
+        <Route component={ProfileSettingPage} path="/ProfileSetting" />
         <Route
           component={ProfileFollowPage}
-          path="/mainPage/profileFollow/:id"
+          path="/profileFollow/:id"
         />
-        <Route component={ProfileLevelPage} path="/mainPage/profileLevel" />
+        <Route component={ProfileLevelPage} path="/profileLevel" />
       </Switch>
     </>
   );

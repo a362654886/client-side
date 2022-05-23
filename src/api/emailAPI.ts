@@ -38,3 +38,52 @@ export const emailPost = async (
       return null;
     });
 };
+
+export const emailsPost = async (
+  toEmails: string[],
+  text: string,
+  subject: string
+): Promise<number | null> => {
+  const endpoint = basicURL + "emailsPost";
+  return Axios.post(endpoint, {
+    toArr: toEmails,
+    subject: subject,
+    text: text,
+  })
+    .then((response) => {
+      openNotification(
+        "email send success",
+        NotificationColor.Success,
+        NotificationTitle.Success
+      );
+      return response.status;
+    })
+    .catch(() => {
+      openNotification(
+        "email send fail",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
+      return null;
+    });
+};
+
+export const userEmailsGet = async (
+  awesome: boolean,
+  comments: boolean,
+  bids: boolean,
+  followers: boolean,
+  messages: boolean,
+  firstAnimeNews: boolean
+): Promise<string[] | null> => {
+  const endpoint =
+    basicURL +
+    `userEmailsGet?awesome=${awesome}&comments=${comments}&bids=${bids}&followers=${followers}&messages=${messages}&firstAnimeNews=${firstAnimeNews}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};

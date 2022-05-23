@@ -2,16 +2,19 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
+  LevelPic,
   NameDiv,
   NameIdDiv,
   NamePic,
   NameSetting,
+  ProfileAwesomePic,
   ProfileBox,
   ProfileDiv,
   ProfileMessageBox,
   ProfileMessageButtons,
   ProfileMessageMore,
   ProfileReply,
+  ProfileSlider,
   SettingIconDiv,
   SettingIconsDiv,
 } from "../../cssJs/ProfilePage/ProfileCss";
@@ -42,7 +45,7 @@ import { _getDate } from "../../helperFns/timeFn";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
 import { MessageDiv, MessageModal } from "../../cssJs/settingImgCss";
 import TextArea from "antd/lib/input/TextArea";
-import { Button } from "antd";
+import { Button, Slider } from "antd";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import {
@@ -51,6 +54,9 @@ import {
   openNotification,
 } from "../../helperFns/popUpAlert";
 import { getWidth } from "../../helperFns/widthFn";
+import { AwesomeLevelType } from "../../types/awesomeLevel";
+import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
+import { getLevel } from "../../helperFns/profileFn";
 
 const ProfileMessagePage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -75,6 +81,10 @@ const ProfileMessagePage = (): JSX.Element => {
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
+  );
+
+  const allLevels: AwesomeLevelType[] | null = useSelector(
+    (state: IStoreState) => state.allLevelState
   );
 
   useEffect(() => {
@@ -144,6 +154,8 @@ const ProfileMessagePage = (): JSX.Element => {
     setMessageVisible(true);
   };
 
+  const getOneLevel = getLevel(allLevels, loginUser ? loginUser.awesomeNum : 0);
+
   const sendMessage = async () => {
     dispatch({
       payload: LoadingType.OPEN,
@@ -203,6 +215,8 @@ const ProfileMessagePage = (): JSX.Element => {
               userName={message.receiveName ? message.receiveName : ""}
               userImg={message.receiveAvatar ? message.receiveAvatar : ""}
               marginTop="24px"
+              type={null}
+              contextId={null}
             />
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
@@ -240,6 +254,8 @@ const ProfileMessagePage = (): JSX.Element => {
               userName={message.userName ? message.userName : ""}
               userImg={message.userAvatar ? message.userAvatar : ""}
               marginTop="24px"
+              type={null}
+              contextId={null}
             />
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
@@ -298,44 +314,72 @@ const ProfileMessagePage = (): JSX.Element => {
         }}
       >
         <ProfileDiv>
-          <NamePic
-            src={
-              loginUser ? (loginUser.avatarImage as Avatar[])[0].imageUrl : ""
-            }
-          />
-          <NameDiv>
-            <NameSetting>
-              <p>
-                {`${loginUser ? loginUser.firstName : ""}.${
-                  loginUser
-                    ? loginUser.lastName.substring(0, 1).toUpperCase()
-                    : ""
-                }`}
-                <Flag
-                  style={{ marginLeft: "5px" }}
-                  country={flagGet(loginUser ? loginUser.country : "")}
+          <div style={{ display: "flex" }}>
+            <NamePic
+              src={
+                loginUser ? (loginUser.avatarImage as Avatar[])[0].imageUrl : ""
+              }
+            />
+            <NameDiv>
+              <NameSetting>
+                <p>
+                  {`${loginUser ? loginUser.firstName : ""}.${
+                    loginUser
+                      ? loginUser.lastName.substring(0, 1).toUpperCase()
+                      : ""
+                  }`}
+                  <Flag
+                    style={{ marginLeft: "5px" }}
+                    country={flagGet(loginUser ? loginUser.country : "")}
+                  />
+                </p>
+                <SettingImg
+                  userId={(loginUser as User)._id}
+                  userName={`${(loginUser as User).firstName}.${
+                    (loginUser as User).lastName
+                  }`}
+                  userImg={`https://animeimagebucket.s3.amazonaws.com/${
+                    (loginUser as User).avatar
+                  }`}
+                  marginTop="4px"
+                  type={null}
+                  contextId={null}
                 />
-              </p>
-              <SettingImg
-                userId={(loginUser as User)._id}
-                userName={`${(loginUser as User).firstName}.${
-                  (loginUser as User).lastName
-                }`}
-                userImg={`https://animeimagebucket.s3.amazonaws.com/${
-                  (loginUser as User).avatar
-                }`}
-                marginTop="4px"
-              />
-            </NameSetting>
-            <NameIdDiv>(ID: 202201)</NameIdDiv>
-          </NameDiv>
+              </NameSetting>
+              <NameIdDiv>{`(ID: ${loginUser ? loginUser._id : ""})`}</NameIdDiv>
+            </NameDiv>
+          </div>
+          <div style={{ display: "flex" }}>
+            <LevelPic
+              onClick={() => toPage("/profileLevel")}
+              src={getOneLevel.image}
+            />
+            <ProfileAwesomePic
+              src={showCaseAwesomeClick}
+              style={{ marginRight: "4px" }}
+            />
+            <ProfileSlider style={{ display: "flex" }}>
+              <p>{`${loginUser ? loginUser.awesomeNum : ""}/${
+                getOneLevel.awesomeRequire
+              }`}</p>
+              <Slider
+                defaultValue={
+                  ((loginUser ? loginUser.awesomeNum : 0) /
+                    getOneLevel.awesomeRequire) *
+                  100
+                }
+                style={{ width: "200px" }}
+                disabled={true}
+              ></Slider>
+            </ProfileSlider>
+          </div>
         </ProfileDiv>
         <SettingIconsDiv>
-          <SettingIconDiv onClick={() => toPage("/mainPage/ProfileSetting")}>
+          <SettingIconDiv onClick={() => toPage("/ProfileSetting")}>
             <img src={IconSettings} />
             <p>Profile</p>
           </SettingIconDiv>
-          <SettingIconDiv onClick={() => toPage("/mainPage/ProfileMessage")}>
+          <SettingIconDiv onClick={() => toPage("/ProfileMessage")}>
             <img src={IconInbox} />
             <p>Inbox</p>
           </SettingIconDiv>

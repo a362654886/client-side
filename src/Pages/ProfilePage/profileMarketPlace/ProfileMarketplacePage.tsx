@@ -69,7 +69,7 @@ const ProfileMarketplacePage = (): JSX.Element => {
     if (profileUser) {
       setLoading(true);
       const result = await marketAllGetByArr(
-        profileUser?.userEmail,
+        profileUser?._id,
         1,
         24,
         chooseButton
@@ -83,7 +83,7 @@ const ProfileMarketplacePage = (): JSX.Element => {
 
   const chooseMarket = (marketId: string) => {
     console.log(history)
-    history.location.pathname = "/mainPage/"
+    history.location.pathname = "/"
     history.replace(`marketplace/showOne/${marketId}`);
   };
 
@@ -160,7 +160,7 @@ const ProfileMarketplacePage = (): JSX.Element => {
           borderColor="white"
           buttonClick={() => {
             history.push({
-              pathname: "/mainPage/marketplace/create",
+              pathname: "/marketplace/create",
             });
           }}
         />

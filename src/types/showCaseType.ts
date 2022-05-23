@@ -20,6 +20,7 @@ export type ShowCaseType = {
   aweSome: number;
   page?: number;
   fullItems?: boolean;
+  episode?: number;
 };
 
 export type ShowCaseReply = {

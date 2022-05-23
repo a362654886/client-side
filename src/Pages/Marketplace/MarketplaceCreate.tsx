@@ -119,7 +119,7 @@ const MarketplaceCreate = (): JSX.Element => {
     });
     const r = await marketAdd(marketBody);
     if (r == 200) {
-      history.push("/mainPage/marketplace/show/null");
+      history.push("/marketplace/show/null");
     }
     dispatch({
       payload: LoadingType.CLOSE,

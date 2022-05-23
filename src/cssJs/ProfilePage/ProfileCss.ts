@@ -4,6 +4,7 @@ export const ProfileBox = styled.div`
   height: auto;
   max-width: 1121px;
   margin: auto;
+  margin-top: 24px;
 `;
 
 export const ProfileFollowBox = styled.div`
@@ -16,6 +17,7 @@ export const ProfileSettingBox = styled.div`
   height: auto;
   max-width: 840px;
   margin: auto;
+  margin-top: 24px;
 `;
 
 export const ProfileDiv = styled.div`
@@ -24,7 +26,7 @@ export const ProfileDiv = styled.div`
   margin-top: 8px;
   padding-top: 16px;
   padding-bottom: 16px;
-  display: flex;
+  display: inline;
   div {
     display: inline;
   }
@@ -103,11 +105,56 @@ export const NamePic = styled.img`
 `;
 
 export const LevelPic = styled.img`
-  width: 60px;
-  height: 60px;
+  width: 30.4px;
+  height: 38.8px;
   margin-top: 10px;
   margin-right: 8px;
   cursor: pointer;
+`;
+
+export const ProfileAwesomePic = styled.img`
+  width: 25px;
+  height: 20px;
+  margin-top: 20px;
+  margin-right: 8px;
+  cursor: pointer;
+`;
+
+export const ProfileSlider = styled.div`
+  display: flex;
+  position: relative;
+  margin-top: 20px;
+  p {
+    position: absolute;
+    line-height: 20px;
+    margin-bottom: 0px;
+    color: #ef392a;
+    font-weight: bold;
+    right: 100px;
+    z-index: 10000;
+  }
+  .ant-slider,
+  .ant-slider-disabled {
+    height: 20px;
+    margin: 0px;
+    background-color: #f6f6f6;
+    border-radius: 0px 20px 20px 0px;
+  }
+  .ant-slider-track {
+    top: -1px;
+    height: 20px;
+    margin: 0px;
+    background-color: #ffdf00 !important;
+    border-radius: 20px 20px 20px 20px;
+  }
+  .ant-slider-step {
+    height: 0px;
+  }
+  .ant-slider-handle {
+    height: 0px;
+    width: 0px;
+    border: 0px solid white;
+  }
 `;
 
 export const NameText = styled.p`
@@ -391,8 +438,8 @@ export const ProfileLevelBox = styled.div`
 `;
 
 export const ProfileLevelDiv = styled.div`
-  height: 112px;
-  width: 432px;
+  height: 152px;
+  width: 380px;
   margin: 0px auto;
   margin-top: 8px;
   padding-top: 16px;

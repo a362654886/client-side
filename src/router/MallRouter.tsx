@@ -8,10 +8,10 @@ const MallRouter = (): JSX.Element => {
     <>
       <Switch>
         {/*
-          <Route component={ShowcaseCreate} path="/mainPage/mall/create" />
+          <Route component={ShowcaseCreate} path="/mall/create" />
         */}
-        <Route component={MallCustom} path="/mainPage/mall/custom" />
-        <Route component={MallRedeem} path="/mainPage/mall/redeem" />
+        <Route component={MallCustom} path="/mall/custom" />
+        <Route component={MallRedeem} path="/mall/redeem" />
       </Switch>
     </>
   );

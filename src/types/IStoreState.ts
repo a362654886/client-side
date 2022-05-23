@@ -1,4 +1,5 @@
 import { Anime } from "./Amine";
+import { AwesomeLevelType } from "./awesomeLevel";
 import { LoadingType, LoginType } from "./EnumTypes";
 import { NewType } from "./NewsType";
 import { ShowCaseType } from "./showCaseType";
@@ -13,4 +14,5 @@ export interface IStoreState {
   mangaState: ShowCaseType | null;
   profileUserState: User | null;
   reportUserState: string | null;
+  allLevelState: AwesomeLevelType[] | null;
 }

@@ -79,7 +79,7 @@ const MarketplaceShow = (): JSX.Element => {
 
   useEffect(() => {
     //console.log(searchString);
-  }, [searchString, page]);
+  }, [searchString, page, country, city, priceFrom, priceTo]);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -134,13 +134,21 @@ const MarketplaceShow = (): JSX.Element => {
 
   const chooseMarket = (market: MarketType) => {
     history.push({
-      pathname: `/mainPage/marketplace/showOne/${market._id}`,
+      pathname: `/marketplace/showOne/${market._id}`,
     });
   };
 
   const setSearch = () => {
     const searchString = `"${city}, ${country}","${priceFrom}-${priceTo}"`;
     setSearchString(searchString);
+  };
+
+  const clearFn = () => {
+    setCountry("");
+    setCity("");
+    setPriceFrom("");
+    setPriceTo("");
+    setSearchString("");
   };
 
   const onChange = (e: React.ChangeEvent<Element>): void => {
@@ -204,13 +212,13 @@ const MarketplaceShow = (): JSX.Element => {
           onClick={() => setSortByVisible(false)}
         />
         <MarketSortLocation>Location</MarketSortLocation>
-        <Input placeholder="Country" onChange={onChange} />
+        <Input placeholder="Country" value={country} onChange={onChange} />
         <p>—</p>
-        <Input placeholder="City" onChange={onChange} />
+        <Input placeholder="City" value={city} onChange={onChange} />
         <MarketSortPrice>Price</MarketSortPrice>
-        <Input placeholder="From" onChange={onChange} />
+        <Input placeholder="From" value={priceFrom} onChange={onChange} />
         <p>—</p>
-        <Input placeholder="To" onChange={onChange} />
+        <Input placeholder="To" value={priceTo} onChange={onChange} />
         <MarketSortButton>
           <AnimeButton
             para=""
@@ -284,7 +292,7 @@ const MarketplaceShow = (): JSX.Element => {
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="#FFC300"
-          buttonClick={() => history.push(`/mainPage/marketplace/create`)}
+          buttonClick={() => history.push(`/marketplace/create`)}
         />
       </MarketPlaceTitleDiv>
       <MarketBodyDiv>
@@ -320,7 +328,7 @@ const MarketplaceShow = (): JSX.Element => {
         </MarketBorder>
         <StringBar
           onClick={() => {
-            console.log("clear");
+            clearFn();
           }}
         >
           <p>{searchString}</p>

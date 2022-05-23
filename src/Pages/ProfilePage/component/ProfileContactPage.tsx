@@ -109,6 +109,7 @@ const ProfileContactPage = (): JSX.Element => {
       shipSuburb: loginUser?.shipSuburb ? loginUser?.shipSuburb : "",
       postCode: loginUser?.postCode ? loginUser?.postCode : "",
       link: link,
+      block: loginUser?.block ? loginUser?.block : false
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);

@@ -70,6 +70,7 @@ import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { MARKET_FOLLOW_ARR } from "../../redux/marketFollow";
 import { getWidth } from "../../helperFns/widthFn";
+import { ReportContextType } from "../../types/blockType";
 
 interface Para {
   id: string;
@@ -228,6 +229,8 @@ const MarketplaceShowOne = (): JSX.Element => {
               userName={item.userName ? item.userName : ""}
               userImg={item.userAvatar ? item.userAvatar : ""}
               marginTop="8px"
+              type={ReportContextType.MARKET}
+              contextId={item._id}
             />
             <MarketItemTime style={{ marginTop: "4px" }}>
               {_getDate(new Date(item.uploadTime))}
@@ -333,7 +336,7 @@ const MarketplaceShowOne = (): JSX.Element => {
             textColor="white"
             backGroundColor="#FFC300"
             borderColor="#FFC300"
-            buttonClick={() => history.push(`/mainPage/marketplace/create`)}
+            buttonClick={() => history.push(`/marketplace/create`)}
           />
         </MarketPlaceTitleDiv>
         <MarketBodyDiv>
@@ -430,6 +433,10 @@ const MarketplaceShowOne = (): JSX.Element => {
                     : ""
                 }
                 marginTop="8px"
+                type={ReportContextType.MARKET}
+                contextId={
+                  marketState ? (marketState._id ? marketState._id : "") : ""
+                }
               />
               <MarketItemTime>{_getDate(new Date())}</MarketItemTime>
             </div>
@@ -478,7 +485,7 @@ const MarketplaceShowOne = (): JSX.Element => {
               <div
                 onClick={() => {
                   history.push({
-                    pathname: `/mainPage/marketplace/edit/${para.id}`,
+                    pathname: `/marketplace/edit/${para.id}`,
                   });
                 }}
               >
@@ -501,7 +508,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           <MarketViewMore
             onClick={() => {
               history.push(
-                `/mainPage/profilePage/${marketState ? marketState.userId : ""}`
+                `/profilePage/${marketState ? marketState.userId : ""}`
               );
             }}
           >
@@ -521,9 +528,14 @@ const MarketplaceShowOne = (): JSX.Element => {
             <div style={{ display: "flex", marginLeft: "16px" }}>
               <p>$</p>
               <Input
+                value={bidPrice}
                 onChange={(e) => {
                   const price = e.target.value;
-                  setBidPrice(Number(price));
+                  if (isNaN(Number(price))) {
+                    setBidPrice(0);
+                  } else {
+                    setBidPrice(Number(price));
+                  }
                 }}
               />
               <p>(NZD)</p>

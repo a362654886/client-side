@@ -36,6 +36,7 @@ import {
   SHOWCASE_AWESOME_ADD,
   SHOWCASE_AWESOME_CANCEL,
 } from "../../redux/showcaseAwesome";
+import { ReportContextType } from "../../types/blockType";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -157,6 +158,7 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
 
   const getExistShowcases = () =>
     allShowCases.map((showcase, index) => {
+      console.log(showcase);
       return (
         <ShowMangaIframe key={index}>
           {showcase.imageArr ? (
@@ -195,10 +197,14 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
                 userName={showcase.userName}
                 userImg={showcase.userAvatar}
                 marginTop="8px"
+                type={ReportContextType.SHOWCASE_REPLY}
+                contextId={showcase._id}
               />
             </ShowAvatarDiv>
           </ShowcaseMangaHeader>
-          <p>Updated to Episode 33</p>
+          <p>{`Updated to Episode ${
+            showcase.episode ? showcase.episode : 0
+          }`}</p>
           <ShowcaseMangaDescription>
             {showcase.description ? showcase.description : ""}
           </ShowcaseMangaDescription>

@@ -185,6 +185,8 @@ const ProfileFollowPage = (): JSX.Element => {
                     }`}
                     userImg={avatarSetting}
                     marginTop="4px"
+                    type={null}
+                    contextId={null}
                   />
                 </FollowElementProfileNameSetting>
               </FollowElementProfileDiv>
@@ -234,6 +236,8 @@ const ProfileFollowPage = (): JSX.Element => {
                     userName={`${item ? item.userName : ""}`}
                     userImg={avatarSetting}
                     marginTop="4px"
+                    type={null}
+                    contextId={null}
                   />
                 </FollowElementProfileNameSetting>
               </FollowElementProfileDiv>
@@ -288,9 +292,11 @@ const ProfileFollowPage = (): JSX.Element => {
               }`}
               userImg={avatarSetting}
               marginTop="4px"
+              type={null}
+              contextId={null}
             />
           </NameSetting>
-          <NameIdDiv>(ID: 202201)</NameIdDiv>
+          <NameIdDiv>{`(ID: ${user ? user._id : ""})`}</NameIdDiv>
         </NameDiv>
       </ProfileFollowDiv>
     );

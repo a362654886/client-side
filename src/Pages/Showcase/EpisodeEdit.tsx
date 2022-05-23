@@ -81,7 +81,7 @@ const EpisodeEdit = (): JSX.Element => {
       ),
     };
     await episodeUpdate(newEpisode);
-    history.push("/mainPage/showcase/Manga");
+    history.push("/showcase/Manga");
   };
 
   return (

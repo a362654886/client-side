@@ -69,7 +69,7 @@ const ProfileMallPage = (): JSX.Element => {
   const getDesignHistory = async () => {
     if (profileUser) {
       setLoading(true);
-      const result = await designHistoryGetById(profileUser?.userEmail, 1, 2);
+      const result = await designHistoryGetById(profileUser?._id, 1, 2);
       if (result) {
         result.designHistories
           ? setAllDesignHistories(result.designHistories)
@@ -124,7 +124,7 @@ const ProfileMallPage = (): JSX.Element => {
                 borderColor="white"
                 buttonClick={() => {
                   history.push({
-                    pathname: "/mainPage/mall/custom",
+                    pathname: "/mall/custom",
                   });
                 }}
               />

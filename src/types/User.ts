@@ -1,3 +1,5 @@
+import { BooleanModel } from "aws-sdk/clients/gamelift";
+
 export type User = {
   _id: string;
   sequenceId?: string;
@@ -31,6 +33,7 @@ export type User = {
   shipSuburb: string;
   postCode: string;
   link: string;
+  block: boolean;
 };
 
 export type UserRate = {

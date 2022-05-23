@@ -156,7 +156,7 @@ const MarketplaceEdit = (): JSX.Element => {
       type: LOADING_CLOSE,
     });
     history.push({
-      pathname: `/mainPage/marketplace/showOne/${para.id}`,
+      pathname: `/marketplace/showOne/${para.id}`,
     });
   };
 
@@ -311,7 +311,7 @@ const MarketplaceEdit = (): JSX.Element => {
                 borderColor="#302D46"
                 buttonClick={() => {
                   history.push({
-                    pathname: `/mainPage/marketplace/showOne/${para.id}`,
+                    pathname: `/marketplace/showOne/${para.id}`,
                   });
                 }}
               />

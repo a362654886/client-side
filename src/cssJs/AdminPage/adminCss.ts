@@ -1,4 +1,5 @@
 import { Button, Input } from "antd";
+import TextArea from "antd/lib/input/TextArea";
 import styled from "styled-components";
 
 export const AdminPageDiv = styled.div`
@@ -106,4 +107,51 @@ export const AdminEmailPageReceiveAddress = styled.div`
     margin-left: 25px;
     margin-top: 8px;
   }
+  .ant-input {
+    margin-top: 24px;
+    height: 272px;
+  }
+`;
+
+export const AdminEmailPageReceiveContext = styled.div`
+  display: inline;
+  margin-top: 16px;
+  h6 {
+    width: 40px;
+    height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 8px;
+    margin-bottom: 0px;
+    line-height: 32px;
+  }
+  p {
+    height: 32px;
+    font-size: 16px;
+    margin-right: 8px;
+    margin-bottom: 0px;
+    line-height: 32px;
+  }
+  button {
+    margin-left: 25px;
+    margin-top: 8px;
+  }
+`;
+
+export const AdminEmailPageReceiveTitle = styled.div`
+  margin-left: 25px;
+  width: 80%;
+  div {
+    display: flex;
+  }
+`;
+
+export const AdminEmailPageContext = styled(TextArea)`
+  margin-left: 25px;
+  margin-top: 25px;
+`;
+
+export const AdminEmailSubmitButton = styled.div`
+  margin: 275px;
+  margin-top: 25px;
 `;

@@ -23,7 +23,7 @@ const NewsPage = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState<number>(1);
   const [allNews, setAllNews] = useState<NewType[]>([]);
-  const pageSize = 1;
+  const pageSize = 6;
 
   useEffect(() => {
     (async function anyNameFunction() {
