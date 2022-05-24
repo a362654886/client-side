@@ -76,5 +76,5 @@ export const AvatarBox = styled.div`
 `;
 
 export const SubmitButtonDiv = styled.div`
-  margin-left: 100px;
+  margin-left: 80px;
 `;

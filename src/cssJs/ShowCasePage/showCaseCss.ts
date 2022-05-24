@@ -30,7 +30,7 @@ export const ShowCaseCreateImage = styled.div`
   max-width: 1170px;
   margin-bottom: 32px;
   text-align: center;
-  width:100%;
+  width: 100%;
   button {
     margin-top: 32px;
     color: black;
@@ -201,6 +201,7 @@ export const ShowImg = styled.img`
 export const ShowcaseReply = styled.div`
   width: 100%;
   height: auto;
+  word-wrap: break-word;
 `;
 
 export const ShowcaseTag = styled.div`
@@ -448,7 +449,7 @@ export const ReplyAddDiv = styled.div`
 export const ShowcaseEditDiv = styled.div`
   margin-top: 16px;
   margin-bottom: 16px;
-  width:100%;
+  width: 100%;
   button {
     margin-top: 16px;
     padding-left: 0px;

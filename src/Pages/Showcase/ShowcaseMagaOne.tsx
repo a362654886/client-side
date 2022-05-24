@@ -559,14 +559,14 @@ const ShowcaseMangaOne = (): JSX.Element => {
     } else {
       newArr.push("");
     }
-    setNewSecondReplyHtml(newArr);
+    //setNewSecondReplyHtml(newArr);
     setUpdate(update + 1);
   };
 
   const sendNewSecondReply = (e: string, secondIndex: number) => {
     const newSecondReplyHtmls = newSecondReplyHtml;
     newSecondReplyHtmls[secondIndex] = e;
-    setNewSecondReplyHtml(newSecondReplyHtmls);
+    //setNewSecondReplyHtml(newSecondReplyHtmls);
   };
 
   const submitNewSecondReplyItem = async (
@@ -791,21 +791,25 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 ) : (
                   <></>
                 )}
-                {secondItemLoading ? (
-                  <Spin />
+                {reply.fullItems != true ? (
+                  secondItemLoading ? (
+                    <Spin />
+                  ) : (
+                    <ShowcaseMoreButtonDiv
+                      onClick={() =>
+                        getMoreSecondItem(
+                          reply.showCaseId,
+                          reply.replyId,
+                          reply.page
+                        )
+                      }
+                    >
+                      <img src={forumMore} />
+                      <p>More</p>
+                    </ShowcaseMoreButtonDiv>
+                  )
                 ) : (
-                  <ShowcaseMoreButtonDiv
-                    onClick={() =>
-                      getMoreSecondItem(
-                        reply.showCaseId,
-                        reply.replyId,
-                        reply.page
-                      )
-                    }
-                  >
-                    <img src={forumMore} />
-                    <p>More</p>
-                  </ShowcaseMoreButtonDiv>
+                  <></>
                 )}
               </div>
             </div>
@@ -867,7 +871,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
   const getMoreItem = async (showCaseId: string, page: number | undefined) => {
     if (page) {
       setItemLoading(true);
-      const showcaseResult = await showCaseReplyGet(showCaseId, page + 1, 1);
+      const showcaseResult = await showCaseReplyGet(showCaseId, page + 1, 6);
 
       //set
       const newShowCase = cloneDeep(showCase);
@@ -876,6 +880,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           showcaseResult.result
         );
       }
+
       setShowCase(newShowCase);
       setShowcasePage(page + 1);
 
@@ -907,6 +912,15 @@ const ShowcaseMangaOne = (): JSX.Element => {
         ].secondReplies?.concat(showcaseResult.result);
         const secondPage = newShowCase.replies[secondIndex].page;
         newShowCase.replies[secondIndex].page = secondPage ? secondPage + 1 : 1;
+        (newShowCase.replies as ShowCaseReply[])[secondIndex].fullItems =
+          showcaseResult.count <=
+          (
+            (newShowCase.replies as ShowCaseReply[])[secondIndex]
+              .secondReplies as ShowSecondCaseReply[]
+          ).length
+            ? true
+            : false;
+
         setShowCase(newShowCase);
         setUpdate(update + 1);
       }
@@ -1244,44 +1258,46 @@ const ShowcaseMangaOne = (): JSX.Element => {
             {getEpisodesPage(episodePage)}
           </ShowMangaButtons>
           {loginUser && loginUser?._id == manga?.userId ? (
-            <EpisodesEditDiv>
-              <img
-                onClick={() => {
-                  console.log("edit");
-                }}
-                src={`${editIcon}`}
+            <>
+              <EpisodesEditDiv>
+                <img
+                  onClick={() => {
+                    console.log("edit");
+                  }}
+                  src={`${editIcon}`}
+                />
+                <p>Edit</p>
+                <h6
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setEditShowCaseManga(!editShowCaseManga);
+                  }}
+                >
+                  Cover Info
+                </h6>
+                <h6>|</h6>
+                <h6
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setEditEpisodesManga(!editEpisode);
+                  }}
+                >
+                  Episodes
+                </h6>
+              </EpisodesEditDiv>
+              <DeleteWrapperDiv
+                element={
+                  <EpisodesDeleteDiv>
+                    <img src={`${editIcon}`} />
+                    <p>Delete the whole series</p>
+                  </EpisodesDeleteDiv>
+                }
+                deleteFn={() => deleteMange()}
               />
-              <p>Edit</p>
-              <h6
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setEditShowCaseManga(!editShowCaseManga);
-                }}
-              >
-                Cover Info
-              </h6>
-              <h6>|</h6>
-              <h6
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setEditEpisodesManga(!editEpisode);
-                }}
-              >
-                Episodes
-              </h6>
-            </EpisodesEditDiv>
+            </>
           ) : (
             <></>
           )}
-          <DeleteWrapperDiv
-            element={
-              <EpisodesDeleteDiv>
-                <img src={`${editIcon}`} />
-                <p>Delete the whole series</p>
-              </EpisodesDeleteDiv>
-            }
-            deleteFn={() => deleteMange()}
-          />
           <EpisodesComments
             onClick={() => {
               setCommentShow(!commentShow);
@@ -1304,17 +1320,21 @@ const ShowcaseMangaOne = (): JSX.Element => {
               ) : (
                 <></>
               )}
-              {itemLoading ? (
-                <Spin />
+              {showCase && showCase.fullItems != true ? (
+                itemLoading ? (
+                  <Spin />
+                ) : (
+                  <ShowcaseMoreButtonDiv
+                    onClick={() =>
+                      getMoreItem(showCase ? showCase._id : "", showcasePage)
+                    }
+                  >
+                    <img src={forumMore} />
+                    <p>More</p>
+                  </ShowcaseMoreButtonDiv>
+                )
               ) : (
-                <ShowcaseMoreButtonDiv
-                  onClick={() =>
-                    getMoreItem(showCase ? showCase._id : "", showcasePage)
-                  }
-                >
-                  <img src={forumMore} />
-                  <p>More</p>
-                </ShowcaseMoreButtonDiv>
+                <></>
               )}
             </>
           ) : (

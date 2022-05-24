@@ -168,8 +168,6 @@ const SignUpPage = (): JSX.Element => {
   };
 
   const submit = async () => {
-    console.log("345");
-    console.log(emailCheck);
     setLoadingAlert(false);
     if (emailCheck !== "") {
       openNotification(
@@ -180,7 +178,6 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
-    console.log("ASf");
     if (vitrifyGenerateCode !== vitrifyCode || vitrifyGenerateCode === "") {
       openNotification(
         "your vitrify code is wrong",
@@ -190,7 +187,6 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
-    console.log("ASf");
     if (
       password !== confirmPassword ||
       password.trim() == "" ||
@@ -204,7 +200,6 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
-    console.log("ASf");
     if (email.trim() == "") {
       openNotification(
         "please input email",
@@ -214,7 +209,6 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
-    console.log("ASf");
     if (firstName.trim() == "") {
       openNotification(
         "please input first name",
@@ -224,7 +218,6 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
-    console.log("ASf");
     if (lastName.trim() == "") {
       openNotification(
         "please input first name",
@@ -234,7 +227,6 @@ const SignUpPage = (): JSX.Element => {
       setLoadingAlert(true);
       return;
     }
-    console.log("ASf");
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
