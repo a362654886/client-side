@@ -298,17 +298,14 @@ const AnimeOneForum = ({
     });
     if (loginUser) {
       const length = forums[index].items ? forums[index].items?.length : 0;
+      const id = `${
+        length && length > 0
+          ? (forums[index].items as ForumItem[])[0]._id + new Date().valueOf()
+          : forums[index]._id + new Date().valueOf()
+      }`;
       const forumItem: ForumItem = {
-        _id: `${
-          length && length > 0
-            ? (forums[index].items as ForumItem[])[0]._id + new Date().valueOf()
-            : forums[index]._id + new Date().valueOf()
-        }`,
-        forumItemId: `${
-          length && length > 0
-            ? (forums[index].items as ForumItem[])[0]._id + new Date().valueOf()
-            : forums[index]._id + new Date().valueOf()
-        }`,
+        _id: id,
+        forumItemId: id,
         text: newItemHtml[index],
         forumId: forums[index]._id,
         uploadTime: new Date(),
@@ -351,25 +348,18 @@ const AnimeOneForum = ({
         .secondItems;
       const iniId = (forums[index].items as ForumItem[])[secondIndex]
         .forumItemId;
+      const id = `${
+        forums[index].items
+          ? secondItems
+            ? secondItems.length > 0
+              ? secondItems[0]._id + new Date().valueOf()
+              : iniId + new Date().valueOf()
+            : iniId + new Date().valueOf()
+          : iniId + new Date().valueOf()
+      }`;
       const secondForumItem: ForumSecondItem = {
-        _id: `${
-          forums[index].items
-            ? secondItems
-              ? secondItems.length > 0
-                ? secondItems[0]._id + new Date().valueOf()
-                : iniId + new Date().valueOf()
-              : iniId + new Date().valueOf()
-            : iniId + new Date().valueOf()
-        }`,
-        forumSecondItemId: `${
-          forums[index].items
-            ? secondItems
-              ? secondItems.length > 0
-                ? secondItems[0]._id + new Date().valueOf()
-                : iniId + new Date().valueOf()
-              : iniId + new Date().valueOf()
-            : iniId + new Date().valueOf()
-        }`,
+        _id: id,
+        forumSecondItemId: id,
         forumItemId: (forums[index].items as ForumItem[])[secondIndex]._id,
         text: newSecondItemHtml[index][secondIndex],
         forumId: forums[index]._id,
@@ -753,6 +743,8 @@ const AnimeOneForum = ({
       type: LOADING_OPEN,
     });
     const newForums = forums;
+    console.log(newForums);
+    console.log((forums[index].items as ForumItem[])[secondIndex]._id);
     const id = (forums[index].items as ForumItem[])[secondIndex]._id;
     const r = await forumItemDelete(id);
     const deleteIndex = (newForums[index].items as ForumItem[])

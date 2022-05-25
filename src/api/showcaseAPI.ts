@@ -168,13 +168,9 @@ export const showCaseFollowAllGetByArr = async (
 };
 //update
 
-export const showCaseUpdate = async (showcaseBody: {
-  _id: string;
-  text: string;
-  source: string;
-  tags: TagType[];
-  imageArr: string[];
-}): Promise<number | null> => {
+export const showCaseUpdate = async (
+  showcaseBody: any
+): Promise<number | null> => {
   const endpoint = basicURL + "showCaseUpdate";
   return Axios.put(endpoint, { showCase: showcaseBody })
     .then((response) => {

@@ -1163,6 +1163,8 @@ const ShowcaseMangaOne = (): JSX.Element => {
     }
   };
 
+  const toPage = (url: string) => history.push(url);
+
   return (
     <>
       <ShowCaseTitleDiv>
@@ -1187,10 +1189,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               backGroundColor="white"
               borderColor="#4BA3C3"
               buttonClick={() => {
-                history.push({
-                  pathname: "/showcase/showCollection?page=1",
-                  state: `Collections`,
-                });
+                toPage("/showcase/showCollection?page=1");
               }}
             />
             <AnimeButton
@@ -1202,10 +1201,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               backGroundColor="white"
               borderColor="#4BA3C3"
               buttonClick={() => {
-                history.push({
-                  pathname: "/showcase/showIllustrations?page=1",
-                  state: `Illustrations`,
-                });
+                toPage("/showcase/showIllustrations?page=1");
               }}
             />
             <AnimeButton
@@ -1270,7 +1266,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 <h6
                   style={{ cursor: "pointer" }}
                   onClick={() => {
-                    setEditShowCaseManga(!editShowCaseManga);
+                   toPage(`/showcase/mangaUpdate/${manga._id}`)
                   }}
                 >
                   Cover Info

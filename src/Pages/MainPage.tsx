@@ -426,7 +426,12 @@ const MainPage = (): JSX.Element => {
           ) : (
             <>
               <HeaderMobileHeader>
-                <HeaderMobileImg src={LOGOMobile} />
+                <HeaderMobileImg
+                  onClick={() => {
+                    toProfile("/home");
+                  }}
+                  src={LOGOMobile}
+                />
                 {getProfile()}
                 <div
                   onClick={() => setMobileMenu(!mobileMenu)}

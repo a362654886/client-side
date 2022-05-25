@@ -78,6 +78,7 @@ const ShowcaseShowCollection = (): JSX.Element => {
 
   useEffect(() => {
     const { search } = history.location;
+    console.log(search)
     const propPage = getShowCasePage(search);
     setPageNum(parseInt(propPage));
     SetIniState(true);
