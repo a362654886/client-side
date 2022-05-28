@@ -99,7 +99,6 @@ export const HomeNewsBodyDiv = styled.div`
 export const HomePageAnimeDiv = styled.div`
   margin-top: 40px;
   text-align: center;
-  min-height: 630px;
   h1 {
     color: #f5a623;
     font-size: 36px;
@@ -325,7 +324,7 @@ export const MarketContextDiv = styled.div`
 
 export const MarketHomeBox = styled.div`
   width: 240px !important;
-  height: 360px;
+  height: auto;
   margin-right: 60px;
   padding: 0px;
   cursor: pointer;
@@ -347,10 +346,12 @@ export const MarketHomeBox = styled.div`
     margin-bottom: 0px;
     font-size: 16px;
     line-height: 32px;
+    height: auto;
     margin-top: 0px;
     word-break: break-all;
     background-color: white;
     padding-left: 8px;
+    overflow: hidden;
   }
 `;
 

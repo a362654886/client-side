@@ -248,6 +248,32 @@ export const showCaseDelete = async (_id: string): Promise<number | null> => {
     });
 };
 
+export const showCaseReplyDelete = async (
+  _id: string
+): Promise<number | null> => {
+  const endpoint = basicURL + `showCaseReplyDelete?id=${_id}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const showCaseSecondReplyDelete = async (
+  _id: string
+): Promise<number | null> => {
+  const endpoint = basicURL + `showCaseSecondReplyDelete?id=${_id}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const showCaseMangaDelete = async (
   _id: string
 ): Promise<number | null> => {

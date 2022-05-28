@@ -316,6 +316,7 @@ const AnimeOneForum = ({
           .toUpperCase()}`,
         userCountry: `${loginUser.country}`,
         anime: chooseAnime?._id as string,
+        fullItems: true,
       };
       const r = await forumItemAdd(forumItem);
       if (r && r < 300) {
@@ -375,7 +376,17 @@ const AnimeOneForum = ({
       const r = await forumSecondItemAdd(secondForumItem);
       if (r && r < 300) {
         addForumSecondItemToForum(secondForumItem, index, secondIndex);
-        setNewSecondItemHtml([]);
+        const newArr: string[][] = [[]];
+        for (let k = 0; k < forums.length; k++) {
+          newArr.push([]);
+          const l = forums[k].items;
+          if (l) {
+            for (let j = 0; j < l.length; j++) {
+              newArr[k].push("");
+            }
+          }
+        }
+        setNewSecondItemHtml(newArr);
       }
     } else {
       openNotification(
@@ -486,13 +497,7 @@ const AnimeOneForum = ({
     <div style={{ marginTop: "16px", width: "" }}>
       <TextInput style={{}}>
         <FullTextEditor
-          html={
-            newSecondItemHtml[index]
-              ? newSecondItemHtml[index][secondIndex]
-                ? newSecondItemHtml[index][secondIndex]
-                : ""
-              : ""
-          }
+          html={""}
           setFullText={(e) => {
             IfLoginCheck(loginUser)
               ? sendNewSecondItem(e, index, secondIndex)
@@ -743,8 +748,6 @@ const AnimeOneForum = ({
       type: LOADING_OPEN,
     });
     const newForums = forums;
-    console.log(newForums);
-    console.log((forums[index].items as ForumItem[])[secondIndex]._id);
     const id = (forums[index].items as ForumItem[])[secondIndex]._id;
     const r = await forumItemDelete(id);
     const deleteIndex = (newForums[index].items as ForumItem[])
@@ -871,7 +874,7 @@ const AnimeOneForum = ({
               <DeleteWrapperDiv
                 element={
                   <>
-                    <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                    <img style={{ width: "24px" }} src={`${deleteIcon}`} />
                     <p>Delete</p>
                   </>
                 }
@@ -1002,7 +1005,7 @@ const AnimeOneForum = ({
                   <DeleteWrapperDiv
                     element={
                       <>
-                        <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                        <img style={{ width: "24px" }} src={`${deleteIcon}`} />
                         <p>Delete</p>
                       </>
                     }
@@ -1156,30 +1159,41 @@ const AnimeOneForum = ({
                       }}
                       dangerouslySetInnerHTML={{ __html: forum.text }}
                     ></ReactQuillCss>
-                    <AnimeEditAndDeleteDiv>
-                      <div
-                        onClick={() =>
-                          editSecondForumItem(index, secondIndex, thirdIndex)
-                        }
-                      >
-                        <img src={`${editIcon}`} />
-                        <p>Edit</p>
-                      </div>
-                      <DeleteWrapperDiv
-                        element={
-                          <>
-                            <img
-                              style={{ width: "20px" }}
-                              src={`${deleteIcon}`}
-                            />
-                            <p>Delete</p>
-                          </>
-                        }
-                        deleteFn={async () =>
-                          await deleteSecondItem(index, secondIndex, thirdIndex)
-                        }
-                      />
-                    </AnimeEditAndDeleteDiv>
+                    {(
+                      (forums[index].items as ForumItem[])[secondIndex]
+                        .secondItems as ForumSecondItem[]
+                    )[thirdIndex].userId == loginUser?._id ? (
+                      <AnimeEditAndDeleteDiv>
+                        <div
+                          onClick={() =>
+                            editSecondForumItem(index, secondIndex, thirdIndex)
+                          }
+                        >
+                          <img src={`${editIcon}`} />
+                          <p>Edit</p>
+                        </div>
+                        <DeleteWrapperDiv
+                          element={
+                            <>
+                              <img
+                                style={{ width: "24px" }}
+                                src={`${deleteIcon}`}
+                              />
+                              <p>Delete</p>
+                            </>
+                          }
+                          deleteFn={async () =>
+                            await deleteSecondItem(
+                              index,
+                              secondIndex,
+                              thirdIndex
+                            )
+                          }
+                        />
+                      </AnimeEditAndDeleteDiv>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 )}
                 <ReplyButton>

@@ -271,9 +271,7 @@ const ShowcaseShowManga = (): JSX.Element => {
             toMangaOne={(index) => toManga(index)}
           />
         )}
-        {allShowCases.length +
-          (parseInt(getShowCasePage(history.location.search)) - 1) * pageSize <
-        count ? (
+        {allShowCases.length < count ? (
           <MoreButtonDiv onClick={() => getMore()}>
             <div>
               <img src={`${getMoreImg}`} />

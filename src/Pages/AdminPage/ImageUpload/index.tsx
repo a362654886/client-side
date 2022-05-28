@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import add from "../../../files/Add.svg";
 import { AvatarUploadText } from "../../../cssJs/AdminPage/adminSysSettingCss";
+import { NotificationColor, NotificationTitle, openNotification } from "../../../helperFns/popUpAlert";
 
 type ImageCheck = {
   width: number;
@@ -59,12 +60,20 @@ const ImageUpload = ({
     }
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
-      console.log("You can only upload JPG/PNG file!");
+      openNotification(
+        "You can only upload JPG/PNG file!",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
       return false;
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
+    const isLt2M = file.size / 1024 / 1024 < 10;
     if (!isLt2M) {
-      console.log("Image must smaller than 2MB!");
+      openNotification(
+        "Image must smaller than 2MB!",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
       return false;
     }
     return true;

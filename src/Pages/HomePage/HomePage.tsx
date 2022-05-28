@@ -566,12 +566,16 @@ const HomePage = (): JSX.Element => {
           <>
             <MarketPlaceTitle>
               <h2>Marketplace</h2>
-              <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
-                <img src={moreRightImg} />
-                <p>View All</p>
-              </MarketPlaceMore>
             </MarketPlaceTitle>
             <MarketContextDiv>{getMarketsDiv()}</MarketContextDiv>
+            <CenterDiv>
+              <MiddleBiggerDiv>
+                <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
+                  <img src={moreRightImg} />
+                  <p>View All</p>
+                </MarketPlaceMore>
+              </MiddleBiggerDiv>
+            </CenterDiv>
           </>
         ) : (
           <>
@@ -597,12 +601,16 @@ const HomePage = (): JSX.Element => {
           <>
             <MarketPlaceTitle>
               <h2>Anime Products</h2>
-              <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
-                <img src={moreRightImg} />
-                <p>View All</p>
-              </MarketPlaceMore>
             </MarketPlaceTitle>
             <ProductContextDiv>{getProductDiv()}</ProductContextDiv>
+            <CenterDiv>
+              <MiddleBiggerDiv>
+                <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
+                  <img src={moreRightImg} />
+                  <p>View All</p>
+                </MarketPlaceMore>
+              </MiddleBiggerDiv>
+            </CenterDiv>
           </>
         ) : (
           <>

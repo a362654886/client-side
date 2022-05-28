@@ -51,7 +51,7 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
   const [iniState, SetIniState] = useState<boolean>(true);
   const [allLoading, SetAllLoading] = useState<boolean>(false);
 
-  const pageSize = 3;
+  const pageSize = 6;
 
   const buttonsColor = [
     {
@@ -271,9 +271,8 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
             <ShowcaseForum showcases={allShowCases} editLink={true} />
           </>
         )}
-        {allShowCases.length +
-          (parseInt(getShowCasePage(history.location.search)) - 1) * pageSize <
-        count ? (
+        
+        {allShowCases.length < count ? (
           <MoreButtonDiv onClick={() => getMore()}>
             <div>
               <img src={`${getMoreImg}`} />

@@ -53,6 +53,7 @@ export type ShowSecondCaseReply = {
   edit?: boolean;
   page?: number;
   fullItems?: boolean;
+  reply?:boolean
 };
 
 export enum ShowCaseEnum {

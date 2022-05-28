@@ -68,7 +68,7 @@ export const MarketBodyDiv = styled.div`
 `;
 
 export const MarketBorder = styled.div`
-  height: 68px;
+  height: 54px;
   display: flex;
   margin-top: 32px;
   div {
@@ -211,8 +211,10 @@ export const MarketBox = styled.div`
     margin-bottom: 0px;
     font-size: 16px;
     line-height: 32px;
+    height: 32px;
     margin-top: 0px;
     word-break: break-all;
+    overflow: hidden;
   }
 `;
 

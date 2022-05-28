@@ -54,6 +54,7 @@ export const ForumName = styled.p`
   font-weight: bold;
   line-height: 32px;
   margin-left: 8px;
+  margin-right: 8px;
   font-size: 14px;
   width: auto;
   margin-top: 20px;

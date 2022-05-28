@@ -52,7 +52,7 @@ const ShowcaseShowCollection = (): JSX.Element => {
   const [iniState, SetIniState] = useState<boolean>(true);
   const [allLoading, SetAllLoading] = useState<boolean>(false);
 
-  const pageSize = 3;
+  const pageSize = 6;
 
   const buttonsColor = [
     {
@@ -78,7 +78,6 @@ const ShowcaseShowCollection = (): JSX.Element => {
 
   useEffect(() => {
     const { search } = history.location;
-    console.log(search)
     const propPage = getShowCasePage(search);
     setPageNum(parseInt(propPage));
     SetIniState(true);
@@ -270,9 +269,7 @@ const ShowcaseShowCollection = (): JSX.Element => {
         ) : (
           <ShowcaseForum showcases={allShowCases} editLink={true} />
         )}
-        {allShowCases.length +
-          (parseInt(getShowCasePage(history.location.search)) - 1) * pageSize <
-        count ? (
+        {allShowCases.length < count ? (
           <MoreButtonDiv onClick={() => getMore()}>
             <div>
               <img src={`${getMoreImg}`} />

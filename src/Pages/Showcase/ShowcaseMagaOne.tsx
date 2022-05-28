@@ -5,9 +5,11 @@ import {
   showCaseMangaDelete,
   showCaseOneMangaGet,
   showCaseReplyAdd,
+  showCaseReplyDelete,
   showCaseReplyGet,
   showCaseReplyUpdate,
   showCaseSecondReplyAdd,
+  showCaseSecondReplyDelete,
   showCaseSecondReplyGet,
   showCaseSecondReplyUpdate,
 } from "../../api/showcaseAPI";
@@ -22,6 +24,7 @@ import {
   EpisodesText,
   ReplyAddDiv,
   ReplyBox,
+  ReplyDiv,
   ReplySecondBox,
   ShowAvatarDiv,
   ShowCaseDiv,
@@ -67,7 +70,10 @@ import { useHistory, useParams } from "react-router-dom";
 import { AnimeButtonsDiv } from "../../cssJs/AnimePage/AnimeOneCss";
 import { episodeGet } from "../../api/episodeAPI";
 import { Button, Modal, Spin } from "antd";
-import { TextInput } from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
+import {
+  AnimeEditAndDeleteDiv,
+  TextInput,
+} from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import TextArea from "antd/lib/input/TextArea";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
@@ -93,6 +99,7 @@ import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
 import { cloneDeep } from "lodash";
 import forumMore from "../../files/forumMore.png";
 import { ReportContextType } from "../../types/blockType";
+import { LoadingBox } from "../../cssJs/headerCss";
 
 interface Para {
   id: string;
@@ -145,14 +152,27 @@ const ShowcaseMangaOne = (): JSX.Element => {
     })();
   }, []);
 
-  useEffect(() => {
+  /*useEffect(() => {
     (async function anyNameFunction() {
       await getEpisode();
     })();
-  }, [showCase]);
+  }, [showCase]);*/
 
   useEffect(() => {
     setShowCase(manga);
+    (async function anyNameFunction() {
+      await getEpisode();
+    })();
+    if (showCase) {
+      const newArr: string[] = [];
+      const l = showCase.replies;
+      if (l) {
+        for (let j = 0; j < l.length; j++) {
+          newArr.push("");
+        }
+      }
+      setNewSecondReplyHtml(newArr);
+    }
   }, [manga]);
 
   useEffect(() => {
@@ -161,10 +181,18 @@ const ShowcaseMangaOne = (): JSX.Element => {
   }, [episodeNum, loading, newReplyHtml, newSecondReplyHtml]);
 
   const getManga = async (id: string) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     const manga = await showCaseOneMangaGet(id);
     dispatch({
       payload: manga,
       type: SHOWCASE_MANGA_ADD,
+    });
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
     });
   };
 
@@ -455,44 +483,63 @@ const ShowcaseMangaOne = (): JSX.Element => {
   };
 
   const getEpisodesPage = (page: number) => {
-    return Array.from({ length: 2 }, (v, k) => k).map((n, index) => {
-      const pageNum = page * 2 + index + 1;
-      if (pageNum <= episodeNum) {
-        return (
-          <>
-            <EpisodesGeneralButton
-              key={index}
+    if (page == 0 && episodeNum == 0) {
+      return (
+        <>
+          {loginUser ? (
+            <EpisodesAddButton
               onClick={() => {
-                history.push({
-                  pathname: "/episodeShow",
-                  state: `${manga?._id}Episode${index + 1}`,
-                });
+                history.push("/showcase/episodeAdd");
               }}
             >
-              <p>{`${pageNum}`}</p>
-            </EpisodesGeneralButton>
-            {`${pageNum}` == episodeNum.toString() ? (
-              <>
-                {loginUser ? (
-                  <EpisodesAddButton
-                    onClick={() => {
-                      history.push("/showcase/episodeAdd");
-                    }}
-                  >
-                    <img src={`${add}`} />
-                    <p>Add</p>
-                  </EpisodesAddButton>
-                ) : (
-                  <></>
-                )}
-              </>
-            ) : (
-              <></>
-            )}
-          </>
-        );
-      }
-    });
+              <img src={`${add}`} />
+              <p>Add</p>
+            </EpisodesAddButton>
+          ) : (
+            <></>
+          )}
+        </>
+      );
+    } else {
+      return Array.from({ length: 2 }, (v, k) => k).map((n, index) => {
+        const pageNum = page * 2 + index + 1;
+        if (pageNum <= episodeNum) {
+          return (
+            <>
+              <EpisodesGeneralButton
+                key={index}
+                onClick={() => {
+                  history.push({
+                    pathname: "/episodeShow",
+                    state: `${manga?._id}Episode${index + 1}`,
+                  });
+                }}
+              >
+                <p>{`${pageNum}`}</p>
+              </EpisodesGeneralButton>
+              {`${pageNum}` == episodeNum.toString() ? (
+                <>
+                  {loginUser ? (
+                    <EpisodesAddButton
+                      onClick={() => {
+                        history.push("/showcase/episodeAdd");
+                      }}
+                    >
+                      <img src={`${add}`} />
+                      <p>Add</p>
+                    </EpisodesAddButton>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+            </>
+          );
+        }
+      });
+    }
   };
 
   //forums
@@ -564,9 +611,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
   };
 
   const sendNewSecondReply = (e: string, secondIndex: number) => {
-    const newSecondReplyHtmls = newSecondReplyHtml;
+    const newSecondReplyHtmls = cloneDeep(newSecondReplyHtml);
     newSecondReplyHtmls[secondIndex] = e;
-    //setNewSecondReplyHtml(newSecondReplyHtmls);
+    setNewSecondReplyHtml(newSecondReplyHtmls);
   };
 
   const submitNewSecondReplyItem = async (
@@ -578,10 +625,11 @@ const ShowcaseMangaOne = (): JSX.Element => {
       type: LOADING_OPEN,
     });
     if (loginUser) {
-      console.log(showcase);
       const secondShowcase: ShowSecondCaseReply = {
         _id: `${showcase._id}${
-          showcase.secondReplies ? showcase.secondReplies.length + 1 : 1
+          showcase.secondReplies
+            ? showcase.secondReplies.length + +new Date().valueOf()
+            : +new Date().valueOf()
         }`,
         replyId: showcase.replyId,
         showCaseId: showcase.showCaseId,
@@ -595,7 +643,6 @@ const ShowcaseMangaOne = (): JSX.Element => {
       };
       const r = await showCaseSecondReplyAdd(secondShowcase);
       if (r && r < 300) {
-        console.log("23");
         addSecondShowcaseToState(secondShowcase, secondIndex);
         const newSecondItems = cloneDeep(newSecondReplyHtml);
         newSecondItems[secondIndex] = "";
@@ -622,13 +669,44 @@ const ShowcaseMangaOne = (): JSX.Element => {
     if (_showCase && _showCase.replies) {
       const replies = _showCase.replies;
       if (replies[secondIndex].secondReplies) {
-        replies[secondIndex].secondReplies?.push(showcaseReply);
+        replies[secondIndex].secondReplies?.unshift(showcaseReply);
       } else {
         replies[secondIndex].secondReplies = [];
-        replies[secondIndex].secondReplies?.push(showcaseReply);
+        replies[secondIndex].secondReplies?.unshift(showcaseReply);
       }
       _showCase.replies = replies;
       setShowCase(_showCase);
+    }
+  };
+
+  //delete
+  const deleteShowcaseReply = async (id: string, index: number) => {
+    const newShowcase = cloneDeep(showCase);
+    if (newShowcase) {
+      const deleteIndex = (newShowcase.replies as ShowCaseReply[])
+        .map((x) => x.replyId)
+        .indexOf(id);
+      (newShowcase.replies as ShowCaseReply[]).splice(deleteIndex, 1);
+      setShowCase(newShowcase);
+      await showCaseReplyDelete(id);
+    }
+  };
+
+  const deleteShowcaseSecondReply = async (id: string, index: number) => {
+    const newShowcase = cloneDeep(showCase);
+    if (newShowcase) {
+      const deleteIndex = (
+        (newShowcase.replies as ShowCaseReply[])[index]
+          .secondReplies as ShowSecondCaseReply[]
+      )
+        .map((x) => x.replyId)
+        .indexOf(id);
+      (
+        (newShowcase.replies as ShowCaseReply[])[index]
+          .secondReplies as ShowSecondCaseReply[]
+      ).splice(deleteIndex, 1);
+      setShowCase(newShowcase);
+      await showCaseSecondReplyDelete(id);
     }
   };
 
@@ -739,39 +817,51 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 <></>
               ) : (
                 <EditAndDeleteDiv>
-                  <img
-                    onClick={() => editShowcaseReply(secondIndex)}
-                    src={`${editIcon}`}
+                  <AnimeEditAndDeleteDiv style={{ height: "32px" }}>
+                    <img
+                      style={{ width: "24px" }}
+                      onClick={() => editShowcaseReply(secondIndex)}
+                      src={`${editIcon}`}
+                    />
+                    <p
+                      style={{ cursor: "pointer", height: "32px" }}
+                      onClick={() => editShowcaseReply(secondIndex)}
+                    >
+                      Edit
+                    </p>
+                  </AnimeEditAndDeleteDiv>
+                  <DeleteWrapperDiv
+                    element={
+                      <AnimeEditAndDeleteDiv style={{ height: "32px" }}>
+                        <img style={{ width: "24px" }} src={`${deleteIcon}`} />
+                        <p style={{ cursor: "pointer", height: "32px" }}>
+                          Delete
+                        </p>
+                      </AnimeEditAndDeleteDiv>
+                    }
+                    deleteFn={() => deleteShowcaseReply(reply._id, secondIndex)}
                   />
-                  <p
-                    style={{ cursor: "pointer" }}
-                    onClick={() => editShowcaseReply(secondIndex)}
-                  >
-                    Edit
-                  </p>
-                  <img
-                    style={{ width: "20px" }}
-                    onClick={() => {
-                      console.log("deleteIcon");
-                    }}
-                    src={`${deleteIcon}`}
-                  />
-                  <p>Delete</p>
                 </EditAndDeleteDiv>
               )}
-              <EpisodesComments
+              <ReplyDiv
                 onClick={() => {
                   openSecondReply(secondIndex);
                 }}
               >
-                <h6>{`Replies(${
-                  reply.secondReplies ? reply.secondReplies.length : 0
-                })`}</h6>
-                <img
-                  style={{ height: "20px", width: "20px" }}
-                  src={`${switchIcon}`}
+                <AnimeButton
+                  para=""
+                  text={`Replies(${
+                    reply.secondReplies ? reply.secondReplies.length : 0
+                  })`}
+                  width="81px"
+                  height="22px"
+                  textColor="#4BA3C3"
+                  backGroundColor="white"
+                  borderColor="white"
+                  buttonClick={() => console.log("")}
                 />
-              </EpisodesComments>
+                <img src={`${switchIcon}`} />
+              </ReplyDiv>
               <div
                 style={{
                   display: reply.showReplay == true ? "inline" : "none",
@@ -819,6 +909,29 @@ const ShowcaseMangaOne = (): JSX.Element => {
     });
   };
 
+  const replySecondReply = (
+    name: string,
+    secondIndex: number,
+    thirdIndex: number
+  ) => {
+    const _newSecondReplyHtml = cloneDeep(newSecondReplyHtml);
+    _newSecondReplyHtml[secondIndex] = `@${name} `;
+
+    const _showcase = cloneDeep(showCase);
+    (
+      ((_showcase as ShowCaseType).replies as ShowCaseReply[])[secondIndex]
+        .secondReplies as ShowSecondCaseReply[]
+    )[thirdIndex].reply = !(
+      ((_showcase as ShowCaseType).replies as ShowCaseReply[])[secondIndex]
+        .secondReplies as ShowSecondCaseReply[]
+    )[thirdIndex].reply;
+
+    setShowCase(_showcase);
+    setNewSecondReplyHtml(_newSecondReplyHtml);
+
+    setUpdate(update + 1);
+  };
+
   const submitNewShowcaseReply = async () => {
     dispatch({
       payload: LoadingType.OPEN,
@@ -841,6 +954,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           .substring(0, 1)
           .toUpperCase()}`,
         userCountry: loginUser.country,
+        fullItems: true,
       };
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
@@ -1043,40 +1157,43 @@ const ShowcaseMangaOne = (): JSX.Element => {
                   <></>
                 ) : (
                   <EditAndDeleteDiv>
-                    <img
-                      onClick={() =>
-                        editShowcaseSecondReply(secondIndex, thirdIndex)
+                    <AnimeEditAndDeleteDiv style={{ height: "32px" }}>
+                      <img
+                        onClick={() =>
+                          editShowcaseSecondReply(secondIndex, thirdIndex)
+                        }
+                        src={`${editIcon}`}
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      />
+                      <p
+                        onClick={() =>
+                          editShowcaseSecondReply(secondIndex, thirdIndex)
+                        }
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      >
+                        Edit
+                      </p>
+                    </AnimeEditAndDeleteDiv>
+                    <DeleteWrapperDiv
+                      element={
+                        <AnimeEditAndDeleteDiv style={{ height: "32px" }}>
+                          <img
+                            style={{ width: "24px" }}
+                            src={`${deleteIcon}`}
+                          />
+                          <p style={{ cursor: "pointer", height: "32px" }}>
+                            Delete
+                          </p>
+                        </AnimeEditAndDeleteDiv>
                       }
-                      src={`${editIcon}`}
-                      style={{
-                        cursor: "pointer",
-                      }}
-                    />
-                    <p
-                      onClick={() =>
-                        editShowcaseSecondReply(secondIndex, thirdIndex)
+                      deleteFn={() =>
+                        deleteShowcaseSecondReply(showcaseSecondReply._id, secondIndex)
                       }
-                      style={{
-                        cursor: "pointer",
-                      }}
-                    >
-                      Edit
-                    </p>
-                    <img
-                      style={{ width: "20px", cursor: "pointer" }}
-                      onClick={() => {
-                        console.log("deleteIcon");
-                      }}
-                      src={`${deleteIcon}`}
                     />
-                    <p
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        console.log("deleteIcon");
-                      }}
-                    >
-                      Delete
-                    </p>
                   </EditAndDeleteDiv>
                 )}
                 <ReplyAddDiv>
@@ -1088,9 +1205,51 @@ const ShowcaseMangaOne = (): JSX.Element => {
                     textColor="#4BA3C3"
                     backGroundColor="white"
                     borderColor="white"
-                    buttonClick={() => console.log("reply")}
+                    buttonClick={() =>
+                      replySecondReply(
+                        showcaseSecondReply.userName,
+                        secondIndex,
+                        thirdIndex
+                      )
+                    }
                   />
                 </ReplyAddDiv>
+                {showcaseSecondReply.reply ? (
+                  <>
+                    <TextArea
+                      value={
+                        newSecondReplyHtml[secondIndex]
+                          ? newSecondReplyHtml[secondIndex]
+                          : ""
+                      }
+                      onChange={(e) => {
+                        IfLoginCheck(loginUser)
+                          ? sendNewSecondReply(e.target.value, secondIndex)
+                          : "";
+                      }}
+                    />
+                    <br />
+                    <ReplyAddDiv>
+                      <AnimeButton
+                        para=""
+                        text={"Post"}
+                        width="100%"
+                        height="32px"
+                        textColor="white"
+                        backGroundColor="#FFC300"
+                        borderColor="#FFC300"
+                        buttonClick={() =>
+                          submitNewSecondReplyItem(
+                            showcaseSecondReply,
+                            secondIndex
+                          )
+                        }
+                      />
+                    </ReplyAddDiv>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </ReplySecondBox>
           </>
@@ -1266,7 +1425,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 <h6
                   style={{ cursor: "pointer" }}
                   onClick={() => {
-                   toPage(`/showcase/mangaUpdate/${manga._id}`)
+                    toPage(`/showcase/mangaUpdate/${manga._id}`);
                   }}
                 >
                   Cover Info

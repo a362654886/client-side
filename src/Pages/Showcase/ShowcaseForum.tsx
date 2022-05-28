@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import {
   showCaseDelete,
   showCaseReplyAdd,
+  showCaseReplyDelete,
   showCaseReplyGet,
   showCaseReplyUpdate,
   showCaseSecondReplyAdd,
+  showCaseSecondReplyDelete,
   showCaseSecondReplyGet,
   showCaseSecondReplyUpdate,
   showCaseUpdate,
@@ -61,7 +63,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { ReactQuillCss } from "../../cssJs/fullTextEditor";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
-import TextArea from "antd/lib/input/TextArea";
 import { Button, Input, Spin } from "antd";
 import arrows from "../../files/arrows.svg";
 import forumMore from "../../files/forumMore.png";
@@ -84,6 +85,7 @@ import ImageUpload, { ImageBody } from "../../components/ImageUpload";
 import { formatName } from "../../helperFns/nameFn";
 import { openNewWindow } from "../../helperFns/windowsFn";
 import { ReportContextType } from "../../types/blockType";
+import TextArea from "antd/lib/input/TextArea";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -111,17 +113,27 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
   const [itemLoading, setItemLoading] = useState<boolean>(false);
   const [secondItemLoading, setSecondItemLoading] = useState<boolean>(false);
 
-  const pageSize = 3;
+  const pageSize = 6;
 
   useEffect(() => {
-    console.log(showcases);
     setAllShowCases(showcases);
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
+    const newArr: string[][] = [[]];
+    for (let k = 0; k < showcases.length; k++) {
+      newArr.push([]);
+      const l = showcases[k].replies;
+      if (l) {
+        for (let j = 0; j < l.length; j++) {
+          newArr[k].push("");
+        }
+      }
+    }
+    setNewSecondReplyHtml(newArr);
   }, [showcases]);
 
   useEffect(() => {
-    //console.log(forums);
-  }, [update, allShowCases]);
+    //console.log(newSecondReplyHtml);
+  }, [update, allShowCases, newSecondReplyHtml, newReplyHtml]);
 
   useEffect(() => {
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
@@ -220,7 +232,7 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
     index: number,
     secondIndex: number
   ) => {
-    const newSecondReplyHtmls = newSecondReplyHtml;
+    const newSecondReplyHtmls = cloneDeep(newSecondReplyHtml);
     newSecondReplyHtmls[index][secondIndex] = e;
     setNewSecondReplyHtml(newSecondReplyHtmls);
     setUpdate(update + 1);
@@ -255,6 +267,7 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
           .substring(0, 1)
           .toUpperCase()}`,
         userCountry: loginUser.country,
+        fullItems: true,
       };
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
@@ -341,10 +354,10 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
     const replies = showcases[index].replies;
     if (replies) {
       if (replies[secondIndex].secondReplies) {
-        replies[secondIndex].secondReplies?.push(showcaseReply);
+        replies[secondIndex].secondReplies?.unshift(showcaseReply);
       } else {
         replies[secondIndex].secondReplies = [];
-        replies[secondIndex].secondReplies?.push(showcaseReply);
+        replies[secondIndex].secondReplies?.unshift(showcaseReply);
       }
     }
     showcases[index].replies = replies;
@@ -449,6 +462,27 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
       }
     }
     setNewSecondReplyHtml(newArr);
+    setUpdate(update + 1);
+  };
+
+  const replySecondReply = (
+    name: string,
+    index: number,
+    secondIndex: number,
+    thirdIndex: number
+  ) => {
+    newSecondReplyHtml[index][secondIndex] = `@${name} `;
+    setNewSecondReplyHtml(newSecondReplyHtml);
+
+    const newAllShowCase = allShowCases;
+    (
+      (newAllShowCase[index].replies as ShowCaseReply[])[secondIndex]
+        .secondReplies as ShowSecondCaseReply[]
+    )[thirdIndex].reply = !(
+      (newAllShowCase[index].replies as ShowCaseReply[])[secondIndex]
+        .secondReplies as ShowSecondCaseReply[]
+    )[thirdIndex].reply;
+
     setUpdate(update + 1);
   };
 
@@ -743,6 +777,36 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
     await showCaseDelete(id);
   };
 
+  const deleteShowcaseReply = async (id: string, index: number) => {
+    const newAllShowcase = cloneDeep(allShowCases);
+    const deleteIndex = (newAllShowcase[index].replies as ShowCaseReply[])
+      .map((x) => x.replyId)
+      .indexOf(id);
+    (newAllShowcase[index].replies as ShowCaseReply[]).splice(deleteIndex, 1);
+    setAllShowCases(newAllShowcase);
+    await showCaseReplyDelete(id);
+  };
+
+  const deleteShowcaseSecondReply = async (
+    id: string,
+    index: number,
+    secondIndex: number
+  ) => {
+    const newAllShowcase = cloneDeep(allShowCases);
+    const deleteIndex = (
+      (newAllShowcase[index].replies as ShowCaseReply[])[secondIndex]
+        .secondReplies as ShowSecondCaseReply[]
+    )
+      .map((x) => x.replyId)
+      .indexOf(id);
+    (
+      (newAllShowcase[index].replies as ShowCaseReply[])[secondIndex]
+        .secondReplies as ShowSecondCaseReply[]
+    ).splice(deleteIndex, 1);
+    setAllShowCases(newAllShowcase);
+    await showCaseSecondReplyDelete(id);
+  };
+
   const getExistShowcases = () =>
     allShowCases.map((showcase, index) => {
       const date = new Date(parseInt(showcase._id));
@@ -1015,6 +1079,14 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                   </>
                 }
               ></ProfileWrapperDiv>
+              <SettingImg
+                userId={reply.userId}
+                userName={reply.userName}
+                userImg={reply.userAvatar}
+                marginTop="24px"
+                type={ReportContextType.SHOWCASE_REPLY}
+                contextId={reply._id}
+              />
               <ForumTime>{_getDate(date)}</ForumTime>
             </div>
             <div style={{ marginLeft: "40px" }}>
@@ -1061,15 +1133,22 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                       >
                         <img src={`${editIcon}`} />
                         <p>Edit</p>
-                        <img
-                          style={{ width: "20px" }}
-                          onClick={() => {
-                            console.log("deleteIcon");
-                          }}
-                          src={`${deleteIcon}`}
-                        />
-                        <p>Delete</p>
                       </div>
+                      <DeleteWrapperDiv
+                        element={
+                          <AnimeEditAndDeleteDiv>
+                            <img
+                              style={{ width: "20px" }}
+                              onClick={() => {
+                                console.log("deleteIcon");
+                              }}
+                              src={`${deleteIcon}`}
+                            />
+                            <p>Delete</p>
+                          </AnimeEditAndDeleteDiv>
+                        }
+                        deleteFn={() => deleteShowcaseReply(reply._id, index)}
+                      />
                     </ShowcaseEditAndDeleteDiv>
                   ) : (
                     <></>
@@ -1172,6 +1251,14 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                     </>
                   }
                 ></ProfileWrapperDiv>
+                <SettingImg
+                  userId={showcaseSecondReply.userId}
+                  userName={showcaseSecondReply.userName}
+                  userImg={showcaseSecondReply.userAvatar}
+                  marginTop="24px"
+                  type={ReportContextType.SHOWCASE_REPLY}
+                  contextId={showcaseSecondReply._id}
+                />
                 <ForumTime>{_getDate(date)}</ForumTime>
               </div>
               <div style={{ marginLeft: "40px" }}>
@@ -1233,15 +1320,28 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                         >
                           <img src={`${editIcon}`} />
                           <p>Edit</p>
-                          <img
-                            style={{ width: "20px" }}
-                            onClick={() => {
-                              console.log("deleteIcon");
-                            }}
-                            src={`${deleteIcon}`}
-                          />
-                          <p>Delete</p>
                         </div>
+                        <DeleteWrapperDiv
+                          element={
+                            <AnimeEditAndDeleteDiv>
+                              <img
+                                style={{ width: "20px" }}
+                                onClick={() => {
+                                  console.log("deleteIcon");
+                                }}
+                                src={`${deleteIcon}`}
+                              />
+                              <p>Delete</p>
+                            </AnimeEditAndDeleteDiv>
+                          }
+                          deleteFn={() =>
+                            deleteShowcaseSecondReply(
+                              showcaseSecondReply._id,
+                              index,
+                              secondIndex
+                            )
+                          }
+                        />
                       </ShowcaseEditAndDeleteDiv>
                     }
                   </>
@@ -1257,9 +1357,59 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                     textColor="#4BA3C3"
                     backGroundColor="white"
                     borderColor="white"
-                    buttonClick={() => console.log("reply")}
+                    buttonClick={() =>
+                      replySecondReply(
+                        showcaseSecondReply.userName,
+                        index,
+                        secondIndex,
+                        thirdIndex
+                      )
+                    }
                   />
                 </ReplyAddDiv>
+                {showcaseSecondReply.reply ? (
+                  <>
+                    <TextArea
+                      value={
+                        newSecondReplyHtml[index]
+                          ? newSecondReplyHtml[index][secondIndex]
+                            ? newSecondReplyHtml[index][secondIndex]
+                            : ""
+                          : ""
+                      }
+                      onChange={(e) => {
+                        IfLoginCheck(loginUser)
+                          ? sendNewSecondReply(
+                              e.target.value,
+                              index,
+                              secondIndex
+                            )
+                          : "";
+                      }}
+                    />
+                    <br />
+                    <ReplyAddDiv>
+                      <AnimeButton
+                        para=""
+                        text={"Post"}
+                        width="100%"
+                        height="32px"
+                        textColor="white"
+                        backGroundColor="#FFC300"
+                        borderColor="#FFC300"
+                        buttonClick={() =>
+                          submitNewSecondReplyItem(
+                            showcaseSecondReply,
+                            index,
+                            secondIndex
+                          )
+                        }
+                      />
+                    </ReplyAddDiv>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </ReplySecondBox>
           </>

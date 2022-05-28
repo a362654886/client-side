@@ -372,7 +372,8 @@ export const ShowcaseEditAndDeleteDiv = styled.div`
 
 export const EditAndDeleteDiv = styled.div`
   display: flex;
-  margin-top: 32px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   img {
     height: 24px;
     width: 24px;
@@ -381,6 +382,7 @@ export const EditAndDeleteDiv = styled.div`
   p {
     margin-left: 8px;
     margin-right: 32px;
+    margin-bottom: 0px;
   }
 `;
 

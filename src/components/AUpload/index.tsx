@@ -6,6 +6,11 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AvatarUploadImg, UploadButtons } from "./style";
 import addAvatar from "../../files/addAvatar.svg";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 
 type ImageCheck = {
   width: number;
@@ -49,7 +54,7 @@ const AUpload = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-   // console.log(margin);
+    // console.log(margin);
   }, []);
 
   const fileCheck = (file: RcFile | undefined) => {
@@ -59,12 +64,20 @@ const AUpload = ({
     }
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
-      console.log("You can only upload JPG/PNG file!");
+      openNotification(
+        "You can only upload JPG/PNG file!",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
       return false;
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
+    const isLt2M = file.size / 1024 / 1024 < 10;
     if (!isLt2M) {
-      console.log("Image must smaller than 2MB!");
+      openNotification(
+        "Image must smaller than 2MB!",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
       return false;
     }
     return true;

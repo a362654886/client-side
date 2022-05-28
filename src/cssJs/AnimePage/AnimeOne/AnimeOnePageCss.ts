@@ -35,7 +35,7 @@ export const AnimOneHeaderLeft = styled.div`
 
 export const AnimOneHeaderLabel = styled.div`
   display: flex;
-  height: 48px;
+  min-height: 48px;
   margin: 8px auto;
   h6 {
     color: #302d46;

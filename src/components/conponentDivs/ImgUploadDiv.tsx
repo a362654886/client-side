@@ -42,7 +42,7 @@ const fileCheck = (file: File | undefined | null) => {
     );
     return false;
   }
-  const isLt2M = file.size / 1024 / 1024 < 2;
+  const isLt2M = file.size / 1024 / 1024 < 10;
   if (!isLt2M) {
     openNotification(
       "Image must smaller than 2MB!",

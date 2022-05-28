@@ -375,7 +375,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
       <AnimeOneTitle>Forum</AnimeOneTitle>
       <AnimeOneForum
         anime={chooseAnime}
-        pageSizeSetting={3}
+        pageSizeSetting={6}
         ifShowHeader={false}
         ifShowAdd={true}
         toForum={(num: number) => toPage(num)}
