@@ -122,7 +122,10 @@ const LoginPage = (): JSX.Element => {
       </EmailInput>
       <EmailInput>
         <h3>Password:</h3>
-        <Input placeholder={"password"} onChange={onChange}></Input>
+        <Input.Password
+          placeholder={"password"}
+          onChange={onChange}
+        ></Input.Password>
       </EmailInput>
       <PasswordForget onClick={() => toPage("/forgetPasswordPage")}>
         Forget Password?

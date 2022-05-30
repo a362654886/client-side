@@ -206,12 +206,12 @@ const MallCustom = (): JSX.Element => {
           textColor={"black"}
           backGroundColor={"white"}
           border={"1px solid #D1D2D3"}
-          text={"Upload"}
+          text={"Upload Image"}
           setImg={(value: ImageBody) => {
             setUploadImg(value);
             setShowCropper(true);
           }}
-          margin={"0px auto"}
+          margin={"0px 0px"}
         />
       </UploadButton>
 

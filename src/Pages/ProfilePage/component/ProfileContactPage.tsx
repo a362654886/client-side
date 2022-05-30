@@ -52,19 +52,19 @@ const ProfileContactPage = (): JSX.Element => {
       case email:
         setUserEmail((e.target as HTMLInputElement).value);
         break;
-      case tel:
+      case "telephone number":
         setTel((e.target as HTMLInputElement).value);
         break;
-      case location:
+      case "location":
         setLocation((e.target as HTMLInputElement).value);
         break;
-      case facebook:
+      case "facebook":
         setFacebook((e.target as HTMLInputElement).value);
         break;
-      case ins:
+      case "ins":
         setIns((e.target as HTMLInputElement).value);
         break;
-      case link:
+      case "link":
         setLink((e.target as HTMLInputElement).value);
         break;
     }
@@ -109,7 +109,7 @@ const ProfileContactPage = (): JSX.Element => {
       shipSuburb: loginUser?.shipSuburb ? loginUser?.shipSuburb : "",
       postCode: loginUser?.postCode ? loginUser?.postCode : "",
       link: link,
-      block: loginUser?.block ? loginUser?.block : false
+      block: loginUser?.block ? loginUser?.block : false,
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);
@@ -138,26 +138,26 @@ const ProfileContactPage = (): JSX.Element => {
           </ContactEmailInput>
           <ContactTelInput>
             <p>Tel:</p>
-            <Input placeholder={tel} onChange={onChange}></Input>
+            <Input value={tel} placeholder={"telephone number"} onChange={onChange}></Input>
           </ContactTelInput>
           <ContactLocationInput>
             <p>Location:</p>
-            <Input placeholder={location} onChange={onChange}></Input>
+            <Input value={location} placeholder={"location"} onChange={onChange}></Input>
           </ContactLocationInput>
           <SocialDiv>
             <p>Pages</p>
             <LogoInput>
               <div>
                 <img src={facebookPng} />
-                <Input placeholder={facebook} onChange={onChange}></Input>
+                <Input value={facebook} placeholder={"facebook"} onChange={onChange}></Input>
               </div>
               <div>
                 <img src={insPng} />
-                <Input placeholder={ins} onChange={onChange}></Input>
+                <Input value={ins} placeholder={"ins"} onChange={onChange}></Input>
               </div>
               <div>
                 <img src={profileLink} />
-                <Input placeholder={link} onChange={onChange}></Input>
+                <Input value={link} placeholder={"link"} onChange={onChange}></Input>
               </div>
             </LogoInput>
           </SocialDiv>

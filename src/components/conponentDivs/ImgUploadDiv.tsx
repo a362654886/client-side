@@ -1,6 +1,8 @@
+import { RcFile } from "antd/lib/upload";
 import * as React from "react";
 import { ChangeEvent } from "react";
 import styled from "styled-components";
+import { getCompressImage } from "../../helperFns/imageCompress";
 import {
   NotificationColor,
   NotificationTitle,
@@ -42,7 +44,7 @@ const fileCheck = (file: File | undefined | null) => {
     );
     return false;
   }
-  const isLt2M = file.size / 1024 / 1024 < 10;
+  /*const isLt2M = file.size / 1024 / 1024 < 10;
   if (!isLt2M) {
     openNotification(
       "Image must smaller than 2MB!",
@@ -50,7 +52,7 @@ const fileCheck = (file: File | undefined | null) => {
       NotificationTitle.Error
     );
     return false;
-  }
+  }*/
   return true;
 };
 
@@ -66,7 +68,8 @@ const ImgUploadDiv = ({ setImg }: IProps): JSX.Element => {
     const files: FileList | null = (e.target as HTMLInputElement).files;
     const checkResult = fileCheck(files ? files[0] : null);
     if (files && checkResult) {
-      await getBase64file(files[0]).then((result: ImageBody) => {
+      const compressFile = await getCompressImage(files[0] as RcFile);
+      await getBase64file(compressFile).then((result: ImageBody) => {
         resultImg = result;
       });
       setImg(resultImg);

@@ -1,4 +1,4 @@
-import { Input, Select } from "antd";
+import { Input, notification, Select } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Flag from "react-flagkit";
@@ -19,8 +19,8 @@ import {
   AvatarInput,
 } from "../../../cssJs/loginCss";
 import {
-  AvatarBox,
   PasswordInput,
+  PasswordSecretInput,
   ProfileAccountDiv,
   ProfileAccountHeaderDiv,
   SubmitButtonDiv,
@@ -34,6 +34,11 @@ import avatarUpload from "../../../files/avatarUpload.png";
 import CropImgDiv from "../../../components/CropImgDiv";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../../helperFns/popUpAlert";
 
 const { Option } = Select;
 
@@ -111,22 +116,18 @@ const ProfileAccountPage = (): JSX.Element => {
     const arr1: Avatar[] = [];
     const arr2: Avatar[] = [];
     const arr3: Avatar[] = [];
-    const arr4: Avatar[] = [];
     avatars?.forEach((avatar, index) => {
-      if ((index - 4) % 4 == 0 || index == 0) {
-        arr1.push(avatar);
-      }
-      if ((index - 4) % 4 == 1 || index == 1) {
-        arr2.push(avatar);
-      }
-      if ((index - 4) % 4 == 2 || index == 2) {
+      if ((index - 3) % 3 == 0 || index == 0) {
         arr3.push(avatar);
       }
-      if ((index - 4) % 4 == 3 || index == 3) {
-        arr4.push(avatar);
+      if ((index - 3) % 3 == 1 || index == 1) {
+        arr2.push(avatar);
+      }
+      if ((index - 3) % 3 == 2 || index == 2) {
+        arr1.push(avatar);
       }
     });
-    setAvatarArr([arr1, arr2, arr3, arr4]);
+    setAvatarArr([arr1, arr2, arr3]);
   };
 
   const setChooseAvatar = (avatar: Avatar) => setChooseAvatarIndex(avatar);
@@ -163,31 +164,18 @@ const ProfileAccountPage = (): JSX.Element => {
     }
   };
 
-  const getAvatarBox = () => {
-    if (ifAvatarLoading) {
-      return (
-        <>
-          <h6>Avatar:</h6>
-          <LoadingDiv height="150px" width="150px" />
-        </>
-      );
+  const updateUserCheck = async () => {
+    if (password == confirmPassword) {
+      const oldPassword = localStorage.getItem("password");
+      if (oldPassword != password) {
+        localStorage.setItem("password", password.toString());
+      }
+      await updateUser();
     } else {
-      return (
-        <>
-          <h6>Avatar:</h6>
-          <AvatarBox1>
-            {getAvatarDiv(avatarArr ? avatarArr[0] : null)}
-          </AvatarBox1>
-          <AvatarBox2>
-            {getAvatarDiv(avatarArr ? avatarArr[1] : null)}
-          </AvatarBox2>
-          <AvatarBox3>
-            {getAvatarDiv(avatarArr ? avatarArr[2] : null)}
-          </AvatarBox3>
-          <AvatarBox4>
-            {getAvatarDiv(avatarArr ? avatarArr[3] : null)}
-          </AvatarBox4>
-        </>
+      openNotification(
+        "please confirm password and confirmPassword",
+        NotificationColor.Error,
+        NotificationTitle.Error
       );
     }
   };
@@ -284,22 +272,22 @@ const ProfileAccountPage = (): JSX.Element => {
             <h6>Account Email</h6>
             <p>{loginUser?.userEmail}</p>
           </ProfileAccountHeaderDiv>
-          <PasswordInput>
+          <PasswordSecretInput>
             <h6>Password</h6>
-            <Input
+            <Input.Password
               value={password}
               placeholder={"password"}
               onChange={onChange}
-            ></Input>
-          </PasswordInput>
-          <PasswordInput>
+            ></Input.Password>
+          </PasswordSecretInput>
+          <PasswordSecretInput>
             <h6>Please Confirm the Password </h6>
-            <Input
+            <Input.Password
               value={confirmPassword}
               placeholder={"confirm password"}
               onChange={onChange}
-            ></Input>
-          </PasswordInput>
+            ></Input.Password>
+          </PasswordSecretInput>
           <PasswordInput>
             <h6>Name</h6>
             <Input
@@ -381,7 +369,7 @@ const ProfileAccountPage = (): JSX.Element => {
               textColor="white"
               backGroundColor="#F5A623"
               borderColor="#F5A623"
-              buttonClick={() => updateUser()}
+              buttonClick={() => updateUserCheck()}
             />
           </SubmitButtonDiv>
           <CropImgDiv

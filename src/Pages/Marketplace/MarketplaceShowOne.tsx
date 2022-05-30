@@ -495,7 +495,7 @@ const MarketplaceShowOne = (): JSX.Element => {
               <DeleteWrapperDiv
                 element={
                   <>
-                    <img style={{ width: "20px" }} src={`${deleteIcon}`} />
+                    <img style={{ width: "24px" }} src={`${deleteIcon}`} />
                     <p>Delete</p>
                   </>
                 }
@@ -508,7 +508,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           <MarketViewMore
             onClick={() => {
               history.push(
-                `/profilePage/${marketState ? marketState.userId : ""}`
+                `/profilePage/${marketState ? marketState.userId : ""}?market=true`
               );
             }}
           >

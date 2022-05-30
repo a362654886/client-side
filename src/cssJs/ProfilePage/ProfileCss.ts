@@ -476,6 +476,7 @@ export const ProfileLevelImgBox = styled.div`
 
 export const ProfileLevelImgDiv = styled.div`
   width: 248px;
+  margin-bottom:32px;
   div {
     display: flex;
   }

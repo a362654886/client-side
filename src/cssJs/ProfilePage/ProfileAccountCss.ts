@@ -42,6 +42,26 @@ export const PasswordInput = styled.div`
   }
 `;
 
+export const PasswordSecretInput = styled.div`
+  margin-top: 24px;
+  h6 {
+    width: 100%;
+    height: 48px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 32px;
+    color: #302d46;
+    margin-bottom: 0px;
+  }
+  .ant-input-affix-wrapper,.ant-input-password{
+    width: 320px;
+    height: 40px;
+    margin-top: 8px;
+  }
+`;
+
 export const ConfirmPasswordInput = styled.div`
   margin-top: 10px;
   display: flex;

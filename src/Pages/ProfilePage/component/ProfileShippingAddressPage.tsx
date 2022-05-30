@@ -107,28 +107,28 @@ const ProfileShippingAddressPage = (): JSX.Element => {
           <ContactLocationInput>
             <p>Address:</p>
             <Input
-              placeholder={address}
+              value={address}
               onChange={(e) => setAddress(e.target.value)}
             ></Input>
           </ContactLocationInput>
           <ContactLocationInput>
             <p>City:</p>
             <Input
-              placeholder={city}
+              value={city}
               onChange={(e) => setCity(e.target.value)}
             ></Input>
           </ContactLocationInput>
           <ContactLocationInput>
             <p>Suburb:</p>
             <Input
-              placeholder={suburb}
+              value={suburb}
               onChange={(e) => setSuburb(e.target.value)}
             ></Input>
           </ContactLocationInput>
           <ContactLocationInput>
             <p>Post Code:</p>
             <Input
-              placeholder={postCode}
+              value={postCode}
               onChange={(e) => setPostcode(e.target.value)}
             ></Input>
           </ContactLocationInput>

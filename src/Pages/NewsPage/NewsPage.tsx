@@ -60,7 +60,7 @@ const NewsPage = (): JSX.Element => {
           }-${time.getDate()}-${time.getFullYear()}`}</p>
           <NewBodyContext
             style={{ marginTop: "16px" }}
-            dangerouslySetInnerHTML={{ __html: newBody.html }}
+            dangerouslySetInnerHTML={{ __html: newBody.html.replace(new RegExp(`/<img [^>]*src=['"]([^'"]+)[^>]*>/gi`),"") }}
           ></NewBodyContext>
           ......
         </NewBody>

@@ -48,6 +48,7 @@ import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import { MarketFollow } from "../../cssJs/MarketPage/MarketPlaceCss";
 import marketFollow from "../../files/Icon-Follow.svg";
+import marketFollowing from "../../files/IconFollowing.svg";
 import marketMessage from "../../files/marketMessage.png";
 import { MessageDiv, MessageModal } from "../../cssJs/settingImgCss";
 import TextArea from "antd/lib/input/TextArea";
@@ -84,6 +85,7 @@ const ProfilePage = (): JSX.Element => {
   const [contactInfo, setContactInfo] = useState<boolean>(false);
   const [messageVisible, setMessageVisible] = useState(false);
   const [messageValue, setMessageValue] = useState("");
+  const [chooseButton, setChooseButton] = useState<number>(0);
 
   const profileUser: User | null = useSelector(
     (state: IStoreState) => state.profileUserState
@@ -106,6 +108,13 @@ const ProfilePage = (): JSX.Element => {
       });
       await getFollowers(para.id);
     })();
+  }, []);
+
+  useEffect(() => {
+    const market = history.location.search.replace("?market=", "");
+    if (market == "true") {
+      setChooseButton(1);
+    }
   }, []);
 
   useEffect(() => {
@@ -163,7 +172,6 @@ const ProfilePage = (): JSX.Element => {
   };
 
   const toPage = (url: string) => history.push(url);
-  const [chooseButton, setChooseButton] = useState<number>(0);
 
   const changeButton = (index: number) => setChooseButton(index);
 
@@ -327,13 +335,18 @@ const ProfilePage = (): JSX.Element => {
           </NameDiv>
         </div>
         <div style={{ display: "flex" }}>
-          <LevelPic onClick={() => toPage("/profileLevel")} src={getOneLevel.image} />
+          <LevelPic
+            onClick={() => toPage("/profileLevel")}
+            src={getOneLevel.image}
+          />
           <ProfileAwesomePic
             src={showCaseAwesomeClick}
             style={{ marginRight: "4px" }}
           />
           <ProfileSlider style={{ display: "flex" }}>
-            <p>{`${profileUser ? profileUser.awesomeNum : ""}/${getOneLevel.awesomeRequire}`}</p>
+            <p>{`${profileUser ? profileUser.awesomeNum : ""}/${
+              getOneLevel.awesomeRequire
+            }`}</p>
             <Slider
               defaultValue={
                 ((profileUser ? profileUser.awesomeNum : 0) /
@@ -387,11 +400,16 @@ const ProfilePage = (): JSX.Element => {
       {loginUser?._id !== profileUser?._id ? (
         <MarketFollow>
           <div>
-            <img src={marketFollow} />
             {ifFollow() == -1 ? (
-              <p onClick={() => followUser()}>Follow</p>
+              <>
+                <img src={marketFollow} />
+                <p onClick={() => followUser()}>Follow</p>
+              </>
             ) : (
-              <p onClick={() => followUser()}>Following</p>
+              <>
+                <img src={marketFollowing} />
+                <p onClick={() => followUser()}>Following</p>
+              </>
             )}
           </div>
           <div onClick={() => setMessageVisible(true)}>

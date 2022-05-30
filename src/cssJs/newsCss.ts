@@ -63,6 +63,10 @@ export const OneNewText = styled.div`
   font-size: 16px;
   line-height: 26px;
   color: #4a4a4a;
+  max-width: 864px;
+  img{
+    width:100%;
+  }
 `;
 
 export const OneNewSource = styled.div`

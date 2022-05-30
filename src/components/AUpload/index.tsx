@@ -11,6 +11,7 @@ import {
   NotificationTitle,
   openNotification,
 } from "../../helperFns/popUpAlert";
+import { getCompressImage } from "../../helperFns/imageCompress";
 
 type ImageCheck = {
   width: number;
@@ -71,7 +72,7 @@ const AUpload = ({
       );
       return false;
     }
-    const isLt2M = file.size / 1024 / 1024 < 10;
+    /*const isLt2M = file.size / 1024 / 1024 < 10;
     if (!isLt2M) {
       openNotification(
         "Image must smaller than 2MB!",
@@ -79,7 +80,7 @@ const AUpload = ({
         NotificationTitle.Error
       );
       return false;
-    }
+    }*/
     return true;
   };
 
@@ -95,11 +96,12 @@ const AUpload = ({
     };
     const checkResult = fileCheck(info.file.originFileObj);
     if (checkResult) {
-      await getBase64file(info.file.originFileObj as RcFile).then(
-        (result: ImageBody) => {
-          resultImg = result;
-        }
+      const compressFile = await getCompressImage(
+        info.file.originFileObj as RcFile
       );
+      await getBase64file(compressFile).then((result: ImageBody) => {
+        resultImg = result;
+      });
       setImg(resultImg);
     }
     setLoading(false);
