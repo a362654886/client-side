@@ -63,31 +63,36 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
       };
       const files = input.files;
       if (files) {
-        Array.from(files).forEach(async (item) => {
-          const compressedFile = await getCompressImage(item as RcFile);
-          await getBase64file(compressedFile as RcFile).then(
-            (result: ImageBody) => {
-              resultImg = result;
-            }
-          );
-          const url = await imageAdd({
-            _id: "",
-            imageValue: resultImg.imgBase64,
-            forumId: "forumImage",
+        try{
+          Array.from(files).forEach(async (item) => {
+            const compressedFile = await getCompressImage(item as RcFile);
+            await getBase64file(compressedFile as RcFile).then(
+              (result: ImageBody) => {
+                resultImg = result;
+              }
+            );
+            const url = await imageAdd({
+              _id: "",
+              imageValue: resultImg.imgBase64,
+              forumId: "forumImage",
+            });
+  
+            const quill = (textInput?.current as any).getEditor(); //获取到编辑器本身
+            const cursorPosition = quill.getSelection().index; //获取当前光标位置
+            console.log(cursorPosition)
+            setCropper(url ? url.toString() : "");
+            quill.insertEmbed(
+              cursorPosition,
+              "image",
+              `https://animeimagebucket.s3.amazonaws.com/${url}`
+            ); //插入图片
+            console.log(html)
+            quill.setSelection(cursorPosition + 1); //光标位置加1
           });
+        }catch(e){
+          setCropper(e.toString());
+        }
 
-          const quill = (textInput?.current as any).getEditor(); //获取到编辑器本身
-          const cursorPosition = quill.getSelection().index; //获取当前光标位置
-          console.log(cursorPosition)
-          setCropper(url ? url.toString() : "");
-          quill.insertEmbed(
-            cursorPosition,
-            "image",
-            `https://animeimagebucket.s3.amazonaws.com/${url}`
-          ); //插入图片
-          console.log(html)
-          quill.setSelection(cursorPosition + 1); //光标位置加1
-        });
       }
     };
   };
