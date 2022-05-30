@@ -2,7 +2,7 @@ import { UploadChangeParam } from "antd/lib/upload";
 import { RcFile, UploadFile } from "antd/lib/upload/interface";
 import imageCompression from "browser-image-compression";
 import * as React from "react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import { imageAdd } from "../api/imageAPI";
 import { getCompressImage } from "../helperFns/imageCompress";
@@ -15,6 +15,7 @@ interface IProps {
 
 const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
   const textInput = useRef(null);
+  const [cropper, setCropper] = useState<string>("");
 
   const getWidthAndHeight = (imageObj: HTMLImageElement) => {
     return new Promise((resolve: (value: ImageCheck) => void) => {
@@ -77,12 +78,14 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
 
           const quill = (textInput?.current as any).getEditor(); //获取到编辑器本身
           const cursorPosition = quill.getSelection().index; //获取当前光标位置
+          console.log(cursorPosition)
+          setCropper(url ? url.toString() : "");
           quill.insertEmbed(
-            //cursorPosition
-            0,
+            cursorPosition,
             "image",
             `https://animeimagebucket.s3.amazonaws.com/${url}`
           ); //插入图片
+          console.log(html)
           quill.setSelection(cursorPosition + 1); //光标位置加1
         });
       }
@@ -142,6 +145,7 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
         formats={formats}
         bounds={".app"}
       />
+      <>{cropper}</>
     </>
   );
 };
