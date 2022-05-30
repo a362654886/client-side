@@ -121,7 +121,7 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
                 { indent: "-1" },
                 { indent: "+1" },
               ],
-              ["link"],
+              ["link", "image"],
               ["clean"],
             ],
           },
