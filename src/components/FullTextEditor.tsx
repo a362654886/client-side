@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import { imageAdd } from "../api/imageAPI";
 import { getCompressImage } from "../helperFns/imageCompress";
+import { getWidth } from "../helperFns/widthFn";
 import { ImageBody, ImageCheck } from "./ImageUpload";
 
 interface IProps {
@@ -15,7 +16,6 @@ interface IProps {
 
 const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
   const textInput = useRef(null);
-  const [cropper, setCropper] = useState<string>("");
 
   const getWidthAndHeight = (imageObj: HTMLImageElement) => {
     return new Promise((resolve: (value: ImageCheck) => void) => {
@@ -63,59 +63,68 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
       };
       const files = input.files;
       if (files) {
-        try{
-          Array.from(files).forEach(async (item) => {
-            const compressedFile = await getCompressImage(item as RcFile);
-            await getBase64file(compressedFile as RcFile).then(
-              (result: ImageBody) => {
-                resultImg = result;
-              }
-            );
-            const url = await imageAdd({
-              _id: "",
-              imageValue: resultImg.imgBase64,
-              forumId: "forumImage",
-            });
-  
-            const quill = (textInput?.current as any).getEditor(); //获取到编辑器本身
-            const cursorPosition = quill.getSelection().index; //获取当前光标位置
-            console.log(cursorPosition)
-            setCropper(url ? url.toString() : "");
-            quill.insertEmbed(
-              cursorPosition,
-              "image",
-              `https://animeimagebucket.s3.amazonaws.com/${url}`
-            ); //插入图片
-            console.log(html)
-            quill.setSelection(cursorPosition + 1); //光标位置加1
+        Array.from(files).forEach(async (item) => {
+          const compressedFile = await getCompressImage(item as RcFile);
+          await getBase64file(compressedFile as RcFile).then(
+            (result: ImageBody) => {
+              resultImg = result;
+            }
+          );
+          const url = await imageAdd({
+            _id: "",
+            imageValue: resultImg.imgBase64,
+            forumId: "forumImage",
           });
-        }catch(e){
-          setCropper(e.toString());
-        }
 
+          const quill = (textInput?.current as any).getEditor(); //获取到编辑器本身
+          const cursorPosition = quill.getSelection().index; //获取当前光标位置
+          quill.insertEmbed(
+            cursorPosition,
+            "image",
+            `https://animeimagebucket.s3.amazonaws.com/${url}`
+          ); //插入图片
+          quill.setSelection(cursorPosition + 1); //光标位置加1
+        });
       }
     };
   };
 
   const modules = {
-    toolbar: {
-      container: [
-        [{ header: "1" }, { header: "2" }, { font: [] }],
-        [{ size: [] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
-        [
-          { list: "ordered" },
-          { list: "bullet" },
-          { indent: "-1" },
-          { indent: "+1" },
-        ],
-        ["link", "image"],
-        ["clean"],
-      ],
-      handlers: {
-        image: handlerImage,
-      },
-    },
+    toolbar:
+      getWidth() > 600
+        ? {
+            container: [
+              [{ header: "1" }, { header: "2" }, { font: [] }],
+              [{ size: [] }],
+              ["bold", "italic", "underline", "strike", "blockquote"],
+              [
+                { list: "ordered" },
+                { list: "bullet" },
+                { indent: "-1" },
+                { indent: "+1" },
+              ],
+              ["link", "image"],
+              ["clean"],
+            ],
+            handlers: {
+              image: handlerImage,
+            },
+          }
+        : {
+            container: [
+              [{ header: "1" }, { header: "2" }, { font: [] }],
+              [{ size: [] }],
+              ["bold", "italic", "underline", "strike", "blockquote"],
+              [
+                { list: "ordered" },
+                { list: "bullet" },
+                { indent: "-1" },
+                { indent: "+1" },
+              ],
+              ["link"],
+              ["clean"],
+            ],
+          },
     clipboard: {
       // toggle to add extra line breaks when pasting HTML:
       matchVisual: false,
@@ -150,7 +159,6 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
         formats={formats}
         bounds={".app"}
       />
-      <>{cropper}</>
     </>
   );
 };
