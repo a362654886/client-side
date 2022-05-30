@@ -8,7 +8,7 @@ const basicURL = backEndLink;
 //image
 export const imageAdd = async (
   imageBody: imageType
-): Promise<number | null> => {
+): Promise<string | null> => {
   const endpoint = basicURL + "ImageInsert";
   return Axios.post(endpoint, { imageBody: imageBody })
     .then((response) => {

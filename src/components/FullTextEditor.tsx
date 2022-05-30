@@ -78,7 +78,8 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
           const quill = (textInput?.current as any).getEditor(); //获取到编辑器本身
           const cursorPosition = quill.getSelection().index; //获取当前光标位置
           quill.insertEmbed(
-            cursorPosition,
+            //cursorPosition
+            0,
             "image",
             `https://animeimagebucket.s3.amazonaws.com/${url}`
           ); //插入图片
