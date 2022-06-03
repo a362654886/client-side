@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import Flag from "react-flagkit";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { followByGetByUserId } from "../../api/followByAPI";
 import { userFollowsGets } from "../../api/userApi";
 import SettingImg from "../../components/SettingImg";
@@ -32,7 +32,6 @@ import {
 } from "../../cssJs/ProfilePage/ProfileFollowCss";
 import { LOGIN_USER_UPDATE_FOLLOW } from "../../redux/loginUser";
 import getMoreImg from "../../files/getMore.png";
-import { cloneDeep } from "lodash";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 
@@ -56,6 +55,7 @@ interface Para {
 const ProfileFollowPage = (): JSX.Element => {
   const para: Para = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
@@ -250,7 +250,9 @@ const ProfileFollowPage = (): JSX.Element => {
           {followIng.map((item: User, index: number) => {
             return (
               <FollowElementDiv key={index}>
-                <FollowElementProfileDiv>
+                <FollowElementProfileDiv
+                  onClick={() => history.push(`/profilePage/${item._id}`)}
+                >
                   <img
                     src={`https://animeimagebucket.s3.amazonaws.com/${item.avatar}`}
                   />
@@ -317,7 +319,9 @@ const ProfileFollowPage = (): JSX.Element => {
           {followers.map((item: followByType, index: number) => {
             return (
               <FollowElementDiv key={index}>
-                <FollowElementProfileDiv>
+                <FollowElementProfileDiv
+                  onClick={() => history.push(`/profilePage/${item._id}`)}
+                >
                   <img src={`${item.userAvatar}`} />
                   <FollowElementProfileNameSetting>
                     <p>

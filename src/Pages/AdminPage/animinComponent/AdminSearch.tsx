@@ -29,7 +29,7 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
   const [count, setCount] = useState<number>(0);
-  const pageSize = 2;
+  const pageSize = 20;
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -53,7 +53,7 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
     });
     const animeResult = await animeAllGet(
       searchValue,
-      "general",
+      "new",
       page,
       pageSize
     );

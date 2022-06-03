@@ -151,7 +151,7 @@ const ShowcaseSide = (): JSX.Element => {
                 <p
                   key={index}
                   onClick={() => {
-                    history.push(`oneNew/${news._id}`);
+                    history.push(`/oneNew/${news._id}`);
                   }}
                 >
                   {news.header.length > 35
@@ -162,7 +162,7 @@ const ShowcaseSide = (): JSX.Element => {
             })}
             <MoreRight
               onClick={() => {
-                history.push(`news`);
+                history.push(`/news`);
               }}
             >
               <img src={moreRightImg} />

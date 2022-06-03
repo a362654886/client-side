@@ -63,7 +63,6 @@ const AdminHomeLinePage = ({
   };
 
   const replaceNewImage = (imageBody: ImageBody) => {
-    console.log(imageBody)
     const newHeadline = cloneDeep(localHeadLine);
     newHeadline.image = imageBody.imgBase64;
     setLocalHeadLine(newHeadline);

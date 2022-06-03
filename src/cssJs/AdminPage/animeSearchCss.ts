@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const SearchDiv = styled.div`
   width: 80%;
-  height: 162px;
+  height: 62px;
   margin-left: 52px;
   margin-top: 45px;
   display: flex;

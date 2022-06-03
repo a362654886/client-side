@@ -17,10 +17,14 @@ import AnimeButton from "../../../components/Button";
 import { useHistory } from "react-router-dom";
 
 interface IProps {
+  paraId: string;
   profile?: boolean;
 }
 
-const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
+const ProfileShowcaseCollections = ({
+  paraId,
+  profile,
+}: IProps): JSX.Element => {
   const profileUser: User | null = useSelector(
     (state: IStoreState) => state.profileUserState
   );
@@ -55,18 +59,13 @@ const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
     setTypeLoading(true);
     const showcaseResult =
       profile == true
-        ? await showCaseAllGetByArr(
-            profileUser ? profileUser._id : "",
-            "collections",
-            pageNum,
-            pageSize
-          )
+        ? await showCaseAllGetByArr(paraId, "collections", pageNum, pageSize)
         : await showCaseAllGet(
             ShowCaseEnum.Collections,
             "hot",
             pageNum,
             pageSize,
-            profileUser ? profileUser._id : "",
+            paraId,
             "",
             ""
           );
@@ -82,18 +81,13 @@ const ProfileShowcaseCollections = ({ profile }: IProps): JSX.Element => {
     setLoading(true);
     const showcaseResult =
       profile == true
-        ? await showCaseAllGetByArr(
-            profileUser ? profileUser._id : "",
-            "collections",
-            pageNum,
-            pageSize
-          )
+        ? await showCaseAllGetByArr(paraId, "collections", pageNum, pageSize)
         : await showCaseAllGet(
             ShowCaseEnum.Collections,
             "hot",
             pageNum,
             pageSize,
-            profileUser ? profileUser._id : "",
+            paraId,
             "",
             ""
           );

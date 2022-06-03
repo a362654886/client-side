@@ -13,7 +13,11 @@ import stateAvailable from "../../../files/stateAvailable.png";
 import stateSoldOut from "../../../files/stateSoldOut.png";
 import { getWidth } from "../../../helperFns/widthFn";
 
-const ProfileShowcasePage = (): JSX.Element => {
+interface IProps {
+  paraId: string;
+}
+
+const ProfileShowcasePage = ({ paraId }: IProps): JSX.Element => {
   const buttonsColor = [
     {
       text: "Collections",
@@ -73,7 +77,7 @@ const ProfileShowcasePage = (): JSX.Element => {
   const getShowcaseDiv = () => {
     switch (chooseButton) {
       case 0:
-        return <ProfileShowcaseCollections profile={true} />;
+        return <ProfileShowcaseCollections profile={true} paraId={paraId} />;
         break;
       case 1:
         return <ProfileShowcaseIllustration profile={true} />;

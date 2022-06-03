@@ -219,7 +219,7 @@ const ProfilePage = (): JSX.Element => {
   const getProfileDiv = () => {
     switch (chooseButton) {
       case 0:
-        return <ProfileShowcasePage />;
+        return <ProfileShowcasePage paraId={para.id}/>;
       case 1:
         return <ProfileMarketplacePage />;
       case 2:

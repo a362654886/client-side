@@ -1,4 +1,13 @@
-import { Checkbox, Input, RadioChangeEvent, Row, Col, DatePicker } from "antd";
+import {
+  Checkbox,
+  Input,
+  RadioChangeEvent,
+  Row,
+  Col,
+  DatePicker,
+  Button,
+  Modal,
+} from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import ImgUploadDiv from "../../../components/conponentDivs/ImgUploadDiv";
@@ -35,7 +44,7 @@ import {
 import AlertBox, { ColorType } from "../../../components/AlertBox";
 import moment from "moment";
 import ImageUpload from "../../../components/ImageUpload";
-import { animeSourcesGet } from "../../../api/animeSourceAPI";
+import { animeSourceAdd, animeSourcesGet } from "../../../api/animeSourceAPI";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -138,6 +147,19 @@ const AdminEditComponent = ({ anime }: IProps): JSX.Element => {
     }
   };
 
+  const saveWhereToWatch = async () => {
+    const whereToWatchBody: AnimeSource = {
+      _id: whereToWatchName,
+      imageLink: whereToWatchUploadImg,
+      sourceName: whereToWatchName,
+      link: whereToWatchLink,
+    };
+    const r = await animeSourceAdd(whereToWatchBody);
+    if (r == 200) {
+      setWhereToWatchShow(false);
+    }
+  };
+
   const getResultFn = () => (
     <>
       <AlertBox
@@ -226,6 +248,15 @@ const AdminEditComponent = ({ anime }: IProps): JSX.Element => {
                 </Col>
               );
             })}
+            <Col style={{ marginRight: "42px", width: "82px" }}>
+              <Button
+                onClick={() => {
+                  setWhereToWatchShow(true);
+                }}
+              >
+                Add
+              </Button>
+            </Col>
           </Row>
         </CheckboxGroup>
       </WhereWatchDiv>
@@ -241,6 +272,38 @@ const AdminEditComponent = ({ anime }: IProps): JSX.Element => {
           buttonClick={() => submit()}
         />
       </AnimeCreateSubmitButton>
+      <Modal
+        width={700}
+        footer={[]}
+        onCancel={() => setWhereToWatchShow(false)}
+        maskClosable={false}
+        visible={whereToWatchShow}
+      >
+        <img src={whereToWatchUploadImg} />
+        <UploadImageButton>
+          <ImageUpload
+            width={"120px"}
+            height={"32px"}
+            textColor={"black"}
+            backGroundColor={"white"}
+            border={"1px solid #D1D2D3"}
+            text={"Upload"}
+            setImg={(value: ImageBody) =>
+              setWhereToWatchUploadImg(value.imgBase64)
+            }
+            margin={"0px"}
+          />
+          <Input
+            value={whereToWatchName}
+            onChange={(e) => setWhereToWatchName(e.target.value)}
+          />
+          <Input
+            value={whereToWatchLink}
+            onChange={(e) => setWhereToWatchLink(e.target.value)}
+          />
+          <Button onClick={() => saveWhereToWatch()}>save</Button>
+        </UploadImageButton>
+      </Modal>
     </>
   );
 

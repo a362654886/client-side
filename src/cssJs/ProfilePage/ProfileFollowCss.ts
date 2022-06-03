@@ -24,6 +24,7 @@ export const FollowElementDiv = styled.div`
 
 export const FollowElementProfileDiv = styled.div`
   display: flex;
+  cursor:pointer ;
   img {
     height: 80px;
     width: 80px;
