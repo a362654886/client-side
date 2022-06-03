@@ -102,7 +102,12 @@ const CropImgDiv = ({
 
   return (
     <>
-      <Modal footer={[]} onCancel={() => setVisibleFalse()} visible={visible}>
+      <Modal
+        footer={[]}
+        onCancel={() => setVisibleFalse()}
+        maskClosable={false}
+        visible={visible}
+      >
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           {getCropper()}
           <Button

@@ -14,7 +14,7 @@ export const MallCustomHeaderDiv = styled.div`
   margin-top: 16px;
   margin-bottom: 16px;
   margin-right: 30px;
-  height: 80px;
+  height: 85px;
 `;
 
 export const MallCustomHeader = styled.div`

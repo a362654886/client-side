@@ -171,7 +171,7 @@ const MallCustom = (): JSX.Element => {
             <MallCustomHeaderDiv
               key={index}
               style={{
-                backgroundColor: index == chooseIndex ? "#AAFFC9" : "white",
+                borderBottom: index == chooseIndex ? "2px solid red" : "2px solid white",
               }}
             >
               <img

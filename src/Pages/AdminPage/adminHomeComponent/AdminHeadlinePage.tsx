@@ -3,14 +3,15 @@ import { cloneDeep } from "lodash";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import AnimeButton from "../../../components/Button";
-import CropImgBodyDiv from "../../../components/CropImgBodyDiv";
 import ImageUpload from "../../../components/ImageUpload";
 import {
   AdminHomePageButtonsDiv,
   HeadlineInput,
 } from "../../../cssJs/AdminPage/adminManagementCss";
+import { HeaderLineImage } from "../../../cssJs/homePageCss";
 import { ImageBody } from "../../../types/BasicType";
 import { HeadLineType } from "../../../types/headLine";
+import CropImgBodyDiv from "./CropImgBodyDiv";
 
 interface IProps {
   headLine: HeadLineType | null;
@@ -37,10 +38,10 @@ const AdminHomeLinePage = ({
     imgName: "",
   });
   const [showCropper, setShowCropper] = useState<boolean>(false);
+  
 
   useEffect(() => {
     setIniHeadline();
-    console.log(headLine)
   }, [headLine, num]);
 
   useEffect(() => {
@@ -62,6 +63,7 @@ const AdminHomeLinePage = ({
   };
 
   const replaceNewImage = (imageBody: ImageBody) => {
+    console.log(imageBody)
     const newHeadline = cloneDeep(localHeadLine);
     newHeadline.image = imageBody.imgBase64;
     setLocalHeadLine(newHeadline);
@@ -81,7 +83,7 @@ const AdminHomeLinePage = ({
 
   return (
     <div>
-      <img src={localHeadLine?.image} />
+      <HeaderLineImage src={localHeadLine?.image} />
       <ImageUpload
         width={"240px"}
         height={"32px"}
@@ -103,7 +105,6 @@ const AdminHomeLinePage = ({
         }}
         visible={showCropper}
         setVisibleFalse={() => setShowCropper(false)}
-        cube={false}
       />
       <HeadlineInput>
         <h6>Title</h6>

@@ -14,3 +14,10 @@ export type RateBody = {
   ratePeople: number;
   totalRate: number;
 };
+
+export type AnimeSource = {
+  _id: string;
+  imageLink: string;
+  sourceName: string;
+  link: string;
+};

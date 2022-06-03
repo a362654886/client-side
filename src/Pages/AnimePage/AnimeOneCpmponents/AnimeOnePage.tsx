@@ -11,7 +11,7 @@ import {
   OnePageStarChildDiv,
   OnePageStarDiv,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
-import { Anime, RateBody } from "../../../types/Amine";
+import { Anime, AnimeSource, RateBody } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
 import crunchyroll from "../../../files/cunp.png";
 import Funimation from "../../../files/Funimation.png";
@@ -47,6 +47,7 @@ import {
 import ShareDiv from "../../../components/ShareDiv";
 import { useHistory } from "react-router-dom";
 import { getWidth } from "../../../helperFns/widthFn";
+import { animeSourcesGet } from "../../../api/animeSourceAPI";
 
 interface IProps {
   toPage: (page: number) => void;
@@ -67,6 +68,9 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const [enterRate, setEnterRate] = useState<boolean>(false);
   const [chooseRate, setChooseRate] = useState<number>(0);
 
+  //all where to watch
+  const [whereToWatches, setWhereToWatches] = useState<AnimeSource[]>([]);
+
   const toOther = (url: string) => window.open(url);
 
   useEffect(() => {
@@ -77,6 +81,8 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
         payload: anime,
         type: ANIME_ADD,
       });
+      const allSources = await animeSourcesGet();
+      setWhereToWatches(allSources);
     })();
   }, []);
 
@@ -94,56 +100,18 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   const getWhereToWatch = () => {
     if (chooseAnime?.whereToWatch) {
       return chooseAnime?.whereToWatch.map((img, index) => {
-        switch (img) {
-          case "Funimation":
-            return (
-              <AnimOneWhereWatchImg
-                src={Funimation}
-                key={index}
-                onClick={() => toOther("https://www.funimation.com")}
-              />
-            );
-          case "crunchyroll":
-            return (
-              <AnimOneWhereWatchImg
-                src={crunchyroll}
-                key={index}
-                onClick={() => toOther("https://www.crunchyroll.com")}
-              />
-            );
-          case "hidive":
-            return (
-              <AnimOneWhereWatchImg
-                src={hidive}
-                key={index}
-                onClick={() => toOther("https://www.hidive.com/dashboard")}
-              />
-            );
-          case "tubi":
-            return (
-              <AnimOneWhereWatchImg
-                src={tubi}
-                key={index}
-                onClick={() => toOther("https://tubitv.com/")}
-              />
-            );
-          case "VIZ":
-            return (
-              <AnimOneWhereWatchImg
-                src={VIZ}
-                key={index}
-                onClick={() => toOther("https://www.viz.com/")}
-              />
-            );
-          case "AnimePlant":
-            return (
-              <AnimOneWhereWatchImg
-                src={AnimePlant}
-                key={index}
-                onClick={() => toOther("https://www.anime-planet.com/ ")}
-              />
-            );
-        }
+        const whereToWatchBody = whereToWatches.find(
+          (item) => item.sourceName == img
+        );
+        return (
+          <AnimOneWhereWatchImg
+            src={`https://animeimagebucket.s3.amazonaws.com/${whereToWatchBody?.imageLink}`}
+            key={index}
+            onClick={() =>
+              toOther(whereToWatchBody ? whereToWatchBody.link : "")
+            }
+          />
+        );
       });
     }
   };

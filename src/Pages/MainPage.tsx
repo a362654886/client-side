@@ -214,6 +214,7 @@ const MainPage = (): JSX.Element => {
                     </LoginCountry>
                   </>
                 }
+                loginUser={true}
               ></ProfileWrapperDiv>
               <LoginOutImg
                 src={logOut}
@@ -257,6 +258,7 @@ const MainPage = (): JSX.Element => {
                     </LoginMobileCountry>
                   </>
                 }
+                loginUser={true}
               ></ProfileWrapperDiv>
               <MobileLoginOutImg
                 src={logOut}

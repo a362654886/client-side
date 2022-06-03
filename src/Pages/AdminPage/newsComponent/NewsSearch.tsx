@@ -8,6 +8,7 @@ import {
   AnimeTableElement,
   AnimeTableItem,
   SearchDiv,
+  SearchNewsDiv,
   SearchTableDiv,
   ViewButton,
 } from "../../../cssJs/AdminPage/animeSearchCss";
@@ -18,6 +19,8 @@ import getMoreImg from "../../../files/getMore.png";
 import { useDispatch } from "react-redux";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
+import { useHistory } from "react-router-dom";
+import { openNewWindow, openNewWindowPath } from "../../../helperFns/windowsFn";
 
 interface IProps {
   editNew: (news: NewType) => void;
@@ -25,6 +28,7 @@ interface IProps {
 
 const NewsSearch = ({ editNew }: IProps): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [page, setPage] = useState<number>(1);
@@ -87,7 +91,12 @@ const NewsSearch = ({ editNew }: IProps): JSX.Element => {
         <>
           {allNews.map((newBody, index) => (
             <AnimeTableElement key={index}>
-              <AnimeTableItem>{newBody.header}</AnimeTableItem>
+              <AnimeTableItem
+                style={{ cursor: "pointer" }}
+                onClick={() => openNewWindowPath(`${newBody._id}`)}
+              >
+                {newBody.header}
+              </AnimeTableItem>
               <div>
                 <ViewButton onClick={() => editNew(newBody)}>
                   <img src={editIcon} />
@@ -112,11 +121,11 @@ const NewsSearch = ({ editNew }: IProps): JSX.Element => {
 
   return (
     <>
-      <SearchDiv>
+      <SearchNewsDiv>
         <Input placeholder={"searchValue"} onChange={onChange}></Input>
         <AnimeButton
           para=""
-          text="Submit"
+          text="Search"
           width="120px"
           height="32px"
           textColor="white"
@@ -124,7 +133,7 @@ const NewsSearch = ({ editNew }: IProps): JSX.Element => {
           borderColor="white"
           buttonClick={() => search()}
         />
-      </SearchDiv>
+      </SearchNewsDiv>
       <SearchTableDiv>{getTableFn()}</SearchTableDiv>
       {allNews.length < count ? (
         <MoreButtonDiv onClick={() => getMore()}>

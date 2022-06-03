@@ -5,9 +5,14 @@ import { ProfileWrapper } from "../cssJs/basicCss";
 interface IProps {
   userId: string;
   element: ReactElement;
+  loginUser?: boolean;
 }
 
-const ProfileWrapperDiv = ({ userId, element }: IProps): JSX.Element => {
+const ProfileWrapperDiv = ({
+  userId,
+  element,
+  loginUser,
+}: IProps): JSX.Element => {
   const history = useHistory();
 
   return (
@@ -15,7 +20,9 @@ const ProfileWrapperDiv = ({ userId, element }: IProps): JSX.Element => {
       style={{}}
       onClick={() => {
         history.push({
-          pathname: `/profilePage/${userId}`,
+          pathname: loginUser
+            ? `/profileLoginUser/${userId}`
+            : `/profilePage/${userId}`,
         });
       }}
     >

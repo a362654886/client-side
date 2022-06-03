@@ -21,8 +21,11 @@ import AnimeOneVideo from "../AnimePage/AnimeOneCpmponents/AnimeOneVideo";
 import DiscoveryHeader from "./DiscoveryHeader";
 import moreRightImg from "../../files/moreRightArrow.png";
 import { getWidth } from "../../helperFns/widthFn";
+import { useHistory } from "react-router-dom";
 
 const Discovery = (): JSX.Element => {
+  const history = useHistory();
+
   const [chooseButton, setChooseButton] = useState<number>(0);
   const [allNews, setAllNews] = useState<NewType[]>([]);
 
@@ -162,7 +165,12 @@ const Discovery = (): JSX.Element => {
             <h6 style={{ fontWeight: "bold" }}>News</h6>
             {allNews.map((news, index) => {
               return (
-                <p key={index}>
+                <p
+                  key={index}
+                  onClick={() => {
+                    history.push(`oneNew/${news._id}`);
+                  }}
+                >
                   {news.header.length > 35
                     ? `${news.header.substring(0, 35)}.....`
                     : news.header}
@@ -171,7 +179,7 @@ const Discovery = (): JSX.Element => {
             })}
             <MoreRight
               onClick={() => {
-                console.log("more");
+                history.push(`news`);
               }}
             >
               <img src={moreRightImg} />

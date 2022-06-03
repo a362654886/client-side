@@ -130,12 +130,7 @@ const ShowcaseSide = (): JSX.Element => {
             <ShowcaseSideTag key={index}>
               <p
                 onClick={() => {
-                  toPage(
-                    `/showcase/showTag?tag=${tag.text.replace(
-                      "#",
-                      ""
-                    )}`
-                  );
+                  toPage(`/showcase/showTag?tag=${tag.text.replace("#", "")}`);
                 }}
               >
                 {tag.text}
@@ -153,7 +148,12 @@ const ShowcaseSide = (): JSX.Element => {
             <h6 style={{ fontWeight: "bold" }}>News</h6>
             {allNews.map((news, index) => {
               return (
-                <p key={index}>
+                <p
+                  key={index}
+                  onClick={() => {
+                    history.push(`oneNew/${news._id}`);
+                  }}
+                >
                   {news.header.length > 35
                     ? `${news.header.substring(0, 35)}.....`
                     : news.header}
@@ -162,7 +162,7 @@ const ShowcaseSide = (): JSX.Element => {
             })}
             <MoreRight
               onClick={() => {
-                console.log("more");
+                history.push(`news`);
               }}
             >
               <img src={moreRightImg} />

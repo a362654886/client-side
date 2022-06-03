@@ -1,6 +1,6 @@
 import { Checkbox, Input, RadioChangeEvent, Row, Col, DatePicker } from "antd";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImgUploadDiv from "../../../components/conponentDivs/ImgUploadDiv";
 import { AdminAnimeCreateDiv } from "../../../cssJs/AdminPage/adminAdminCreateCss";
 import {
@@ -26,7 +26,7 @@ import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { useDispatch } from "react-redux";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
-import { Anime } from "../../../types/Amine";
+import { Anime, AnimeSource } from "../../../types/Amine";
 import {
   NotificationColor,
   NotificationTitle,
@@ -35,6 +35,7 @@ import {
 import AlertBox, { ColorType } from "../../../components/AlertBox";
 import moment from "moment";
 import ImageUpload from "../../../components/ImageUpload";
+import { animeSourcesGet } from "../../../api/animeSourceAPI";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -58,6 +59,23 @@ const AdminEditComponent = ({ anime }: IProps): JSX.Element => {
   const [whereWatchList, setWhereWatchList] = useState<string[]>(
     anime.whereToWatch
   );
+
+  //all where to watch
+  const [whereToWatches, setWhereToWatches] = useState<AnimeSource[]>([]);
+
+  //where to watch
+  const [whereToWatchShow, setWhereToWatchShow] = useState<boolean>(false);
+  const [whereToWatchUploadImg, setWhereToWatchUploadImg] =
+    useState<string>("");
+  const [whereToWatchName, setWhereToWatchName] = useState<string>("");
+  const [whereToWatchLink, setWhereToWatchLink] = useState<string>("");
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      const allSources = await animeSourcesGet();
+      setWhereToWatches(allSources);
+    })();
+  }, []);
 
   const onChange = (e: React.ChangeEvent<Element> | RadioChangeEvent): void => {
     const type = (e.target as HTMLInputElement).placeholder;
@@ -190,41 +208,24 @@ const AdminEditComponent = ({ anime }: IProps): JSX.Element => {
           style={{ display: "flex", marginLeft: "130px", width: "450px" }}
         >
           <Row>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"mal"}>
-                <WhereWatchImg src={mal} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"tubi"}>
-                <WhereWatchImg src={tubi} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"crunchyroll"}>
-                <WhereWatchImg src={crunchyroll} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"Funimation"} style={{ marginTop: "32px" }}>
-                <WhereWatchImg src={Funimation} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"hidive"} style={{ marginTop: "32px" }}>
-                <WhereWatchImg src={hidive} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"VIZ"} style={{ marginTop: "32px" }}>
-                <WhereWatchImg src={VIZ} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"AnimePlant"} style={{ marginTop: "32px" }}>
-                <WhereWatchImg src={AnimePlant} />
-              </Checkbox>
-            </Col>
+            {whereToWatches.map((item, index) => {
+              return (
+                <Col
+                  key={index}
+                  style={{
+                    marginRight: "42px",
+                    marginBottom: "20px",
+                    width: "82px",
+                  }}
+                >
+                  <Checkbox value={item.sourceName}>
+                    <WhereWatchImg
+                      src={`https://animeimagebucket.s3.amazonaws.com/${item.imageLink}`}
+                    />
+                  </Checkbox>
+                </Col>
+              );
+            })}
           </Row>
         </CheckboxGroup>
       </WhereWatchDiv>

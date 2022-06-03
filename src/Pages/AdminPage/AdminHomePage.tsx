@@ -22,19 +22,22 @@ const AdminHomePage = (): JSX.Element => {
     null
   );
 
-  const [headlineNum, setHeadlineNum] = useState<number>(0);
+  const [headlineNum, setHeadlineNum] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     (async function anyNameFunction() {
-      await getAllHeadlines();
+      await getAllHeadlines(1);
     })();
   }, []);
 
-  const getAllHeadlines = async () => {
+  const getAllHeadlines = async (headline:number) => {
+    setLoading(true);
     const headlinesResult = await headlineAllGet();
     setAllHeadlines(headlinesResult ? headlinesResult : []);
-    setHeadlineNum(1);
+    setHeadlineNum(headline);
+    setChooseHeadLine(headlinesResult[headline-1]);
+    setLoading(false);
   };
 
   const setChildHeadlineNum = (index: number) => {
@@ -65,6 +68,8 @@ const AdminHomePage = (): JSX.Element => {
         //
       }
     );
+    const index= allHeadlines.findIndex(item=>item._id == headline._id)
+    getAllHeadlines(index+1);
     setLoading(false);
   };
 
@@ -76,9 +81,9 @@ const AdminHomePage = (): JSX.Element => {
           text={"HeadLine1"}
           width="120px"
           height="32px"
-          textColor="black"
-          backGroundColor="#AAFFC9"
-          borderColor="#AAFFC9"
+          textColor={headlineNum == 1 ? "black" : "black"}
+          backGroundColor={headlineNum == 1 ? "#AAFFC9" : "white"}
+          borderColor={headlineNum == 1 ? "#AAFFC9" : "black"}
           buttonClick={() => setChildHeadlineNum(1)}
         />
         <AnimeButton
@@ -86,9 +91,9 @@ const AdminHomePage = (): JSX.Element => {
           text={"HeadLine2"}
           width="120px"
           height="32px"
-          textColor="black"
-          backGroundColor="#AAFFC9"
-          borderColor="#AAFFC9"
+          textColor={headlineNum == 2 ? "black" : "black"}
+          backGroundColor={headlineNum == 2 ? "#AAFFC9" : "white"}
+          borderColor={headlineNum == 2 ? "#AAFFC9" : "black"}
           buttonClick={() => setChildHeadlineNum(2)}
         />
         <AnimeButton
@@ -96,9 +101,9 @@ const AdminHomePage = (): JSX.Element => {
           text={"HeadLine3"}
           width="120px"
           height="32px"
-          textColor="black"
-          backGroundColor="#AAFFC9"
-          borderColor="#AAFFC9"
+          textColor={headlineNum == 3 ? "black" : "black"}
+          backGroundColor={headlineNum == 3 ? "#AAFFC9" : "white"}
+          borderColor={headlineNum == 3 ? "#AAFFC9" : "black"}
           buttonClick={() => setChildHeadlineNum(3)}
         />
       </AdminHomePageButtonsDiv>

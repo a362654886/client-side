@@ -3,7 +3,7 @@ import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Flag from "react-flagkit";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { blockInsert } from "../api/blockAPI";
 import { userGet } from "../api/userApi";
@@ -18,7 +18,10 @@ import {
   ReportUserImg,
 } from "../cssJs/reportPage";
 import { flagGet } from "../helperFns/flag";
+import { NotificationColor, NotificationTitle, openNotification } from "../helperFns/popUpAlert";
+import { LOADING_CLOSE, LOADING_OPEN } from "../redux/loading";
 import { ReportContextType, ReportType } from "../types/blockType";
+import { LoadingType } from "../types/EnumTypes";
 import { IStoreState } from "../types/IStoreState";
 import { User } from "../types/User";
 
@@ -38,6 +41,7 @@ const getPamas = (url: string) => {
 
 const Report = (): JSX.Element => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [urlPamaObj, setUrlPamaObj] = useState<Record<string, string> | null>(
     null
@@ -91,7 +95,29 @@ const Report = (): JSX.Element => {
           timeString.getMonth() + 1
         }-${timeString.getFullYear()}`,
       };
-      await blockInsert(reportBody);
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
+      const status = await blockInsert(reportBody);
+      if (status == 200) {
+        openNotification(
+          "success",
+          NotificationColor.Success,
+          NotificationTitle.Success
+        );
+        setCheckedList([])
+      } else {
+        openNotification(
+          "send fail",
+          NotificationColor.Error,
+          NotificationTitle.Error
+        );
+      }
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
     }
   };
 

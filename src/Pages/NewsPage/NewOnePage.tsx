@@ -76,17 +76,18 @@ const NewOnePage = (): JSX.Element => {
   };
 
   const toNext = (id: string) => {
-    const idNum = parseInt(id) + 1;
-    history.replace(idNum.toString());
-  };
-
-  const toPrve = (id: string) => {
     const idNum = parseInt(id) - 1;
     history.replace(idNum.toString());
   };
 
+  const toPrve = (id: string) => {
+    const idNum = parseInt(id) + 1;
+    history.replace(idNum.toString());
+  };
+
   const getPrveDiv = () => {
-    if (para.id !== "1") {
+    const idNumber = parseInt(para.id);
+    if (idNumber - 1 != newsNumber) {
       return (
         <AnimeButton
           para=""
@@ -103,7 +104,8 @@ const NewOnePage = (): JSX.Element => {
   };
 
   const getNextDiv = () => {
-    if (parseInt(para.id) < (newsNumber ? newsNumber : 0)) {
+    const idNumber = parseInt(para.id);
+    if (idNumber > 1) {
       return (
         <AnimeButton
           para=""

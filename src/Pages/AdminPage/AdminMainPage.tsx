@@ -39,7 +39,7 @@ const AdminMainPage = (): JSX.Element => {
       //toPage("/adminPage");
     }
     if (loginUser && history.location.pathname == "/adminManagement") {
-      toPage("/adminManagement/News");
+      toPage("/adminManagement/Home Page");
     }
   }, [loginUser]);
 

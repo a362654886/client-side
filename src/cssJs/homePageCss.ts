@@ -415,3 +415,10 @@ export const CookieDiv = styled(Drawer)`
     line-height: 32px;
   }
 `;
+
+//headline image
+
+export const HeaderLineImage = styled.img`
+  width: 640px;
+  height: 320px;
+`;

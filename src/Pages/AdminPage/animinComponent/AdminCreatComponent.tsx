@@ -1,4 +1,13 @@
-import { Checkbox, Input, RadioChangeEvent, Row, Col, DatePicker } from "antd";
+import {
+  Checkbox,
+  Input,
+  RadioChangeEvent,
+  Row,
+  Col,
+  DatePicker,
+  Button,
+  Modal,
+} from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { AdminAnimeCreateDiv } from "../../../cssJs/AdminPage/adminAdminCreateCss";
@@ -20,7 +29,7 @@ import hidive from "../../../files/Hidive.png";
 import VIZ from "../../../files/VIZ.png";
 import AnimePlant from "../../../files/AnimePlant.png";
 import AnimeButton from "../../../components/Button";
-import { Anime } from "../../../types/Amine";
+import { Anime, AnimeSource } from "../../../types/Amine";
 import { animeAdd } from "../../../api/animeAPI";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { useDispatch } from "react-redux";
@@ -34,6 +43,7 @@ import {
 } from "../../../helperFns/popUpAlert";
 import AlertBox, { ColorType } from "../../../components/AlertBox";
 import moment from "moment";
+import { animeSourceAdd, animeSourcesGet } from "../../../api/animeSourceAPI";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -54,6 +64,23 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
   const [errorText, setErrorText] = useState<string>("");
   const [ifLoadingAlert, setLoadingAlert] = useState<boolean>(false);
 
+  //all where to watch
+  const [whereToWatches, setWhereToWatches] = useState<AnimeSource[]>([]);
+
+  //where to watch
+  const [whereToWatchShow, setWhereToWatchShow] = useState<boolean>(false);
+  const [whereToWatchUploadImg, setWhereToWatchUploadImg] =
+    useState<string>("");
+  const [whereToWatchName, setWhereToWatchName] = useState<string>("");
+  const [whereToWatchLink, setWhereToWatchLink] = useState<string>("");
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      const allSources = await animeSourcesGet();
+      setWhereToWatches(allSources);
+    })();
+  }, []);
+
   useEffect(() => {
     //
   }, [uploadImg]);
@@ -73,8 +100,10 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
     }
   };
 
-  const onMultipleChange = (checkedValue: CheckboxValueType[]): void =>
+  const onMultipleChange = (checkedValue: CheckboxValueType[]): void =>{
+    console.log(checkedValue)
     setWhereWatchList(checkedValue as string[]);
+  }
 
   const setImg = (value: ImageBody) => setLoadImg(value.imgBase64);
 
@@ -114,6 +143,19 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
         NotificationTitle.Success
       );
       editAnime(anime);
+    }
+  };
+
+  const saveWhereToWatch = async () => {
+    const whereToWatchBody: AnimeSource = {
+      _id: whereToWatchName,
+      imageLink: whereToWatchUploadImg,
+      sourceName: whereToWatchName,
+      link: whereToWatchLink,
+    };
+    const r = await animeSourceAdd(whereToWatchBody);
+    if (r == 200) {
+      setWhereToWatchShow(false);
     }
   };
 
@@ -175,40 +217,33 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
           style={{ display: "flex", marginLeft: "130px", width: "450px" }}
         >
           <Row>
+            {whereToWatches.map((item, index) => {
+              return (
+                <Col
+                  key={index}
+                  style={{
+                    marginRight: "42px",
+                    marginBottom: "20px",
+                    width: "82px",
+                  }}
+                >
+                  <Checkbox value={item.sourceName}>
+                    <WhereWatchImg
+                      src={`https://animeimagebucket.s3.amazonaws.com/${item.imageLink}`}
+                    />
+                  </Checkbox>
+                </Col>
+              );
+            })}
+
             <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"mal"}>
-                <WhereWatchImg src={mal} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"tubi"}>
-                <WhereWatchImg src={tubi} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"crunchyroll"}>
-                <WhereWatchImg src={crunchyroll} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"Funimation"} style={{ marginTop: "32px" }}>
-                <WhereWatchImg src={Funimation} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"hidive"} style={{ marginTop: "32px" }}>
-                <WhereWatchImg src={hidive} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"VIZ"} style={{ marginTop: "32px" }}>
-                <WhereWatchImg src={VIZ} />
-              </Checkbox>
-            </Col>
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Checkbox value={"AnimePlant"} style={{ marginTop: "32px" }}>
-                <WhereWatchImg src={AnimePlant} />
-              </Checkbox>
+              <Button
+                onClick={() => {
+                  setWhereToWatchShow(true);
+                }}
+              >
+                Add
+              </Button>
             </Col>
           </Row>
         </CheckboxGroup>
@@ -225,6 +260,38 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
           buttonClick={() => submit()}
         />
       </AnimeCreateSubmitButton>
+      <Modal
+        width={700}
+        footer={[]}
+        onCancel={() => setWhereToWatchShow(false)}
+        maskClosable={false}
+        visible={whereToWatchShow}
+      >
+        <img src={whereToWatchUploadImg} />
+        <UploadImageButton>
+          <ImageUpload
+            width={"120px"}
+            height={"32px"}
+            textColor={"black"}
+            backGroundColor={"white"}
+            border={"1px solid #D1D2D3"}
+            text={"Upload"}
+            setImg={(value: ImageBody) =>
+              setWhereToWatchUploadImg(value.imgBase64)
+            }
+            margin={"0px"}
+          />
+          <Input
+            value={whereToWatchName}
+            onChange={(e) => setWhereToWatchName(e.target.value)}
+          />
+          <Input
+            value={whereToWatchLink}
+            onChange={(e) => setWhereToWatchLink(e.target.value)}
+          />
+          <Button onClick={() => saveWhereToWatch()}>save</Button>
+        </UploadImageButton>
+      </Modal>
     </>
   );
 

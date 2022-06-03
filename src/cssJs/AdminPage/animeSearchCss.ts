@@ -15,6 +15,21 @@ export const SearchDiv = styled.div`
   }
 `;
 
+export const SearchNewsDiv = styled.div`
+  width: 80%;
+  height: 62px;
+  margin-left: 52px;
+  margin-top: 45px;
+  display: flex;
+  input {
+    width: 573px;
+    height: 36px;
+  }
+  button {
+    margin-left: 30px;
+  }
+`;
+
 export const SearchTableDiv = styled.div`
   width: 80%;
   height: auto;

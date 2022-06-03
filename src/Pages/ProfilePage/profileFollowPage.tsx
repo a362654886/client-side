@@ -22,7 +22,7 @@ import { User } from "../../types/User";
 import avatarSetting from "../../files/avatarSetting.png";
 import ingfollow from "../../files/ingfollow.png";
 import marketFollow from "../../files/Icon-Follow.svg";
-import AnimeButton from "../../components/Button";
+import AnimeButton, { MoreButtonDiv } from "../../components/Button";
 import {
   FollowBottomDiv,
   FollowButtonsDiv,
@@ -31,6 +31,10 @@ import {
   FollowElementProfileNameSetting,
 } from "../../cssJs/ProfilePage/ProfileFollowCss";
 import { LOGIN_USER_UPDATE_FOLLOW } from "../../redux/loginUser";
+import getMoreImg from "../../files/getMore.png";
+import { cloneDeep } from "lodash";
+import { LoadingType } from "../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 
 const buttonsColor = [
   {
@@ -62,21 +66,34 @@ const ProfileFollowPage = (): JSX.Element => {
   );
 
   const [chooseButton, setChooseButton] = useState<number>(0);
+
   const [followIng, setFollowing] = useState<User[] | null>([]);
   const [followIngCount, setFollowIngCount] = useState<number>(0);
+  const [followIngPage, setFollowIngPage] = useState<number>(1);
+
   const [followers, setFollowers] = useState<followByType[] | null>([]);
   const [followersCount, setFollowersCount] = useState<number>(0);
+  const [followersPage, setFollowersPage] = useState<number>(1);
+  const pageSize = 2;
 
   useEffect(() => {
     (async function anyNameFunction() {
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
       await getFollowers(para.id);
       await getFollowing(para.id);
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
     })();
   }, []);
 
   useEffect(() => {
-    console.log(loginUser);
-    console.log(followers);
+    //console.log(followIng);
+    //console.log(followers);
   }, [
     followers,
     followersCount,
@@ -87,16 +104,76 @@ const ProfileFollowPage = (): JSX.Element => {
     profileUser,
   ]);
 
+  useEffect(() => {
+    (async function anyNameFunction() {
+      await getMoreFollowing(para.id);
+    })();
+  }, [followIngPage]);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      await getMoreFollower(para.id);
+    })();
+  }, [followersPage]);
+
   const getFollowers = async (userId: string) => {
-    const followerResult = await followByGetByUserId(userId, 1, 10, 0);
+    const followerResult = await followByGetByUserId(
+      userId,
+      followersPage,
+      pageSize,
+      0
+    );
     setFollowers(followerResult ? followerResult.result : null);
     setFollowersCount(followerResult ? followerResult.count : 0);
   };
 
   const getFollowing = async (userId: string) => {
-    const followingResult = await userFollowsGets(userId, 1, 10);
+    const followingResult = await userFollowsGets(userId, 1, pageSize);
     setFollowing(followingResult ? followingResult.result : null);
-    setFollowIngCount(followingResult ? followingResult.count : 0);
+    setFollowIngCount(followingResult ? followingResult.count : followersPage);
+  };
+
+  const getMoreFollowing = async (userId: string) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const followingResult = await userFollowsGets(
+      userId,
+      followIngPage,
+      pageSize
+    );
+    if (followIng) {
+      setFollowing(
+        followIng.concat(followingResult ? followingResult.result : [])
+      );
+    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
+  const getMoreFollower = async (userId: string) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const followerResult = await followByGetByUserId(
+      userId,
+      followersPage,
+      pageSize,
+      0
+    );
+    if (followers) {
+      setFollowers(
+        followers.concat(followerResult ? followerResult.result : [])
+      );
+    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const getImage = () => {
@@ -111,6 +188,14 @@ const ProfileFollowPage = (): JSX.Element => {
       payload: id,
       type: LOGIN_USER_UPDATE_FOLLOW,
     });
+  };
+
+  const getFollowingMore = () => {
+    setFollowIngPage(followIngPage + 1);
+  };
+
+  const getFollowerMore = () => {
+    setFollowersPage(followersPage + 1);
   };
 
   const getButtons = () => {
@@ -161,107 +246,131 @@ const ProfileFollowPage = (): JSX.Element => {
   const getPart = () => {
     if (chooseButton == 0) {
       return followIng ? (
-        followIng.map((item: User, index: number) => {
-          return (
-            <FollowElementDiv key={index}>
-              <FollowElementProfileDiv>
-                <img
-                  src={`https://animeimagebucket.s3.amazonaws.com/${item.avatar}`}
-                />
-                <FollowElementProfileNameSetting>
-                  <p>
-                    {`${item ? item.firstName : ""}.${
-                      item ? item.lastName.substring(0, 1).toUpperCase() : ""
-                    }`}
-                    <Flag
-                      style={{ marginLeft: "5px" }}
-                      country={flagGet(item ? item.country : "")}
-                    />
-                  </p>
-                  <SettingImg
-                    userId={item ? item._id : ""}
-                    userName={`${item ? item.firstName : ""}.${
-                      item ? item.lastName : ""
-                    }`}
-                    userImg={avatarSetting}
-                    marginTop="4px"
-                    type={null}
-                    contextId={null}
+        <>
+          {followIng.map((item: User, index: number) => {
+            return (
+              <FollowElementDiv key={index}>
+                <FollowElementProfileDiv>
+                  <img
+                    src={`https://animeimagebucket.s3.amazonaws.com/${item.avatar}`}
                   />
-                </FollowElementProfileNameSetting>
-              </FollowElementProfileDiv>
-              <FollowBottomDiv
-                onClick={() => {
-                  followUser(item._id);
-                }}
-              >
-                <img
-                  src={
-                    loginUser?.followUsers.indexOf(item._id) == -1
-                      ? marketFollow
-                      : ingfollow
-                  }
-                />
-                <h6>
-                  {loginUser?.followUsers.indexOf(item._id) == -1
-                    ? `Follow`
-                    : `Following`}
-                </h6>
-              </FollowBottomDiv>
-            </FollowElementDiv>
-          );
-        })
+                  <FollowElementProfileNameSetting>
+                    <p>
+                      {`${item ? item.firstName : ""}.${
+                        item ? item.lastName.substring(0, 1).toUpperCase() : ""
+                      }`}
+                      <Flag
+                        style={{ marginLeft: "5px" }}
+                        country={flagGet(item ? item.country : "")}
+                      />
+                    </p>
+                    <SettingImg
+                      userId={item ? item._id : ""}
+                      userName={`${item ? item.firstName : ""}.${
+                        item ? item.lastName : ""
+                      }`}
+                      userImg={avatarSetting}
+                      marginTop="4px"
+                      type={null}
+                      contextId={null}
+                    />
+                  </FollowElementProfileNameSetting>
+                </FollowElementProfileDiv>
+                <FollowBottomDiv
+                  onClick={() => {
+                    followUser(item._id);
+                  }}
+                >
+                  <img
+                    src={
+                      loginUser?.followUsers.indexOf(item._id) == -1
+                        ? marketFollow
+                        : ingfollow
+                    }
+                  />
+                  <h6>
+                    {loginUser?.followUsers.indexOf(item._id) == -1
+                      ? `Follow`
+                      : `Following`}
+                  </h6>
+                </FollowBottomDiv>
+              </FollowElementDiv>
+            );
+          })}
+          {followIng.length < followIngCount ? (
+            <MoreButtonDiv onClick={() => getFollowingMore()}>
+              <div>
+                <img src={`${getMoreImg}`} />
+                <p>Load More</p>
+              </div>
+            </MoreButtonDiv>
+          ) : (
+            <></>
+          )}
+        </>
       ) : (
         <></>
       );
     } else {
       return followers ? (
-        followers.map((item: followByType, index: number) => {
-          return (
-            <FollowElementDiv key={index}>
-              <FollowElementProfileDiv>
-                <img src={`${item.userAvatar}`} />
-                <FollowElementProfileNameSetting>
-                  <p>
-                    {`${item ? item.userName : ""}`}
-                    <Flag
-                      style={{ marginLeft: "5px" }}
-                      country={flagGet(
-                        item ? (item.country ? item.country : "") : ""
-                      )}
+        <>
+          {followers.map((item: followByType, index: number) => {
+            return (
+              <FollowElementDiv key={index}>
+                <FollowElementProfileDiv>
+                  <img src={`${item.userAvatar}`} />
+                  <FollowElementProfileNameSetting>
+                    <p>
+                      {`${item ? item.userName : ""}`}
+                      <Flag
+                        style={{ marginLeft: "5px" }}
+                        country={flagGet(
+                          item ? (item.country ? item.country : "") : ""
+                        )}
+                      />
+                    </p>
+                    <SettingImg
+                      userId={item ? item._id : ""}
+                      userName={`${item ? item.userName : ""}`}
+                      userImg={avatarSetting}
+                      marginTop="4px"
+                      type={null}
+                      contextId={null}
                     />
-                  </p>
-                  <SettingImg
-                    userId={item ? item._id : ""}
-                    userName={`${item ? item.userName : ""}`}
-                    userImg={avatarSetting}
-                    marginTop="4px"
-                    type={null}
-                    contextId={null}
+                  </FollowElementProfileNameSetting>
+                </FollowElementProfileDiv>
+                <FollowBottomDiv
+                  onClick={() => {
+                    followUser(item.userId);
+                  }}
+                >
+                  <img
+                    src={
+                      loginUser?.followUsers.indexOf(item.userId) == -1
+                        ? marketFollow
+                        : ingfollow
+                    }
                   />
-                </FollowElementProfileNameSetting>
-              </FollowElementProfileDiv>
-              <FollowBottomDiv
-                onClick={() => {
-                  followUser(item.userId);
-                }}
-              >
-                <img
-                  src={
-                    loginUser?.followUsers.indexOf(item.userId) == -1
-                      ? marketFollow
-                      : ingfollow
-                  }
-                />
-                <h6>
-                  {loginUser?.followUsers.indexOf(item.userId) == -1
-                    ? `Follow`
-                    : `Following`}
-                </h6>
-              </FollowBottomDiv>
-            </FollowElementDiv>
-          );
-        })
+                  <h6>
+                    {loginUser?.followUsers.indexOf(item.userId) == -1
+                      ? `Follow`
+                      : `Following`}
+                  </h6>
+                </FollowBottomDiv>
+              </FollowElementDiv>
+            );
+          })}
+          {followers.length < followersCount ? (
+            <MoreButtonDiv onClick={() => getFollowerMore()}>
+              <div>
+                <img src={`${getMoreImg}`} />
+                <p>Load More</p>
+              </div>
+            </MoreButtonDiv>
+          ) : (
+            <></>
+          )}
+        </>
       ) : (
         <></>
       );

@@ -6,8 +6,12 @@ import { MallSideDiv } from "../../cssJs/MallPage/MallPageCss";
 import { NewType } from "../../types/NewsType";
 import moreRightImg from "../../files/moreRightArrow.png";
 import { newAllGet } from "../../api/newsAPI";
+import { useHistory } from "react-router-dom";
 
 const MallSide = (): JSX.Element => {
+  
+  const history = useHistory();
+  
   const [allNews, setAllNews] = useState<NewType[]>([]);
 
   useEffect(() => {
@@ -35,7 +39,12 @@ const MallSide = (): JSX.Element => {
           <h6 style={{ fontWeight: "bold" }}>News</h6>
           {allNews.map((news, index) => {
             return (
-              <p key={index}>
+              <p
+                key={index}
+                onClick={() => {
+                  history.push(`oneNew/${news._id}`);
+                }}
+              >
                 {news.header.length > 35
                   ? `${news.header.substring(0, 35)}.....`
                   : news.header}
@@ -44,7 +53,7 @@ const MallSide = (): JSX.Element => {
           })}
           <MoreRight
             onClick={() => {
-              console.log("more");
+              history.push(`news`);
             }}
           >
             <img src={moreRightImg} />

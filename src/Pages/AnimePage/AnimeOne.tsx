@@ -23,8 +23,12 @@ import AnimeOneVideo from "./AnimeOneCpmponents/AnimeOneVideo";
 import AnimeOneVideoAdd from "./AnimeOneCpmponents/AnimeOneVideoAdd";
 import moreRightImg from "../../files/moreRightArrow.png";
 import { getWidth } from "../../helperFns/widthFn";
+import { useHistory } from "react-router-dom";
 
 const AnimeOne = (): JSX.Element => {
+
+  const history = useHistory();
+
   const chooseAnime: Anime | null = useSelector(
     (state: IStoreState) => state.animeState
   );
@@ -198,7 +202,9 @@ const AnimeOne = (): JSX.Element => {
             <h6 style={{ fontWeight: "bold" }}>News</h6>
             {allNews.map((news, index) => {
               return (
-                <p key={index}>
+                <p key={index} onClick={()=>{
+                  history.push(`oneNew/${news._id}`);
+                }}>
                   {news.header.length > 35
                     ? `${news.header.substring(0, 35)}.....`
                     : news.header}
@@ -207,7 +213,7 @@ const AnimeOne = (): JSX.Element => {
             })}
             <MoreRight
               onClick={() => {
-                console.log("more");
+                history.push(`news`);
               }}
             >
               <img src={moreRightImg} />
