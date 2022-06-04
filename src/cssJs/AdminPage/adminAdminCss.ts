@@ -126,3 +126,35 @@ export const AnimeCreateSubmitButton = styled.div`
 export const AnimeDatePicker = styled(DatePicker)`
   height: 36px;
 `;
+
+export const AnimeAddNewSource = styled.div`
+  display: flex;
+  cursor: pointer;
+  img {
+    height: 32px;
+    width: 32px;
+  }
+  p {
+    font-size: 16px;
+    line-height: 32px;
+    width: 296px;
+    margin-bottom: 0px;
+    margin-left: 4px;
+  }
+`;
+
+export const AnimeAddNewSourceModalDiv = styled.div`
+  display: flex;
+  cursor: pointer;
+  img {
+    height: 60px;
+    width: 60px;
+  }
+`;
+
+export const AnimeAddNewSourceInput = styled.div`
+  .ant-input {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+`;

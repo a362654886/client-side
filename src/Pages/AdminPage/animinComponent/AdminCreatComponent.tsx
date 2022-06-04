@@ -14,6 +14,9 @@ import { AdminAnimeCreateDiv } from "../../../cssJs/AdminPage/adminAdminCreateCs
 import {
   AdminAiredInput,
   AdminAnimeInput,
+  AnimeAddNewSource,
+  AnimeAddNewSourceInput,
+  AnimeAddNewSourceModalDiv,
   AnimeCreateSubmitButton,
   UploadImageButton,
   UploadImageDiv,
@@ -21,13 +24,6 @@ import {
   WhereWatchImg,
 } from "../../../cssJs/AdminPage/adminAdminCss";
 import { ImageBody } from "../../../types/BasicType";
-import crunchyroll from "../../../files/cunp.png";
-import Funimation from "../../../files/Funimation.png";
-import mal from "../../../files/mal.png";
-import tubi from "../../../files/Tubi.png";
-import hidive from "../../../files/Hidive.png";
-import VIZ from "../../../files/VIZ.png";
-import AnimePlant from "../../../files/AnimePlant.png";
 import AnimeButton from "../../../components/Button";
 import { Anime, AnimeSource } from "../../../types/Amine";
 import { animeAdd } from "../../../api/animeAPI";
@@ -44,6 +40,9 @@ import {
 import AlertBox, { ColorType } from "../../../components/AlertBox";
 import moment from "moment";
 import { animeSourceAdd, animeSourcesGet } from "../../../api/animeSourceAPI";
+import CropImgBodyDiv from "./CropImgBodyDiv";
+import Add from "../../../files/Add.svg";
+import IconUpload from "./ImageUpload";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -59,10 +58,17 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
   const [airedEnd, setAiredEnd] = useState<string>("");
   const [producers, setProducers] = useState<string>("");
   const [rating, setRating] = useState<string>("");
-  const [uploadImg, setLoadImg] = useState<string>("");
+  const [uploadImg, setLoadImg] = useState<ImageBody>({
+    width: 0,
+    height: 0,
+    imgBase64: "",
+    imgName: "",
+  });
+  const [animeImg, setAnimeImg] = useState<string>("");
   const [whereWatchList, setWhereWatchList] = useState([""]);
   const [errorText, setErrorText] = useState<string>("");
   const [ifLoadingAlert, setLoadingAlert] = useState<boolean>(false);
+  const [showCropper, setShowCropper] = useState<boolean>(false);
 
   //all where to watch
   const [whereToWatches, setWhereToWatches] = useState<AnimeSource[]>([]);
@@ -100,12 +106,13 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
     }
   };
 
-  const onMultipleChange = (checkedValue: CheckboxValueType[]): void =>{
-    console.log(checkedValue)
+  const onMultipleChange = (checkedValue: CheckboxValueType[]): void => {
     setWhereWatchList(checkedValue as string[]);
-  }
+  };
 
-  const setImg = (value: ImageBody) => setLoadImg(value.imgBase64);
+  const replaceNewImage = (imageBody: ImageBody) => {
+    setAnimeImg(imageBody.imgBase64);
+  };
 
   const submit = async () => {
     const anime: Anime = {
@@ -115,14 +122,14 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
       producers: producers,
       rating: rating,
       whereToWatch: whereWatchList,
-      headImage: uploadImg,
+      headImage: animeImg,
       likes: 0,
       rate: {
         ratePeople: 0,
         totalRate: 0,
       },
     };
-    if (title.trim() == "" || uploadImg == "") {
+    if (title.trim() == "" || animeImg == "") {
       setErrorText("the header and head image shouldn't be empty");
       setLoadingAlert(true);
       return;
@@ -173,7 +180,7 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
       <UploadImageDiv>
         <h6>Head Image</h6>
         <div>
-          <img src={`${uploadImg}`}></img>
+          <img src={`${animeImg}`}></img>
           <p>280x280</p>
         </div>
       </UploadImageDiv>
@@ -185,7 +192,10 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
           backGroundColor={"white"}
           border={"1px solid #D1D2D3"}
           text={"Upload"}
-          setImg={(value: ImageBody) => setImg(value)}
+          setImg={(value: ImageBody) => {
+            setLoadImg(value);
+            setShowCropper(true);
+          }}
           margin={"0px"}
         />
       </UploadImageButton>
@@ -236,14 +246,15 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
               );
             })}
 
-            <Col style={{ marginRight: "42px", width: "82px" }}>
-              <Button
+            <Col style={{ marginRight: "42px", width: "296px" }}>
+              <AnimeAddNewSource
                 onClick={() => {
                   setWhereToWatchShow(true);
                 }}
               >
-                Add
-              </Button>
+                <img src={Add} />
+                <p>Add a New Source</p>
+              </AnimeAddNewSource>
             </Col>
           </Row>
         </CheckboxGroup>
@@ -267,9 +278,9 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
         maskClosable={false}
         visible={whereToWatchShow}
       >
-        <img src={whereToWatchUploadImg} />
-        <UploadImageButton>
-          <ImageUpload
+        <AnimeAddNewSourceModalDiv>
+          <img src={whereToWatchUploadImg} />
+          <IconUpload
             width={"120px"}
             height={"32px"}
             textColor={"black"}
@@ -281,17 +292,32 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
             }
             margin={"0px"}
           />
+        </AnimeAddNewSourceModalDiv>
+        <AnimeAddNewSourceInput>
           <Input
+            placeholder="Image Name"
             value={whereToWatchName}
             onChange={(e) => setWhereToWatchName(e.target.value)}
           />
+        </AnimeAddNewSourceInput>
+        <AnimeAddNewSourceInput>
           <Input
+            placeholder="Link"
             value={whereToWatchLink}
             onChange={(e) => setWhereToWatchLink(e.target.value)}
           />
-          <Button onClick={() => saveWhereToWatch()}>save</Button>
-        </UploadImageButton>
+        </AnimeAddNewSourceInput>
+        <Button onClick={() => saveWhereToWatch()}>save</Button>
       </Modal>
+      <CropImgBodyDiv
+        uploadImg={uploadImg}
+        setLoadImg={(imageBody: ImageBody) => {
+          replaceNewImage(imageBody);
+          setShowCropper(false);
+        }}
+        visible={showCropper}
+        setVisibleFalse={() => setShowCropper(false)}
+      />
     </>
   );
 

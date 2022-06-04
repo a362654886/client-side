@@ -37,7 +37,7 @@ const CropImgBodyDiv = ({
   return (
     <>
       <Modal
-        width={700}
+        width={400}
         footer={[]}
         onCancel={() => setVisibleFalse()}
         maskClosable={false}
@@ -46,15 +46,15 @@ const CropImgBodyDiv = ({
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <Cropper
             src={uploadImg.imgBase64}
-            style={{ height: "320px", width: "640px" }}
+            style={{ height: "280px", width: "280px" }}
             // Cropper.js options
-            initialAspectRatio={1 / 2}
+            initialAspectRatio={1}
             /* eslint-disable @typescript-eslint/no-explicit-any */
             ref={ImgCorpRef as any}
             minCropBoxHeight={10}
             minCropBoxWidth={10}
             viewMode={1}
-            aspectRatio={1.5}
+            aspectRatio={1}
             background={false}
             responsive={true}
             cropBoxResizable={true}

@@ -134,7 +134,7 @@ const AnimeOneForum = ({
   }, [pageNum]);
 
   useEffect(() => {
-    if (chooseAnime != null) {
+    if (chooseAnime != null || discovery) {
       (async function anyNameFunction() {
         await getIniForums();
       })();
@@ -150,7 +150,7 @@ const AnimeOneForum = ({
       }
       setNewSecondItemHtml(newArr);
     }
-  }, [chooseAnime]);
+  }, [chooseAnime, discovery]);
 
   useEffect(() => {
     //console.log(forums);
@@ -177,6 +177,7 @@ const AnimeOneForum = ({
       pageNum,
       pageSize
     );
+    console.log(forumResult);
     if (forumResult) {
       setForums(forumResult.result);
       setCount(forumResult.count);
@@ -441,8 +442,12 @@ const AnimeOneForum = ({
 
   const sendNewSecondItem = (e: string, index: number, secondIndex: number) => {
     const newSecondItemHtmls = newSecondItemHtml;
-    newSecondItemHtmls[index][secondIndex] = e;
-    setNewSecondItemHtml(newSecondItemHtmls);
+    try {
+      newSecondItemHtmls[index][secondIndex] = e;
+      setNewSecondItemHtml(newSecondItemHtmls);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   //get html element
