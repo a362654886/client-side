@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { animeAllGet } from "../../api/animeAPI";
-import { MiddleBiggerDiv } from "../../components/Button";
+import { MiddleBiggerDiv, MiddleHomeDiv } from "../../components/Button";
 import {
   AnimeBox,
   CenterDiv,
+  HomeCenterDiv,
   LikeDiv,
   ShowcaseBox,
   StarDiv,
@@ -57,7 +58,7 @@ import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import SettingImg from "../../components/SettingImg";
 import { TimeText } from "../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
-import animeProduct from "../../files/animeProduct.png";
+import animeProduct from "../../files/homeBottomLine.png";
 import { Carousel } from "antd";
 import { marketAllGet } from "../../api/marketAPI";
 import { MarketType } from "../../types/MarketType";
@@ -503,14 +504,14 @@ const HomePage = (): JSX.Element => {
             </Carousel>
           )}
         </HomePageAnimeDiv>
-        <CenterDiv>
-          <MiddleBiggerDiv>
+        <HomeCenterDiv>
+          <MiddleHomeDiv>
             <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
               <img src={moreRightImg} />
               <p>View All</p>
             </MarketPlaceMore>
-          </MiddleBiggerDiv>
-        </CenterDiv>
+          </MiddleHomeDiv>
+        </HomeCenterDiv>
         {size.width > 700 ? (
           <>
             <HomeShowcaseDiv>
@@ -521,8 +522,8 @@ const HomePage = (): JSX.Element => {
               </h3>
               <MarketContextDiv>{getShowcasesDiv()}</MarketContextDiv>
             </HomeShowcaseDiv>
-            <CenterDiv>
-              <MiddleBiggerDiv>
+            <HomeCenterDiv>
+              <MiddleHomeDiv>
                 <MoreRight
                   onClick={() =>
                     history.push("/showcase/showCollection?page=1")
@@ -531,8 +532,8 @@ const HomePage = (): JSX.Element => {
                   <img src={moreRightImg} />
                   <p>View All</p>
                 </MoreRight>
-              </MiddleBiggerDiv>
-            </CenterDiv>
+              </MiddleHomeDiv>
+            </HomeCenterDiv>
           </>
         ) : (
           <>
@@ -548,8 +549,8 @@ const HomePage = (): JSX.Element => {
                 {getShowcaseMobileDiv()}
               </Carousel>
             </HomePageShowcaseDiv>
-            <CenterDiv>
-              <MiddleBiggerDiv>
+            <HomeCenterDiv>
+              <MiddleHomeDiv>
                 <MarketPlaceMore
                   onClick={() =>
                     history.push("/showcase/showCollection?page=1")
@@ -558,8 +559,8 @@ const HomePage = (): JSX.Element => {
                   <img src={moreRightImg} />
                   <p>View All</p>
                 </MarketPlaceMore>
-              </MiddleBiggerDiv>
-            </CenterDiv>
+              </MiddleHomeDiv>
+            </HomeCenterDiv>
           </>
         )}
         {size.width > 700 ? (
@@ -568,14 +569,14 @@ const HomePage = (): JSX.Element => {
               <h2>Marketplace</h2>
             </MarketPlaceTitle>
             <MarketContextDiv>{getMarketsDiv()}</MarketContextDiv>
-            <CenterDiv>
-              <MiddleBiggerDiv>
+            <HomeCenterDiv>
+              <MiddleHomeDiv>
                 <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
                   <img src={moreRightImg} />
                   <p>View All</p>
                 </MarketPlaceMore>
-              </MiddleBiggerDiv>
-            </CenterDiv>
+              </MiddleHomeDiv>
+            </HomeCenterDiv>
           </>
         ) : (
           <>
@@ -587,14 +588,14 @@ const HomePage = (): JSX.Element => {
                 {getMarketsDiv()}
               </Carousel>
             </HomePageMarketPlaceDiv>
-            <CenterDiv>
-              <MiddleBiggerDiv>
+            <HomeCenterDiv>
+              <MiddleHomeDiv>
                 <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
                   <img src={moreRightImg} />
                   <p>View All</p>
                 </MarketPlaceMore>
-              </MiddleBiggerDiv>
-            </CenterDiv>
+              </MiddleHomeDiv>
+            </HomeCenterDiv>
           </>
         )}
         {size.width > 700 ? (
@@ -603,14 +604,14 @@ const HomePage = (): JSX.Element => {
               <h2>Anime Products</h2>
             </MarketPlaceTitle>
             <ProductContextDiv>{getProductDiv()}</ProductContextDiv>
-            <CenterDiv>
-              <MiddleBiggerDiv>
+            <HomeCenterDiv>
+              <MiddleHomeDiv>
                 <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
                   <img src={moreRightImg} />
                   <p>View All</p>
                 </MarketPlaceMore>
-              </MiddleBiggerDiv>
-            </CenterDiv>
+              </MiddleHomeDiv>
+            </HomeCenterDiv>
           </>
         ) : (
           <>
@@ -622,14 +623,14 @@ const HomePage = (): JSX.Element => {
                 {getProductDiv()}
               </Carousel>
             </HomePageProductPlaceDiv>
-            <CenterDiv>
-              <MiddleBiggerDiv>
+            <HomeCenterDiv>
+              <MiddleHomeDiv>
                 <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
                   <img src={moreRightImg} />
                   <p>View All</p>
                 </MarketPlaceMore>
-              </MiddleBiggerDiv>
-            </CenterDiv>
+              </MiddleHomeDiv>
+            </HomeCenterDiv>
           </>
         )}
         <CustomerProductBottomImg

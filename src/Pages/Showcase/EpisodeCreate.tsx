@@ -95,16 +95,21 @@ const EpisodeCreate = (): JSX.Element => {
             </EpisodeImage>
           );
         })}
-        <ImageUpload
-          width={"100%"}
-          height={"36px"}
-          textColor={"#F5A623"}
-          backGroundColor={"#FBFCDB"}
-          border={"1px solid #F5A623"}
-          text={"+ Image"}
-          setImg={(value: ImageBody) => setNewImage(value)}
-          margin={"0px"}
-        />
+        <div style={{ width: "100%" }}>
+          <div style={{ width: "240px", margin: "0px auto" }}>
+            <ImageUpload
+              width={"240px"}
+              height={"240px"}
+              textColor={"black"}
+              backGroundColor={"#F6F6F6"}
+              border={"1px solid #F6F6F6"}
+              text={""}
+              setImg={(value: ImageBody) => setNewImage(value)}
+              imageAdd={false}
+              margin={"20px auto"}
+            />
+          </div>
+        </div>
         <div style={{ marginTop: "32px", marginBottom: "32px" }}>
           <AnimeButton
             para=""

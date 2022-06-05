@@ -138,7 +138,7 @@ export const HomePageShowcaseDiv = styled.div`
   }
   .slick-slider,
   .slick-initialized {
-    height: 300px;
+    height: auto;
   }
 `;
 
@@ -411,6 +411,21 @@ export const CookieDiv = styled(Drawer)`
   p {
     margin-top: 36px;
     margin: 0px 120px;
+    font-size: 16px;
+    line-height: 32px;
+  }
+`;
+
+export const MobileCookieDiv = styled(Drawer)`
+  .ant-drawer-wrapper-body {
+    height: 370px;
+  }
+  .ant-drawer-body {
+    background-color: #ecf9fe;
+    height: 370px;
+  }
+  p {
+    margin-top: 16px;
     font-size: 16px;
     line-height: 32px;
   }

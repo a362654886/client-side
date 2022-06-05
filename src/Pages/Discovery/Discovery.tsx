@@ -69,9 +69,21 @@ const Discovery = (): JSX.Element => {
   const getButtons = () => {
     const indexNum = chooseButton;
     return buttonsColor.map((button, index) => {
+      const style =
+        getWidth() > 800
+          ? {
+              marginTop: "0px",
+            }
+          : {
+              marginTop: "8px",
+              position: button.text !== "Videos" ? "absolute" : undefined,
+              left: button.text == "Products" ? "138px" : "0px",
+              top: button.text == "Forums" ? "58px" : "15px",
+            };
+
       if (index == indexNum) {
         return (
-          <div key={index}>
+          <div key={index} style={style as React.CSSProperties}>
             <AnimeButton
               para=""
               text={button.text}
@@ -86,7 +98,7 @@ const Discovery = (): JSX.Element => {
         );
       } else {
         return (
-          <div key={index}>
+          <div key={index} style={style as React.CSSProperties}>
             <AnimeButton
               para=""
               text={button.text}
@@ -147,11 +159,14 @@ const Discovery = (): JSX.Element => {
           <DiscoveryTitle>Explore</DiscoveryTitle>
           <DiscoveryHeader />
           <DiscoverySubTitle>The latest posts</DiscoverySubTitle>
-          {getWidth() > 600 ? (
-            <AnimeButtonsDiv>{getButtons()}</AnimeButtonsDiv>
-          ) : (
-            getButtons()
-          )}
+          <AnimeButtonsDiv
+            style={{
+              height: getWidth() > 600 ? "64px" : "104px",
+              position: "relative",
+            }}
+          >
+            {getButtons()}
+          </AnimeButtonsDiv>
           {getChildDiv()}
         </DiscoveryBox>
         <div

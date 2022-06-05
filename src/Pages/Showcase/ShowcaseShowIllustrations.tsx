@@ -104,57 +104,40 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
 
   const getButtons = () => {
     return buttonsColor.map((button, index) => {
-      if (index == 1) {
-        return (
-          <div
-            key={index}
-            style={{ marginTop: getWidth() > 800 ? "0px" : "8px" }}
-            className={
-              getWidth() > 800 ? "" : "col-xl-4 col-md-4 col-sm-6 col-6"
+      const style =
+        getWidth() > 800
+          ? {
+              marginTop: "0px",
             }
-          >
-            <AnimeButton
-              para=""
-              text={button.text}
-              width="120px"
-              height="32px"
-              textColor="black"
-              backGroundColor="#AAFFC9"
-              borderColor="#AAFFC9"
-              buttonClick={() => {
-                console.log("");
-              }}
-            />
-          </div>
-        );
-      } else {
-        return (
-          <div
-            key={index}
-            style={{ marginTop: getWidth() > 800 ? "0px" : "8px" }}
-            className={
-              getWidth() > 800 ? "" : "col-xl-4 col-md-4 col-sm-6 col-6"
+          : {
+              marginTop: "8px",
+              position: button.text !== "Collections" ? "absolute" : undefined,
+              left: button.text == "Illustrations" ? "138px" : "0px",
+              top: button.text == "Manga" ? "58px" : "15px",
+            };
+
+      return (
+        <div key={index} style={style as React.CSSProperties}>
+          <AnimeButton
+            para=""
+            text={button.text}
+            width="120px"
+            height="32px"
+            textColor={index == 1 ? "black" : "#4BA3C3"}
+            backGroundColor={index == 1 ? "#AAFFC9" : "white"}
+            borderColor={index == 1 ? "#AAFFC9" : "#4BA3C3"}
+            buttonClick={() =>
+              index == 1
+                ? console.log("")
+                : toPage(
+                    index == 1
+                      ? `/showcase/showIllustrations?page=1`
+                      : "/showcase/showManga?page=1"
+                  )
             }
-          >
-            <AnimeButton
-              para=""
-              text={button.text}
-              width="120px"
-              height="32px"
-              textColor="#4BA3C3"
-              backGroundColor="white "
-              borderColor="#4BA3C3"
-              buttonClick={() => {
-                toPage(
-                  index == 0
-                    ? `/showcase/showCollection?page=1`
-                    : "/showcase/showManga?page=1"
-                );
-              }}
-            />
-          </div>
-        );
-      }
+          />
+        </div>
+      );
     });
   };
 
@@ -271,7 +254,7 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
             <ShowcaseForum showcases={allShowCases} editLink={true} />
           </>
         )}
-        
+
         {allShowCases.length < count ? (
           <MoreButtonDiv onClick={() => getMore()}>
             <div>
@@ -307,9 +290,9 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
           </ShowCaseTitleDiv>
           <AnimeButtonsDiv
             style={{
-              display: getWidth() > 800 ? "flex" : "",
+              height: getWidth() > 800 ? "64px" : "104px",
+              position: "relative",
             }}
-            className={getWidth() > 800 ? "" : "row"}
           >
             {getButtons()}
           </AnimeButtonsDiv>

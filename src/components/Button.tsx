@@ -61,6 +61,11 @@ export const MiddleBiggerDiv = styled.div`
   margin: 0 auto;
 `;
 
+export const MiddleHomeDiv = styled.div`
+  width: 160px;
+  margin: 0 auto;
+`;
+
 export const MoreButtonDiv = styled.div`
   width: 100%;
   height: 64px;

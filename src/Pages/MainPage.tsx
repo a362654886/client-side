@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LoadingType, LoginType } from "../types/EnumTypes";
+import { LoadingType } from "../types/EnumTypes";
 import { IStoreState } from "../types/IStoreState";
 import avatar from "../files/avatar.png";
 import titleTextWhite from "../files/titleTextWhite.png";
@@ -40,7 +40,7 @@ import {
   FooterText4,
 } from "../cssJs/footerCss";
 import loadingImg from "../files/loading.gif";
-import { Drawer, Dropdown, Menu, notification } from "antd";
+import { notification } from "antd";
 import Flag from "react-flagkit";
 import { flagGet } from "../helperFns/flag";
 import logOut from "../files/logOut.png";
@@ -50,12 +50,13 @@ import LOGOMobile from "../files/LOGO-Mobile.svg";
 import menuPng from "../files/menuPng.png";
 import { userAuth } from "../api/userApi";
 import { PROFILE_USER_UPDATE } from "../redux/profileUser";
-import { CookieDiv } from "../cssJs/homePageCss";
+import { CookieDiv, MobileCookieDiv } from "../cssJs/homePageCss";
 import cookie from "react-cookies";
 import MainPageRouter from "../router/MainPageRouter";
 import { AwesomeLevelType } from "../types/awesomeLevel";
 import { awesomeLevelAllGet } from "../api/awesomeLevelAPI";
 import { ALL_LEVELS_UPDATE } from "../redux/allLevels";
+import { getWidth } from "../helperFns/widthFn";
 
 const MainPage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -145,7 +146,7 @@ const MainPage = (): JSX.Element => {
     } else {
       console.log(history.location.pathname);
     }
-    const cookieState = cookie.load("cookieAlert");
+    const cookieState = localStorage.getItem("cookieAlert");
     if (cookieState && cookieState == "true") {
       setCookieValue(false);
     }
@@ -548,23 +549,43 @@ const MainPage = (): JSX.Element => {
           </div>
         )}
       </Footer>
-      <CookieDiv
-        placement="bottom"
-        onClose={() => {
-          setCookieValue(false);
-          cookie.save("cookieAlert", "true", { path: "/" });
-        }}
-        visible={cookieValue}
-        height={132}
-      >
-        <p>
-          We and <a style={{ color: "blue" }}>our partners</a> use cookies to
-          personalize your experience, to navigate between pages efficiently,
-          and for measurement and analytics purposes. By using our website and
-          services, you agree to our use of cookies as described in our{" "}
-          <a style={{ color: "blue" }}>Cookie Policy</a>.
-        </p>
-      </CookieDiv>
+      {getWidth() > 700 ? (
+        <CookieDiv
+          placement="bottom"
+          onClose={() => {
+            setCookieValue(false);
+            localStorage.setItem("cookieAlert", "true");
+          }}
+          visible={cookieValue}
+          height={132}
+        >
+          <p>
+            We and <a style={{ color: "blue" }}>our partners</a> use cookies to
+            personalize your experience, to navigate between pages efficiently,
+            and for measurement and analytics purposes. By using our website and
+            services, you agree to our use of cookies as described in our{" "}
+            <a style={{ color: "blue" }}>Cookie Policy</a>.
+          </p>
+        </CookieDiv>
+      ) : (
+        <MobileCookieDiv
+          placement="bottom"
+          onClose={() => {
+            setCookieValue(false);
+            localStorage.setItem("cookieAlert", "true");
+          }}
+          visible={cookieValue}
+          height={370}
+        >
+          <p>
+            We and <a style={{ color: "blue" }}>our partners</a> use cookies to
+            personalize your experience, to navigate between pages efficiently,
+            and for measurement and analytics purposes. By using our website and
+            services, you agree to our use of cookies as described in our{" "}
+            <a style={{ color: "blue" }}>Cookie Policy</a>.
+          </p>
+        </MobileCookieDiv>
+      )}
     </div>
   );
 };

@@ -229,7 +229,7 @@ export const ButtonsDiv = styled.div`
 export const MobileButtonsDiv = styled.div`
   margin-top: 16px;
   button {
-    margin-right: 8px;
+    margin-right: 16px;
     margin-top: 8px;
   }
 `;

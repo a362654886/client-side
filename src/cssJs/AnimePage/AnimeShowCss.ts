@@ -87,11 +87,11 @@ export const AnimeBox = styled.div`
 
 export const ShowcaseBox = styled.div`
   width: 260px;
-  height: 260px;
+  height: auto;
   margin-right: 19px;
   img {
     width: 260px;
-    height: 264px;
+    height: auto;
   }
   h6 {
     height: 80px;
@@ -123,6 +123,12 @@ export const CenterDiv = styled.div`
   text-align: center;
   margin-bottom: 40px;
   margin-top: 40px;
+`;
+
+export const HomeCenterDiv = styled.div`
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: 32px;
 `;
 
 export const StarDiv = styled.div`

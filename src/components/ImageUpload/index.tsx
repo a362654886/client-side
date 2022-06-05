@@ -184,7 +184,7 @@ const ImageUpload = ({
               style={{ marginLeft: "83.5px", marginTop: "104px" }}
               src={add}
             />
-            <p style={{ marginTop: "104px" }}>Image</p>
+            <p style={{ marginTop: "109px" }}>Image</p>
           </ImageAddButtonDiv>
         </Upload>
       );

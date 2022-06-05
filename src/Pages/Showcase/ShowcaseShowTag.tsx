@@ -1,6 +1,6 @@
 import { Input } from "antd";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { showCaseAllGet } from "../../api/showcaseAPI";
 import AnimeButton, { MoreButtonDiv } from "../../components/Button";
@@ -88,8 +88,19 @@ const ShowcaseShowTag = (): JSX.Element => {
 
   const getButtons = () => {
     return buttonsColor.map((button, index) => {
+      const style =
+        getWidth() > 800
+          ? {
+              marginTop: "0px",
+            }
+          : {
+              marginTop: "8px",
+              position: button.text !== "Collections" ? "absolute" : undefined,
+              left: button.text == "Illustrations" ? "138px" : "0px",
+              top: button.text == "Manga" ? "58px" : "15px",
+            };
       return (
-        <div key={index}>
+        <div key={index} style={style as CSSProperties}>
           <AnimeButton
             para=""
             text={button.text}
@@ -256,7 +267,8 @@ const ShowcaseShowTag = (): JSX.Element => {
           </ShowCaseTitleDiv>
           <AnimeButtonsDiv
             style={{
-              display: getWidth() > 800 ? "flex" : "inline",
+              height: getWidth() > 800 ? "64px" : "104px",
+              position: "relative",
             }}
           >
             {getButtons()}
