@@ -1,5 +1,5 @@
 import * as React from "react";
-import avatarSetting from "../files/avatarSetting.png";
+import avatarSetting from "../files/avatarSetting.svg";
 import { Popover } from "antd";
 import {
   MessageDiv,

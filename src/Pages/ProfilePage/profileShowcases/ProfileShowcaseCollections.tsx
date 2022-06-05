@@ -4,7 +4,7 @@ import { showCaseAllGet, showCaseAllGetByArr } from "../../../api/showcaseAPI";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ShowCaseEnum, ShowCaseType } from "../../../types/showCaseType";
 import loadingImg from "../../../files/loading.gif";
-import getMoreImg from "../../../files/getMore.png";
+import getMoreImg from "../../../files/getMore.svg";
 import ShowcaseForum from "../../Showcase/ShowcaseForum";
 import { User } from "../../../types/User";
 import { useSelector } from "react-redux";

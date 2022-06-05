@@ -20,7 +20,7 @@ import {
 } from "../../cssJs/ProfilePage/ProfileCss";
 import { IStoreState } from "../../types/IStoreState";
 import { Avatar, User } from "../../types/User";
-import getMoreImg from "../../files/getMore.png";
+import getMoreImg from "../../files/getMore.svg";
 import SettingImg from "../../components/SettingImg";
 import IconSettings from "../../files/IconSettings.svg";
 import IconInbox from "../../files/IconInbox.svg";

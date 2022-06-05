@@ -28,13 +28,13 @@ import {
 import { useHistory, useParams } from "react-router-dom";
 import { MarketType } from "../../types/MarketType";
 import { marketAllGet, marketAllGetByArr } from "../../api/marketAPI";
-import marketSort from "../../files/marketSort.png";
-import marketFilter from "../../files/marketFilter.png";
+import marketSort from "../../files/marketSort.svg";
+import marketFilter from "../../files/marketFilter.svg";
 import iconSelect from "../../files/Icon-Selected.svg";
 import iconClose from "../../files/Icon-Close.svg";
 import iconClear from "../../files/Icon-Clear.svg";
 import loadingImg from "../../files/loading.gif";
-import getMoreImg from "../../files/getMore.png";
+import getMoreImg from "../../files/getMore.svg";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
 import { getWidth } from "../../helperFns/widthFn";
 

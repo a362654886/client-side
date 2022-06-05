@@ -1,3 +1,5 @@
+import { TagType } from "./tagType";
+
 export type MarketType = {
   _id: string;
   userId: string;
@@ -13,6 +15,7 @@ export type MarketType = {
   userAvatar?: string;
   userName?: string;
   userCountry?: string;
+  tags: TagType[] | undefined;
 };
 
 export type MarketPriceType = {

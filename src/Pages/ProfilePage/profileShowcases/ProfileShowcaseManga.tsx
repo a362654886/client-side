@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
 import ShowcaseManga from "../../Showcase/ShowcaseMaga";
 import { SHOWCASE_MANGA_ADD } from "../../../redux/showcaseManga";
-import getMoreImg from "../../../files/getMore.png";
+import getMoreImg from "../../../files/getMore.svg";
 import {
   ProfileAddButtonDiv,
   ProfileMiddleDiv,

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon-Mobile Menue</title>
+    <g id="Icon-Mobile-Menue" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" fill-rule="nonzero">
+            <path d="M16,1 C20.141875,1 23.8918653,2.67907887 26.6063932,5.39360678 C29.3209211,8.1081347 31,11.858125 31,16 C31,20.141875 29.3209211,23.8918653 26.6063932,26.6063932 C23.8918653,29.3209211 20.141875,31 16,31 C11.858125,31 8.1081347,29.3209211 5.39360678,26.6063932 C2.67907887,23.8918653 1,20.141875 1,16 C1,11.858125 2.67907887,8.1081347 5.39360678,5.39360678 C8.1081347,2.67907887 11.858125,1 16,1 Z" id="Background" stroke="#302D46" stroke-width="2" fill="#FFFFFF"></path>
+            <path d="M24,24 L8,24 L8,21 L24,21 L24,24 Z M24,18 L8,18 L8,15 L24,15 L24,18 Z M24,12 L8,12 L8,9 L24,9 L24,12 Z" id="Shape" fill="#263E7D"></path>
+        </g>
+    </g>
+</svg>

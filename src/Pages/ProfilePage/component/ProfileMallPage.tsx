@@ -14,9 +14,9 @@ import {
 import { DesignHistory } from "../../../types/designHistoryType";
 import { IStoreState } from "../../../types/IStoreState";
 import { User } from "../../../types/User";
-import stateAvailable from "../../../files/stateAvailable.png";
-import stateSoldOut from "../../../files/stateSoldOut.png";
-import getMoreImg from "../../../files/getMore.png";
+import stateAvailable from "../../../files/stateAvailable.svg";
+import stateSoldOut from "../../../files/stateSoldOut.svg";
+import getMoreImg from "../../../files/getMore.svg";
 import { getWidth } from "../../../helperFns/widthFn";
 import AnimeButton from "../../../components/Button";
 import { mallCustomerAPI } from "../../../api/mallCustomeAPI";

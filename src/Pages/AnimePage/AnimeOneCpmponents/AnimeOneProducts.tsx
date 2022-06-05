@@ -32,8 +32,8 @@ import {
   TimeText,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import deleteIcon from "../../../files/deleteIcon.svg";
-import getMoreImg from "../../../files/getMore.png";
-import moreRightImg from "../../../files/moreRightArrow.png";
+import getMoreImg from "../../../files/getMore.svg";
+import moreRightImg from "../../../files/moreRightArrow.svg";
 import { MoreRight } from "../../../cssJs/basicCss";
 import SettingImg from "../../../components/SettingImg";
 import ProfileWrapperDiv from "../../../components/ProfileWrapperDiv";

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { showCaseAllGet, showCaseAllGetByArr } from "../../../api/showcaseAPI";
-import getMoreImg from "../../../files/getMore.png";
+import getMoreImg from "../../../files/getMore.svg";
 import { LoadingImgDiv } from "../../../cssJs/homePageCss";
 import { ShowCaseEnum, ShowCaseType } from "../../../types/showCaseType";
 import loadingImg from "../../../files/loading.gif";

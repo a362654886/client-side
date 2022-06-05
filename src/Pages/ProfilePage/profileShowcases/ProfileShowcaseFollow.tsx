@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStoreState } from "../../../types/IStoreState";
 import { SHOWCASE_MANGA_ADD } from "../../../redux/showcaseManga";
 import ShowcaseFollowing from "../../Showcase/ShowcaseFollowing";
-import getMoreImg from "../../../files/getMore.png";
+import getMoreImg from "../../../files/getMore.svg";
 import { ProfileMiddleDiv } from "../../../cssJs/ProfilePage/ProfileCss";
 
 const ProfileShowcaseFollow = (): JSX.Element => {

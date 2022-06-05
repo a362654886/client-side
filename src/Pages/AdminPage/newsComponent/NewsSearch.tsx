@@ -15,7 +15,7 @@ import {
 import { NewType } from "../../../types/NewsType";
 import editIcon from "../../../files/editIcon.svg";
 import deleteIcon from "../../../files/deleteIcon.svg";
-import getMoreImg from "../../../files/getMore.png";
+import getMoreImg from "../../../files/getMore.svg";
 import { useDispatch } from "react-redux";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";

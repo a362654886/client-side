@@ -15,7 +15,7 @@ import {
   MiddleViewAll,
   ViewAll,
 } from "../../cssJs/DiscoveryPage/discoveryPageCss";
-import moreRightImg from "../../files/moreRightArrow.png";
+import moreRightImg from "../../files/moreRightArrow.svg";
 import { MiddleBiggerDiv, MiddleDiv } from "../../components/Button";
 
 const DiscoveryHeader = (): JSX.Element => {

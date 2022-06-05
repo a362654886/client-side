@@ -21,7 +21,7 @@ import AnimeOneProductAdd from "./AnimeOneCpmponents/AnimeOneProductAdd";
 import AnimeOneProducts from "./AnimeOneCpmponents/AnimeOneProducts";
 import AnimeOneVideo from "./AnimeOneCpmponents/AnimeOneVideo";
 import AnimeOneVideoAdd from "./AnimeOneCpmponents/AnimeOneVideoAdd";
-import moreRightImg from "../../files/moreRightArrow.png";
+import moreRightImg from "../../files/moreRightArrow.svg";
 import { getWidth } from "../../helperFns/widthFn";
 import { useHistory } from "react-router-dom";
 

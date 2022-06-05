@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon-Episode</title>
+    <g id="Icon-Episode" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <circle id="Background" stroke="#302D46" stroke-width="2" fill="#FFFFFF" cx="12" cy="12" r="11"></circle>
+            <path d="M11,20 L8,20 L8,16 L11,16 L11,20 Z M16,14 L13,14 L13,10 L16,10 L16,14 Z M11,14 L8,14 L8,10 L11,10 L11,14 Z M16,8 L13,8 L13,4 L16,4 L16,8 Z M11,8 L8,8 L8,4 L11,4 L11,8 Z M16,20 L13,20 L13,16 L16,16 L16,20 Z" id="Shape" fill="#263E7D" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

@@ -24,9 +24,9 @@ import {
   AnimTapButton,
   AnimTwoButtons,
 } from "../../cssJs/AnimePage/AnimeShowCss";
-import newIcon from "../../files/newIcon.png";
-import hotIcon from "../../files/hotIcon.png";
-import getMoreImg from "../../files/getMore.png";
+import newIcon from "../../files/newIcon.svg";
+import hotIcon from "../../files/hotIcon.svg";
+import getMoreImg from "../../files/getMore.svg";
 import { IfLoginCheck } from "../../helperFns/loginCheck";
 import { User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";

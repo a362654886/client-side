@@ -9,8 +9,8 @@ import ProfileShowcaseCollections from "../profileShowcases/ProfileShowcaseColle
 import ProfileShowcaseFollow from "../profileShowcases/ProfileShowcaseFollow";
 import ProfileShowcaseIllustration from "../profileShowcases/ProfileShowcaseIllustration";
 import ProfileShowcaseManga from "../profileShowcases/ProfileShowcaseManga";
-import stateAvailable from "../../../files/stateAvailable.png";
-import stateSoldOut from "../../../files/stateSoldOut.png";
+import stateAvailable from "../../../files/stateAvailable.svg";
+import stateSoldOut from "../../../files/stateSoldOut.svg";
 import { getWidth } from "../../../helperFns/widthFn";
 
 interface IProps {

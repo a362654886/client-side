@@ -19,8 +19,8 @@ import { flagGet } from "../../helperFns/flag";
 import { followByType } from "../../types/FollowBycopy";
 import { IStoreState } from "../../types/IStoreState";
 import { User } from "../../types/User";
-import avatarSetting from "../../files/avatarSetting.png";
-import ingfollow from "../../files/ingfollow.png";
+import avatarSetting from "../../files/avatarSetting.svg";
+import ingfollow from "../../files/Icon-Selected.svg";
 import marketFollow from "../../files/Icon-Follow.svg";
 import AnimeButton, { MoreButtonDiv } from "../../components/Button";
 import {
@@ -31,7 +31,7 @@ import {
   FollowElementProfileNameSetting,
 } from "../../cssJs/ProfilePage/ProfileFollowCss";
 import { LOGIN_USER_UPDATE_FOLLOW } from "../../redux/loginUser";
-import getMoreImg from "../../files/getMore.png";
+import getMoreImg from "../../files/getMore.svg";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 

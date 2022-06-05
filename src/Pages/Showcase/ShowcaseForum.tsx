@@ -65,7 +65,7 @@ import { ReactQuillCss } from "../../cssJs/fullTextEditor";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { Button, Input, Spin } from "antd";
 import arrows from "../../files/arrows.svg";
-import forumMore from "../../files/forumMore.png";
+import forumMore from "../../files/forumMore.svg";
 import ShareDiv from "../../components/ShareDiv";
 import SettingImg from "../../components/SettingImg";
 import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
@@ -943,7 +943,7 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                   {showcase.tags.map((tag, index) => {
                     return (
                       <ShowcaseTag key={index}>
-                        <p
+                        <span
                           onClick={() => {
                             toPage(
                               `/showcase/showTag?tag=${tag.text.replace(
@@ -954,7 +954,7 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                           }}
                         >
                           {tag.text}
-                        </p>
+                        </span>
                       </ShowcaseTag>
                     );
                   })}

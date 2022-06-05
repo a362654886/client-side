@@ -16,7 +16,7 @@ import { Anime } from "../../../types/Amine";
 import { LoadingType } from "../../../types/EnumTypes";
 import editIcon from "../../../files/editIcon.svg";
 import deleteIcon from "../../../files/deleteIcon.svg";
-import getMoreImg from "../../../files/getMore.png";
+import getMoreImg from "../../../files/getMore.svg";
 
 interface IProps {
   editAnime: (anime: Anime) => void;

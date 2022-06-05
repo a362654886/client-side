@@ -16,8 +16,8 @@ import {
   ProfileAddButtonDiv,
   ProfileSubDiv,
 } from "../../../cssJs/ProfilePage/ProfileCss";
-import stateAvailable from "../../../files/stateAvailable.png";
-import stateSoldOut from "../../../files/stateSoldOut.png";
+import stateAvailable from "../../../files/stateAvailable.svg";
+import stateSoldOut from "../../../files/stateSoldOut.svg";
 import AnimeButton from "../../../components/Button";
 import { getWidth } from "../../../helperFns/widthFn";
 

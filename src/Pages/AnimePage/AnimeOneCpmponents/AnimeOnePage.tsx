@@ -13,16 +13,10 @@ import {
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import { Anime, AnimeSource, RateBody } from "../../../types/Amine";
 import { IStoreState } from "../../../types/IStoreState";
-import crunchyroll from "../../../files/cunp.png";
-import Funimation from "../../../files/Funimation.png";
-import tubi from "../../../files/Tubi.png";
-import hidive from "../../../files/Hidive.png";
-import VIZ from "../../../files/VIZ.png";
-import AnimePlant from "../../../files/AnimePlant.png";
 import starBorder from "../../../files/Star-border.svg";
 import starFill from "../../../files/Star-filled.svg";
-import likePng from "../../../files/like.png";
-import unLikePng from "../../../files/unLike.png";
+import likePng from "../../../files/like.svg";
+import unLikePng from "../../../files/unLike.svg";
 import AnimeOneForum from "./AnimeOneForums";
 import {
   AnimeLikeButton,

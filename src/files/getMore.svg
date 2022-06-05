@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon-Load More</title>
+    <g id="Icon-Load-More" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" fill-rule="nonzero">
+            <path d="M16,0 C7.164,0 0,7.164 0,16 C0,24.836 7.164,32 16,32 C24.836,32 32,24.836 32,16 C32,7.164 24.836,0 16,0 Z" id="Background" fill="#302D46"></path>
+            <polygon id="Path" fill="#FFFFFF" points="9 17.4285714 14.7142857 17.4285714 14.7142857 6 17.5714286 6 17.5714286 17.4285714 23.2857143 17.4285714 16.1428571 26"></polygon>
+        </g>
+    </g>
+</svg>

@@ -203,13 +203,13 @@ export const ShowcaseReply = styled.div`
   word-wrap: break-word;
 `;
 
-export const ShowcaseTag = styled.div`
-  margin-top: 8px;
-  min-height: 40px;
-  height: auto;
-  margin-bottom: 8px;
-  margin-right: 16px;
-  p {
+export const ShowcaseTag = styled.span`
+  span {
+    margin-top: 8px;
+    min-height: 40px;
+    height: auto;
+    margin-bottom: 8px;
+    margin-right: 16px;
     background-color: #c1eeff;
     min-height: 40px;
     height: auto;

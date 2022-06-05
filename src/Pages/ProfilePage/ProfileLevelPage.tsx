@@ -20,7 +20,7 @@ import {
 } from "../../cssJs/ProfilePage/ProfileCss";
 import { IStoreState } from "../../types/IStoreState";
 import { User } from "../../types/User";
-import avatarSetting from "../../files/avatarSetting.png";
+import avatarSetting from "../../files/avatarSetting.svg";
 import Flag from "react-flagkit";
 import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import { flagGet } from "../../helperFns/flag";

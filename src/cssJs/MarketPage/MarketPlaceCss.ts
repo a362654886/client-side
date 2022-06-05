@@ -614,3 +614,30 @@ export const MarketPriceMoreDiv = styled.div`
     margin-right: 8px;
   }
 `;
+
+//tag
+
+export const MarketTag = styled.span`
+  span {
+    margin-top: 8px;
+    min-height: 40px;
+    height: auto;
+    margin-bottom: 8px;
+    margin-right: 16px;
+    display: "inline";
+    width: 100%;
+    background-color: #c1eeff;
+    min-height: 40px;
+    height: auto;
+    width: auto;
+    display: "inline";
+    padding: 4px 8px;
+    margin-bottom: 0px;
+    line-height: 32px;
+    font-size: 16px;
+    font-family: "Arial MT";
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+`;

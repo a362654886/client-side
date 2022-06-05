@@ -19,7 +19,7 @@ import AnimeOneForum from "../AnimePage/AnimeOneCpmponents/AnimeOneForums";
 import AnimeOneProducts from "../AnimePage/AnimeOneCpmponents/AnimeOneProducts";
 import AnimeOneVideo from "../AnimePage/AnimeOneCpmponents/AnimeOneVideo";
 import DiscoveryHeader from "./DiscoveryHeader";
-import moreRightImg from "../../files/moreRightArrow.png";
+import moreRightImg from "../../files/moreRightArrow.svg";
 import { getWidth } from "../../helperFns/widthFn";
 import { useHistory } from "react-router-dom";
 

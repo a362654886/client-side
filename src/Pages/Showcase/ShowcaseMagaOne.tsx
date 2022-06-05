@@ -82,7 +82,7 @@ import deleteIcon from "../../files/deleteIcon.svg";
 import switchIcon from "../../files/arrows.svg";
 import ShowcaseSide from "./ShowcaseSide";
 import EpisodeEditModal from "./EpisodeEditModal";
-import episodes from "../../files/Episodes.png";
+import episodes from "../../files/Episodes.svg";
 import SettingImg from "../../components/SettingImg";
 import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
 import Flag from "react-flagkit";
@@ -97,7 +97,7 @@ import {
 import DeleteWrapperDiv from "../../components/DeleteWrapperDiv";
 import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
 import { cloneDeep } from "lodash";
-import forumMore from "../../files/forumMore.png";
+import forumMore from "../../files/forumMore.svg";
 import { ReportContextType } from "../../types/blockType";
 import { LoadingBox } from "../../cssJs/headerCss";
 
@@ -456,11 +456,11 @@ const ShowcaseMangaOne = (): JSX.Element => {
         ) : (
           <p>{description}</p>
         )}
-        <div style={{ display: "flex" }}>
+        <div>
           {showCase?.tags.map((tag, index) => {
             return (
               <ShowcaseTag key={index}>
-                <p
+                <span
                   onClick={() => {
                     history.push(
                       `/showcase/showTag?tag=${tag.text.replace("#", "")}`
@@ -468,7 +468,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
                   }}
                 >
                   {tag.text}
-                </p>
+                </span>
               </ShowcaseTag>
             );
           })}
@@ -1191,7 +1191,10 @@ const ShowcaseMangaOne = (): JSX.Element => {
                         </AnimeEditAndDeleteDiv>
                       }
                       deleteFn={() =>
-                        deleteShowcaseSecondReply(showcaseSecondReply._id, secondIndex)
+                        deleteShowcaseSecondReply(
+                          showcaseSecondReply._id,
+                          secondIndex
+                        )
                       }
                     />
                   </EditAndDeleteDiv>

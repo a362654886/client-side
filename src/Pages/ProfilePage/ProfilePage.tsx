@@ -21,7 +21,6 @@ import {
   ProfileChildDiv,
   ProfileDiv,
   ProfileSlider,
-  SettingAwesomeDiv,
   SettingFollowDiv,
   SettingFollowerDiv,
   SettingFollowingDiv,
@@ -30,7 +29,7 @@ import {
   SocialDiv,
 } from "../../cssJs/ProfilePage/ProfileCss";
 import { IStoreState } from "../../types/IStoreState";
-import { Avatar, User } from "../../types/User";
+import { User } from "../../types/User";
 import ProfileLikesPage from "./component/ProfileLikesPage";
 import ProfileMallPage from "./component/ProfileMallPage";
 import ProfileMarketplacePage from "./profileMarketPlace/ProfileMarketplacePage";
@@ -39,17 +38,16 @@ import IconSettings from "../../files/IconSettings.svg";
 import IconInbox from "../../files/IconInbox.svg";
 import facebook from "../../files/facebook.svg";
 import insImage from "../../files/insImage.svg";
-import profileLink from "../../files/profileLink.png";
+import profileLink from "../../files/profileLink.svg";
 import { followByGetByUserId } from "../../api/followByAPI";
 import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import arrows from "../../files/arrows.svg";
-import level1 from "../../files/level1.png";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import { MarketFollow } from "../../cssJs/MarketPage/MarketPlaceCss";
 import marketFollow from "../../files/Icon-Follow.svg";
 import marketFollowing from "../../files/IconFollowing.svg";
-import marketMessage from "../../files/marketMessage.png";
+import marketMessage from "../../files/marketMessage.svg";
 import { MessageDiv, MessageModal } from "../../cssJs/settingImgCss";
 import TextArea from "antd/lib/input/TextArea";
 import { LoadingType } from "../../types/EnumTypes";
@@ -219,7 +217,7 @@ const ProfilePage = (): JSX.Element => {
   const getProfileDiv = () => {
     switch (chooseButton) {
       case 0:
-        return <ProfileShowcasePage paraId={para.id}/>;
+        return <ProfileShowcasePage paraId={para.id} />;
       case 1:
         return <ProfileMarketplacePage />;
       case 2:

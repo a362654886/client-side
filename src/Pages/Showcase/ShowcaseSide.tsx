@@ -11,12 +11,12 @@ import {
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import { userAwesomeGet } from "../../api/userApi";
 import { User } from "../../types/User";
-import hotLike from "../../files/hotLike.png";
-import hotTag from "../../files/hotTag.png";
+import hotLike from "../../files/hotLike.svg";
+import hotTag from "../../files/hotTag.svg";
 import ProfileWrapperDiv from "../../components/ProfileWrapperDiv";
 import { AnimOneSide, AnimOneSideTwo } from "../../cssJs/AnimePage/AnimeOneCss";
 import { MoreRight } from "../../cssJs/basicCss";
-import moreRightImg from "../../files/moreRightArrow.png";
+import moreRightImg from "../../files/moreRightArrow.svg";
 import { newAllGet } from "../../api/newsAPI";
 import { NewType } from "../../types/NewsType";
 import Flag from "react-flagkit";

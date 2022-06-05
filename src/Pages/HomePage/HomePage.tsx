@@ -41,7 +41,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ANIME_NONE } from "../../redux/anime";
 import { MoreRight } from "../../cssJs/basicCss";
-import moreRightImg from "../../files/moreRightArrow.png";
+import moreRightImg from "../../files/moreRightArrow.svg";
 import { productAllGet } from "../../api/productAPI";
 import { Product } from "../../types/ProductType";
 import {

@@ -19,7 +19,7 @@ import { IStoreState } from "../../../types/IStoreState";
 import { User } from "../../../types/User";
 import facebookPng from "./../../../files/facebook.svg";
 import insPng from "./../../../files/insImage.svg";
-import profileLink from "./../../../files/profileLink.png";
+import profileLink from "./../../../files/profileLink.svg";
 
 const ProfileContactPage = (): JSX.Element => {
   const loginUser: User | null = useSelector(

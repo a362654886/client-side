@@ -23,6 +23,7 @@ import {
   MarketPriceNum,
   MarketPricePriceName,
   MarketShowOneTitle,
+  MarketTag,
   MarketText,
   MarketViewMore,
   PriceInput,
@@ -45,13 +46,14 @@ import Flag from "react-flagkit";
 import { flagGet, flagGetName } from "../../helperFns/flag";
 import { _getDate } from "../../helperFns/timeFn";
 import marketFollow from "../../files/Icon-Follow.svg";
-import marketMessage from "../../files/marketMessage.png";
+import marketMessage from "../../files/marketMessage.svg";
+import hotIcon from "../../files/hotIcon.svg";
 import IconFollowing from "../../files/IconFollowing.svg";
 import editIcon from "../../files/editIcon.svg";
 import deleteIcon from "../../files/deleteIcon.svg";
-import moreRightImg from "../../files/moreRightArrow.png";
-import marketPrice from "../../files/marketPrice.png";
-import moreBottomArrow from "../../files/moreBottomArrow.png";
+import moreRightImg from "../../files/moreRightArrow.svg";
+import marketPrice from "../../files/marketPrice.svg";
+import moreBottomArrow from "../../files/moreBottomArrow.svg";
 import SettingImg from "../../components/SettingImg";
 import ShareDiv from "../../components/ShareDiv";
 import loading from "../../files/loading.gif";
@@ -304,7 +306,6 @@ const MarketplaceShowOne = (): JSX.Element => {
         marketArr.splice(index, 1);
       }
     }
-    console.log(marketArr);
     //update user
     const readyUpdateUser: User = loginUser as User;
     readyUpdateUser.followMarket = marketArr;
@@ -391,6 +392,28 @@ const MarketplaceShowOne = (): JSX.Element => {
               state ? "Available" : "Sold Out"
             }`}</span>
           </MarketText>
+          {marketState && marketState.tags && marketState.tags.length > 0 ? (
+            <div>
+              {marketState.tags.map((tag, index) => {
+                return (
+                  <MarketTag key={index}>
+                    <span
+                      onClick={() => {
+                        /*toPage(
+                          `/showcase/showTag?tag=${tag.text.replace("#", "")}`
+                        );*/
+                      }}
+                    >
+                      {tag.text}
+                    </span>
+                  </MarketTag>
+                );
+              })}
+              <img src={hotIcon} />
+            </div>
+          ) : (
+            <></>
+          )}
           <MarketBody>
             <div style={{ display: "flex" }}>
               <ProfileWrapperDiv
@@ -508,7 +531,9 @@ const MarketplaceShowOne = (): JSX.Element => {
           <MarketViewMore
             onClick={() => {
               history.push(
-                `/profilePage/${marketState ? marketState.userId : ""}?market=true`
+                `/profilePage/${
+                  marketState ? marketState.userId : ""
+                }?market=true`
               );
             }}
           >

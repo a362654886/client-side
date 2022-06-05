@@ -29,6 +29,11 @@ import Flag from "react-flagkit";
 import CropImgBodyDiv from "../../components/CropImgBodyDiv";
 import { useHistory, useParams } from "react-router-dom";
 import { getWidth } from "../../helperFns/widthFn";
+import {
+  ShowCaseCreateImageHeader,
+  TagSelect,
+  TagSelectDiv,
+} from "../../cssJs/ShowCasePage/showCaseCss";
 
 const { Option } = Select;
 
@@ -60,6 +65,7 @@ const MarketplaceEdit = (): JSX.Element => {
     imgName: "",
   });
   const [showCropper, setShowCropper] = useState<boolean>(false);
+  const [tags, setTags] = useState<string[]>([]);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -78,6 +84,9 @@ const MarketplaceEdit = (): JSX.Element => {
         setCountry(market.country);
         setState(market.state);
         setCity(market.location);
+        if (market.tags && market.tags.length > 0) {
+          setTags(market.tags.map((item) => item.text));
+        }
       }
     })();
   }, []);
@@ -133,6 +142,21 @@ const MarketplaceEdit = (): JSX.Element => {
     return arr;
   };
 
+  const formatTag = (tagArr: string[]) => {
+    let newTagArr: string[] = [];
+    tagArr.forEach((item) => {
+      const arr = item.split("#");
+      newTagArr = newTagArr.concat(arr);
+    });
+    const returnTagArr: string[] = [];
+    newTagArr.forEach((item) => {
+      if (item != "") {
+        returnTagArr.push(`#${item}`);
+      }
+    });
+    setTags(returnTagArr);
+  };
+
   const marketEdit = async () => {
     const marketBody: MarketType = {
       _id: para.id,
@@ -145,6 +169,13 @@ const MarketplaceEdit = (): JSX.Element => {
       country: country,
       location: city,
       uploadTime: new Date(),
+      tags: tags.map((tag, index) => {
+        return {
+          _id: para.id + new Date().valueOf(),
+          text: tag,
+          num: -1,
+        };
+      }),
     };
     dispatch({
       payload: LoadingType.OPEN,
@@ -236,6 +267,15 @@ const MarketplaceEdit = (): JSX.Element => {
             <h6>Item Title</h6>
             <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </MarketInputDiv>
+          <TagSelectDiv>
+            <ShowCaseCreateImageHeader>Tags</ShowCaseCreateImageHeader>
+            <TagSelect
+              mode="tags"
+              value={tags}
+              onChange={(e) => formatTag(e as string[])}
+              dropdownStyle={{ display: "none" }}
+            ></TagSelect>
+          </TagSelectDiv>
           <MarketInputDiv>
             <h6>Price</h6>
             <InputNumber value={price} onChange={(e) => setPrice(e)} /> $ (NZD)

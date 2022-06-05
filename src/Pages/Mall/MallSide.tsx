@@ -4,7 +4,7 @@ import { AnimOneSide, AnimOneSideTwo } from "../../cssJs/AnimePage/AnimeOneCss";
 import { MoreRight } from "../../cssJs/basicCss";
 import { MallSideDiv } from "../../cssJs/MallPage/MallPageCss";
 import { NewType } from "../../types/NewsType";
-import moreRightImg from "../../files/moreRightArrow.png";
+import moreRightImg from "../../files/moreRightArrow.svg";
 import { newAllGet } from "../../api/newsAPI";
 import { useHistory } from "react-router-dom";
 

@@ -18,11 +18,10 @@ import {
 } from "../../cssJs/ProfilePage/ProfileCss";
 import { SettingButtonsDiv } from "../../cssJs/ProfilePage/ProfileSettingCss";
 import { IStoreState } from "../../types/IStoreState";
-import { Avatar, User } from "../../types/User";
+import { User } from "../../types/User";
 import ProfileAccountPage from "./component/ProfileAccountPage";
 import ProfileContactPage from "./component/ProfileContactPage";
-import avatarSetting from "../../files/avatarSetting.png";
-import level1 from "../../files/level1.png";
+import avatarSetting from "../../files/avatarSetting.svg";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
 import ProfileNotificationPage from "./component/ProfileNotificationPage";

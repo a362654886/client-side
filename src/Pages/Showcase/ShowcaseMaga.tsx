@@ -208,11 +208,11 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
           <ShowcaseMangaDescription>
             {showcase.description ? showcase.description : ""}
           </ShowcaseMangaDescription>
-          <div style={{ display: "flex" }}>
+          <div>
             {showcase.tags.map((tag, index) => {
               return (
                 <ShowcaseTag key={index}>
-                  <p>{tag.text}</p>
+                  <span>{tag.text}</span>
                 </ShowcaseTag>
               );
             })}

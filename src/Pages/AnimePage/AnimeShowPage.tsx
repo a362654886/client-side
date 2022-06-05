@@ -24,8 +24,8 @@ import starBorder from "../../files/Star-border.svg";
 import starFill from "../../files/Star-filled.svg";
 import loadingImg from "../../files/loading.gif";
 import searchImg from "../../files/search.svg";
-import newIcon from "../../files/newIcon.png";
-import hotIcon from "../../files/hotIcon.png";
+import newIcon from "../../files/newIcon.svg";
+import hotIcon from "../../files/hotIcon.svg";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
 import { getWidth } from "../../helperFns/widthFn";
 
