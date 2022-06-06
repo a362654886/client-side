@@ -80,7 +80,7 @@ const EpisodeCreate = (): JSX.Element => {
       <EpisodeTitle>Episode</EpisodeTitle>
       <EpisodeNumber>
         <h6>Episode Number:</h6>
-        <p>{episodeNum}</p>
+        <p>{episodeNum + 1}</p>
       </EpisodeNumber>
       <EpisodeImages>
         {imgArr.map((image, index) => {

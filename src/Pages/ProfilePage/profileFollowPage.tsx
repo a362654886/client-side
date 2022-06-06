@@ -74,7 +74,7 @@ const ProfileFollowPage = (): JSX.Element => {
   const [followers, setFollowers] = useState<followByType[] | null>([]);
   const [followersCount, setFollowersCount] = useState<number>(0);
   const [followersPage, setFollowersPage] = useState<number>(1);
-  const pageSize = 2;
+  const pageSize = 6;
 
   useEffect(() => {
     (async function anyNameFunction() {

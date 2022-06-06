@@ -253,6 +253,7 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
           style={{
             marginLeft: getWidth() > 600 ? "40px" : "0px",
             width: getWidth() > 600 ? "520px" : "100%",
+            marginBottom: getWidth() > 600 ? "px" : "24px",
           }}
         >
           <AnimOneHeaderLabel

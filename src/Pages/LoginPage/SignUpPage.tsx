@@ -496,6 +496,7 @@ const SignUpPage = (): JSX.Element => {
         }}
         visible={showCropper}
         setVisibleFalse={() => setShowCropper(false)}
+        cube={true}
       />
     </SignUpBox>
   );

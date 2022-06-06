@@ -1384,7 +1384,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           <ShareDiv marginTop={"24px"} />
           <EpisodesText>
             <img src={episodes} />
-            Episodes
+            <span>Episodes</span>
           </EpisodesText>
           <ShowMangaIframeEpisodesButtons>
             {Array.from(

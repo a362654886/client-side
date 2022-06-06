@@ -171,7 +171,7 @@ const MallCustom = (): JSX.Element => {
             <MallCustomHeaderDiv
               key={index}
               style={{
-                borderBottom: index == chooseIndex ? "2px solid red" : "2px solid white",
+                borderBottom: index == chooseIndex ? "2px solid #892E2F" : "2px solid white",
               }}
             >
               <img
@@ -234,7 +234,7 @@ const MallCustom = (): JSX.Element => {
           <MiddleDiv>
             <AnimeButton
               para=""
-              text={"Get a Quota"}
+              text={"Quota"}
               width="120px"
               height="32px"
               textColor="white"

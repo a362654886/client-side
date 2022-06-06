@@ -369,7 +369,6 @@ const MarketplaceEdit = (): JSX.Element => {
           cube={true}
         />
       </div>
-      <div className="col-xl-3 col-md-3 col-sm-3 col-3">side</div>
     </>
   );
 };

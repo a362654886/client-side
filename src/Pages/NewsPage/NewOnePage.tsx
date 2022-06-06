@@ -91,7 +91,7 @@ const NewOnePage = (): JSX.Element => {
       return (
         <AnimeButton
           para=""
-          text={"PREV"}
+          text={"NEXT"}
           width="120px"
           height="32px"
           textColor="black"
@@ -109,7 +109,7 @@ const NewOnePage = (): JSX.Element => {
       return (
         <AnimeButton
           para=""
-          text={"Next"}
+          text={"PREV"}
           width="120px"
           height="32px"
           textColor="black"

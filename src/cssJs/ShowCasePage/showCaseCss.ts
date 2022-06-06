@@ -552,7 +552,8 @@ export const EpisodesText = styled.h3`
   padding-top: 8px;
   height: 48px;
   padding-bottom: 8px;
-  margin-bottom: 0px;
+  margin-bottom: 16px;
+  margin-top: 24px;
   img {
     margin-right: 4px;
   }
@@ -669,7 +670,7 @@ export const EpisodesComments = styled.div`
 
 export const ShowcaseSideDiv = styled.div`
   width: 276px;
-  height: 648px;
+  height: 1560px;
   margin-left: 42px;
   margin-top: 8px;
 `;
@@ -786,4 +787,9 @@ export const ShowcaseTagText = styled.h2`
   line-height: 40px;
   font-size: 24px;
   width: 100%;
+`;
+
+export const ShowcaseManga = styled.div`
+  display:"flex" ;
+  min-height:""
 `;

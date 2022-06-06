@@ -50,7 +50,6 @@ const CropImgDiv = ({
           initialAspectRatio={1 / 1}
           /* eslint-disable @typescript-eslint/no-explicit-any */
           ref={ImgCorpRef as any}
-          zoomTo={0.5}
           viewMode={1}
           aspectRatio={1}
           minCropBoxHeight={10}

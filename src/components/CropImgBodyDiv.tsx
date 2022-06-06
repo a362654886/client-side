@@ -50,10 +50,9 @@ const CropImgBodyDiv = ({
               src={uploadImg.imgBase64}
               style={{ height: "100%", width: "100%" }}
               // Cropper.js options
-              initialAspectRatio={1 / 1}
+              initialAspectRatio={1}
               /* eslint-disable @typescript-eslint/no-explicit-any */
               ref={ImgCorpRef as any}
-              zoomTo={0.5}
               viewMode={1}
               aspectRatio={1}
               minCropBoxHeight={10}
