@@ -47,7 +47,7 @@ import { flagGet, flagGetName } from "../../helperFns/flag";
 import { _getDate } from "../../helperFns/timeFn";
 import marketFollow from "../../files/Icon-Follow.svg";
 import marketMessage from "../../files/marketMessage.svg";
-import hotIcon from "../../files/hotIcon.svg";
+import hotIcon from "../../files/MarketHotTags.svg";
 import IconFollowing from "../../files/IconFollowing.svg";
 import editIcon from "../../files/editIcon.svg";
 import deleteIcon from "../../files/deleteIcon.svg";

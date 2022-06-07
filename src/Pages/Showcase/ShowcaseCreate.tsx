@@ -201,8 +201,8 @@ const ShowcaseCreate = (): JSX.Element => {
           {imgArr.map((image, index) => {
             return (
               <ShowCaseCreateImage key={index} style={{ height: `auto` }}>
-                <div>
-                  <img src={image.imgBase64} style={{ maxWidth: "1170px" }} />
+                <div style={{ width: "100%" }}>
+                  <img src={image.imgBase64} style={{ width: "100%" }} />
                 </div>
                 <div>
                   <Button onClick={() => deleteImg(index)}>Delete</Button>
@@ -220,8 +220,9 @@ const ShowcaseCreate = (): JSX.Element => {
                 border={"1px solid #F6F6F6"}
                 text={""}
                 setImg={(value: ImageBody) => {
-                  setLoadImg(value);
-                  setShowCropper(true);
+                  //setLoadImg(value);
+                  //setShowCropper(true);
+                  setNewImage(value);
                 }}
                 imageAdd={false}
                 margin={"20px auto"}
@@ -233,15 +234,11 @@ const ShowcaseCreate = (): JSX.Element => {
     } else {
       return (
         <>
-          <ShowCaseCreateImage
-            style={{
-              height: `${imgArr.length > 0 ? imgArr[0].height : 0 + 48}px`,
-            }}
-          >
-            <div>
+          <ShowCaseCreateImage style={{ height: `auto` }}>
+            <div style={{ width: "100%" }}>
               <img
                 src={imgArr.length > 0 ? imgArr[0].imgBase64 : ""}
-                style={{ maxWidth: "1170px" }}
+                style={{ width: "100%" }}
               />
             </div>
           </ShowCaseCreateImage>
@@ -253,8 +250,9 @@ const ShowcaseCreate = (): JSX.Element => {
             border={"1px solid #F6F6F6"}
             text={"Change the Cover Image"}
             setImg={(value: ImageBody) => {
-              setLoadImg(value);
-              setShowCropper(true);
+              //setLoadImg(value);
+              //setShowCropper(true);
+              replaceNewImage(value);
             }}
             margin={"20px auto"}
           />

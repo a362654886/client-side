@@ -158,8 +158,8 @@ const NewOnePage = (): JSX.Element => {
           <ShareDiv marginTop={"24px"} />
           <OneNewButtons>
             <div style={{ display: "flex", margin: "0px auto" }}>
-              {getPrveDiv()}
               {getNextDiv()}
+              {getPrveDiv()}
             </div>
           </OneNewButtons>
         </>
