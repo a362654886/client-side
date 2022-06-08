@@ -43,6 +43,7 @@ import { animeSourceAdd, animeSourcesGet } from "../../../api/animeSourceAPI";
 import CropImgBodyDiv from "./CropImgBodyDiv";
 import Add from "../../../files/Add.svg";
 import IconUpload from "./ImageUpload";
+import { cloneDeep } from "lodash";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -89,7 +90,7 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
 
   useEffect(() => {
     //
-  }, [uploadImg]);
+  }, [uploadImg, whereWatchList]);
 
   const onChange = (e: React.ChangeEvent<Element> | RadioChangeEvent): void => {
     const type = (e.target as HTMLInputElement).placeholder;
@@ -163,6 +164,10 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
     const r = await animeSourceAdd(whereToWatchBody);
     if (r == 200) {
       setWhereToWatchShow(false);
+      whereToWatchBody.imageLink = `${whereToWatchBody.sourceName}.png`;
+      const newArr = cloneDeep(whereToWatches);
+      newArr.push(whereToWatchBody);
+      setWhereToWatches(newArr);
     }
   };
 

@@ -4,5 +4,6 @@ export const openNewWindow = (url: string): void => {
 };
 
 export const openNewWindowPath = (url: string): void => {
-  window.location.href= `http://localhost:3001/oneNew/${url}`
+  window.open(`https://www.animepark.com/oneNew/${url}`,`_blank`);
+ // window.location.href= `http://localhost:3001/oneNew/${url}`
 };

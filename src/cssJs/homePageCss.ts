@@ -129,16 +129,13 @@ export const HomePageAnimeDiv = styled.div`
 export const HomePageShowcaseDiv = styled.div`
   margin-top: 40px;
   text-align: center;
-  .ant-carousel {
-    width: 280px;
-    margin: 0px auto;
+  width:260px;
+  margin:0 auto;
+  .swiper-slide{
+    
   }
-  .slick-list {
+  img {
     width: 260px;
-  }
-  .slick-slider,
-  .slick-initialized {
-    height: auto;
   }
 `;
 

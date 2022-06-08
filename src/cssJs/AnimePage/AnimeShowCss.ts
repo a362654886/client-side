@@ -128,7 +128,7 @@ export const CenterDiv = styled.div`
 export const HomeCenterDiv = styled.div`
   text-align: center;
   margin-bottom: 40px;
-  margin-top: 32px;
+  margin-top: 16px;
 `;
 
 export const StarDiv = styled.div`

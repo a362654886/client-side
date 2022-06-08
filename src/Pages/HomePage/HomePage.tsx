@@ -29,9 +29,7 @@ import {
   MarketPlaceTitle,
   ProductContextDiv,
   ShowcaseHomeBox,
-  ShowCaseImgDiv,
 } from "../../cssJs/homePageCss";
-import showCaseImg from "../../files/showCase.jpg";
 import starBorder from "../../files/Star-border.svg";
 import starFill from "../../files/Star-filled.svg";
 import { Anime, RateBody } from "../../types/Amine";
@@ -90,6 +88,7 @@ const HomePage = (): JSX.Element => {
   const [newLoading, setNewLoading] = useState<boolean>(false);
   const [animeLoading, setAnimeLoading] = useState<boolean>(false);
   const [showcaseLoading, setShowcaseLoading] = useState<boolean>(false);
+  const [imageHighestPx, setImageHighestPx] = useState<number>(0);
 
   const [size, setSize] = useState({
     width: document.documentElement.clientWidth,
@@ -140,6 +139,15 @@ const HomePage = (): JSX.Element => {
       ""
     );
     if (showCaseResult) {
+      //let highest = 0
+      showCaseResult.result.forEach((item) => {
+        const img = new Image();
+        img.src = item.imageArr[0];
+        const imageHeight = img.height / (img.width / 260);
+        if (item.imageArr && item.imageArr[0] && imageHighestPx < imageHeight) {
+          setImageHighestPx(imageHeight);
+        }
+      });
       setAllShowcases(showCaseResult.result);
     }
     setShowcaseLoading(false);
@@ -350,13 +358,29 @@ const HomePage = (): JSX.Element => {
         <img src={`${loadingImg}`} />
       </LoadingImgDiv>
     ) : (
-      allShowcases.map((showcase, index) => (
-        <div key={index} style={{ cursor: "pointer" }}>
-          <ShowcaseBox>
-            <img src={`${showcase.imageArr[0]}`} />
-          </ShowcaseBox>
-        </div>
-      ))
+      allShowcases.map((showcase, index) => {
+        const img = new Image();
+        img.src = showcase.imageArr[0];
+        const marginTop = (imageHighestPx - img.height / (img.width / 260)) / 2;
+        return (
+          <SwiperSlide key={index} style={{ cursor: "pointer" }}>
+            <div
+              style={{
+                width: "260px",
+                height: `${imageHighestPx}px`,
+                backgroundColor: "#762324",
+              }}
+            >
+              <div style={{ width: "260px" }}>
+                <img
+                  style={{ marginTop: `${marginTop}px` }}
+                  src={`${showcase.imageArr[0]}`}
+                />
+              </div>
+            </div>
+          </SwiperSlide>
+        );
+      })
     );
   };
 
@@ -545,9 +569,19 @@ const HomePage = (): JSX.Element => {
               </h3>
             </HomePageMobileShowcaseDiv>
             <HomePageShowcaseDiv>
-              <Carousel style={{ marginLeft: "10px" }} dots={true}>
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={30}
+                pagination={{
+                  clickable: true,
+                }}
+                scrollbar={{
+                  hide: true,
+                }}
+                className="mySwiper"
+              >
                 {getShowcaseMobileDiv()}
-              </Carousel>
+              </Swiper>
             </HomePageShowcaseDiv>
             <HomeCenterDiv>
               <MiddleHomeDiv>
