@@ -100,12 +100,17 @@ const ShowcaseCreate = (): JSX.Element => {
     const exist = imgArr
       .map((image) => image.imgName)
       .indexOf(imageBody.imgName);
-    if (exist == -1) {
+    /*if (exist == -1) {
       const newArr = [];
       imgArr.forEach((image) => newArr.push(image));
       newArr.push(imageBody);
       setImgArr(newArr);
-    }
+    }*/
+    const newArr = [];
+    imgArr.forEach((image) => newArr.push(image));
+    imageBody.imgName = exist == -1?imageBody.imgName:`${imageBody.imgName}New`
+    newArr.push(imageBody);
+    setImgArr(newArr);
   };
 
   const replaceNewImage = (imageBody: ImageBody) => {

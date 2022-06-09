@@ -14,7 +14,7 @@ import {
   PublishButtonsDiv,
 } from "../../cssJs/MarketPage/MarketPlaceCss";
 import lodash from "lodash";
-import add from "../../files/Add.svg";
+import blankMarket from "../../files/blankMarket.png";
 import TextArea from "antd/lib/input/TextArea";
 import AnimeButton, { MiddleDiv } from "../../components/Button";
 import { MarketType } from "../../types/MarketType";
@@ -75,7 +75,7 @@ const MarketplaceCreate = (): JSX.Element => {
         }
       })
       .indexOf(imageBody.imgName);
-    if (exist == -1) {
+    /*if (exist == -1) {
       const newArr: (string | ImageBody)[] = [];
       imgArr.forEach((image) => newArr.push(image));
       newArr.unshift(imageBody);
@@ -83,7 +83,15 @@ const MarketplaceCreate = (): JSX.Element => {
         newArr.pop();
       }
       setImgArr(newArr);
+    }*/
+    const newArr: (string | ImageBody)[] = [];
+    imgArr.forEach((image) => newArr.push(image));
+    imageBody.imgName = exist == -1? imageBody.imgName:`${ imageBody.imgName}New`
+    newArr.unshift(imageBody);
+    if (newArr.length >= 5 && newArr.indexOf("add") !== -1) {
+      newArr.pop();
     }
+    setImgArr(newArr);
   };
 
   const deleteImg = (index: number) => {
@@ -237,6 +245,36 @@ const MarketplaceCreate = (): JSX.Element => {
                 );
               }
             })}
+            {Array.from({ length: 4 - imgArr.length }, (v, k) => k).map(
+              (image, index) => {
+                const _index = imgArr.length + index;
+                return (
+                  <MarketUploadImage
+                    key={index}
+                    style={
+                      getWidth() > 600
+                        ? {
+                            position: "absolute",
+                            left: (_index + 1) % 2 == 0 ? "300px" : "0px",
+                            top: _index <= 1 ? "0px" : "320px",
+                          }
+                        : {}
+                    }
+                  >
+                    <div>
+                      <img
+                        src={blankMarket}
+                        style={{
+                          width: "250px",
+                          height: "250px",
+                          borderRadius: "20px",
+                        }}
+                      />
+                    </div>
+                  </MarketUploadImage>
+                );
+              }
+            )}
           </MarketImgDiv>
           <MarketImgLimitDiv>
             <p>4 Pictures for an Item to the Maximum</p>
