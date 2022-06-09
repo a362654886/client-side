@@ -77,23 +77,18 @@ export const EpisodeShowHeader = styled.div`
 
 export const EpisodeShowFooter = styled.div`
   top: calc(100vh - 48px);
-  width: 80%;
+  width: 100%;
   height: 48px;
-  margin-left: 10%;
   display: flex;
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0) 0%,
-    #959595 50%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: #959595 ;
   position: fixed;
+  opacity: 0.7;
 `;
 
 export const EpisodeShowHeaderLeft = styled.p`
   line-height: 48px;
   color: white;
-  text-align: left;
+  text-align: center;
   margin-bottom: 0px;
   width: 33%;
   cursor: pointer;
@@ -119,10 +114,10 @@ export const EpisodeShowHeaderRight = styled.p`
 
 export const EpisodeShowFooterLeft = styled.p`
   line-height: 48px;
-  color: #4ba3c3;
-  text-align: center;
+  color: black;
+  text-align: right;
   margin-bottom: 0px;
-  width: 33%;
+  width: 25%;
   cursor: pointer;
 `;
 
@@ -131,16 +126,16 @@ export const EpisodeShowFooterMiddle = styled.p`
   color: white;
   text-align: center;
   margin-bottom: 0px;
-  width: 33%;
+  width: 50%;
   cursor: pointer;
 `;
 
 export const EpisodeShowFooterRight = styled.p`
   line-height: 48px;
-  color: #4ba3c3;
-  text-align: center;
+  color:black;
+  text-align: left;
   margin-bottom: 0px;
-  width: 33%;
+  width: 25%;
   cursor: pointer;
 `;
 
