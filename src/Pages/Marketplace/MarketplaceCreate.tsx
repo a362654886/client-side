@@ -195,12 +195,12 @@ const MarketplaceCreate = (): JSX.Element => {
                             top: index <= 1 ? "0px" : "320px",
                             marginLeft: "40px",
                           }
-                        : {}
+                        : {marginLeft:"40px",marginBottom:"70px"}
                     }
                   >
                     <ImageUpload
-                      width={"240px"}
-                      height={"240px"}
+                      width={"260px"}
+                      height={"260px"}
                       textColor={"black"}
                       backGroundColor={"#F6F6F6"}
                       border={"1px solid #F6F6F6"}

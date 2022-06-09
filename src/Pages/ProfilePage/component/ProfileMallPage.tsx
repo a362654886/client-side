@@ -8,6 +8,7 @@ import {
   ProfileAddButtonDiv,
   ProfileDesignAttribute,
   ProfileDesignHistory,
+  ProfileDesignHistoryImg,
   ProfileMiddleDiv,
   ProfileSubDiv,
 } from "../../../cssJs/ProfilePage/ProfileCss";
@@ -21,7 +22,10 @@ import { getWidth } from "../../../helperFns/widthFn";
 import AnimeButton from "../../../components/Button";
 import { mallCustomerAPI } from "../../../api/mallCustomeAPI";
 import { MallCustomType } from "../../../types/mallCustomType";
-import { MallCustomInsideBackImg } from "../../../cssJs/MallPage/MallCustom";
+import {
+  MallCustomInsideBackImg,
+  MallCustomInsideImgDiv,
+} from "../../../cssJs/MallPage/MallCustom";
 import loadingImg from "../../../files/loading.gif";
 
 const buttonsColor = [
@@ -66,7 +70,7 @@ const ProfileMallPage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(allDesignHistories);
+    //console.log(allDesignHistories);
   }, [allDesignHistories]);
 
   useEffect(() => {
@@ -90,7 +94,6 @@ const ProfileMallPage = (): JSX.Element => {
     if (profileUser) {
       setLoading(true);
       const result = await designHistoryGetById(profileUser?._id, 1, pageSize);
-      console.log(result);
       if (result) {
         result.designHistories
           ? setAllDesignHistories(result.designHistories)
@@ -104,14 +107,25 @@ const ProfileMallPage = (): JSX.Element => {
   const searchPage = async () => {
     if (profileUser) {
       setLoading(true);
-      const result = await designHistoryGetById(profileUser?._id, pageNum, pageSize);
-      if (result&&allDesignHistories) {
-        setAllDesignHistories(allDesignHistories.concat(result.designHistories));
+      const result = await designHistoryGetById(
+        profileUser?._id,
+        pageNum,
+        pageSize
+      );
+      if (result && allDesignHistories) {
+        setAllDesignHistories(
+          allDesignHistories.concat(result.designHistories)
+        );
         //setAllShowCases(showcaseResult.result);
         //setCount(showcaseResult.count);
       }
       setLoading(false);
     }
+  };
+
+  const getTime = (value: number) => {
+    const date = new Date(value);
+    return `${date.getDate()} - ${date.getMonth() + 1} - ${date.getFullYear()}`;
   };
 
   const getButtons = () => {
@@ -147,7 +161,6 @@ const ProfileMallPage = (): JSX.Element => {
   };
 
   const getMallHistory = () => {
-    console.log(allDesignHistories);
     switch (chooseButton) {
       case 0:
         return (
@@ -171,26 +184,80 @@ const ProfileMallPage = (): JSX.Element => {
             <ProfileDesignHistory>Completion history</ProfileDesignHistory>
             <div>
               {allDesignHistories?.map((item) => {
-                return (
-                  <>
-                    <p>{item.uploadTime}</p>
-                    <MallCustomInsideBackImg
-                      src={
-                        mallCustomer[item.type]
-                          ? mallCustomer[item.type].imgURL
-                          : ""
-                      }
-                      style={{
-                        backgroundImage: `url(${item.imageString})`,
-                        backgroundSize: "contain",
-                        backgroundRepeat: "no-repeat",
-                      }}
-                    />
-                    <ProfileDesignAttribute>
-                      {item.value}
-                    </ProfileDesignAttribute>
-                  </>
-                );
+                if (item.type == 3) {
+                  return (
+                    <div style={{ position: "relative" }}>
+                      <p>{getTime(item.uploadTime)}</p>
+                      <ProfileDesignHistoryImg
+                        src={
+                          mallCustomer[item.type]
+                            ? mallCustomer[item.type].imgURL
+                            : ""
+                        }
+                      />
+                      <img
+                        style={{
+                          height: "525px",
+                          position: "absolute",
+                          left: "90px",
+                          top: "85px",
+                          width: "345px",
+                        }}
+                        src={item.imageString}
+                      />
+                      <ProfileDesignAttribute>
+                        {item.value}
+                      </ProfileDesignAttribute>
+                    </div>
+                  );
+                } else if (item.type == 1) {
+                  return (
+                    <div style={{ position: "relative" }}>
+                      <p>{getTime(item.uploadTime)}</p>
+                      <ProfileDesignHistoryImg
+                        src={
+                          mallCustomer[item.type]
+                            ? mallCustomer[item.type].imgURL
+                            : ""
+                        }
+                      />
+                      <img
+                        style={{
+                          height: "325px",
+                          position: "absolute",
+                          left: "183px",
+                          top: "215px",
+                          width: "245px",
+                        }}
+                        src={item.imageString}
+                      />
+                      <ProfileDesignAttribute>
+                        {item.value}
+                      </ProfileDesignAttribute>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <>
+                      <p>{getTime(item.uploadTime)}</p>
+                      <ProfileDesignHistoryImg
+                        src={
+                          mallCustomer[item.type]
+                            ? mallCustomer[item.type].imgURL
+                            : ""
+                        }
+                        style={{
+                          backgroundImage: `url(${item.imageString})`,
+                          backgroundSize: "contain",
+                          backgroundRepeat: "no-repeat",
+                        }}
+                      />
+                      <ProfileDesignAttribute>
+                        {item.value}
+                      </ProfileDesignAttribute>
+                    </>
+                  );
+                }
               })}
             </div>
             {allDesignHistories ? (

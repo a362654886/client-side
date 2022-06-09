@@ -97,26 +97,34 @@ const MallCustom = (): JSX.Element => {
     setLoadImg(value.imgBase64);
   };
 
-  const sendEmail = async () =>
+  const sendEmail = async () => {
+    //send to customer service
     await emailPost(
-      email,
+      window.btoa(email),
       `
-    email:${email},
-    attributes:${attributes}
-  `,
-      "mall"
+  email:${email},
+  attributes:${attributes}
+`,
+      "mall",
+      "customerService"
     );
+    //send to customer
+    await emailPost(
+      window.btoa(email),
+      "",
+      "Thanks for your inquiry",
+      "autoReply"
+    );
+  };
 
   const sendDesignHistory = async () => {
     const today = new Date();
     const body: DesignHistory = {
       _id: `${loginUser ? loginUser._id : ""}${today.valueOf()}`,
-      uploadTime: `${today.getDate()}-${
-        today.getMonth() + 1
-      }-${today.getFullYear()}`,
+      uploadTime: today.valueOf(),
       type: chooseIndex,
       imageString: resizeUploadImg,
-      value: attributes,
+      value: `${attributes} Contact Email ${email}`,
       userId: `${loginUser ? loginUser._id : ""}`,
     };
     await designHistoryPost(body);
@@ -171,7 +179,10 @@ const MallCustom = (): JSX.Element => {
             <MallCustomHeaderDiv
               key={index}
               style={{
-                borderBottom: index == chooseIndex ? "2px solid #892E2F" : "2px solid white",
+                borderBottom:
+                  index == chooseIndex
+                    ? "2px solid #892E2F"
+                    : "2px solid white",
               }}
             >
               <img

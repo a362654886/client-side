@@ -476,7 +476,7 @@ export const ProfileLevelImgBox = styled.div`
 
 export const ProfileLevelImgDiv = styled.div`
   width: 248px;
-  margin-bottom:32px;
+  margin-bottom: 32px;
   div {
     display: flex;
   }
@@ -538,6 +538,14 @@ export const ProfileDesignHistory = styled.h2`
   font-weight: bold;
 `;
 
+export const ProfileDesignHistoryImg = styled.img`
+  height: 600px;
+  width: auto;
+  margin: 0px auto;
+  text-align: center;
+  left: 60px;
+`;
+
 export const ProfileDesignTime = styled.p`
   height: 32px;
   line-height: 32px;
@@ -545,7 +553,7 @@ export const ProfileDesignTime = styled.p`
 `;
 
 export const ProfileDesignAttribute = styled.p`
-  height: 32px;
+  height: auto;
   line-height: 32px;
   font-size: 16px;
 `;

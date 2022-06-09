@@ -1,6 +1,6 @@
 export type DesignHistory = {
   _id: string;
-  uploadTime: string;
+  uploadTime: number;
   type: number;
   imageString: string;
   value: string;

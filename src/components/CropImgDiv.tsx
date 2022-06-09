@@ -47,7 +47,7 @@ const CropImgDiv = ({
           src={uploadImg}
           style={{ height: "100%", width: "100%" }}
           // Cropper.js options
-          initialAspectRatio={1 / 1}
+          initialAspectRatio={1 / 2}
           /* eslint-disable @typescript-eslint/no-explicit-any */
           ref={ImgCorpRef as any}
           viewMode={1}
@@ -83,7 +83,7 @@ const CropImgDiv = ({
         src={uploadImg}
         style={{ height: "100%", width: "100%" }}
         // Cropper.js options
-        initialAspectRatio={1 / 1}
+        initialAspectRatio={radio}
         ref={ImgCorpRef as any}
         aspectRatio={radio}
         minCropBoxHeight={10}
