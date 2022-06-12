@@ -88,7 +88,7 @@ const HomePage = (): JSX.Element => {
   const [newLoading, setNewLoading] = useState<boolean>(false);
   const [animeLoading, setAnimeLoading] = useState<boolean>(false);
   const [showcaseLoading, setShowcaseLoading] = useState<boolean>(false);
-  const [imageHighestPx, setImageHighestPx] = useState<number>(0);
+  const [imageHighestPx, setImageHighestPx] = useState<number>(300);
 
   const [size, setSize] = useState({
     width: document.documentElement.clientWidth,
@@ -143,7 +143,9 @@ const HomePage = (): JSX.Element => {
       showCaseResult.result.forEach((item) => {
         const img = new Image();
         img.src = item.imageArr[0];
+        console.log(img.height);
         const imageHeight = img.height / (img.width / 260);
+        console.log(imageHighestPx);
         if (item.imageArr && item.imageArr[0] && imageHighestPx < imageHeight) {
           setImageHighestPx(imageHeight);
         }
@@ -568,7 +570,7 @@ const HomePage = (): JSX.Element => {
                 Rewards by your Awesome pictures!
               </h3>
             </HomePageMobileShowcaseDiv>
-            <HomePageShowcaseDiv>
+            <HomePageShowcaseDiv style={{ height: `${imageHighestPx}px` }}>
               <Swiper
                 slidesPerView={1}
                 spaceBetween={30}
@@ -614,7 +616,7 @@ const HomePage = (): JSX.Element => {
           </>
         ) : (
           <>
-            <MarketPlaceTitle>
+            <MarketPlaceTitle style={{ marginLeft: "4px" }}>
               <h2>Marketplace</h2>
             </MarketPlaceTitle>
             <HomePageMarketPlaceDiv>
@@ -649,7 +651,7 @@ const HomePage = (): JSX.Element => {
           </>
         ) : (
           <>
-            <MarketPlaceTitle>
+            <MarketPlaceTitle style={{ marginLeft: "4px" }}>
               <h2>Anime Products</h2>
             </MarketPlaceTitle>
             <HomePageProductPlaceDiv>
