@@ -22,6 +22,7 @@ import {
   MarketSortByDiv,
   MarketSortLocation,
   MarketSortPrice,
+  MarketTagDiv,
   StringBar,
   StringClear,
 } from "../../cssJs/MarketPage/MarketPlaceCss";
@@ -37,6 +38,10 @@ import loadingImg from "../../files/loading.gif";
 import getMoreImg from "../../files/getMore.svg";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
 import { getWidth } from "../../helperFns/widthFn";
+import { marketTagAllGet } from "../../api/tagAPI";
+import { TagType } from "../../types/tagType";
+import hotIcon from "../../files/MarketHotTags.svg";
+import { ShowcaseTagText } from "../../cssJs/ShowCasePage/showCaseCss";
 
 export enum FilterEnum {
   Latest = "Latest",
@@ -60,6 +65,7 @@ const MarketplaceShow = (): JSX.Element => {
   const [allMarket, setAllMarket] = useState<MarketType[]>([]);
   const [sortByVisible, setSortByVisible] = useState<boolean>(false);
   const [filterVisible, setFilterVisible] = useState<boolean>(false);
+  const [hotTagVisible, setHotTagVisible] = useState<boolean>(false);
   const [country, setCountry] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [priceFrom, setPriceFrom] = useState<string>("");
@@ -68,40 +74,48 @@ const MarketplaceShow = (): JSX.Element => {
   const [filterType, setFilterType] = useState<FilterEnum>(FilterEnum.Latest);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [searchUser, setSearchUser] = useState<boolean>(true);
+  const [marketTags, setMarketTags] = useState<TagType[]>([]);
   const pageSize = 24;
 
   useEffect(() => {
     (async function anyNameFunction() {
       setSearchUser(true);
+      await getAllTags();
       await search("");
     })();
-  }, []);
+  }, [para.id]);
 
   useEffect(() => {
     //console.log(searchString);
-  }, [searchString, page, country, city, priceFrom, priceTo]);
+  }, [searchString, page, country, city, priceFrom, priceTo, marketTags]);
 
   useEffect(() => {
     (async function anyNameFunction() {
       setSearchUser(false);
       await search("");
+      await getAllTags();
     })();
   }, [filterType, searchString]);
 
   const search = async (value: string) => {
-    if (para.id != "null" && searchUser) {
-      await searchByUser(para.id);
+    if (para.id != "null") {
+      searchBySearchValue(value, para.id);
     } else {
-      await searchBySearchValue(value);
+      await searchBySearchValue(value, "");
     }
   };
 
+  const getAllTags = async () => {
+    const marketResult = await marketTagAllGet();
+    setMarketTags(marketResult);
+  };
+
   const getMore = async () => {
-    await searchBySearchValue("");
+    await searchBySearchValue("", para.id == "null" ? "" : para.id);
     setPage(page + 1);
   };
 
-  const searchBySearchValue = async (value: string) => {
+  const searchBySearchValue = async (value: string, tag: string) => {
     setLoading(true);
     const marketResult = await marketAllGet(
       value,
@@ -111,7 +125,8 @@ const MarketplaceShow = (): JSX.Element => {
       country,
       priceFrom,
       priceTo,
-      filterType
+      filterType,
+      tag
     );
     if (marketResult) {
       //setAllMarket(allMarket.concat(marketResult.markets));
@@ -274,6 +289,33 @@ const MarketplaceShow = (): JSX.Element => {
     );
   };
 
+  const hotTagDiv = () => {
+    return (
+      <MarketFilterDiv>
+        <MarketFilterCloseImg
+          src={iconClose}
+          onClick={() => setHotTagVisible(false)}
+        />
+        <MarketTagDiv>
+          {marketTags.map((tag, index) => {
+            return (
+              <p
+                onClick={() => {
+                  history.push({
+                    pathname: `/marketplace/show/${tag.text}`,
+                  });
+                }}
+                key={index}
+              >
+                {tag.text}
+              </p>
+            );
+          })}
+        </MarketTagDiv>
+      </MarketFilterDiv>
+    );
+  };
+
   return (
     <div
       style={{
@@ -295,6 +337,7 @@ const MarketplaceShow = (): JSX.Element => {
           buttonClick={() => history.push(`/marketplace/create`)}
         />
       </MarketPlaceTitleDiv>
+      {para.id != "null" ? <ShowcaseTagText>{para.id}</ShowcaseTagText> : <></>}
       <MarketBodyDiv>
         <MarketSearchInputDiv>
           <Input value={value} onChange={(e) => setValue(e.target.value)} />
@@ -323,6 +366,17 @@ const MarketplaceShow = (): JSX.Element => {
             <div onClick={() => setFilterVisible(true)}>
               <img src={marketFilter} />
               <p>Filters</p>
+            </div>
+          </Popover>
+          <Popover
+            placement="bottom"
+            content={hotTagDiv()}
+            trigger="click"
+            visible={hotTagVisible}
+          >
+            <div onClick={() => setHotTagVisible(true)}>
+              <img src={hotIcon} />
+              <p>Hot Tags</p>
             </div>
           </Popover>
         </MarketBorder>

@@ -72,6 +72,7 @@ import DeleteWrapperDiv from "../../../components/DeleteWrapperDiv";
 import { IfLoginCheck } from "../../../helperFns/loginCheck";
 import { getWidth } from "../../../helperFns/widthFn";
 import { ReportContextType } from "../../../types/blockType";
+import { cloneDeep } from "lodash";
 
 interface IProps {
   anime: Anime | null;
@@ -498,33 +499,61 @@ const AnimeOneForum = ({
     </ForumAddNew>
   );
 
-  const getAddSecondItemBox = (index: number, secondIndex: number) => (
-    <div style={{ marginTop: "16px", width: "" }}>
-      <TextInput style={{}}>
-        <FullTextEditor
-          html={""}
-          setFullText={(e) => {
-            IfLoginCheck(loginUser)
-              ? sendNewSecondItem(e, index, secondIndex)
-              : "";
-          }}
-        />
-        <br />
-        <div>
-          <AnimeButton
-            para=""
-            text={"Post"}
-            width="100%"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() => submitNewSecondForumItem(index, secondIndex)}
+  const getAddSecondItemBox = (index: number, secondIndex: number) =>{
+    let ifShowReply = true;
+    (forums[index].items as ForumItem[])[secondIndex].secondItems?.forEach(item=>{
+      if (item.reply) {
+        ifShowReply = false;
+      }
+    })
+    return ifShowReply ? (
+      <div style={{ marginTop: "16px", width: "" }}>
+        <TextInput style={{}}>
+          <FullTextEditor
+            html={""}
+            setFullText={(e) => {
+              IfLoginCheck(loginUser)
+                ? sendNewSecondItem(e, index, secondIndex)
+                : "";
+            }}
           />
-        </div>
-      </TextInput>
-    </div>
-  );
+          <br />
+          <div>
+            <AnimeButton
+              para=""
+              text={"Post"}
+              width="100%"
+              height="32px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() => submitNewSecondForumItem(index, secondIndex)}
+            />
+          </div>
+        </TextInput>
+      </div>
+    ):(
+      <AnimeButton
+        para=""
+        text={"Post New Reply"}
+        width="100%"
+        height="32px"
+        textColor="white"
+        backGroundColor="#FFC300"
+        borderColor="#FFC300"
+        buttonClick={() => openAddSecondReply(index, secondIndex)}
+      />
+    );
+  }
+
+  const openAddSecondReply = (index: number,secondIndex:number) => {
+    const newForums = cloneDeep(forums);
+    (newForums[index].items as ForumItem[])[secondIndex].secondItems?.forEach((item) => {
+      item.reply = false;
+    });
+    setForums(newForums)
+  };
+
   // reply
   const openReply = (index: number) => {
     forums[index].showReplay = !forums[index].showReplay;

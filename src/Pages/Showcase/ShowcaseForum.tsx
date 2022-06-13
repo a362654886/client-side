@@ -395,41 +395,81 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
     showcaseReply: ShowCaseReply,
     index: number,
     secondIndex: number
-  ) => (
-    <div key={index} style={{ marginTop: "16px" }}>
-      <TextInput>
-        <TextArea
-          value={
-            newSecondReplyHtml[index]
-              ? newSecondReplyHtml[index][secondIndex]
+  ) => {
+    let ifShowReply = true;
+    showcaseReply.secondReplies?.forEach((item) => {
+      if (item.reply) {
+        ifShowReply = false;
+      }
+    });
+    return ifShowReply ? (
+      <div key={index} style={{ marginTop: "16px" }}>
+        <TextInput>
+          <TextArea
+            value={
+              newSecondReplyHtml[index]
                 ? newSecondReplyHtml[index][secondIndex]
+                  ? newSecondReplyHtml[index][secondIndex]
+                  : ""
                 : ""
-              : ""
-          }
-          onChange={(e) => {
-            IfLoginCheck(loginUser)
-              ? sendNewSecondReply(e.target.value, index, secondIndex)
-              : "";
-          }}
-        />
-        <br />
-        <ReplyAddDiv>
-          <AnimeButton
-            para=""
-            text={"Post"}
-            width="100%"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() =>
-              submitNewSecondReplyItem(showcaseReply, index, secondIndex)
             }
+            onChange={(e) => {
+              IfLoginCheck(loginUser)
+                ? sendNewSecondReply(e.target.value, index, secondIndex)
+                : "";
+            }}
           />
-        </ReplyAddDiv>
-      </TextInput>
-    </div>
-  );
+          <br />
+          <ReplyAddDiv>
+            <AnimeButton
+              para=""
+              text={"Post"}
+              width="100%"
+              height="32px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() =>
+                submitNewSecondReplyItem(showcaseReply, index, secondIndex)
+              }
+            />
+          </ReplyAddDiv>
+        </TextInput>
+      </div>
+    ) : (
+      <AnimeButton
+        para=""
+        text={"Post New Reply"}
+        width="100%"
+        height="32px"
+        textColor="white"
+        backGroundColor="#FFC300"
+        borderColor="#FFC300"
+        buttonClick={() => openAddSecondReply(showcaseReply, index)}
+      />
+    );
+  };
+
+  const openAddSecondReply = (showcaseReply: ShowCaseReply, index: number) => {
+    const newShowCaseReply = cloneDeep(showcaseReply);
+    newShowCaseReply.secondReplies?.forEach((item) => {
+      item.reply = false;
+    });
+    const newAllShowCases = cloneDeep(allShowCases);
+    if (newAllShowCases[index].replies) {
+      const _index = (
+        newAllShowCases[index].replies as ShowCaseReply[]
+      ).findIndex((item) => item._id == showcaseReply._id);
+      (newAllShowCases[index].replies as ShowCaseReply[])[_index] =
+        newShowCaseReply;
+      setAllShowCases(newAllShowCases);
+      const _newSecondReplyHtml = cloneDeep(newSecondReplyHtml);
+      const newArr: string[] = [];
+      _newSecondReplyHtml[index].forEach((item) => newArr.push(""));
+      _newSecondReplyHtml[index] = newArr;
+      setNewSecondReplyHtml(_newSecondReplyHtml);
+    }
+  };
 
   // reply
   const openReply = (index: number) => {

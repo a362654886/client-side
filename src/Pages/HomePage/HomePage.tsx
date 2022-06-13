@@ -187,7 +187,8 @@ const HomePage = (): JSX.Element => {
       "",
       "0",
       "1000000",
-      "Latest"
+      "Latest",
+      ""
     );
     if (marketResult) {
       setAllMarkets(marketResult.markets);

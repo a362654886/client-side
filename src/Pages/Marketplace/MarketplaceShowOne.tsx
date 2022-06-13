@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input, Popover } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { ImageBody } from "../../components/ImageUpload";
@@ -8,12 +8,15 @@ import {
   MarketBodyDiv,
   MarketDescription,
   MarketEditAndDeleteDiv,
+  MarketFilterCloseImg,
+  MarketFilterDiv,
   MarketFollow,
   MarketImgDiv,
   MarketItemImg,
   MarketItemName,
   MarketItemTime,
   MarketLocation,
+  MarketOneHotDiv,
   MarketPlaceTitle,
   MarketPlaceTitleDiv,
   MarketPriceContextDiv,
@@ -24,6 +27,7 @@ import {
   MarketPricePriceName,
   MarketShowOneTitle,
   MarketTag,
+  MarketTagDiv,
   MarketText,
   MarketViewMore,
   PriceInput,
@@ -73,6 +77,9 @@ import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { MARKET_FOLLOW_ARR } from "../../redux/marketFollow";
 import { getWidth } from "../../helperFns/widthFn";
 import { ReportContextType } from "../../types/blockType";
+import { TagType } from "../../types/tagType";
+import iconClose from "../../files/Icon-Close.svg";
+import { marketTagAllGet } from "../../api/tagAPI";
 
 interface Para {
   id: string;
@@ -103,9 +110,12 @@ const MarketplaceShowOne = (): JSX.Element => {
   const [bidIniLoading, setBidIniLoading] = useState<boolean>(false);
   const [messageVisible, setMessageVisible] = useState(false);
   const [messageValue, setMessageValue] = useState("");
+  const [marketTags, setMarketTags] = useState<TagType[]>([]);
+  const [hotTagVisible, setHotTagVisible] = useState<boolean>(false);
 
   useEffect(() => {
     (async function anyNameFunction() {
+      await getAllTags();
       const market = await marketGet(para.id);
       if (market && market.imageArr) {
         setImgArr(market.imageArr);
@@ -144,6 +154,11 @@ const MarketplaceShowOne = (): JSX.Element => {
       }
     })();
   }, [marketState, page]);
+
+  const getAllTags = async () => {
+    const marketResult = await marketTagAllGet();
+    setMarketTags(marketResult);
+  };
 
   const getMarketPrices = async () => {
     setBidLoading(true);
@@ -201,6 +216,33 @@ const MarketplaceShowOne = (): JSX.Element => {
 
       getIniMarketPrices();
     }
+  };
+
+  const hotTagDiv = () => {
+    return (
+      <MarketOneHotDiv>
+        <MarketFilterCloseImg
+          src={iconClose}
+          onClick={() => setHotTagVisible(false)}
+        />
+        <MarketTagDiv>
+          {marketTags.map((tag, index) => {
+            return (
+              <p
+                onClick={() => {
+                  history.push({
+                    pathname: `/marketplace/show/${tag.text}`,
+                  });
+                }}
+                key={index}
+              >
+                {tag.text}
+              </p>
+            );
+          })}
+        </MarketTagDiv>
+      </MarketOneHotDiv>
+    );
   };
 
   const getMarketPricesDiv = () => {
@@ -393,24 +435,38 @@ const MarketplaceShowOne = (): JSX.Element => {
             }`}</span>
           </MarketText>
           {marketState && marketState.tags && marketState.tags.length > 0 ? (
-            <div>
-              {marketState.tags.map((tag, index) => {
-                return (
-                  <MarketTag key={index}>
-                    <span
-                      onClick={() => {
-                        /*toPage(
+            <>
+              <div>
+                {marketState.tags.map((tag, index) => {
+                  return (
+                    <MarketTag key={index}>
+                      <span
+                        onClick={() => {
+                          /*toPage(
                           `/showcase/showTag?tag=${tag.text.replace("#", "")}`
                         );*/
-                      }}
-                    >
-                      {tag.text}
-                    </span>
-                  </MarketTag>
-                );
-              })}
-              <img src={hotIcon} />
-            </div>
+                        }}
+                      >
+                        {tag.text}
+                      </span>
+                    </MarketTag>
+                  );
+                })}
+                <Popover
+                  style={{ height: "24px", width: "50px" }}
+                  placement="right"
+                  content={hotTagDiv()}
+                  trigger="click"
+                  visible={hotTagVisible}
+                >
+                  <img
+                    style={{ height: "32px", width: "50px" }}
+                    src={hotIcon}
+                    onClick={() => setHotTagVisible(true)}
+                  />
+                </Popover>
+              </div>
+            </>
           ) : (
             <></>
           )}

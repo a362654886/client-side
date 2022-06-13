@@ -72,7 +72,7 @@ export const MarketBorder = styled.div`
   display: flex;
   margin-top: 32px;
   div {
-    width: 96px;
+    width: 126px;
     margin-right: 32px;
     display: flex;
     cursor: pointer;
@@ -261,6 +261,12 @@ export const MarketFilterDiv = styled.div`
   border: 10px solid #a0a0a0;
 `;
 
+export const MarketOneHotDiv = styled.div`
+  width: 320px;
+  height: 150px;
+  border: 10px solid #a0a0a0;
+`;
+
 export const MarketFilterCloseImg = styled.img`
   float: right;
   height: 32px;
@@ -311,6 +317,17 @@ export const MarketFilterPriceHighest = styled.p`
   }
   img {
     float: right;
+  }
+`;
+
+export const MarketTagDiv = styled.div`
+  margin-top: 46px;
+  p {
+    margin-left: 49px;
+    height: 32px;
+    padding: 8px 0px;
+    font-size: 16px;
+    cursor: pointer;
   }
 `;
 

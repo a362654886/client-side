@@ -36,14 +36,15 @@ export const marketAllGet = async (
   country: string,
   priceLow: string,
   priceHeight: string,
-  sortType: string
+  sortType: string,
+  tag: string
 ): Promise<{
   markets: MarketType[];
   count: number;
 } | null> => {
   const endpoint =
     basicURL +
-    `marketsGet?value=${value}&city=${city}&country=${country}&priceLow=${priceLow}&priceHeight=${priceHeight}&sortType=${sortType}&page=${page}&pageSize=${pageSize}`;
+    `marketsGet?value=${value}&city=${city}&country=${country}&priceLow=${priceLow}&priceHeight=${priceHeight}&sortType=${sortType}&page=${page}&pageSize=${pageSize}&tag=${tag.replace("#","")}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;
