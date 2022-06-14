@@ -34,6 +34,7 @@ import {
   TagSelect,
   TagSelectDiv,
 } from "../../cssJs/ShowCasePage/showCaseCss";
+import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
 
 const { Option } = Select;
 
@@ -86,7 +87,8 @@ const MarketplaceCreate = (): JSX.Element => {
     }*/
     const newArr: (string | ImageBody)[] = [];
     imgArr.forEach((image) => newArr.push(image));
-    imageBody.imgName = exist == -1? imageBody.imgName:`${ imageBody.imgName}New`
+    imageBody.imgName =
+      exist == -1 ? imageBody.imgName : `${imageBody.imgName}New`;
     newArr.unshift(imageBody);
     if (newArr.length >= 5 && newArr.indexOf("add") !== -1) {
       newArr.pop();
@@ -141,6 +143,12 @@ const MarketplaceCreate = (): JSX.Element => {
     const r = await marketAdd(marketBody);
     if (r == 200) {
       history.push("/marketplace/show/null");
+    } else {
+      openNotification(
+        r.toString(),
+        NotificationColor.Success,
+        NotificationTitle.Success
+      );
     }
     dispatch({
       payload: LoadingType.CLOSE,
@@ -195,7 +203,7 @@ const MarketplaceCreate = (): JSX.Element => {
                             top: index <= 1 ? "0px" : "320px",
                             marginLeft: "40px",
                           }
-                        : {marginLeft:"40px",marginBottom:"70px"}
+                        : { marginLeft: "40px", marginBottom: "70px" }
                     }
                   >
                     <ImageUpload

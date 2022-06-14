@@ -4,14 +4,14 @@ import { MarketPriceType, MarketType } from "../types/MarketType";
 
 const basicURL = backEndLink;
 
-export const marketAdd = async (market: MarketType): Promise<number | null> => {
+export const marketAdd = async (market: MarketType): Promise<number | string> => {
   const endpoint = basicURL + "marketInsert";
   return Axios.post(endpoint, { marketBody: market })
     .then((response) => {
       return response.status;
     })
-    .catch(() => {
-      return null;
+    .catch((e) => {
+      return e.toString();
     });
 };
 
