@@ -97,8 +97,8 @@ export const forumSecondItemAdd = async (
     .then((response) => {
       return response.status;
     })
-    .catch(() => {
-      return null;
+    .catch((e) => {
+      return e.toString();
     });
 };
 

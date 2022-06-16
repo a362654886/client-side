@@ -389,6 +389,12 @@ const AnimeOneForum = ({
           }
         }
         setNewSecondItemHtml(newArr);
+      } else {
+        openNotification(
+          r?r.toString():"",
+          NotificationColor.Error,
+          NotificationTitle.Error
+        );
       }
     } else {
       openNotification(
@@ -499,13 +505,15 @@ const AnimeOneForum = ({
     </ForumAddNew>
   );
 
-  const getAddSecondItemBox = (index: number, secondIndex: number) =>{
+  const getAddSecondItemBox = (index: number, secondIndex: number) => {
     let ifShowReply = true;
-    (forums[index].items as ForumItem[])[secondIndex].secondItems?.forEach(item=>{
-      if (item.reply) {
-        ifShowReply = false;
+    (forums[index].items as ForumItem[])[secondIndex].secondItems?.forEach(
+      (item) => {
+        if (item.reply) {
+          ifShowReply = false;
+        }
       }
-    })
+    );
     return ifShowReply ? (
       <div style={{ marginTop: "16px", width: "" }}>
         <TextInput style={{}}>
@@ -532,7 +540,7 @@ const AnimeOneForum = ({
           </div>
         </TextInput>
       </div>
-    ):(
+    ) : (
       <AnimeButton
         para=""
         text={"Post New Reply"}
@@ -544,14 +552,16 @@ const AnimeOneForum = ({
         buttonClick={() => openAddSecondReply(index, secondIndex)}
       />
     );
-  }
+  };
 
-  const openAddSecondReply = (index: number,secondIndex:number) => {
+  const openAddSecondReply = (index: number, secondIndex: number) => {
     const newForums = cloneDeep(forums);
-    (newForums[index].items as ForumItem[])[secondIndex].secondItems?.forEach((item) => {
-      item.reply = false;
-    });
-    setForums(newForums)
+    (newForums[index].items as ForumItem[])[secondIndex].secondItems?.forEach(
+      (item) => {
+        item.reply = false;
+      }
+    );
+    setForums(newForums);
   };
 
   // reply
