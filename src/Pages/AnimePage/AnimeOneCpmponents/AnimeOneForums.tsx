@@ -445,6 +445,11 @@ const AnimeOneForum = ({
     const newItemHtmls = newItemHtml;
     newItemHtmls[index] = e;
     setNewItemHtml(newItemHtmls);
+    openNotification(
+      e.toString(),
+      NotificationColor.Success,
+      NotificationTitle.Success
+    );
   };
 
   const sendNewSecondItem = (e: string, index: number, secondIndex: number) => {
