@@ -13,7 +13,7 @@ import {
   MarketUploadImage,
   PublishButtonsDiv,
 } from "../../cssJs/MarketPage/MarketPlaceCss";
-import lodash from "lodash";
+import lodash, { cloneDeep } from "lodash";
 import blankMarket from "../../files/blankMarket.png";
 import TextArea from "antd/lib/input/TextArea";
 import AnimeButton, { MiddleDiv } from "../../components/Button";
@@ -34,7 +34,12 @@ import {
   TagSelect,
   TagSelectDiv,
 } from "../../cssJs/ShowCasePage/showCaseCss";
-import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
+import CropImgDiv from "../../components/CropImgDiv";
 
 const { Option } = Select;
 
@@ -51,47 +56,21 @@ const MarketplaceCreate = (): JSX.Element => {
   const [description, setDescription] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [country, setCountry] = useState<string>("");
-  const [imgArr, setImgArr] = useState<(string | ImageBody)[]>(["add"]);
+  const [imgArr, setImgArr] = useState<(string)[]>(["add"]);
   const [tags, setTags] = useState<string[]>([]);
   const [state, setState] = useState<string>("available");
-  const [uploadImg, setLoadImg] = useState<ImageBody>({
-    width: 0,
-    height: 0,
-    imgBase64: "",
-    imgName: "",
-  });
+  const [uploadImg, setLoadImg] = useState<string>("");
   const [showCropper, setShowCropper] = useState<boolean>(false);
 
   useEffect(() => {
     console.log(imgArr);
   }, [imgArr, state]);
 
-  const setResizeUploadImg = (imageBody: ImageBody) => {
-    const exist = imgArr
-      .map((image) => {
-        if (typeof image == "string") {
-          return image;
-        } else {
-          return image.imgName;
-        }
-      })
-      .indexOf(imageBody.imgName);
-    /*if (exist == -1) {
-      const newArr: (string | ImageBody)[] = [];
-      imgArr.forEach((image) => newArr.push(image));
-      newArr.unshift(imageBody);
-      if (newArr.length >= 5 && newArr.indexOf("add") !== -1) {
-        newArr.pop();
-      }
-      setImgArr(newArr);
-    }*/
-    const newArr: (string | ImageBody)[] = [];
-    imgArr.forEach((image) => newArr.push(image));
-    imageBody.imgName =
-      exist == -1 ? imageBody.imgName : `${imageBody.imgName}New`;
-    newArr.unshift(imageBody);
-    if (newArr.length >= 5 && newArr.indexOf("add") !== -1) {
-      newArr.pop();
+  const setResizeUploadImg = (imageBody: string) => {
+    const newArr: string[] = cloneDeep(imgArr)
+    newArr.unshift(imageBody)
+    if(newArr.length>4){
+      newArr.pop()
     }
     setImgArr(newArr);
   };
@@ -108,8 +87,8 @@ const MarketplaceCreate = (): JSX.Element => {
   const getArr = () => {
     const arr: string[] = [];
     imgArr.forEach((item) => {
-      if (item !== "Add" && typeof item !== "string") {
-        arr.push(item.imgBase64);
+      if (item !== "add" ) {
+        arr.push(item);
       }
     });
     return arr;
@@ -214,7 +193,7 @@ const MarketplaceCreate = (): JSX.Element => {
                       border={"1px solid #F6F6F6"}
                       text={"Image"}
                       setImg={(value: ImageBody) => {
-                        setLoadImg(value);
+                        setLoadImg(value.imgBase64);
                         setShowCropper(true);
                       }}
                       margin={"15px 0px 0px 0px"}
@@ -238,7 +217,7 @@ const MarketplaceCreate = (): JSX.Element => {
                   >
                     <div>
                       <img
-                        src={typeof image == "string" ? image : image.imgBase64}
+                        src={image}
                         style={{
                           width: "250px",
                           height: "250px",
@@ -377,10 +356,10 @@ const MarketplaceCreate = (): JSX.Element => {
             </MiddleDiv>
           </PublishButtonsDiv>
         </MarketBodyDiv>
-        <CropImgBodyDiv
+        <CropImgDiv
           uploadImg={uploadImg}
-          setLoadImg={(imageBody: ImageBody) => {
-            setResizeUploadImg(imageBody);
+          setLoadImg={(image: string) => {
+            setResizeUploadImg(image);
             setShowCropper(false);
           }}
           visible={showCropper}
