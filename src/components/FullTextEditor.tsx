@@ -124,9 +124,6 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
               ["link", "image"],
               ["clean"],
             ],
-            handlers: {
-              image: handlerImage,
-            },
           },
     clipboard: {
       // toggle to add extra line breaks when pasting HTML:
