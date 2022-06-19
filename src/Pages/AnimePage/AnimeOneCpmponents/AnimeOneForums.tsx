@@ -73,6 +73,7 @@ import { IfLoginCheck } from "../../../helperFns/loginCheck";
 import { getWidth } from "../../../helperFns/widthFn";
 import { ReportContextType } from "../../../types/blockType";
 import { cloneDeep } from "lodash";
+import { forumTextCompress } from "../../../helperFns/imageCompress";
 
 interface IProps {
   anime: Anime | null;
@@ -178,7 +179,6 @@ const AnimeOneForum = ({
       pageNum,
       pageSize
     );
-    console.log(forumResult);
     if (forumResult) {
       setForums(forumResult.result);
       setCount(forumResult.count);
@@ -260,11 +260,12 @@ const AnimeOneForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
+    const textString = await forumTextCompress(html)
     if (loginUser) {
       const forum: ForumType = {
         _id: `${loginUser?._id}${new Date().valueOf()}`,
         forumId: `${loginUser?._id}${new Date().valueOf()}`,
-        text: html,
+        text: textString,
         uploadTime: new Date(),
         userId: loginUser?._id,
         userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
@@ -305,10 +306,11 @@ const AnimeOneForum = ({
           ? (forums[index].items as ForumItem[])[0]._id + new Date().valueOf()
           : forums[index]._id + new Date().valueOf()
       }`;
+      const textString = await forumTextCompress(newItemHtml[index]);
       const forumItem: ForumItem = {
         _id: id,
         forumItemId: id,
-        text: newItemHtml[index],
+        text: textString,
         forumId: forums[index]._id,
         uploadTime: new Date(),
         userId: loginUser?._id,
@@ -360,11 +362,12 @@ const AnimeOneForum = ({
             : iniId + new Date().valueOf()
           : iniId + new Date().valueOf()
       }`;
+      const textString = await forumTextCompress(newSecondItemHtml[index][secondIndex])
       const secondForumItem: ForumSecondItem = {
         _id: id,
         forumSecondItemId: id,
         forumItemId: (forums[index].items as ForumItem[])[secondIndex]._id,
-        text: newSecondItemHtml[index][secondIndex],
+        text: textString,
         forumId: forums[index]._id,
         uploadTime: new Date(),
         userId: loginUser?._id,
@@ -499,13 +502,15 @@ const AnimeOneForum = ({
     </ForumAddNew>
   );
 
-  const getAddSecondItemBox = (index: number, secondIndex: number) =>{
+  const getAddSecondItemBox = (index: number, secondIndex: number) => {
     let ifShowReply = true;
-    (forums[index].items as ForumItem[])[secondIndex].secondItems?.forEach(item=>{
-      if (item.reply) {
-        ifShowReply = false;
+    (forums[index].items as ForumItem[])[secondIndex].secondItems?.forEach(
+      (item) => {
+        if (item.reply) {
+          ifShowReply = false;
+        }
       }
-    })
+    );
     return ifShowReply ? (
       <div style={{ marginTop: "16px", width: "" }}>
         <TextInput style={{}}>
@@ -532,7 +537,7 @@ const AnimeOneForum = ({
           </div>
         </TextInput>
       </div>
-    ):(
+    ) : (
       <AnimeButton
         para=""
         text={"Post New Reply"}
@@ -544,14 +549,16 @@ const AnimeOneForum = ({
         buttonClick={() => openAddSecondReply(index, secondIndex)}
       />
     );
-  }
+  };
 
-  const openAddSecondReply = (index: number,secondIndex:number) => {
+  const openAddSecondReply = (index: number, secondIndex: number) => {
     const newForums = cloneDeep(forums);
-    (newForums[index].items as ForumItem[])[secondIndex].secondItems?.forEach((item) => {
-      item.reply = false;
-    });
-    setForums(newForums)
+    (newForums[index].items as ForumItem[])[secondIndex].secondItems?.forEach(
+      (item) => {
+        item.reply = false;
+      }
+    );
+    setForums(newForums);
   };
 
   // reply
@@ -635,10 +642,11 @@ const AnimeOneForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
+    const textString = await forumTextCompress(forums[index].text)
     const updateResult = await forumUpdate({
       _id: forums[index]._id,
       forumId: forums[index].forumId,
-      text: forums[index].text,
+      text: textString,
     });
     dispatch({
       payload: LoadingType.CLOSE,
@@ -677,10 +685,13 @@ const AnimeOneForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
+    const textString = await forumTextCompress(
+      (forums[index].items as ForumItem[])[secondIndex].text
+    );
     const updateResult = await forumItemUpdate({
       _id: (forums[index].items as ForumItem[])[secondIndex]._id,
       forumId: (forums[index].items as ForumItem[])[secondIndex].forumId,
-      text: (forums[index].items as ForumItem[])[secondIndex].text,
+      text: textString,
     });
     dispatch({
       payload: LoadingType.CLOSE,
@@ -739,11 +750,12 @@ const AnimeOneForum = ({
       (forums[index].items as ForumItem[])[secondIndex]
         .secondItems as ForumSecondItem[]
     )[thirdIndex];
+    const textString = await forumTextCompress(item.text)
     const updateResult = await forumSecondUpdate({
       _id: item._id,
       forumId: item.forumId,
       forumSecondItemId: item.forumSecondItemId,
-      text: item.text,
+      text: textString,
     });
     dispatch({
       payload: LoadingType.CLOSE,
