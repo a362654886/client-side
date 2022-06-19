@@ -36,8 +36,18 @@ export const NewBody = styled.div`
 `;
 
 export const NewBodyContext = styled.div`
-  height: 30px;
+  p {
+    height: 16px;
+    line-height: 16px;
+  }
+  height: 52px;
   overflow: hidden;
+`;
+
+export const NewBodyImage = styled.div`
+  img {
+    width: 150px;
+  }
 `;
 
 //new
@@ -64,8 +74,8 @@ export const OneNewText = styled.div`
   line-height: 26px;
   color: #4a4a4a;
   max-width: 864px;
-  img{
-    width:100%;
+  img {
+    width: 100%;
   }
 `;
 

@@ -351,7 +351,7 @@ const MarketplaceCreate = (): JSX.Element => {
                 textColor="black"
                 backGroundColor="white"
                 borderColor="#302D46"
-                buttonClick={() => console.log("cancel")}
+                buttonClick={() => window.history.back()}
               />
             </MiddleDiv>
           </PublishButtonsDiv>

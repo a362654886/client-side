@@ -9,6 +9,7 @@ import { CenterDiv } from "../../cssJs/AnimePage/AnimeShowCss";
 import {
   NewBody,
   NewBodyContext,
+  NewBodyImage,
   NewHeaderTitle,
   NewMainBox,
 } from "../../cssJs/newsCss";
@@ -49,9 +50,32 @@ const NewsPage = (): JSX.Element => {
     history.push(`oneNew/${newBody._id}`);
   };
 
+  const getText = (html: string) => {
+    const r = "<p[^<>]*?";
+    const yyy = html.match(r);
+    console.log(yyy);
+    if (yyy) {
+      return `<img src=${yyy[1]} />`;
+    } else {
+      return ``;
+    }
+  };
+
+  const getImage = (html: string) => {
+    const r = '<img[^<>]*? src="([^<>]*?)"';
+    const yyy = html.match(r);
+    if (yyy) {
+      return `<img src="${yyy[1]}">`;
+    } else {
+      return ``;
+    }
+  };
+
   const getExistNews = () =>
     allNews.map((newBody: NewType, index: number) => {
       const time = new Date(newBody.time);
+      const image = getImage(newBody.html);
+      console.log(newBody.html.replace(image, ""));
       return (
         <NewBody key={index} onClick={() => setNew(newBody)}>
           <h2>{newBody.header}</h2>
@@ -59,10 +83,21 @@ const NewsPage = (): JSX.Element => {
             time.getMonth() + 1
           }-${time.getDate()}-${time.getFullYear()}`}</p>
           <NewBodyContext
-            style={{ marginTop: "16px" }}
-            dangerouslySetInnerHTML={{ __html: newBody.html.replace(new RegExp(`/<img [^>]*src=['"]([^'"]+)[^>]*>/gi`),"") }}
+            style={{ marginTop: "8px" }}
+            dangerouslySetInnerHTML={{
+              __html: newBody.html
+                .replace(image, "")
+                .replace("<p></p>", "")
+                .replace("<p></p>", ""),
+            }}
           ></NewBodyContext>
           ......
+          <NewBodyImage
+            style={{ marginTop: "16px" }}
+            dangerouslySetInnerHTML={{
+              __html: image,
+            }}
+          ></NewBodyImage>
         </NewBody>
       );
     });

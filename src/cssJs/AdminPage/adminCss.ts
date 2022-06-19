@@ -10,6 +10,24 @@ export const AdminPageDiv = styled.div`
   display: flex;
 `;
 
+export const AdminDateDiv = styled.div`
+  display: flex;
+  width: 100%;
+  height: calc(100vh);
+  margin: 0 auto;
+  display: inline;
+  padding: 8px 16px;
+`;
+
+export const AdminDateChildDiv = styled.div`
+  display: flex;
+  h6{
+    font-weight:bold;
+    font-size:16px;
+    line-height:32px;
+  }
+`;
+
 export const AdminLeftMenuDiv = styled.div`
   width: 273px;
   height: 834px;

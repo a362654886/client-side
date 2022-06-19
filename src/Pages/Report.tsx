@@ -18,7 +18,11 @@ import {
   ReportUserImg,
 } from "../cssJs/reportPage";
 import { flagGet } from "../helperFns/flag";
-import { NotificationColor, NotificationTitle, openNotification } from "../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../helperFns/popUpAlert";
 import { LOADING_CLOSE, LOADING_OPEN } from "../redux/loading";
 import { ReportContextType, ReportType } from "../types/blockType";
 import { LoadingType } from "../types/EnumTypes";
@@ -106,7 +110,7 @@ const Report = (): JSX.Element => {
           NotificationColor.Success,
           NotificationTitle.Success
         );
-        setCheckedList([])
+        setCheckedList([]);
       } else {
         openNotification(
           "send fail",
@@ -171,6 +175,16 @@ const Report = (): JSX.Element => {
         backGroundColor="#FFC300"
         borderColor="#FFC300"
         buttonClick={() => sendReport()}
+      />
+      <AnimeButton
+        para=""
+        text={"Cancel"}
+        width="120px"
+        height="32px"
+        textColor="black"
+        backGroundColor="white"
+        borderColor="#302D46"
+        buttonClick={() => window.history.back()}
       />
     </ReportDiv>
   );

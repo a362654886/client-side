@@ -193,7 +193,7 @@ const AnimeOneVideoAdd = ({ toVideo }: IProps): JSX.Element => {
           textColor="black"
           backGroundColor="white"
           borderColor="#302D46"
-          buttonClick={() => console.log("cancel")}
+          buttonClick={() => window.location.reload()}
         />
       </VideoCancelButton>
     </AnimOneVideo>

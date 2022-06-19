@@ -74,6 +74,7 @@ import "swiper/components/pagination/pagination.min.css";
 // import required modules
 import { Pagination } from "swiper";
 import { ReportContextType } from "../../types/blockType";
+import { openNewWindowPath } from "../../helperFns/windowsFn";
 
 const HomePage = (): JSX.Element => {
   const history = useHistory();
@@ -297,6 +298,7 @@ const HomePage = (): JSX.Element => {
   };
 
   const getHeadlineDiv = () => {
+    console.log(allHeadlines);
     return newLoading ? (
       <LoadingImgDiv>
         <img src={`${loadingImg}`} />
@@ -317,7 +319,7 @@ const HomePage = (): JSX.Element => {
                 allHeadlines[index - 1 == -1 ? 2 : index - 1].title
               }`}</p>
             </div>
-            <div>
+            <div onClick={() => openNewWindowPath(headline.link)}>
               <img src={`${headline.image}`} />
               <p>{headline.title}</p>
             </div>

@@ -13,6 +13,7 @@ export const ReportDiv = styled.div`
     font-size: 36px;
   }
   button {
+    margin-right: 8px;
   }
 `;
 
