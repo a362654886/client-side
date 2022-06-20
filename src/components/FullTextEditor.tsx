@@ -1,8 +1,6 @@
-import { UploadChangeParam } from "antd/lib/upload";
-import { RcFile, UploadFile } from "antd/lib/upload/interface";
-import imageCompression from "browser-image-compression";
+import { RcFile } from "antd/lib/upload/interface";
 import * as React from "react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import ReactQuill from "react-quill";
 import { imageAdd } from "../api/imageAPI";
 import { getCompressImage } from "../helperFns/imageCompress";
@@ -106,9 +104,9 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
               ["link", "image"],
               ["clean"],
             ],
-            handlers: {
+            /*handlers: {
               image: handlerImage,
-            },
+            },*/
           }
         : {
             container: [
