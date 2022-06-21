@@ -7,6 +7,7 @@ import { LoginUser } from "../redux/loginUser";
 import { MarketFollowAction } from "../redux/marketFollow";
 import { NewAction } from "../redux/newBody";
 import { ProfileUser } from "../redux/profileUser";
+import { ReportBlock } from "../redux/reportBlock";
 import { ReportUser } from "../redux/reportUser";
 import { ShowcaseAwesomeAction } from "../redux/showcaseAwesome";
 import { ShowcaseAction } from "../redux/showcaseManga";
@@ -36,6 +37,7 @@ export type actionBody =
   | ShowcaseAwesomeAction
   | ReportUser
   | MarketFollowAction
-  | AllLevel;
+  | AllLevel
+  | ReportBlock;
 
 export type nextAction = (action: actionBody) => void;

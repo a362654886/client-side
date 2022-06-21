@@ -8,6 +8,7 @@ import AdminEmailPage from "../Pages/AdminPage/AdminEmailPage";
 import AdminHomePage from "../Pages/AdminPage/AdminHomePage";
 import AdminNewsPage from "../Pages/AdminPage/AdminNewsPage";
 import AdminRedeemProductPage from "../Pages/AdminPage/AdminRedeemProductPage";
+import ReportContext from "../Pages/AdminPage/reportComponent/ReportContext";
 import AvatarSetting from "../Pages/AdminPage/sysSettingComponent/AvatarSetting";
 
 const AdminPageRouter = (): JSX.Element => {
@@ -36,6 +37,10 @@ const AdminPageRouter = (): JSX.Element => {
         <Route
           component={AdminDataPage}
           path="/adminManagement/Content Management"
+        />
+        <Route
+          component={ReportContext}
+          path="/adminManagement/BlockContext"
         />
         <Route
           component={AdminContentManagementPage}

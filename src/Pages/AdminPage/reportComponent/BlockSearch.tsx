@@ -25,7 +25,7 @@ const BlockSearch = (): JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [allAnime, setAllAnime] = useState<Anime[]>([]);
   const [count, setCount] = useState<number>(0);
-  const pageSize = 2;
+  const pageSize = 6;
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -47,7 +47,6 @@ const BlockSearch = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    console.log("search");
     dispatch({
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,

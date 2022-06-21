@@ -7,6 +7,7 @@ import { loginUserState } from "../loginUser";
 import { marketFollowState } from "../marketFollow";
 import { newState } from "../newBody";
 import { profileUserState } from "../profileUser";
+import { reportBlockState } from "../reportBlock";
 import { reportUserState } from "../reportUser";
 import { showcaseAwesomeState } from "../showcaseAwesome";
 import { mangaState } from "../showcaseManga";
@@ -23,4 +24,5 @@ export default combineReducers({
   reportUserState,
   marketFollowState,
   allLevelState,
+  reportBlockState
 });

@@ -2,21 +2,10 @@ import { Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { animeAllGet, animeDelete } from "../../../api/animeAPI";
-import AnimeButton, { MoreButtonDiv } from "../../../components/Button";
-import {
-  AnimeTableElement,
-  AnimeTableItem,
-  SearchDiv,
-  SearchTableDiv,
-  ViewButton,
-} from "../../../cssJs/AdminPage/animeSearchCss";
+import AnimeButton from "../../../components/Button";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { Anime } from "../../../types/Amine";
 import { LoadingType } from "../../../types/EnumTypes";
-import editIcon from "../../../files/editIcon.svg";
-import deleteIcon from "../../../files/deleteIcon.svg";
-import getMoreImg from "../../../files/getMore.svg";
 import { ReportShowType } from "../../../types/blockType";
 import { blockGet } from "../../../api/blockAPI";
 import {
@@ -27,9 +16,13 @@ import {
   ReportSearchState,
   ReportSearchTime,
 } from "../../../cssJs/AdminPage/animeReport";
+import { REPORT_BLOCK_UPDATE } from "../../../redux/reportBlock";
+import { openReportContextPath } from "../../../helperFns/windowsFn";
+import { useHistory } from "react-router-dom";
 
 const ReportSearch = (): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [page, setPage] = useState<number>(1);
@@ -72,7 +65,12 @@ const ReportSearch = (): JSX.Element => {
   };
 
   const toContextPage = (report: ReportShowType) => {
-    console.log(report);
+    dispatch({
+      payload: report,
+      type: REPORT_BLOCK_UPDATE,
+    });
+    history.push("/adminManagement/BlockContext")
+    //openReportContextPath();
   };
 
   return (

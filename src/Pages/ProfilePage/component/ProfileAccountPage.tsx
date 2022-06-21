@@ -74,7 +74,7 @@ const ProfileAccountPage = (): JSX.Element => {
       setAvatarLoading(false);
     })();
     setUserPassword(loginUser ? loginUser.password : "");
-    setConfirmPassword("");
+    setConfirmPassword(loginUser ? loginUser.password : "");
     setFirstName(loginUser ? loginUser.firstName : "");
     setLastName(loginUser ? loginUser.lastName : "");
     setCountry(loginUser ? loginUser.country : "");

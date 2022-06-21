@@ -1,5 +1,4 @@
-import { useSelector } from "react-redux";
-import { IStoreState } from "../types/IStoreState";
+
 import { User } from "../types/User";
 import {
   NotificationColor,
