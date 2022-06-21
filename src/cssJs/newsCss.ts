@@ -39,6 +39,7 @@ export const NewBodyContext = styled.div`
   p {
     height: 16px;
     line-height: 16px;
+    overflow: hidden;
   }
   height: 52px;
   overflow: hidden;

@@ -34,10 +34,13 @@ const AdminPageRouter = (): JSX.Element => {
         />
         <Route component={AvatarSetting} path="/adminManagement/Avatars" />
         <Route
-          component={AdminContentManagementPage}
+          component={AdminDataPage}
           path="/adminManagement/Content Management"
         />
-        <Route component={AdminDataPage} path="/adminManagement/Data" />
+        <Route
+          component={AdminContentManagementPage}
+          path="/adminManagement/Data"
+        />
         <Route component={AdminEmailPage} path="/adminManagement/Mass Email" />
       </Switch>
     </>

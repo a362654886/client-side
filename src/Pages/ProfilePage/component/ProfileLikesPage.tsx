@@ -17,6 +17,7 @@ import { User } from "../../../types/User";
 import starBorder from "../../../files/Star-border.svg";
 import starFill from "../../../files/Star-filled.svg";
 import loadingImg from "../../../files/loading.gif";
+import { openAnimeNewWindowPath } from "../../../helperFns/windowsFn";
 
 const ProfileLikesPage = (): JSX.Element => {
   const history = useHistory();
@@ -52,11 +53,12 @@ const ProfileLikesPage = (): JSX.Element => {
   };
 
   const chooseAnime = (anime: Anime) => {
+    console.log("WE")
     dispatch({
       payload: anime,
       type: ANIME_ADD,
     });
-    history.push("oneAnime");
+    openAnimeNewWindowPath(anime._id);
   };
 
   const getStar = (rate: RateBody) => {

@@ -514,15 +514,18 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
     newSecondReplyHtml[index][secondIndex] = `@${name} `;
     setNewSecondReplyHtml(newSecondReplyHtml);
 
-    const newAllShowCase = allShowCases;
-    (
-      (newAllShowCase[index].replies as ShowCaseReply[])[secondIndex]
-        .secondReplies as ShowSecondCaseReply[]
-    )[thirdIndex].reply = !(
-      (newAllShowCase[index].replies as ShowCaseReply[])[secondIndex]
-        .secondReplies as ShowSecondCaseReply[]
-    )[thirdIndex].reply;
+    const newShowCase = cloneDeep(allShowCases);
+    (newShowCase[index].replies as ShowCaseReply[])[
+      secondIndex
+    ].secondReplies?.forEach((item, index) => {
+      if (index == thirdIndex) {
+        item.reply = !item.reply;
+      } else {
+        item.reply = false;
+      }
+    });
 
+    setAllShowCases(newShowCase)
     setUpdate(update + 1);
   };
 

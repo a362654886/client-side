@@ -75,7 +75,6 @@ const NewsPage = (): JSX.Element => {
     allNews.map((newBody: NewType, index: number) => {
       const time = new Date(newBody.time);
       const image = getImage(newBody.html);
-      console.log(newBody.html.replace(image, ""));
       return (
         <NewBody key={index} onClick={() => setNew(newBody)}>
           <h2>{newBody.header}</h2>

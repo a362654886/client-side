@@ -260,7 +260,7 @@ const AnimeOneForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    const textString = await forumTextCompress(html)
+    const textString = await forumTextCompress(html);
     if (loginUser) {
       const forum: ForumType = {
         _id: `${loginUser?._id}${new Date().valueOf()}`,
@@ -362,7 +362,9 @@ const AnimeOneForum = ({
             : iniId + new Date().valueOf()
           : iniId + new Date().valueOf()
       }`;
-      const textString = await forumTextCompress(newSecondItemHtml[index][secondIndex])
+      const textString = await forumTextCompress(
+        newSecondItemHtml[index][secondIndex]
+      );
       const secondForumItem: ForumSecondItem = {
         _id: id,
         forumSecondItemId: id,
@@ -609,17 +611,17 @@ const AnimeOneForum = ({
     newSecondItemHtml[index][secondIndex] = `@${name} `;
     setNewSecondItemHtml(newSecondItemHtml);
 
-    const newForums = forums;
-    (
-      (newForums[index].items as ForumItem[])[secondIndex]
-        .secondItems as ForumSecondItem[]
-    )[thirdIndex].reply = !(
-      (newForums[index].items as ForumItem[])[secondIndex]
-        .secondItems as ForumSecondItem[]
-    )[thirdIndex].reply;
-
-    setUpdate(update + 1);
-    //setNewSecondItemHtml(`<p>reply @${name}</p><p><br></p><p><br></p>`);
+    const newForums = cloneDeep(forums);
+    (newForums[index].items as ForumItem[])[secondIndex].secondItems?.forEach(
+      (item, index) => {
+        if (index == thirdIndex) {
+          item.reply = !item.reply;
+        } else {
+          item.reply = false;
+        }
+      }
+    );
+    setForums(newForums);
   };
 
   //edit forum functions
@@ -642,7 +644,7 @@ const AnimeOneForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    const textString = await forumTextCompress(forums[index].text)
+    const textString = await forumTextCompress(forums[index].text);
     const updateResult = await forumUpdate({
       _id: forums[index]._id,
       forumId: forums[index].forumId,
@@ -750,7 +752,7 @@ const AnimeOneForum = ({
       (forums[index].items as ForumItem[])[secondIndex]
         .secondItems as ForumSecondItem[]
     )[thirdIndex];
-    const textString = await forumTextCompress(item.text)
+    const textString = await forumTextCompress(item.text);
     const updateResult = await forumSecondUpdate({
       _id: item._id,
       forumId: item.forumId,
