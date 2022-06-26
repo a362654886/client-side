@@ -386,7 +386,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/animeShowPage");
+                    toProfile("/animelibrary");
                   }}
                 >
                   Anime

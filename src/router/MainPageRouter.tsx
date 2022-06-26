@@ -26,7 +26,7 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={SignUpPage} path="/signUpPage" />
         <Route component={ForgetPage} path="/forgetPasswordPage" />
         <Route component={ProfilePage} path="/profilePage/:id" />
-        <Route component={AnimeShowPage} path="/animeShowPage" />
+        <Route component={AnimeShowPage} path="/animelibrary" />
         <Route component={AnimeOne} path="/oneAnime" />
         <Route component={Discovery} path="/discovery" />
         <Route component={Showcase} path="/showcase" />

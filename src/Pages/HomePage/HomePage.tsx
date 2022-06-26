@@ -487,6 +487,10 @@ const HomePage = (): JSX.Element => {
           name="keywords"
           content="anime, manga, comic, Japanese, animation, anime site, anime website, anime library, anime list, anime trends, anime news, anime market, anime products, anime community, anime social media"
         />
+        <meta
+          name="description"
+          content="anime information collection"
+        ></meta>
       </Helmet>
       <HomePageDiv>
         <HomePageBodyDiv>
@@ -543,7 +547,7 @@ const HomePage = (): JSX.Element => {
           </HomePageAnimeDiv>
           <HomeCenterDiv>
             <MiddleHomeDiv>
-              <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
+              <MarketPlaceMore onClick={() => history.push("/animelibrary")}>
                 <img src={moreRightImg} />
                 <p>View All</p>
               </MarketPlaceMore>
@@ -619,7 +623,7 @@ const HomePage = (): JSX.Element => {
               <HomeCenterDiv>
                 <MiddleHomeDiv>
                   <MarketPlaceMore
-                    onClick={() => history.push("/animeShowPage")}
+                    onClick={() => history.push("/animelibrary")}
                   >
                     <img src={moreRightImg} />
                     <p>View All</p>
@@ -640,7 +644,7 @@ const HomePage = (): JSX.Element => {
               <HomeCenterDiv>
                 <MiddleHomeDiv>
                   <MarketPlaceMore
-                    onClick={() => history.push("/animeShowPage")}
+                    onClick={() => history.push("/animelibrary")}
                   >
                     <img src={moreRightImg} />
                     <p>View All</p>
@@ -658,7 +662,7 @@ const HomePage = (): JSX.Element => {
               <HomeCenterDiv>
                 <MiddleHomeDiv>
                   <MarketPlaceMore
-                    onClick={() => history.push("/animeShowPage")}
+                    onClick={() => history.push("/animelibrary")}
                   >
                     <img src={moreRightImg} />
                     <p>View All</p>
@@ -679,7 +683,7 @@ const HomePage = (): JSX.Element => {
               <HomeCenterDiv>
                 <MiddleHomeDiv>
                   <MarketPlaceMore
-                    onClick={() => history.push("/animeShowPage")}
+                    onClick={() => history.push("/animelibrary")}
                   >
                     <img src={moreRightImg} />
                     <p>View All</p>

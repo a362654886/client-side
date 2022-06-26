@@ -28,6 +28,7 @@ import newIcon from "../../files/newIcon.svg";
 import hotIcon from "../../files/hotIcon.svg";
 import { LoadingImgDiv } from "../../cssJs/homePageCss";
 import { getWidth } from "../../helperFns/widthFn";
+import { Helmet } from "react-helmet";
 
 const AnimeShowPage = (): JSX.Element => {
   const history = useHistory();
@@ -194,64 +195,74 @@ const AnimeShowPage = (): JSX.Element => {
   };
 
   return (
-    <AnimMainBox>
-      <AnimTitle>Anime</AnimTitle>
-      <AnimTwoButtons>
-        <AnimTapButton
-          style={{ backgroundColor: `${ifNew ? "#FFC300" : "white"}` }}
-          onClick={() => {
-            setIfNew(true);
-            setPage(1);
-            search("new", 1);
-          }}
-        >
-          <img src={`${newIcon}`} />
-          <p>New</p>
-        </AnimTapButton>
-        <AnimTapButton
-          style={{ backgroundColor: `${ifNew ? "white" : "#FFC300"}` }}
-          onClick={() => {
-            setIfNew(false);
-            setPage(1);
-            search("hot", 1);
-          }}
-        >
-          <img src={`${hotIcon}`} />
-          <p>Hot</p>
-        </AnimTapButton>
-      </AnimTwoButtons>
-      <AnimSearchBox>
-        <Input placeholder={"title"} onChange={onChange}></Input>
-        <AnimSearchImg
-          src={`${searchImg}`}
-          onClick={() => search(sortType, page)}
+    <>
+      <Helmet>
+        <title>Anime Library - Animepark.com</title>
+        <meta
+          name="keywords"
+          content="anime database, anime library, anime list, anime videos, anime products, anime fans, anime community, anime social media"
         />
-      </AnimSearchBox>
-      {!iniLoading ? (
-        <AnimeShowBox className="row">{getExistAnime()}</AnimeShowBox>
-      ) : (
-        <LoadingImgDiv>
-          <img src={`${loadingImg}`} />
-        </LoadingImgDiv>
-      )}
-      {getLoading()}
-      <CenterDiv>
-        {allAnime.length < count ? (
-          <AnimeButton
-            para=""
-            text="View more"
-            width="120px"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="white"
-            buttonClick={() => getMore()}
+        <meta name="description" content="anime information collection"></meta>
+      </Helmet>
+      <AnimMainBox>
+        <AnimTitle>Anime</AnimTitle>
+        <AnimTwoButtons>
+          <AnimTapButton
+            style={{ backgroundColor: `${ifNew ? "#FFC300" : "white"}` }}
+            onClick={() => {
+              setIfNew(true);
+              setPage(1);
+              search("new", 1);
+            }}
+          >
+            <img src={`${newIcon}`} />
+            <p>New</p>
+          </AnimTapButton>
+          <AnimTapButton
+            style={{ backgroundColor: `${ifNew ? "white" : "#FFC300"}` }}
+            onClick={() => {
+              setIfNew(false);
+              setPage(1);
+              search("hot", 1);
+            }}
+          >
+            <img src={`${hotIcon}`} />
+            <p>Hot</p>
+          </AnimTapButton>
+        </AnimTwoButtons>
+        <AnimSearchBox>
+          <Input placeholder={"title"} onChange={onChange}></Input>
+          <AnimSearchImg
+            src={`${searchImg}`}
+            onClick={() => search(sortType, page)}
           />
+        </AnimSearchBox>
+        {!iniLoading ? (
+          <AnimeShowBox className="row">{getExistAnime()}</AnimeShowBox>
         ) : (
-          <></>
+          <LoadingImgDiv>
+            <img src={`${loadingImg}`} />
+          </LoadingImgDiv>
         )}
-      </CenterDiv>
-    </AnimMainBox>
+        {getLoading()}
+        <CenterDiv>
+          {allAnime.length < count ? (
+            <AnimeButton
+              para=""
+              text="View more"
+              width="120px"
+              height="32px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="white"
+              buttonClick={() => getMore()}
+            />
+          ) : (
+            <></>
+          )}
+        </CenterDiv>
+      </AnimMainBox>
+    </>
   );
 };
 

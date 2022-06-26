@@ -22,6 +22,7 @@ import DiscoveryHeader from "./DiscoveryHeader";
 import moreRightImg from "../../files/moreRightArrow.svg";
 import { getWidth } from "../../helperFns/widthFn";
 import { useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Discovery = (): JSX.Element => {
   const history = useHistory();
@@ -153,7 +154,15 @@ const Discovery = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>Anime Library - Animepark.com</title>
+        <meta
+          name="keywords"
+          content="anime trends, anime top 10, best anime, favorite anime, anime database, anime library, anime list, anime videos, anime products, anime fans"
+        />
+        <meta name="description" content="anime information collection"></meta>
+      </Helmet>
       <AnimOne>
         <DiscoveryBox className="col-xl-9 col-lg-9 col-md-12 col-sm-12">
           <DiscoveryTitle>Explore</DiscoveryTitle>
@@ -220,7 +229,7 @@ const Discovery = (): JSX.Element => {
           </AnimOneSideTwo>
         </div>
       </AnimOne>
-    </div>
+    </>
   );
 };
 

@@ -122,7 +122,7 @@ const DiscoveryHeader = (): JSX.Element => {
       <MiddleBiggerDiv>
         <ViewAll
           onClick={() => {
-            history.push("animeShowPage");
+            history.push("animelibrary");
           }}
         >
           <img src={moreRightImg} />
