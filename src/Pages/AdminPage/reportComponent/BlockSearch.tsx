@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Button, Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -17,15 +17,32 @@ import { LoadingType } from "../../../types/EnumTypes";
 import editIcon from "../../../files/editIcon.svg";
 import deleteIcon from "../../../files/deleteIcon.svg";
 import getMoreImg from "../../../files/getMore.svg";
+import {
+  AdminContentPageDiv,
+  AdminPageDiv,
+} from "../../../cssJs/AdminPage/adminCss";
+import AdminDataHeader from "./AdminDataHeader";
+import { userBlockGet, userUpdateBlock } from "../../../api/userApi";
+import { User } from "../../../types/User";
+import {
+  AdminBlockAllBlock,
+  AdminBlockChildEle,
+  AdminBlockEle,
+  AdminBlockEleId,
+  AdminBlockEleReason,
+  AdminBlockTime,
+} from "../../../cssJs/AdminPage/adminManagementCss";
+import { _getDate } from "../../../helperFns/timeFn";
+import { CenterDiv } from "../../../cssJs/AnimePage/AnimeShowCss";
+import { cloneDeep } from "lodash";
 
 const BlockSearch = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  const [allAnime, setAllAnime] = useState<Anime[]>([]);
+  const [allUsers, setAllUsers] = useState<User[]>([]);
   const [count, setCount] = useState<number>(0);
-  const pageSize = 6;
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -47,6 +64,26 @@ const BlockSearch = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
+    const result = await userBlockGet(page, searchValue);
+    setAllUsers(result.result);
+    setCount(result.count);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
+  const unBlock = async (user: User) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    await userUpdateBlock(user._id, !user.block, "");
+    const _allUsers = cloneDeep(allUsers);
+    const index = _allUsers.findIndex((item) => item._id == user._id);
+    user.block = !user.block;
+    _allUsers[index] = user;
+    setAllUsers(_allUsers);
     dispatch({
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,
@@ -54,7 +91,8 @@ const BlockSearch = (): JSX.Element => {
   };
 
   return (
-    <>
+    <AdminContentPageDiv>
+      <AdminDataHeader buttonString={"Blocked"} />
       <SearchDiv>
         <Input placeholder={"searchValue"} onChange={onChange}></Input>
         <AnimeButton
@@ -65,13 +103,51 @@ const BlockSearch = (): JSX.Element => {
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="white"
-          buttonClick={() => {
-            setPage(1);
-          }}
+          buttonClick={() => search()}
         />
       </SearchDiv>
-      BlockSearch
-    </>
+      <AdminBlockAllBlock>All Blocked</AdminBlockAllBlock>
+      {allUsers.map((user, index) => {
+        return (
+          <AdminBlockEle key={index}>
+            <AdminBlockEleId>
+              <p>{`(ID: ${user._id})`}</p>
+            </AdminBlockEleId>
+            <AdminBlockChildEle>
+              <img
+                src={`https://animeimagebucket.s3.amazonaws.com/${user.avatar}`}
+              />
+              <h6>{user.showName}</h6>
+              <Button onClick={() => unBlock(user)}>
+                {user.block ? `Unlock` : `Block`}
+              </Button>
+            </AdminBlockChildEle>
+            <AdminBlockTime>
+              <p>{`${_getDate(new Date(user.blockTime))}`}</p>
+            </AdminBlockTime>
+            <AdminBlockEleReason>
+              <p>{`${user.blockReason}`}</p>
+            </AdminBlockEleReason>
+          </AdminBlockEle>
+        );
+      })}
+      <CenterDiv>
+        {allUsers.length < count ? (
+          <AnimeButton
+            para=""
+            text="View more"
+            width="120px"
+            height="32px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="white"
+            buttonClick={() => setPage(page + 1)}
+          />
+        ) : (
+          <></>
+        )}
+      </CenterDiv>
+    </AdminContentPageDiv>
   );
 };
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ReportDiv = styled.div`
-  width: 403px;
+  width: 100%;
   height: 230px;
   margin-left: 16px;
   button {
@@ -11,9 +11,10 @@ export const ReportDiv = styled.div`
 `;
 
 export const ReportHederDiv = styled.div`
-  width: 403px;
+  width: 100%;
   height: 40px;
   display: flex;
+  margin-top: 23px;
   p {
     width: 159px;
     text-align: center;
@@ -25,6 +26,12 @@ export const ReportHederDiv = styled.div`
     margin-bottom: 0px;
     padding-top: 10px;
     font-weight: bold;
+    margin-right: 40px;
+  }
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 `;
 

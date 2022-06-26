@@ -57,7 +57,7 @@ const AdminMainPage = (): JSX.Element => {
     "Awesome Levels",
     "Redeem Products",
     "Avatars",
-    "Content Management",
+    "Blocked",
     "Data",
     "Mass Email",
   ];
@@ -73,7 +73,9 @@ const AdminMainPage = (): JSX.Element => {
               setMenu(index);
             }}
           >
-            <MenuChooseButton>{menuString}</MenuChooseButton>
+            <MenuChooseButton>
+              {menuString == "Blocked" ? "Content Management" : menuString}
+            </MenuChooseButton>
           </div>
         );
       } else {
@@ -85,7 +87,9 @@ const AdminMainPage = (): JSX.Element => {
               setMenu(index);
             }}
           >
-            <MenuButton>{menuString}</MenuButton>
+            <MenuButton>
+              {menuString == "Blocked" ? "Content Management" : menuString}
+            </MenuButton>
           </div>
         );
       }

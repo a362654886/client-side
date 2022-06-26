@@ -3,13 +3,15 @@ import { Route, Switch } from "react-router-dom";
 import AdminAnimePage from "../Pages/AdminPage/AdminAnimePage";
 import AdminAwesomeLevelPage from "../Pages/AdminPage/AdminAwesomeLevelPage";
 import AdminContentManagementPage from "../Pages/AdminPage/AdminContentManagementPage";
-import AdminDataPage from "../Pages/AdminPage/AdminDataPage";
+import AdminDataPage from "../Pages/AdminPage/reportComponent/AdminDataHeader";
 import AdminEmailPage from "../Pages/AdminPage/AdminEmailPage";
 import AdminHomePage from "../Pages/AdminPage/AdminHomePage";
 import AdminNewsPage from "../Pages/AdminPage/AdminNewsPage";
 import AdminRedeemProductPage from "../Pages/AdminPage/AdminRedeemProductPage";
 import ReportContext from "../Pages/AdminPage/reportComponent/ReportContext";
 import AvatarSetting from "../Pages/AdminPage/sysSettingComponent/AvatarSetting";
+import BlockSearch from "../Pages/AdminPage/reportComponent/BlockSearch";
+import ReportSearch from "../Pages/AdminPage/reportComponent/ReportSearch";
 
 const AdminPageRouter = (): JSX.Element => {
   return (
@@ -35,8 +37,12 @@ const AdminPageRouter = (): JSX.Element => {
         />
         <Route component={AvatarSetting} path="/adminManagement/Avatars" />
         <Route
-          component={AdminDataPage}
-          path="/adminManagement/Content Management"
+          component={BlockSearch}
+          path="/adminManagement/Blocked"
+        />
+        <Route
+          component={ReportSearch}
+          path="/adminManagement/Reports"
         />
         <Route
           component={ReportContext}

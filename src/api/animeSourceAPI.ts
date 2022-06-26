@@ -1,7 +1,6 @@
 import Axios from "axios";
 import { backEndLink } from "../globalValues";
 import { AnimeSource } from "../types/Amine";
-import { EpisodeType } from "../types/EpisodeType";
 
 const basicURL = backEndLink;
 

@@ -81,7 +81,9 @@ const ProfileShippingAddressPage = (): JSX.Element => {
       shipSuburb: suburb,
       postCode: postCode,
       link: loginUser?.link ? loginUser?.link : "",
-      block: loginUser?.block ? loginUser?.block : false
+      block: loginUser?.block ? loginUser?.block : false,
+      blockTime: loginUser ? loginUser.blockTime : 0,
+      blockReason: loginUser ? loginUser.blockReason : "",
     };
     setLoading(true);
     const r = await userUpdateShipAddress(readyUpdateUser);

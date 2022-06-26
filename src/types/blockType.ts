@@ -6,7 +6,7 @@ export type ReportType = {
   forumUserId: string;
   state: string;
   reason: string;
-  uploadTime: string;
+  uploadTime: number;
 };
 
 export type ReportShowType = {
@@ -17,7 +17,7 @@ export type ReportShowType = {
   forumUserId: string;
   state: string;
   reason: string;
-  uploadTime: string;
+  uploadTime: number;
   reportUserAvatar: string;
   reportUserName: string;
   forumUserAvatar: string;

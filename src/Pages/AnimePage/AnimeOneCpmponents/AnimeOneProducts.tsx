@@ -29,7 +29,6 @@ import { popUpAPIResult } from "../../../helperFns/popUpAlert";
 import {
   DeleteDiv,
   TimeMiddleText,
-  TimeText,
 } from "../../../cssJs/AnimePage/AnimeOne/AnimeOnePageCss";
 import deleteIcon from "../../../files/deleteIcon.svg";
 import getMoreImg from "../../../files/getMore.svg";

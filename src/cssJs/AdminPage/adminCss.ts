@@ -1,4 +1,4 @@
-import { Button, Input } from "antd";
+import { Button, Input, Radio } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import styled from "styled-components";
 
@@ -7,7 +7,13 @@ export const AdminPageDiv = styled.div`
   width: 100%;
   height: calc(100vh);
   margin: 0 auto;
-  display: flex;
+`;
+
+export const AdminContentPageDiv = styled.div`
+  display: inline;
+  width: 100%;
+  height: calc(100vh);
+  margin: 0 auto;
 `;
 
 export const AdminDateDiv = styled.div`
@@ -21,10 +27,10 @@ export const AdminDateDiv = styled.div`
 
 export const AdminDateChildDiv = styled.div`
   display: flex;
-  h6{
-    font-weight:bold;
-    font-size:16px;
-    line-height:32px;
+  h6 {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 32px;
   }
 `;
 
@@ -172,4 +178,41 @@ export const AdminEmailPageContext = styled(TextArea)`
 export const AdminEmailSubmitButton = styled.div`
   margin: 275px;
   margin-top: 25px;
+`;
+
+export const AdminProductBox = styled.div`
+  height: 312px !important;
+  margin-bottom: 24px;
+  background-color: #f6f6f6;
+  width: 240px !important;
+  p {
+    text-align: center;
+    margin-bottom: 0px;
+  }
+`;
+
+export const AdminReportButton = styled.div`
+  margin-left: 8px;
+  display: flex;
+  cursor: pointer;
+  p {
+    height: 32px;
+    line-height: 32px;
+    margin-bottom: 0px;
+    margin-left: 8px;
+  }
+  img {
+    height: 24px;
+    margin-top: 4px;
+  }
+`;
+
+export const AdminReportTypeButtons = styled(Radio.Group)`
+  height: 46px;
+  padding-left: 24px;
+  background-color: #c1eeff;
+  padding-top: 12px;
+  margin-left: 16px;
+  width: 100%;
+  margin-bottom: 42px;
 `;

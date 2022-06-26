@@ -95,9 +95,7 @@ const Report = (): JSX.Element => {
         forumUserId: urlPamaObj["forumUserId"],
         state: "pending",
         reason: checkedList.toString(),
-        uploadTime: `${timeString.getDate()}-${
-          timeString.getMonth() + 1
-        }-${timeString.getFullYear()}`,
+        uploadTime: timeString.valueOf(),
       };
       dispatch({
         payload: LoadingType.OPEN,

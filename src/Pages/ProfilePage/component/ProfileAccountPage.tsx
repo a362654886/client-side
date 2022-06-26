@@ -222,6 +222,8 @@ const ProfileAccountPage = (): JSX.Element => {
       postCode: loginUser?.postCode ? loginUser?.postCode : "",
       link: loginUser?.link ? loginUser?.link : "",
       block: loginUser?.block ? loginUser?.block : false,
+      blockTime: loginUser?loginUser.blockTime:0,
+      blockReason: loginUser?loginUser.blockReason:"",
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);

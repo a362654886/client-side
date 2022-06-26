@@ -110,6 +110,8 @@ const ProfileContactPage = (): JSX.Element => {
       postCode: loginUser?.postCode ? loginUser?.postCode : "",
       link: link,
       block: loginUser?.block ? loginUser?.block : false,
+      blockTime: loginUser ? loginUser.blockTime : 0,
+      blockReason: loginUser ? loginUser.blockReason : "",
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);
@@ -138,26 +140,46 @@ const ProfileContactPage = (): JSX.Element => {
           </ContactEmailInput>
           <ContactTelInput>
             <p>Tel:</p>
-            <Input value={tel} placeholder={"telephone number"} onChange={onChange}></Input>
+            <Input
+              value={tel}
+              placeholder={"telephone number"}
+              onChange={onChange}
+            ></Input>
           </ContactTelInput>
           <ContactLocationInput>
             <p>Location:</p>
-            <Input value={location} placeholder={"location"} onChange={onChange}></Input>
+            <Input
+              value={location}
+              placeholder={"location"}
+              onChange={onChange}
+            ></Input>
           </ContactLocationInput>
           <SocialDiv>
             <p>Pages</p>
             <LogoInput>
               <div>
                 <img src={facebookPng} />
-                <Input value={facebook} placeholder={"facebook"} onChange={onChange}></Input>
+                <Input
+                  value={facebook}
+                  placeholder={"facebook"}
+                  onChange={onChange}
+                ></Input>
               </div>
               <div>
                 <img src={insPng} />
-                <Input value={ins} placeholder={"ins"} onChange={onChange}></Input>
+                <Input
+                  value={ins}
+                  placeholder={"ins"}
+                  onChange={onChange}
+                ></Input>
               </div>
               <div>
                 <img src={profileLink} />
-                <Input value={link} placeholder={"link"} onChange={onChange}></Input>
+                <Input
+                  value={link}
+                  placeholder={"link"}
+                  onChange={onChange}
+                ></Input>
               </div>
             </LogoInput>
           </SocialDiv>

@@ -82,3 +82,53 @@ export const HeadlineInput = styled.div`
     width: 90%;
   }
 `;
+
+export const AdminBlockEle = styled.div`
+  margin-left: 16px;
+  width: 100%;
+  border-bottom: 1px solid black;
+`;
+
+export const AdminBlockEleId = styled.div`
+  p {
+    color: #bbbbbb;
+    font-size: 14px;
+  }
+`;
+
+export const AdminBlockChildEle = styled.div`
+  display: flex;
+  img {
+    height: 38px;
+    weight: 38px;
+    border-radius: 50%;
+  }
+  h6 {
+    margin-left: 8px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  button {
+    margin-left: 100px;
+  }
+`;
+
+export const AdminBlockEleReason = styled.div`
+  p {
+    font-size: 14px;
+    font-weight: bold;
+  }
+`;
+
+export const AdminBlockTime = styled.div`
+  p {
+    font-size: 14px;
+  }
+`;
+
+export const AdminBlockAllBlock = styled.h6`
+  margin: 43px 16px;
+  font-weight: bold;
+`;

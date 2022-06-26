@@ -39,6 +39,24 @@ export const userGet = async (id: string): Promise<User | null> => {
     });
 };
 
+export const userBlockGet = async (
+  page: number,
+  id: string
+): Promise<{
+  result: User[];
+  count: number;
+}> => {
+  const endpoint = basicURL + `userBlockGet?page=${page}&id=${id}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      const user = response.data;
+      return user;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const userAwesomeGet = async (): Promise<User[] | null> => {
   const endpoint = basicURL + "usersGetByAwesome";
   return Axios.get(endpoint)
@@ -78,6 +96,27 @@ export const userUpdate = async (updateUser: User): Promise<string | null> => {
     })
     .catch(() => {
       return null;
+    });
+};
+
+export const userUpdateBlock = async (
+  id: string,
+  block: boolean,
+  reason: string
+): Promise<number> => {
+  const endpoint = basicURL + "userUpdateBlock";
+  return Axios.put(endpoint, {
+    body: {
+      id: id,
+      block: block,
+      blockReason: reason,
+    },
+  })
+    .then(() => {
+      return 200;
+    })
+    .catch(() => {
+      return 400;
     });
 };
 

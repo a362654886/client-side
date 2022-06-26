@@ -263,6 +263,8 @@ const SignUpPage = (): JSX.Element => {
       postCode: "",
       link: "",
       block: false,
+      blockTime: 0,
+      blockReason: "",
     };
     const r = await userAdd(user);
     dispatch({

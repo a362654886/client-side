@@ -15,7 +15,7 @@ export const openAnimeNewWindowPath = (id: string): void => {
 
 export const openReportContextPath = (): void => {
   window.open(
-    `https://www.animepark.com/adminManagement/Content Management/context`,
+    `https://www.animepark.com/adminManagement/BlockContext`,
     `_blank`
   );
   // window.location.href= `http://localhost:3001/oneNew/${url}`

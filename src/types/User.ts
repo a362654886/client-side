@@ -31,9 +31,12 @@ export type User = {
   shipAddress: string;
   shipCity: string;
   shipSuburb: string;
+  showName?:string;
   postCode: string;
   link: string;
   block: boolean;
+  blockTime: number;
+  blockReason: string;
 };
 
 export type UserRate = {

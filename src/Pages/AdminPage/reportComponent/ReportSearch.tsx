@@ -1,10 +1,9 @@
-import { Input } from "antd";
+import { Input, Pagination, Radio } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import AnimeButton from "../../../components/Button";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
-import { Anime } from "../../../types/Amine";
 import { LoadingType } from "../../../types/EnumTypes";
 import { ReportShowType } from "../../../types/blockType";
 import { blockGet } from "../../../api/blockAPI";
@@ -17,8 +16,15 @@ import {
   ReportSearchTime,
 } from "../../../cssJs/AdminPage/animeReport";
 import { REPORT_BLOCK_UPDATE } from "../../../redux/reportBlock";
-import { openReportContextPath } from "../../../helperFns/windowsFn";
 import { useHistory } from "react-router-dom";
+import {
+  AdminContentPageDiv,
+  AdminReportTypeButtons,
+} from "../../../cssJs/AdminPage/adminCss";
+import AdminDataHeader from "./AdminDataHeader";
+import { _getDate } from "../../../helperFns/timeFn";
+import { openReportContextPath } from "../../../helperFns/windowsFn";
+import { CenterDiv } from "../../../cssJs/AnimePage/AnimeShowCss";
 
 const ReportSearch = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -28,16 +34,23 @@ const ReportSearch = (): JSX.Element => {
   const [page, setPage] = useState<number>(1);
   const [allReports, setAllReports] = useState<ReportShowType[]>([]);
   const [count, setCount] = useState<number>(0);
+  const [searchType, setSearchType] = useState<string>("pending");
 
   useEffect(() => {
     (async function anyNameFunction() {
-      await search();
+      await search(page);
     })();
   }, [page]);
 
   useEffect(() => {
-    console.log(allReports);
+    //console.log(allReports);
   }, [allReports]);
+
+  useEffect(() => {
+    (async function anyNameFunction() {
+      await search(1);
+    })();
+  }, [searchType]);
 
   const onChange = (e: React.ChangeEvent<Element>): void => {
     const type = (e.target as HTMLInputElement).placeholder;
@@ -53,9 +66,11 @@ const ReportSearch = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    const result = await blockGet(searchValue, page ? page : 1);
+    const result = await blockGet(searchValue, page ? page : 1, searchType);
     if (result) {
-      setAllReports(result.result);
+      setAllReports(
+        page == 1 ? result.result : allReports.concat(result.result)
+      );
       setCount(result.count);
     }
     dispatch({
@@ -69,12 +84,12 @@ const ReportSearch = (): JSX.Element => {
       payload: report,
       type: REPORT_BLOCK_UPDATE,
     });
-    history.push("/adminManagement/BlockContext")
-    //openReportContextPath();
+    openReportContextPath();
   };
 
   return (
-    <>
+    <AdminContentPageDiv>
+      <AdminDataHeader buttonString={"Reports"} />
       <ReportSearchDiv>
         <Input
           value={searchValue}
@@ -94,6 +109,14 @@ const ReportSearch = (): JSX.Element => {
           }}
         />
       </ReportSearchDiv>
+      <AdminReportTypeButtons
+        onChange={(e) => setSearchType(e.target.value)}
+        value={searchType}
+      >
+        <Radio value={"pending"}>Pending</Radio>
+        <Radio value={"delete"}>Deleted</Radio>
+        <Radio value={"ignore"}>Ignored</Radio>
+      </AdminReportTypeButtons>
       {allReports.map((report, index) => {
         return (
           <ReportDiv key={index}>
@@ -104,7 +127,9 @@ const ReportSearch = (): JSX.Element => {
               <img src={report.reportUserAvatar} />
               <h6>{report.reportUserName}</h6>
             </ReportHederDiv>
-            <ReportSearchTime>{report.uploadTime}</ReportSearchTime>
+            <ReportSearchTime>
+              {_getDate(new Date(report.uploadTime))}
+            </ReportSearchTime>
             <ReportSearchReason>{report.reason}</ReportSearchReason>
             <AnimeButton
               para=""
@@ -120,7 +145,23 @@ const ReportSearch = (): JSX.Element => {
           </ReportDiv>
         );
       })}
-    </>
+      <CenterDiv>
+        {allReports.length < count ? (
+          <AnimeButton
+            para=""
+            text="View more"
+            width="120px"
+            height="32px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="white"
+            buttonClick={() => search(page + 1)}
+          />
+        ) : (
+          <></>
+        )}
+      </CenterDiv>
+    </AdminContentPageDiv>
   );
 };
 
