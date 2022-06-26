@@ -1,13 +1,11 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { animeAllGet } from "../../api/animeAPI";
-import { MiddleBiggerDiv, MiddleHomeDiv } from "../../components/Button";
+import { MiddleHomeDiv } from "../../components/Button";
 import {
   AnimeBox,
-  CenterDiv,
   HomeCenterDiv,
   LikeDiv,
-  ShowcaseBox,
   StarDiv,
 } from "../../cssJs/AnimePage/AnimeShowCss";
 import {
@@ -72,9 +70,10 @@ import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 
 // import required modules
-import { Pagination } from "swiper";
 import { ReportContextType } from "../../types/blockType";
 import { openNewWindowPath } from "../../helperFns/windowsFn";
+
+import { Helmet } from "react-helmet";
 
 const HomePage = (): JSX.Element => {
   const history = useHistory();
@@ -298,7 +297,6 @@ const HomePage = (): JSX.Element => {
   };
 
   const getHeadlineDiv = () => {
-    console.log(allHeadlines);
     return newLoading ? (
       <LoadingImgDiv>
         <img src={`${loadingImg}`} />
@@ -480,204 +478,223 @@ const HomePage = (): JSX.Element => {
   };
 
   return (
-    <HomePageDiv>
-      <HomePageBodyDiv>
-        {size.width > 700 ? (
-          <>
-            <HomePageHeadlineDiv>
-              <Swiper
-                slidesPerView={1}
-                spaceBetween={30}
-                pagination={{
-                  clickable: true,
-                }}
-                scrollbar={{
-                  hide: true,
-                }}
-                className="mySwiper"
-              >
-                {getHeadlineDiv()}
-              </Swiper>
+    <>
+      <Helmet>
+        <title>
+          Imaginations, vision, plots, characters, fans - Animepark.com
+        </title>
+        <meta
+          name="keywords"
+          content="anime, manga, comic, Japanese, animation, anime site, anime website, anime library, anime list, anime trends, anime news, anime market, anime products, anime community, anime social media"
+        />
+      </Helmet>
+      <HomePageDiv>
+        <HomePageBodyDiv>
+          {size.width > 700 ? (
+            <>
+              <HomePageHeadlineDiv>
+                <Swiper
+                  slidesPerView={1}
+                  spaceBetween={30}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  scrollbar={{
+                    hide: true,
+                  }}
+                  className="mySwiper"
+                >
+                  {getHeadlineDiv()}
+                </Swiper>
 
-              {/**
+                {/**
                * <Carousel dots={true} style={{ margin: "auto 0px" }}>
                 {getHeadlineDiv()}
               </Carousel>
                */}
-            </HomePageHeadlineDiv>
-          </>
-        ) : (
-          <>
-            <HomePageMobileHeadlineDiv>
-              <Carousel dots={true} style={{ margin: "auto 0px" }}>
-                {getHeadlineMobileDiv()}
-              </Carousel>
-            </HomePageMobileHeadlineDiv>
-          </>
-        )}
-        <HomePageAnimeDiv>
-          <h1>Meet your favourite anime</h1>
-          <h3>
-            Find the most popular anime, as well as the peripheral products and
-            fans.
-          </h3>
-          {size.width > 700 ? (
-            <>
-              <div className="row" style={{ display: "flex" }}>
-                {getAnimeDiv()}
-              </div>
+              </HomePageHeadlineDiv>
             </>
           ) : (
-            <Carousel style={{ marginLeft: "10px" }} dots={true}>
-              {getAnimeMobileDiv()}
-            </Carousel>
+            <>
+              <HomePageMobileHeadlineDiv>
+                <Carousel dots={true} style={{ margin: "auto 0px" }}>
+                  {getHeadlineMobileDiv()}
+                </Carousel>
+              </HomePageMobileHeadlineDiv>
+            </>
           )}
-        </HomePageAnimeDiv>
-        <HomeCenterDiv>
-          <MiddleHomeDiv>
-            <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
-              <img src={moreRightImg} />
-              <p>View All</p>
-            </MarketPlaceMore>
-          </MiddleHomeDiv>
-        </HomeCenterDiv>
-        {size.width > 700 ? (
-          <>
-            <HomeShowcaseDiv>
-              <h1>Show your anime world</h1>
-              <h3>
-                Display your collections and anime drawing talents. Redeem
-                Rewards by your Awesome pictures!
-              </h3>
-              <MarketContextDiv>{getShowcasesDiv()}</MarketContextDiv>
-            </HomeShowcaseDiv>
-            <HomeCenterDiv>
-              <MiddleHomeDiv>
-                <MoreRight
-                  onClick={() =>
-                    history.push("/showcase/showCollection?page=1")
-                  }
-                >
-                  <img src={moreRightImg} />
-                  <p>View All</p>
-                </MoreRight>
-              </MiddleHomeDiv>
-            </HomeCenterDiv>
-          </>
-        ) : (
-          <>
-            <HomePageMobileShowcaseDiv>
-              <h1>Show your anime world</h1>
-              <h3>
-                Display your collections and anime drawing talents. Redeem
-                Rewards by your Awesome pictures!
-              </h3>
-            </HomePageMobileShowcaseDiv>
-            <HomePageShowcaseDiv style={{ height: `${imageHighestPx}px` }}>
-              <Swiper
-                slidesPerView={1}
-                spaceBetween={30}
-                pagination={{
-                  clickable: true,
-                }}
-                scrollbar={{
-                  hide: true,
-                }}
-                className="mySwiper"
-              >
-                {getShowcaseMobileDiv()}
-              </Swiper>
-            </HomePageShowcaseDiv>
-            <HomeCenterDiv>
-              <MiddleHomeDiv>
-                <MarketPlaceMore
-                  onClick={() =>
-                    history.push("/showcase/showCollection?page=1")
-                  }
-                >
-                  <img src={moreRightImg} />
-                  <p>View All</p>
-                </MarketPlaceMore>
-              </MiddleHomeDiv>
-            </HomeCenterDiv>
-          </>
-        )}
-        {size.width > 700 ? (
-          <>
-            <MarketPlaceTitle>
-              <h2>Marketplace</h2>
-            </MarketPlaceTitle>
-            <MarketContextDiv>{getMarketsDiv()}</MarketContextDiv>
-            <HomeCenterDiv>
-              <MiddleHomeDiv>
-                <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
-                  <img src={moreRightImg} />
-                  <p>View All</p>
-                </MarketPlaceMore>
-              </MiddleHomeDiv>
-            </HomeCenterDiv>
-          </>
-        ) : (
-          <>
-            <MarketPlaceTitle style={{ marginLeft: "4px" }}>
-              <h2>Marketplace</h2>
-            </MarketPlaceTitle>
-            <HomePageMarketPlaceDiv>
+          <HomePageAnimeDiv>
+            <h1>Meet your favourite anime</h1>
+            <h3>
+              Find the most popular anime, as well as the peripheral products
+              and fans.
+            </h3>
+            {size.width > 700 ? (
+              <>
+                <div className="row" style={{ display: "flex" }}>
+                  {getAnimeDiv()}
+                </div>
+              </>
+            ) : (
               <Carousel style={{ marginLeft: "10px" }} dots={true}>
-                {getMarketsDiv()}
+                {getAnimeMobileDiv()}
               </Carousel>
-            </HomePageMarketPlaceDiv>
-            <HomeCenterDiv>
-              <MiddleHomeDiv>
-                <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
-                  <img src={moreRightImg} />
-                  <p>View All</p>
-                </MarketPlaceMore>
-              </MiddleHomeDiv>
-            </HomeCenterDiv>
-          </>
-        )}
-        {size.width > 700 ? (
-          <>
-            <MarketPlaceTitle>
-              <h2>Anime Products</h2>
-            </MarketPlaceTitle>
-            <ProductContextDiv>{getProductDiv()}</ProductContextDiv>
-            <HomeCenterDiv>
-              <MiddleHomeDiv>
-                <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
-                  <img src={moreRightImg} />
-                  <p>View All</p>
-                </MarketPlaceMore>
-              </MiddleHomeDiv>
-            </HomeCenterDiv>
-          </>
-        ) : (
-          <>
-            <MarketPlaceTitle style={{ marginLeft: "4px" }}>
-              <h2>Anime Products</h2>
-            </MarketPlaceTitle>
-            <HomePageProductPlaceDiv>
-              <Carousel style={{ marginLeft: "10px" }} dots={true}>
-                {getProductDiv()}
-              </Carousel>
-            </HomePageProductPlaceDiv>
-            <HomeCenterDiv>
-              <MiddleHomeDiv>
-                <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
-                  <img src={moreRightImg} />
-                  <p>View All</p>
-                </MarketPlaceMore>
-              </MiddleHomeDiv>
-            </HomeCenterDiv>
-          </>
-        )}
-        <CustomerProductBottomImg
-          onClick={() => history.push("/mall/custom")}
-          src={animeProduct}
-        />
-      </HomePageBodyDiv>
-    </HomePageDiv>
+            )}
+          </HomePageAnimeDiv>
+          <HomeCenterDiv>
+            <MiddleHomeDiv>
+              <MarketPlaceMore onClick={() => history.push("/animeShowPage")}>
+                <img src={moreRightImg} />
+                <p>View All</p>
+              </MarketPlaceMore>
+            </MiddleHomeDiv>
+          </HomeCenterDiv>
+          {size.width > 700 ? (
+            <>
+              <HomeShowcaseDiv>
+                <h1>Show your anime world</h1>
+                <h3>
+                  Display your collections and anime drawing talents. Redeem
+                  Rewards by your Awesome pictures!
+                </h3>
+                <MarketContextDiv>{getShowcasesDiv()}</MarketContextDiv>
+              </HomeShowcaseDiv>
+              <HomeCenterDiv>
+                <MiddleHomeDiv>
+                  <MoreRight
+                    onClick={() =>
+                      history.push("/showcase/showCollection?page=1")
+                    }
+                  >
+                    <img src={moreRightImg} />
+                    <p>View All</p>
+                  </MoreRight>
+                </MiddleHomeDiv>
+              </HomeCenterDiv>
+            </>
+          ) : (
+            <>
+              <HomePageMobileShowcaseDiv>
+                <h1>Show your anime world</h1>
+                <h3>
+                  Display your collections and anime drawing talents. Redeem
+                  Rewards by your Awesome pictures!
+                </h3>
+              </HomePageMobileShowcaseDiv>
+              <HomePageShowcaseDiv style={{ height: `${imageHighestPx}px` }}>
+                <Swiper
+                  slidesPerView={1}
+                  spaceBetween={30}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  scrollbar={{
+                    hide: true,
+                  }}
+                  className="mySwiper"
+                >
+                  {getShowcaseMobileDiv()}
+                </Swiper>
+              </HomePageShowcaseDiv>
+              <HomeCenterDiv>
+                <MiddleHomeDiv>
+                  <MarketPlaceMore
+                    onClick={() =>
+                      history.push("/showcase/showCollection?page=1")
+                    }
+                  >
+                    <img src={moreRightImg} />
+                    <p>View All</p>
+                  </MarketPlaceMore>
+                </MiddleHomeDiv>
+              </HomeCenterDiv>
+            </>
+          )}
+          {size.width > 700 ? (
+            <>
+              <MarketPlaceTitle>
+                <h2>Marketplace</h2>
+              </MarketPlaceTitle>
+              <MarketContextDiv>{getMarketsDiv()}</MarketContextDiv>
+              <HomeCenterDiv>
+                <MiddleHomeDiv>
+                  <MarketPlaceMore
+                    onClick={() => history.push("/animeShowPage")}
+                  >
+                    <img src={moreRightImg} />
+                    <p>View All</p>
+                  </MarketPlaceMore>
+                </MiddleHomeDiv>
+              </HomeCenterDiv>
+            </>
+          ) : (
+            <>
+              <MarketPlaceTitle style={{ marginLeft: "4px" }}>
+                <h2>Marketplace</h2>
+              </MarketPlaceTitle>
+              <HomePageMarketPlaceDiv>
+                <Carousel style={{ marginLeft: "10px" }} dots={true}>
+                  {getMarketsDiv()}
+                </Carousel>
+              </HomePageMarketPlaceDiv>
+              <HomeCenterDiv>
+                <MiddleHomeDiv>
+                  <MarketPlaceMore
+                    onClick={() => history.push("/animeShowPage")}
+                  >
+                    <img src={moreRightImg} />
+                    <p>View All</p>
+                  </MarketPlaceMore>
+                </MiddleHomeDiv>
+              </HomeCenterDiv>
+            </>
+          )}
+          {size.width > 700 ? (
+            <>
+              <MarketPlaceTitle>
+                <h2>Anime Products</h2>
+              </MarketPlaceTitle>
+              <ProductContextDiv>{getProductDiv()}</ProductContextDiv>
+              <HomeCenterDiv>
+                <MiddleHomeDiv>
+                  <MarketPlaceMore
+                    onClick={() => history.push("/animeShowPage")}
+                  >
+                    <img src={moreRightImg} />
+                    <p>View All</p>
+                  </MarketPlaceMore>
+                </MiddleHomeDiv>
+              </HomeCenterDiv>
+            </>
+          ) : (
+            <>
+              <MarketPlaceTitle style={{ marginLeft: "4px" }}>
+                <h2>Anime Products</h2>
+              </MarketPlaceTitle>
+              <HomePageProductPlaceDiv>
+                <Carousel style={{ marginLeft: "10px" }} dots={true}>
+                  {getProductDiv()}
+                </Carousel>
+              </HomePageProductPlaceDiv>
+              <HomeCenterDiv>
+                <MiddleHomeDiv>
+                  <MarketPlaceMore
+                    onClick={() => history.push("/animeShowPage")}
+                  >
+                    <img src={moreRightImg} />
+                    <p>View All</p>
+                  </MarketPlaceMore>
+                </MiddleHomeDiv>
+              </HomeCenterDiv>
+            </>
+          )}
+          <CustomerProductBottomImg
+            onClick={() => history.push("/mall/custom")}
+            src={animeProduct}
+          />
+        </HomePageBodyDiv>
+      </HomePageDiv>
+    </>
   );
 };
 
