@@ -24,6 +24,7 @@ import AnimeOneVideoAdd from "./AnimeOneCpmponents/AnimeOneVideoAdd";
 import moreRightImg from "../../files/moreRightArrow.svg";
 import { getWidth } from "../../helperFns/widthFn";
 import { useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const AnimeOne = (): JSX.Element => {
 
@@ -173,6 +174,14 @@ const AnimeOne = (): JSX.Element => {
 
   return (
     <>
+    <Helmet>
+        <title>Anime - Animepark.com</title>
+        <meta
+          name="keywords"
+          content="anime videos, anime products, anime fans, anime community, anime social media, anime sharing resource"
+        />
+        <meta name="description" content="anime information collection"></meta>
+      </Helmet>
       <AnimOne
         style={{
           width:

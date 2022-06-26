@@ -57,6 +57,7 @@ import { getWidth } from "../../helperFns/widthFn";
 import { AwesomeLevelType } from "../../types/awesomeLevel";
 import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import { getLevel } from "../../helperFns/profileFn";
+import { Helmet } from "react-helmet";
 
 const ProfileMessagePage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -307,6 +308,9 @@ const ProfileMessagePage = (): JSX.Element => {
 
   return (
     <>
+      <Helmet>
+        <title>Message - Animepark.com</title>
+      </Helmet>
       <ProfileBox
         style={{
           marginLeft: getWidth() > 600 ? "" : "8px",

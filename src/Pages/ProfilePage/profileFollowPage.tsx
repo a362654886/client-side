@@ -34,6 +34,7 @@ import { LOGIN_USER_UPDATE_FOLLOW } from "../../redux/loginUser";
 import getMoreImg from "../../files/getMore.svg";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import { Helmet } from "react-helmet";
 
 const buttonsColor = [
   {
@@ -416,14 +417,19 @@ const ProfileFollowPage = (): JSX.Element => {
   };
 
   return (
-    <ProfileFollowBox>
-      {getTitleUser()}
-      <FollowButtonsDiv>{getButtons()}</FollowButtonsDiv>
-      <LineDiv></LineDiv>
-      <div style={{ margin: "0px auto" }} className="row">
-        {getPart()}
-      </div>
-    </ProfileFollowBox>
+    <>
+      <Helmet>
+        <title>Follow - Animepark.com</title>
+      </Helmet>
+      <ProfileFollowBox>
+        {getTitleUser()}
+        <FollowButtonsDiv>{getButtons()}</FollowButtonsDiv>
+        <LineDiv></LineDiv>
+        <div style={{ margin: "0px auto" }} className="row">
+          {getPart()}
+        </div>
+      </ProfileFollowBox>
+    </>
   );
 };
 

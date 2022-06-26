@@ -45,7 +45,7 @@ const DiscoveryHeader = (): JSX.Element => {
       payload: null,
       type: ANIME_NONE,
     });
-    history.push(`oneAnime?${anime._id}`);
+    history.push(`anime?${anime._id}`);
   };
 
   const getStar = (rate: RateBody) => {

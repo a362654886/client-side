@@ -9,7 +9,7 @@ export const openNewWindowPath = (url: string): void => {
 };
 
 export const openAnimeNewWindowPath = (id: string): void => {
-  window.open(`https://www.animepark.com/oneAnime?${id}`, `_blank`);
+  window.open(`https://www.animepark.com/?${id}`, `_blank`);
   // window.location.href= `http://localhost:3001/oneNew/${url}`
 };
 

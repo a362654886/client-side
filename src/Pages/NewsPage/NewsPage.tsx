@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { newAllGet } from "../../api/newsAPI";
@@ -115,30 +116,40 @@ const NewsPage = (): JSX.Element => {
   };
 
   return (
-    <NewMainBox
-      style={{
-        paddingLeft: getWidth() > 600 ? "" : "8px",
-        paddingRight: getWidth() > 600 ? "" : "8px",
-      }}
-    >
-      <NewHeaderTitle>
-        <h1>News</h1>
-      </NewHeaderTitle>
-      {getExistNews()}
-      {getResult()}
-      <CenterDiv>
-        <AnimeButton
-          para=""
-          text="View more"
-          width="120px"
-          height="32px"
-          textColor="white"
-          backGroundColor="#FFC300"
-          borderColor="white"
-          buttonClick={() => getMore()}
+    <>
+      <Helmet>
+        <title>News - Animepark.com</title>
+        <meta
+          name="keywords"
+          content="anime, anime news, anime event, anime festival"
         />
-      </CenterDiv>
-    </NewMainBox>
+        <meta name="description" content="anime information collection"></meta>
+      </Helmet>
+      <NewMainBox
+        style={{
+          paddingLeft: getWidth() > 600 ? "" : "8px",
+          paddingRight: getWidth() > 600 ? "" : "8px",
+        }}
+      >
+        <NewHeaderTitle>
+          <h1>News</h1>
+        </NewHeaderTitle>
+        {getExistNews()}
+        {getResult()}
+        <CenterDiv>
+          <AnimeButton
+            para=""
+            text="View more"
+            width="120px"
+            height="32px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="white"
+            buttonClick={() => getMore()}
+          />
+        </CenterDiv>
+      </NewMainBox>
+    </>
   );
 };
 
