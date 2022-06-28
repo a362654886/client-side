@@ -63,7 +63,7 @@ const MarketplaceCreate = (): JSX.Element => {
   const [showCropper, setShowCropper] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(imgArr);
+    //console.log(imgArr);
   }, [imgArr, state]);
 
   const setResizeUploadImg = (imageBody: string) => {

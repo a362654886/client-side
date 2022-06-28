@@ -127,7 +127,6 @@ const MarketplaceEdit = (): JSX.Element => {
 
   const getArr = () => {
     const arr: string[] = [];
-    console.log(imgArr);
     imgArr.forEach((item) => {
       if (item !== "Add" && typeof item !== "string") {
         arr.push(item.imgBase64);

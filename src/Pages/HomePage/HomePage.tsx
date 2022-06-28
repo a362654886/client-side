@@ -143,9 +143,7 @@ const HomePage = (): JSX.Element => {
       showCaseResult.result.forEach((item) => {
         const img = new Image();
         img.src = item.imageArr[0];
-        console.log(img.height);
         const imageHeight = img.height / (img.width / 260);
-        console.log(imageHighestPx);
         if (item.imageArr && item.imageArr[0] && imageHighestPx < imageHeight) {
           setImageHighestPx(imageHeight);
         }

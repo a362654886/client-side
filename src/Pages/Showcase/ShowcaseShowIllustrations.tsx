@@ -130,8 +130,8 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
               index == 1
                 ? console.log("")
                 : toPage(
-                    index == 1
-                      ? `/showcase/showIllustrations?page=1`
+                    index == 0
+                      ? `/showcase/showCollection?page=1`
                       : "/showcase/showManga?page=1"
                   )
             }

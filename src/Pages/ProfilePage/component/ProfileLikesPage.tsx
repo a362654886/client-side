@@ -53,7 +53,6 @@ const ProfileLikesPage = (): JSX.Element => {
   };
 
   const chooseAnime = (anime: Anime) => {
-    console.log("WE")
     dispatch({
       payload: anime,
       type: ANIME_ADD,

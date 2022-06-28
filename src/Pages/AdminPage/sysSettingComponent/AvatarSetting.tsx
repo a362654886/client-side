@@ -30,7 +30,7 @@ const AvatarSetting = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(avatars);
+    //console.log(avatars);
   }, [avatars]);
 
   const getAvatars = async () => {

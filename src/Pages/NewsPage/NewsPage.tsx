@@ -54,7 +54,6 @@ const NewsPage = (): JSX.Element => {
   const getText = (html: string) => {
     const r = "<p[^<>]*?";
     const yyy = html.match(r);
-    console.log(yyy);
     if (yyy) {
       return `<img src=${yyy[1]} />`;
     } else {

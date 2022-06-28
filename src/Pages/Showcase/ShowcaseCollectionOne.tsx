@@ -23,7 +23,7 @@ const ShowcaseCollectionOne = (): JSX.Element => {
   const [showCase, setShowCase] = useState<ShowCaseType | null>(null);
 
   useEffect(() => {
-    console.log(para.id);
+    //console.log(para.id);
     //console.log(loading);
   }, [loading, showCase]);
 

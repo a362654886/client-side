@@ -25,6 +25,7 @@ export type ReportShowType = {
 };
 
 export enum ReportContextType {
+  SHOWCASE = "showCase",
   SHOWCASE_REPLY = "showCaseReply",
   SHOWCASE_SECOND_REPLY = "showCaseSecondReply",
   FORUM_ITEM = "forumItem",

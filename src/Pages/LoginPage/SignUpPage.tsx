@@ -138,7 +138,6 @@ const SignUpPage = (): JSX.Element => {
       setEmailCheck("please input valid email address");
     } else {
       const user = await userGet(email);
-      console.log(user);
       setEmailCheck(user !== null ? "this email already exist" : "");
     }
   };

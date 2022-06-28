@@ -128,12 +128,12 @@ const ShowcaseShowManga = (): JSX.Element => {
             backGroundColor={index == 2 ? "#AAFFC9" : "white"}
             borderColor={index == 2 ? "#AAFFC9" : "#4BA3C3"}
             buttonClick={() =>
-              index == 1
-                ? console.log("")
+              index == 3
+                ? console.log(index)
                 : toPage(
                     index == 1
                       ? `/showcase/showIllustrations?page=1`
-                      : "/showcase/showManga?page=1"
+                      : "/showcase/showCollection?page=1"
                   )
             }
           />

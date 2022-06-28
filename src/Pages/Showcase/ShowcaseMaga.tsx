@@ -66,7 +66,6 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
   }, [update]);
 
   useEffect(() => {
-    console.log(loginUser);
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
   }, []);
 
@@ -158,7 +157,6 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
 
   const getExistShowcases = () =>
     allShowCases.map((showcase, index) => {
-      console.log(showcase);
       return (
         <ShowMangaIframe key={index}>
           {showcase.imageArr ? (
@@ -197,7 +195,7 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
                 userName={showcase.userName}
                 userImg={showcase.userAvatar}
                 marginTop="8px"
-                type={ReportContextType.SHOWCASE_REPLY}
+                type={ReportContextType.SHOWCASE}
                 contextId={showcase._id}
               />
             </ShowAvatarDiv>

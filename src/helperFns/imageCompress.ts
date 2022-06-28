@@ -46,7 +46,6 @@ export const compressImg = (
   w: number,
   quality: number
 ) => {
-  console.log(quality)
   const getMimeType = (urlData: any) => {
     const arr = urlData.split(",");
     const mime = arr[0].match(/:(.*?);/)[1];

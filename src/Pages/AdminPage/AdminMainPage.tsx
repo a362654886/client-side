@@ -34,7 +34,6 @@ const AdminMainPage = (): JSX.Element => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(loginUser);
     if (loginUser == null) {
       //toPage("/adminPage");
     }

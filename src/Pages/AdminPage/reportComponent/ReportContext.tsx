@@ -7,6 +7,7 @@ import {
   AdminContentPageDiv,
   AdminProductBox,
   AdminReportButton,
+  AdminReportContextDiv,
 } from "../../../cssJs/AdminPage/adminCss";
 import {
   ForumImg,
@@ -57,6 +58,7 @@ const ReportContext = (): JSX.Element => {
         reportBlock ? reportBlock.contextId : ""
       );
     })();
+    console.log(reportBlock)
   }, [reportBlock]);
 
   useEffect(() => {
@@ -217,7 +219,7 @@ const ReportContext = (): JSX.Element => {
           Block
         </Button>
       </div>
-      <div style={{ marginLeft: "8px" }}>{reportContext}</div>
+      <AdminReportContextDiv style={{ marginLeft: "8px" }}>{reportContext}</AdminReportContextDiv>
       <div style={{ marginLeft: "8px", display: "flex" }}>
         <AdminReportButton onClick={() => updateReport("delete")}>
           <img src={`${deleteIcon}`} />

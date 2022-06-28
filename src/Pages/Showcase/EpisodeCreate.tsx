@@ -34,7 +34,7 @@ const EpisodeCreate = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(episodeNum);
+    //console.log(episodeNum);
   }, [episodeNum]);
 
   const getEpisode = async () => {

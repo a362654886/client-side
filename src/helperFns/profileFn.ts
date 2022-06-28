@@ -7,7 +7,6 @@ export const getLevel = (
   if (allLevels) {
     let loop = false;
     let returnIndex = 0;
-    console.log(allLevels)
     allLevels.forEach((item, index) => {
       if (loop == false && item.awesomeRequire > awesomeNum) {
         loop = true;

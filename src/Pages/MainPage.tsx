@@ -109,7 +109,7 @@ const MainPage = (): JSX.Element => {
   }, [loginUser]);
 
   useEffect(() => {
-    console.log(mobileMenu);
+    //console.log(mobileMenu);
   }, [mobileMenu]);
 
   const login = async (email: string, password: string) => {
@@ -144,7 +144,7 @@ const MainPage = (): JSX.Element => {
         pathname: "/home",
       });
     } else {
-      console.log(history.location.pathname);
+      //console.log(history.location.pathname);
     }
     const cookieState = localStorage.getItem("cookieAlert");
     if (cookieState && cookieState == "true") {

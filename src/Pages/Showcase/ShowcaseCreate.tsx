@@ -67,7 +67,7 @@ const ShowcaseCreate = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(tags);
+   // console.log(tags);
   }, [imgArr, tags]);
 
   const formatTag = (tagArr: string[]) => {

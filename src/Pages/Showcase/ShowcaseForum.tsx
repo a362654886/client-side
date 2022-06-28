@@ -878,7 +878,7 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
               userName={showcase.userName}
               userImg={showcase.userAvatar}
               marginTop="8px"
-              type={ReportContextType.SHOWCASE_REPLY}
+              type={ReportContextType.SHOWCASE}
               contextId={showcase._id}
             />
             <ShowTime>{_getDate(date)}</ShowTime>

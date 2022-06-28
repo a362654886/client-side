@@ -191,6 +191,13 @@ export const AdminProductBox = styled.div`
   }
 `;
 
+export const AdminReportContextDiv = styled.div`
+  margin-left: 8px;
+  img {
+    max-width: 600px;
+  }
+`;
+
 export const AdminReportButton = styled.div`
   margin-left: 8px;
   display: flex;

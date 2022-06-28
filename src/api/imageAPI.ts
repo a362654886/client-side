@@ -12,7 +12,6 @@ export const imageAdd = async (
   const endpoint = basicURL + "ImageInsert";
   return Axios.post(endpoint, { imageBody: imageBody })
     .then((response) => {
-      console.log(response)
       return response.data;
     })
     .catch(() => {

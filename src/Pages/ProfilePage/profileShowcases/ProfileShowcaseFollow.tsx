@@ -32,7 +32,6 @@ const ProfileShowcaseFollow = (): JSX.Element => {
 
   useEffect(() => {
     (async function anyNameFunction() {
-      console.log("sd");
       await searchType();
       //need to be checked
       setCount(100);

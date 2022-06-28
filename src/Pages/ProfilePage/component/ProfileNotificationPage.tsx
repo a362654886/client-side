@@ -38,7 +38,6 @@ const ProfileNotificationPage = (): JSX.Element => {
     setBids(loginUser ? loginUser.interactionBids : false);
     setNewFollow(loginUser ? loginUser.interactionNewFollowers : false);
     setMessage(loginUser ? loginUser.interactionMessages : false);
-    console.log(comments);
   }, [loginUser]);
 
   const updateUser = async () => {

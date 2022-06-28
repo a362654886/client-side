@@ -177,7 +177,6 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
   useEffect(() => {
     //setShowCase(manga);
-    console.log(newSecondReplyHtml);
   }, [episodeNum, loading, newReplyHtml, newSecondReplyHtml]);
 
   const getManga = async (id: string) => {
@@ -1503,7 +1502,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           title={""}
           visible={editEpisode}
           onOk={() => {
-            console.log("S");
+            //console.log("S");
           }}
           onCancel={() => setEditEpisodesManga(false)}
           footer={[]}

@@ -82,7 +82,6 @@ const ProfileMarketplacePage = (): JSX.Element => {
   };
 
   const chooseMarket = (marketId: string) => {
-    console.log(history)
     history.location.pathname = "/"
     history.replace(`marketplace/showOne/${marketId}`);
   };

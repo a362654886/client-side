@@ -97,8 +97,8 @@ const ShowcaseMangaUpdate = (): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log(tags);
-    console.log(html);
+    //console.log(tags);
+    //console.log(html);
   }, [
     imgArr,
     tags,
@@ -202,7 +202,6 @@ const ShowcaseMangaUpdate = (): JSX.Element => {
         payload: LoadingType.CLOSE,
         type: LOADING_CLOSE,
       });
-      console.log("update");
     }
   };
 
