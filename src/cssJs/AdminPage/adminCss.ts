@@ -193,6 +193,7 @@ export const AdminProductBox = styled.div`
 
 export const AdminReportContextDiv = styled.div`
   margin-left: 8px;
+  max-width: 600px;
   img {
     max-width: 600px;
   }

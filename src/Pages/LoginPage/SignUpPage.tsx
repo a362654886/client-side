@@ -264,6 +264,7 @@ const SignUpPage = (): JSX.Element => {
       block: false,
       blockTime: 0,
       blockReason: "",
+      role: "general",
     };
     const r = await userAdd(user);
     dispatch({

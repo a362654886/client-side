@@ -18,7 +18,13 @@ const AdminContentManagementPage = (): JSX.Element => {
         <h6>
           Link:{" "}
           <a
-            href={`https://analytics.google.com/analytics/web/?authuser=5#/p318774988/realtime/overview?params=_u..nav%3Dmaui&collectionId=user`}
+            style={{ color: "blue", textDecoration: "underline" }}
+            onClick={() => {
+              window.open(
+                `https://analytics.google.com/analytics/web/?authuser=5#/p318774988/realtime/overview?params=_u..nav%3Dmaui&collectionId=user`,
+                `_blank`
+              );
+            }}
           >
             Google/analyst
           </a>

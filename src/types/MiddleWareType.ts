@@ -1,4 +1,5 @@
 import { $CombinedState, MiddlewareAPI } from "@reduxjs/toolkit";
+import { AdminLoginUser } from "../redux/adminLoginUser";
 import { AllLevel } from "../redux/allLevels";
 import { AnimeAction } from "../redux/anime";
 import { AuthUser } from "../redux/auth";
@@ -38,6 +39,7 @@ export type actionBody =
   | ReportUser
   | MarketFollowAction
   | AllLevel
-  | ReportBlock;
+  | ReportBlock
+  | AdminLoginUser;
 
 export type nextAction = (action: actionBody) => void;

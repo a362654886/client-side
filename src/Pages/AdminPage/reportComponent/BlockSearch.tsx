@@ -2,24 +2,14 @@ import { Button, Input } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { animeAllGet, animeDelete } from "../../../api/animeAPI";
-import AnimeButton, { MoreButtonDiv } from "../../../components/Button";
+import AnimeButton from "../../../components/Button";
 import {
-  AnimeTableElement,
-  AnimeTableItem,
   SearchDiv,
-  SearchTableDiv,
-  ViewButton,
 } from "../../../cssJs/AdminPage/animeSearchCss";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
-import { Anime } from "../../../types/Amine";
 import { LoadingType } from "../../../types/EnumTypes";
-import editIcon from "../../../files/editIcon.svg";
-import deleteIcon from "../../../files/deleteIcon.svg";
-import getMoreImg from "../../../files/getMore.svg";
 import {
   AdminContentPageDiv,
-  AdminPageDiv,
 } from "../../../cssJs/AdminPage/adminCss";
 import AdminDataHeader from "./AdminDataHeader";
 import { userBlockGet, userUpdateBlock } from "../../../api/userApi";
@@ -74,6 +64,7 @@ const BlockSearch = (): JSX.Element => {
   };
 
   const unBlock = async (user: User) => {
+    console.log(user)
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
@@ -119,7 +110,7 @@ const BlockSearch = (): JSX.Element => {
               />
               <h6>{user.showName}</h6>
               <Button onClick={() => unBlock(user)}>
-                {user.block ? `Unlock` : `Block`}
+                {user.block ?  `UnBlock`:`Block`}
               </Button>
             </AdminBlockChildEle>
             <AdminBlockTime>

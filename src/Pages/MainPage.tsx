@@ -113,7 +113,7 @@ const MainPage = (): JSX.Element => {
   }, [mobileMenu]);
 
   const login = async (email: string, password: string) => {
-    const user = await userAuth(email, password);
+    const user = await userAuth(email, password, "general");
     dispatch({
       payload: user,
       type: PROFILE_USER_UPDATE,

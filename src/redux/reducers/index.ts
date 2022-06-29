@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { adminLoginUserState } from "../adminLoginUser";
 import { allLevelState } from "../allLevels";
 import { animeState } from "../anime";
 import { authState } from "../auth";
@@ -24,5 +25,6 @@ export default combineReducers({
   reportUserState,
   marketFollowState,
   allLevelState,
-  reportBlockState
+  reportBlockState,
+  adminLoginUserState
 });

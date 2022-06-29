@@ -1,9 +1,7 @@
-import { ReportBlock } from "../redux/reportBlock";
 import { Anime } from "./Amine";
 import { AwesomeLevelType } from "./awesomeLevel";
 import { ReportShowType } from "./blockType";
 import { LoadingType, LoginType } from "./EnumTypes";
-import { NewType } from "./NewsType";
 import { ShowCaseType } from "./showCaseType";
 import { User } from "./User";
 
@@ -18,4 +16,5 @@ export interface IStoreState {
   reportUserState: string | null;
   allLevelState: AwesomeLevelType[] | null;
   reportBlockState: ReportShowType | null;
+  adminLoginUserState: User | null;
 }

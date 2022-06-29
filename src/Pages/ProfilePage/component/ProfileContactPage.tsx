@@ -112,6 +112,7 @@ const ProfileContactPage = (): JSX.Element => {
       block: loginUser?.block ? loginUser?.block : false,
       blockTime: loginUser ? loginUser.blockTime : 0,
       blockReason: loginUser ? loginUser.blockReason : "",
+      role: loginUser ? loginUser.role : "general",
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);

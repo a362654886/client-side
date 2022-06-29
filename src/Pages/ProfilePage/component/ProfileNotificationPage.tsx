@@ -2,13 +2,12 @@ import { Checkbox } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdate, userUpdateNotification } from "../../../api/userApi";
+import { userUpdateNotification } from "../../../api/userApi";
 import AnimeButton from "../../../components/Button";
 import LoadingDiv from "../../../components/LoadingDiv";
 import { ProfileAccountDiv } from "../../../cssJs/ProfilePage/ProfileAccountCss";
 import { ContactSubmitButtonDiv } from "../../../cssJs/ProfilePage/ProfileContactCss";
 import {
-  NotificationButton,
   NotificationCheckBox,
   NotificationSystemNews,
   NotificationTitle,
@@ -77,6 +76,7 @@ const ProfileNotificationPage = (): JSX.Element => {
       block: loginUser?.block ? loginUser?.block : false,
       blockTime: loginUser ? loginUser.blockTime : 0,
       blockReason: loginUser ? loginUser.blockReason : "",
+      role: loginUser ? loginUser.role : "general",
     };
     setLoading(true);
     const r = await userUpdateNotification(readyUpdateUser);

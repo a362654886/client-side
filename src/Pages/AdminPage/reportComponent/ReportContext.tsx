@@ -50,6 +50,7 @@ const ReportContext = (): JSX.Element => {
   );
 
   const [reportContext, setReportContext] = useState<JSX.Element>();
+  const [blockState, setBlockState] = useState<boolean>(false);
 
   useEffect(() => {
     (async function anyNameFunction() {
@@ -58,12 +59,12 @@ const ReportContext = (): JSX.Element => {
         reportBlock ? reportBlock.contextId : ""
       );
     })();
-    console.log(reportBlock)
+    console.log(reportBlock);
   }, [reportBlock]);
 
   useEffect(() => {
     //
-  }, [reportContext]);
+  }, [reportContext, blockState]);
 
   const getContext = async (type: string, id: string) => {
     const context = await blockGetContext(id, type);
@@ -190,6 +191,7 @@ const ReportContext = (): JSX.Element => {
   };
 
   const blockFn = async () => {
+    setBlockState(!blockState);
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
@@ -197,7 +199,7 @@ const ReportContext = (): JSX.Element => {
     if (reportBlock) {
       const r = await userUpdateBlock(
         reportBlock?.forumUserId,
-        true,
+        blockState,
         reportBlock.reason
       );
     }
@@ -216,10 +218,12 @@ const ReportContext = (): JSX.Element => {
           {reportBlock ? _getDate(new Date(reportBlock.uploadTime)) : ""}
         </ForumName>
         <Button style={{ marginTop: "16px" }} onClick={() => blockFn()}>
-          Block
+          {blockState?"Block":"UnBlock"}
         </Button>
       </div>
-      <AdminReportContextDiv style={{ marginLeft: "8px" }}>{reportContext}</AdminReportContextDiv>
+      <AdminReportContextDiv style={{ marginLeft: "8px" }}>
+        {reportContext}
+      </AdminReportContextDiv>
       <div style={{ marginLeft: "8px", display: "flex" }}>
         <AdminReportButton onClick={() => updateReport("delete")}>
           <img src={`${deleteIcon}`} />

@@ -20,10 +20,11 @@ import { User } from "../../types/User";
 import loadingImg from "../../files/loading.gif";
 import AdminPage from "./AdminPage";
 import { LOGIN_USER_NONE } from "../../redux/loginUser";
+import { ADMIN_LOGIN_USER_NONE } from "../../redux/adminLoginUser";
 
 const AdminMainPage = (): JSX.Element => {
-  const loginUser: User | null = useSelector(
-    (state: IStoreState) => state.loginUserState
+  const AdminLoginUser: User | null = useSelector(
+    (state: IStoreState) => state.adminLoginUserState
   );
 
   const loading: LoadingType = useSelector(
@@ -34,13 +35,13 @@ const AdminMainPage = (): JSX.Element => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (loginUser == null) {
+    if (AdminLoginUser == null) {
       //toPage("/adminPage");
     }
-    if (loginUser && history.location.pathname == "/adminManagement") {
+    if (AdminLoginUser && history.location.pathname == "/adminManagement") {
       toPage("/adminManagement/Home Page");
     }
-  }, [loginUser]);
+  }, [AdminLoginUser]);
 
   const [menuNum, setMenu] = useState<number>(0);
 
@@ -98,13 +99,13 @@ const AdminMainPage = (): JSX.Element => {
   const logOut = () => {
     dispatch({
       payload: null,
-      type: LOGIN_USER_NONE,
+      type: ADMIN_LOGIN_USER_NONE,
     });
   };
 
   return (
     <AdminMainDiv>
-      {loginUser !== null ? (
+      {AdminLoginUser !== null ? (
         <>
           <LoadingBox>
             <div className={loading == LoadingType.OPEN ? "mask" : "noMask"}>
@@ -112,7 +113,7 @@ const AdminMainPage = (): JSX.Element => {
             </div>
           </LoadingBox>
           <AdminLogoutDiv>
-            <AdminText>{loginUser?.userEmail}</AdminText>
+            <AdminText>{AdminLoginUser?.userEmail}</AdminText>
             <LogoutButton onClick={() => logOut()}>Log out</LogoutButton>
           </AdminLogoutDiv>
           <AdminPageDiv>

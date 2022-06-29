@@ -12,6 +12,12 @@ import {
   PasswordInput,
   SubmitButton,
 } from "../../cssJs/AdminPage/adminCss";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
+import { ADMIN_LOGIN_USER_ADD } from "../../redux/adminLoginUser";
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { LoginType } from "../../types/EnumTypes";
@@ -41,20 +47,17 @@ const AdminPage = (): JSX.Element => {
       payload: LoginType.LOADING,
       type: AUTH_LOADING,
     });
-    const user = await userAuth(email, password);
+    const user = await userAuth(email, password, "admin");
     if (user == null) {
-      dispatch({
-        payload: LoginType.FAIL,
-        type: AUTH_FAIL,
-      });
+      openNotification(
+        "this user isn't administrator account",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
     } else {
       dispatch({
-        payload: LoginType.SUCCESS,
-        type: AUTH_SUCCESS,
-      });
-      dispatch({
         payload: user,
-        type: LOGIN_USER_ADD,
+        type: ADMIN_LOGIN_USER_ADD,
       });
     }
     setLoading(false);

@@ -8,12 +8,14 @@ const basicURL = backEndLink;
 
 export const userAuth = async (
   email: string,
-  password: string
+  password: string,
+  role: string
 ): Promise<User | null> => {
   const endpoint = basicURL + "userAuth";
   return Axios.post(endpoint, {
     userEmail: email,
     userPassword: password,
+    role: role,
   })
     .then((response) => {
       if (response.data.user != null) {
@@ -104,6 +106,7 @@ export const userUpdateBlock = async (
   block: boolean,
   reason: string
 ): Promise<number> => {
+  console.log(block);
   const endpoint = basicURL + "userUpdateBlock";
   return Axios.put(endpoint, {
     body: {

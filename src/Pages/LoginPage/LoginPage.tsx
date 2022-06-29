@@ -40,7 +40,7 @@ const LoginPage = (): JSX.Element => {
       payload: LoginType.LOADING,
       type: AUTH_LOADING,
     });
-    const user = await userAuth(email, password);
+    const user = await userAuth(email, password, "general");
     setLoadingAlert(false);
     if (user == null) {
       dispatch({
