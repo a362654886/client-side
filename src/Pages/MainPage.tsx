@@ -464,7 +464,7 @@ const MainPage = (): JSX.Element => {
                   <div>
                     <p
                       onClick={() => {
-                        toProfile("/animeShowPage");
+                        toProfile("/animelibrary");
                       }}
                     >
                       Anime
