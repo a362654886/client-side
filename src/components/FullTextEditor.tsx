@@ -2,6 +2,7 @@ import { RcFile } from "antd/lib/upload/interface";
 import * as React from "react";
 import { useRef } from "react";
 import ReactQuill from "react-quill";
+import styled from "styled-components";
 import { imageAdd } from "../api/imageAPI";
 import { getCompressImage } from "../helperFns/imageCompress";
 import { getWidth } from "../helperFns/widthFn";
@@ -147,7 +148,7 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
   ];
 
   return (
-    <>
+    <ReactQuillDiv>
       <ReactQuill
         ref={textInput}
         theme={"snow"}
@@ -157,8 +158,18 @@ const FullTextEditor = ({ html, setFullText }: IProps): JSX.Element => {
         formats={formats}
         bounds={".app"}
       />
-    </>
+    </ReactQuillDiv>
   );
 };
 
 export default FullTextEditor;
+
+export const ReactQuillDiv = styled.div`
+  .quill,
+  .ql-editor,
+  .ql-container {
+    min-height: 200px;
+    max-height: 1000px;
+    height: auto !important;
+  }
+`;
