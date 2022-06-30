@@ -9,7 +9,7 @@ const AdminContentManagementPage = (): JSX.Element => {
   return (
     <AdminDateDiv>
       <AdminDateChildDiv>
-        <h6>Account: info@animepark.com</h6>
+        <h6>Account: infoAdmin@animepark.com</h6>
       </AdminDateChildDiv>
       <AdminDateChildDiv>
         <h6>Password: NUBQDE8c</h6>
