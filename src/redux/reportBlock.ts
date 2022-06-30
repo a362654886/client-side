@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash";
 import { ReportShowType } from "../types/blockType";
 import { createReducer } from "./reducers/reducerFn";
 
@@ -30,7 +31,9 @@ export const actions = {
     payload,
     type: REPORT_BLOCK_NONE,
   }),
-  ReportBlockUpdateAction: (payload: ReportShowType): ReportBlockUpdateAction => ({
+  ReportBlockUpdateAction: (
+    payload: ReportShowType
+  ): ReportBlockUpdateAction => ({
     payload,
     type: REPORT_BLOCK_UPDATE,
   }),
@@ -40,7 +43,7 @@ export const actions = {
 const handlers = {
   REPORT_BLOCK_NONE: (state: string | null, action: ReportBlock) => null,
   REPORT_BLOCK_UPDATE: (state: string | null, action: ReportBlock) => {
-    const reportUserId = action.payload;
+    const reportUserId = cloneDeep(action.payload);
     return reportUserId;
   },
 };
@@ -48,4 +51,5 @@ const handlers = {
 export const reportBlockState = (
   state: ReportShowType | null = null,
   action: ReportBlock
-): ReportShowType | null => createReducer<ReportShowType | null>(state, action, handlers);
+): ReportShowType | null =>
+  createReducer<ReportShowType | null>(state, action, handlers);

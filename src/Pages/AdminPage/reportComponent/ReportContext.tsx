@@ -59,7 +59,7 @@ const ReportContext = (): JSX.Element => {
         reportBlock ? reportBlock.contextId : ""
       );
     })();
-    console.log(reportBlock);
+    setBlockState(false)
   }, [reportBlock]);
 
   useEffect(() => {
@@ -199,7 +199,7 @@ const ReportContext = (): JSX.Element => {
     if (reportBlock) {
       const r = await userUpdateBlock(
         reportBlock?.forumUserId,
-        blockState,
+        !blockState,
         reportBlock.reason
       );
     }
@@ -218,7 +218,7 @@ const ReportContext = (): JSX.Element => {
           {reportBlock ? _getDate(new Date(reportBlock.uploadTime)) : ""}
         </ForumName>
         <Button style={{ marginTop: "16px" }} onClick={() => blockFn()}>
-          {blockState?"Block":"UnBlock"}
+          {blockState?"UnBlock":"Block"}
         </Button>
       </div>
       <AdminReportContextDiv style={{ marginLeft: "8px" }}>

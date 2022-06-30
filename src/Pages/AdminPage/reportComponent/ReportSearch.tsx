@@ -84,7 +84,9 @@ const ReportSearch = (): JSX.Element => {
       payload: report,
       type: REPORT_BLOCK_UPDATE,
     });
-    openReportContextPath();
+    setTimeout(()=>{
+      openReportContextPath();
+    },500)
   };
 
   return (
