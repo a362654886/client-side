@@ -10,6 +10,7 @@ import {
   MallTitle,
   MallTitleDiv,
 } from "../../cssJs/MallPage/MallPageCss";
+import { getWidth } from "../../helperFns/widthFn";
 import MallRouter from "../../router/MallRouter";
 import MallSide from "./MallSide";
 
@@ -92,7 +93,7 @@ const MallPage = (): JSX.Element => {
         />
         <meta name="description" content="anime information collection"></meta>
       </Helmet>
-      <MallDiv>
+      <MallDiv style={{ width: getWidth() > 600 ? "1140px" : "100%" }}>
         <div style={{ display: "flex" }}>
           <MallShowDiv className="col-xl-9 col-md-9 col-sm-9 col-9">
             <MallTitleDiv>

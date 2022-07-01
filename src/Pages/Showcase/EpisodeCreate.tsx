@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { episodeAdd, episodeGet } from "../../api/episodeAPI";
 import AnimeButton, { MiddleDiv } from "../../components/Button";
@@ -13,12 +13,16 @@ import {
   EpisodeNumber,
   EpisodeTitle,
 } from "../../cssJs/ShowCasePage/EpisodeCss";
+import { getWidth } from "../../helperFns/widthFn";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import { LoadingType } from "../../types/EnumTypes";
 import { EpisodeType } from "../../types/EpisodeType";
 import { IStoreState } from "../../types/IStoreState";
 import { ShowCaseType } from "../../types/showCaseType";
 
 const EpisodeCreate = (): JSX.Element => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const manga: ShowCaseType | null = useSelector(
     (state: IStoreState) => state.mangaState
@@ -64,6 +68,10 @@ const EpisodeCreate = (): JSX.Element => {
   };
 
   const insertEpisode = async () => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     const newEpisode: EpisodeType = {
       _id: `${manga?._id}Episode${episodeNum + 1}`,
       page: episodeNum + 1,
@@ -72,6 +80,10 @@ const EpisodeCreate = (): JSX.Element => {
       imageArr: imgArr.map((image) => image.imgBase64),
     };
     await episodeAdd(newEpisode);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
     history.push(`/showcase/Manga/${manga?._id}`);
   };
 
@@ -87,7 +99,10 @@ const EpisodeCreate = (): JSX.Element => {
           return (
             <EpisodeImage key={index}>
               <div>
-                <img src={image.imgBase64} style={{ width: "723px" }} />
+                <img
+                  src={image.imgBase64}
+                  style={{ width: getWidth() > 600 ? "723px" : "100%" }}
+                />
               </div>
               <div>
                 <Button onClick={() => deleteImg(index)}>Delete</Button>
@@ -132,7 +147,7 @@ const EpisodeCreate = (): JSX.Element => {
             backGroundColor="white"
             borderColor="#dbdbdb"
             buttonClick={() => {
-              console.log("cancel");
+              window.history.go(-1);
             }}
           />
         </MiddleDiv>

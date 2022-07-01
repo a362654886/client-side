@@ -92,6 +92,7 @@ export const OneNewSource = styled.div`
     line-height: 32px;
     color: blue;
     cursor: pointer;
+    word-wrap: break-word;
   }
 `;
 

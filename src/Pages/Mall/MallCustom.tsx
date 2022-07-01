@@ -38,6 +38,12 @@ import mallWallBack from "../../files/mallWallBack.svg";
 import { imageAdd } from "../../api/imageAPI";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import { getWidth } from "../../helperFns/widthFn";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 
 const customerTypes: MallCustomType[] = [
   {
@@ -100,38 +106,52 @@ const MallCustom = (): JSX.Element => {
     setLoadImg(value.imgBase64);
   };
 
+  const validateEmail = (email: string) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
   const sendEmail = async () => {
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
-    const imgUrl = await imageAdd({
-      _id: "",
-      imageValue: resizeUploadImg,
-      forumId: "forumImage",
-    });
-    //send to customer service
-    await emailPost(
-      window.btoa(email),
-      `
-        <p>imageLink:https://animeimagebucket.s3.amazonaws.com/${imgUrl}</p>
-        <div>${attributes}</div>
-        <div>Contact Email: ${email}</div>
-      `,
-      "mall",
-      "customerService"
-    );
-    //send to customer
-    await emailPost(
-      window.btoa(email),
-      "",
-      "Thanks for your inquiry",
-      "autoReply"
-    );
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
+    const checkEmail = validateEmail(email);
+    if (!checkEmail) {
+      openNotification(
+        "please complete your Email address",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else {
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
+      const imgUrl = await imageAdd({
+        _id: "",
+        imageValue: resizeUploadImg,
+        forumId: "forumImage",
+      });
+      //send to customer service
+      await emailPost(
+        window.btoa(email),
+        `
+          <p>imageLink:https://animeimagebucket.s3.amazonaws.com/${imgUrl}</p>
+          <div>${attributes}</div>
+          <div>Contact Email: ${email}</div>
+        `,
+        "mall",
+        "customerService"
+      );
+      //send to customer
+      await emailPost(
+        window.btoa(email),
+        "",
+        "Thanks for your inquiry",
+        "autoReply"
+      );
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
+    }
   };
 
   const sendDesignHistory = async () => {
@@ -185,35 +205,94 @@ const MallCustom = (): JSX.Element => {
     }
   };
 
+  const getHeaderComponent = () => {
+    if (getWidth() > 600) {
+      return mallCustomer.map((item, index) => {
+        return (
+          <MallCustomHeaderDiv
+            key={index}
+            style={{
+              borderBottom:
+                index == chooseIndex ? "2px solid #892E2F" : "2px solid white",
+            }}
+          >
+            <img
+              src={item.imgURL}
+              onClick={() => {
+                setChooseIndex(index);
+              }}
+            />
+          </MallCustomHeaderDiv>
+        );
+      });
+    } else {
+      const topCustomers = mallCustomer.slice(0, 2);
+      const bottomCustomers = mallCustomer.slice(2, 4);
+      return (
+        <div style={{ display: "inline" }}>
+          <div style={{ display: "flex" }}>
+            {topCustomers.map((item, index) => {
+              return (
+                <MallCustomHeaderDiv
+                  key={index}
+                  style={{
+                    borderBottom:
+                      index == chooseIndex
+                        ? "2px solid #892E2F"
+                        : "2px solid white",
+                  }}
+                >
+                  <img
+                    src={item.imgURL}
+                    onClick={() => {
+                      setChooseIndex(index);
+                    }}
+                  />
+                </MallCustomHeaderDiv>
+              );
+            })}
+          </div>
+          <div style={{ display: "flex" }}>
+            {bottomCustomers.map((item, index) => {
+              return (
+                <MallCustomHeaderDiv
+                  key={index}
+                  style={{
+                    borderBottom:
+                      index == chooseIndex + 2
+                        ? "2px solid #892E2F"
+                        : "2px solid white",
+                  }}
+                >
+                  <img
+                    src={item.imgURL}
+                    onClick={() => {
+                      setChooseIndex(index + 2);
+                    }}
+                  />
+                </MallCustomHeaderDiv>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+  };
+
   return (
-    <>
+    <div>
       <MallCustomTitle>
         Order a product with your favorite image!
       </MallCustomTitle>
-      <MallCustomHeader>
-        {mallCustomer.map((item, index) => {
-          return (
-            <MallCustomHeaderDiv
-              key={index}
-              style={{
-                borderBottom:
-                  index == chooseIndex
-                    ? "2px solid #892E2F"
-                    : "2px solid white",
-              }}
-            >
-              <img
-                src={item.imgURL}
-                onClick={() => {
-                  setChooseIndex(index);
-                }}
-              />
-            </MallCustomHeaderDiv>
-          );
-        })}
+      <MallCustomHeader
+        style={{ height: getWidth() > 600 ? "144px" : "288px" }}
+      >
+        {getHeaderComponent()}
       </MallCustomHeader>
       <MallCustomImgDiv>
-        <MallCustomInsideImgDiv>
+        <MallCustomInsideImgDiv
+          style={{ width: getWidth() > 600 ? "600px" : "100%" }}
+        >
           <MallCustomInsideBackImg
             src={mallCustomer[chooseIndex].imgURL}
             style={{
@@ -251,7 +330,7 @@ const MallCustom = (): JSX.Element => {
         {getAttributeEle()}
         <div>
           <MallCustomerInputTitle>
-            ContactEmail/Tel for receiving a quote
+            ContactEmail for receiving a quote
           </MallCustomerInputTitle>
           <MallCustomerEmailInput
             value={email}
@@ -328,7 +407,7 @@ const MallCustom = (): JSX.Element => {
           radio={mallCustomer[chooseIndex].radio}
         />
       )}
-    </>
+    </div>
   );
 };
 

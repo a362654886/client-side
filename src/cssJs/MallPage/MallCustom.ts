@@ -2,12 +2,13 @@ import { Checkbox, Input } from "antd";
 import styled from "styled-components";
 
 export const MallCustomTitle = styled.h2`
-  height: 52px;
+  height: auto;
   padding: 8px auto;
   font-size: 24px;
   line-height: 32px;
   font-weight: bold;
   margin-bottom: 0px;
+  width: 100%;
 `;
 
 export const MallCustomHeaderDiv = styled.div`
@@ -18,7 +19,6 @@ export const MallCustomHeaderDiv = styled.div`
 `;
 
 export const MallCustomHeader = styled.div`
-  height: 144px;
   display: flex;
   img {
     height: 80px;
@@ -33,7 +33,6 @@ export const MallCustomImgDiv = styled.div`
 `;
 
 export const MallCustomInsideImgDiv = styled.div`
-  width: 600px;
   margin: 0px;
   position: relative;
 `;
@@ -60,7 +59,7 @@ export const MallCustomPillowInsideInnerImg = styled.img`
 `;
 
 export const MallCustomerInputTitle = styled.h3`
-  height: 32px;
+  height: auto;
   padding: 8px 0px;
   font-size: 16px;
   font-weight: bold;

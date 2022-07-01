@@ -7,7 +7,7 @@ export const MallDiv = styled.div`
 `;
 
 export const MallShowDiv = styled.div`
-  width: 1140px;
+  width: 100%;
   margin: 0 auto;
 `;
 
@@ -33,7 +33,7 @@ export const MallTitle = styled.h1`
 export const MallDisplayText = styled.p`
   font-size: 16px;
   color: #302d46;
-  height: 48px;
+  height: auto;
   line-height: 32px;
   padding: 8px 0px;
   margin-bottom: 0px;

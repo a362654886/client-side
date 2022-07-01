@@ -234,7 +234,7 @@ export const UserNameText = styled.p`
 `;
 
 export const DeleteDiv = styled.div`
-  width: 79px;
+  width: 85px;
   height: 64px;
   margin-bottom: 0px;
   margin-top: 0px;

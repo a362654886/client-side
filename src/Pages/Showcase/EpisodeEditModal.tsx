@@ -11,8 +11,10 @@ import editIcon from "../../files/editIcon.svg";
 import deleteIcon from "../../files/deleteIcon.svg";
 import { ShowCaseType } from "../../types/showCaseType";
 import { IStoreState } from "../../types/IStoreState";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { episodeDelete } from "../../api/episodeAPI";
+import { LoadingType } from "../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 
 export interface IProps {
   episodeNum: number;
@@ -26,6 +28,7 @@ const EpisodeEditModal = ({
   deleteEpidose,
 }: IProps): JSX.Element => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const manga: ShowCaseType | null = useSelector(
     (state: IStoreState) => state.mangaState
@@ -47,9 +50,17 @@ const EpisodeEditModal = ({
 
   const deleteEpisode = async () => {
     const epidoseId = `${manga?._id}Episode${episode}`;
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
     await episodeDelete(epidoseId);
     setEpisodeTotal(episodeTotal - 1);
     deleteEpidose();
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   return (

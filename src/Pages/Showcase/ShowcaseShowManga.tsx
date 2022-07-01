@@ -31,7 +31,6 @@ import { IfLoginCheck } from "../../helperFns/loginCheck";
 import { User } from "../../types/User";
 import { IStoreState } from "../../types/IStoreState";
 import { getWidth } from "../../helperFns/widthFn";
-import { getShowCasePage } from "../../helperFns/getPage";
 import { openNewWindow } from "../../helperFns/windowsFn";
 
 const ShowcaseShowManga = (): JSX.Element => {

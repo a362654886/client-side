@@ -2,8 +2,8 @@ import { Drawer } from "antd";
 import styled from "styled-components";
 
 export const EpisodeDiv = styled.div`
-  width: 1140px;
-  margin: 24px auto;
+  width: 100%;
+  margin: 24px 4px;
 `;
 
 export const EpisodeTitle = styled.h1`
@@ -41,7 +41,7 @@ export const EpisodeImage = styled.div`
 export const EpisodeImages = styled.div`
   margin-top: 32px;
   margin-bottom: 32px;
-  width: 840px;
+  width: 100%;
 `;
 
 //episode show
@@ -80,7 +80,7 @@ export const EpisodeShowFooter = styled.div`
   width: 100%;
   height: 48px;
   display: flex;
-  background: #959595 ;
+  background: #959595;
   position: fixed;
   opacity: 0.7;
 `;
@@ -132,7 +132,7 @@ export const EpisodeShowFooterMiddle = styled.p`
 
 export const EpisodeShowFooterRight = styled.p`
   line-height: 48px;
-  color:black;
+  color: black;
   text-align: left;
   margin-bottom: 0px;
   width: 25%;

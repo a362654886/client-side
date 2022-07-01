@@ -99,11 +99,28 @@ import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
 import { cloneDeep } from "lodash";
 import forumMore from "../../files/forumMore.svg";
 import { ReportContextType } from "../../types/blockType";
-import { LoadingBox } from "../../cssJs/headerCss";
 
 interface Para {
   id: string;
 }
+
+const buttonsColor = [
+  {
+    text: "Collections",
+    color: "#4BA3C3",
+    backColor: "white",
+  },
+  {
+    text: "Illustrations",
+    color: "#4BA3C3",
+    backColor: "white",
+  },
+  {
+    text: "Manga",
+    color: "#4BA3C3",
+    backColor: "white",
+  },
+];
 
 const ShowcaseMangaOne = (): JSX.Element => {
   const para: Para = useParams();
@@ -1326,6 +1343,45 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
   const toPage = (url: string) => history.push(url);
 
+  const getButtons = () => {
+    return buttonsColor.map((button, index) => {
+      const style =
+        getWidth() > 800
+          ? {
+              marginTop: "0px",
+            }
+          : {
+              marginTop: "8px",
+              position: button.text !== "Collections" ? "absolute" : undefined,
+              left: button.text == "Illustrations" ? "138px" : "0px",
+              top: button.text == "Manga" ? "58px" : "15px",
+            };
+
+      return (
+        <div key={index} style={style as React.CSSProperties}>
+          <AnimeButton
+            para=""
+            text={button.text}
+            width="120px"
+            height="32px"
+            textColor={index == 1 ? "black" : "#4BA3C3"}
+            backGroundColor={index == 1 ? "#AAFFC9" : "white"}
+            borderColor={index == 1 ? "#AAFFC9" : "#4BA3C3"}
+            buttonClick={() =>
+              index == 1
+                ? console.log("")
+                : toPage(
+                    index == 0
+                      ? `/showcase/showCollection?page=1`
+                      : "/showcase/showManga?page=1"
+                  )
+            }
+          />
+        </div>
+      );
+    });
+  };
+
   return (
     <>
       <ShowCaseTitleDiv>
@@ -1340,43 +1396,14 @@ const ShowcaseMangaOne = (): JSX.Element => {
             paddingLeft: getWidth() > 600 ? "" : "8px",
           }}
         >
-          <AnimeButtonsDiv>
-            <AnimeButton
-              para=""
-              text="Collections"
-              width="120px"
-              height="32px"
-              textColor="#4BA3C3"
-              backGroundColor="white"
-              borderColor="#4BA3C3"
-              buttonClick={() => {
-                toPage("/showcase/showCollection?page=1");
-              }}
-            />
-            <AnimeButton
-              para=""
-              text="Illustrations"
-              width="120px"
-              height="32px"
-              textColor="#4BA3C3"
-              backGroundColor="white"
-              borderColor="#4BA3C3"
-              buttonClick={() => {
-                toPage("/showcase/showIllustrations?page=1");
-              }}
-            />
-            <AnimeButton
-              para=""
-              text="Manga"
-              width="120px"
-              height="32px"
-              textColor="black"
-              backGroundColor="#AAFFC9"
-              borderColor="#AAFFC9"
-              buttonClick={() => {
-                console.log("Manga");
-              }}
-            />
+          <AnimeButtonsDiv
+            style={{
+              height: getWidth() > 800 ? "64px" : "104px",
+              position: "relative",
+              marginBottom: "8px",
+            }}
+          >
+            {getButtons()}
           </AnimeButtonsDiv>
           {getOneShowcase()}
           {getFollowButton()}
@@ -1511,6 +1538,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
             episodeNum={episodeNum}
             deleteEpidose={() => {
               setEpisodeNum(episodeNum - 1);
+              setEditEpisodesManga(false)
             }}
           />
         </Modal>
