@@ -76,16 +76,12 @@ const MallTShirt = ({ changeAttributes }: IProps): JSX.Element => {
 
   const sendValues = () => {
     let value = ``;
-    value = value + `
-    Color: ${colorBase}
-    `;
+    value += `<p>Color: ${colorBase}</p>`;
+    value += `<p>Quantity by Sizes</p>`;
     quantities.forEach((item) => {
-    value = `${value}
-    ${item.name}: ${item.value}
-    `;
+      value += `<p>${item.name}: ${item.value}</p>`;
     });
-    value = `${value} 
-    Style: ${style}`;
+    value += `<p>Style: ${style}</p>`;
 
     changeAttributes(value);
   };
@@ -107,7 +103,7 @@ const MallTShirt = ({ changeAttributes }: IProps): JSX.Element => {
         </Radio.Group>
       </div>
       <div>
-        <MallCustomerInputTitle>Quantity Sizes</MallCustomerInputTitle>
+        <MallCustomerInputTitle>Quantity by Sizes</MallCustomerInputTitle>
         {quantities.map((item, index) => {
           return (
             <MallCustomerCheckBoxDiv key={index}>

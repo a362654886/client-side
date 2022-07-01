@@ -14,8 +14,7 @@ const MallScroll = ({ changeAttributes }: IProps): JSX.Element => {
 
   const sendValues = (value: string) => {
     setQuantity(value);
-
-    changeAttributes(`value: ${value}`);
+    changeAttributes(`<p>Quantity: ${value}</p>`);
   };
 
   return (

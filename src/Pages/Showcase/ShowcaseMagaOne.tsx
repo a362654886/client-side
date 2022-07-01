@@ -771,7 +771,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 userImg={reply.userAvatar}
                 marginTop="8px"
                 type={ReportContextType.SHOWCASE_REPLY}
-                contextId={showCase ? showCase._id : ""}
+                contextId={reply ? reply._id : ""}
               />
               <ShowTime>{`${date.getDate()}-${
                 date.getMonth() + 1

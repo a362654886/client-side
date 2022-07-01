@@ -1,22 +1,17 @@
+import { windowLink } from "../globalValues";
+
 export const openNewWindow = (url: string): void => {
-  console.log(window.location);
   window.open(url);
 };
 
 export const openNewWindowPath = (url: string): void => {
-  window.open(`https://www.animepark.com/oneNew/${url}`, `_blank`);
-  // window.location.href= `http://localhost:3001/oneNew/${url}`
+  window.open(`${windowLink}/oneNew/${url}`, `_blank`);
 };
 
 export const openAnimeNewWindowPath = (id: string): void => {
-  window.open(`https://www.animepark.com/?${id}`, `_blank`);
-  // window.location.href= `http://localhost:3001/oneNew/${url}`
+  window.open(`${windowLink}/?${id}`, `_blank`);
 };
 
 export const openReportContextPath = (): void => {
-  window.open(
-    `https://www.animepark.com/adminManagement/BlockContext`,
-    `_blank`
-  );
-  // window.location.href= `http://localhost:3001/oneNew/${url}`
+  window.open(`${windowLink}/adminManagement/BlockContext`, `_blank`);
 };

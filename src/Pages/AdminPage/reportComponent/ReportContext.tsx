@@ -54,12 +54,20 @@ const ReportContext = (): JSX.Element => {
 
   useEffect(() => {
     (async function anyNameFunction() {
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
       await getContext(
         reportBlock ? reportBlock.type : "",
         reportBlock ? reportBlock.contextId : ""
       );
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
     })();
-    setBlockState(false)
+    setBlockState(false);
   }, [reportBlock]);
 
   useEffect(() => {
@@ -218,7 +226,7 @@ const ReportContext = (): JSX.Element => {
           {reportBlock ? _getDate(new Date(reportBlock.uploadTime)) : ""}
         </ForumName>
         <Button style={{ marginTop: "16px" }} onClick={() => blockFn()}>
-          {blockState?"UnBlock":"Block"}
+          {blockState ? "UnBlock" : "Block"}
         </Button>
       </div>
       <AdminReportContextDiv style={{ marginLeft: "8px" }}>

@@ -18,8 +18,7 @@ import {
   openNotification,
 } from "../../helperFns/popUpAlert";
 import { ADMIN_LOGIN_USER_ADD } from "../../redux/adminLoginUser";
-import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
-import { LOGIN_USER_ADD } from "../../redux/loginUser";
+import { AUTH_LOADING } from "../../redux/auth";
 import { LoginType } from "../../types/EnumTypes";
 
 const AdminPage = (): JSX.Element => {

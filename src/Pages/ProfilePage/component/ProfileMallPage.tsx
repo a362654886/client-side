@@ -22,11 +22,8 @@ import { getWidth } from "../../../helperFns/widthFn";
 import AnimeButton from "../../../components/Button";
 import { mallCustomerAPI } from "../../../api/mallCustomeAPI";
 import { MallCustomType } from "../../../types/mallCustomType";
-import {
-  MallCustomInsideBackImg,
-  MallCustomInsideImgDiv,
-} from "../../../cssJs/MallPage/MallCustom";
 import loadingImg from "../../../files/loading.gif";
+import { _getDate } from "../../../helperFns/timeFn";
 
 const buttonsColor = [
   {
@@ -123,11 +120,6 @@ const ProfileMallPage = (): JSX.Element => {
     }
   };
 
-  const getTime = (value: number) => {
-    const date = new Date(value);
-    return `${date.getDate()} - ${date.getMonth() + 1} - ${date.getFullYear()}`;
-  };
-
   const getButtons = () => {
     return buttonsColor.map(
       (
@@ -187,7 +179,7 @@ const ProfileMallPage = (): JSX.Element => {
                 if (item.type == 3) {
                   return (
                     <div style={{ position: "relative" }}>
-                      <p>{getTime(item.uploadTime)}</p>
+                      <p>{_getDate(new Date(item.uploadTime))}</p>
                       <ProfileDesignHistoryImg
                         src={
                           mallCustomer[item.type]
@@ -206,14 +198,16 @@ const ProfileMallPage = (): JSX.Element => {
                         src={item.imageString}
                       />
                       <ProfileDesignAttribute>
-                        {item.value}
+                        <div
+                          dangerouslySetInnerHTML={{ __html: item.value }}
+                        ></div>
                       </ProfileDesignAttribute>
                     </div>
                   );
                 } else if (item.type == 1) {
                   return (
                     <div style={{ position: "relative" }}>
-                      <p>{getTime(item.uploadTime)}</p>
+                      <p>{_getDate(new Date(item.uploadTime))}</p>
                       <ProfileDesignHistoryImg
                         src={
                           mallCustomer[item.type]
@@ -232,14 +226,16 @@ const ProfileMallPage = (): JSX.Element => {
                         src={item.imageString}
                       />
                       <ProfileDesignAttribute>
-                        {item.value}
+                        <div
+                          dangerouslySetInnerHTML={{ __html: item.value }}
+                        ></div>
                       </ProfileDesignAttribute>
                     </div>
                   );
                 } else {
                   return (
                     <>
-                      <p>{getTime(item.uploadTime)}</p>
+                      <p>{_getDate(new Date(item.uploadTime))}</p>
                       <ProfileDesignHistoryImg
                         src={
                           mallCustomer[item.type]
@@ -253,7 +249,9 @@ const ProfileMallPage = (): JSX.Element => {
                         }}
                       />
                       <ProfileDesignAttribute>
-                        {item.value}
+                        <div
+                          dangerouslySetInnerHTML={{ __html: item.value }}
+                        ></div>
                       </ProfileDesignAttribute>
                     </>
                   );

@@ -48,10 +48,9 @@ const MallPillow = ({ changeAttributes }: IProps): JSX.Element => {
 
   const sendValues = () => {
     let value = ``;
+    value += `<p>Quantity by Sizes</p>`;
     quantities.forEach((item) => {
-      value = `${value}
-      ${item.name}: ${item.value}
-      `;
+      value += `<p>${item.name} - ${item.value}</p>`
     });
 
     changeAttributes(value);
@@ -60,7 +59,7 @@ const MallPillow = ({ changeAttributes }: IProps): JSX.Element => {
   return (
     <>
       <div>
-        <MallCustomerInputTitle>Quantity Sizes</MallCustomerInputTitle>
+        <MallCustomerInputTitle>Quantity by Sizes</MallCustomerInputTitle>
         {quantities.map((item, index) => {
           return (
             <MallCustomerCheckBoxDiv key={index}>

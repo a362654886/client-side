@@ -28,7 +28,7 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={ProfilePage} path="/profilePage/:id" />
         <Route component={AnimeShowPage} path="/animelibrary" />
         <Route component={AnimeOne} path="/anime" />
-        <Route component={Discovery} path="/discovery" />
+        <Route component={Discovery} path="/explore" />
         <Route component={Showcase} path="/showcase" />
         <Route component={Marketplace} path="/marketplace" />
         <Route component={Mall} path="/mall" />

@@ -28,6 +28,7 @@ export enum ReportContextType {
   SHOWCASE = "showCase",
   SHOWCASE_REPLY = "showCaseReply",
   SHOWCASE_SECOND_REPLY = "showCaseSecondReply",
+  FORUM = "forum",
   FORUM_ITEM = "forumItem",
   FORUM_SECOND_ITEM = "forumSecondItem",
   PRODUCT = "product",

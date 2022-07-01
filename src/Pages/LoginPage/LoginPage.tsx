@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input, notification } from "antd";
 import * as React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -20,6 +20,7 @@ import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { PROFILE_USER_UPDATE } from "../../redux/profileUser";
 import avatarUpload from "../../files/avatarUpload.png";
+import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
 
 const LoginPage = (): JSX.Element => {
   const history = useHistory();
@@ -27,7 +28,6 @@ const LoginPage = (): JSX.Element => {
 
   const [email, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [ifLoadingAlert, setLoadingAlert] = useState<boolean>(false);
 
   const toPage = (url: string) => history.push(url);
 
@@ -41,13 +41,16 @@ const LoginPage = (): JSX.Element => {
       type: AUTH_LOADING,
     });
     const user = await userAuth(email, password, "general");
-    setLoadingAlert(false);
     if (user == null) {
       dispatch({
         payload: LoginType.FAIL,
         type: AUTH_FAIL,
       });
-      setLoadingAlert(true);
+      openNotification(
+        "Wrong Email or password",
+        NotificationColor.Error,
+        NotificationTitle.Error
+      );
     } else {
       localStorage.setItem("userEmail", email);
       localStorage.setItem("password", password);
@@ -86,11 +89,6 @@ const LoginPage = (): JSX.Element => {
 
   return (
     <LoginBox>
-      <AlertBox
-        text="wrong email or password"
-        color={ColorType.ERROR}
-        show={ifLoadingAlert}
-      />
       <LogInHeaderImg>
         <img src={avatarUpload} />
       </LogInHeaderImg>

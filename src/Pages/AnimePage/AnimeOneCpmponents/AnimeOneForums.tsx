@@ -74,6 +74,7 @@ import { getWidth } from "../../../helperFns/widthFn";
 import { ReportContextType } from "../../../types/blockType";
 import { cloneDeep } from "lodash";
 import { forumTextCompress } from "../../../helperFns/imageCompress";
+import { DiscoveryHead } from "../../../cssJs/AnimePage/AnimeOneCss";
 
 interface IProps {
   anime: Anime | null;
@@ -850,6 +851,7 @@ const AnimeOneForum = ({
       const date = new Date(forum.uploadTime);
       return (
         <ForumIframe key={index}>
+          {discovery ? <DiscoveryHead>{forum.anime}</DiscoveryHead> : <></>}
           <div style={{ display: "flex", height: "72px" }}>
             <ProfileWrapperDiv
               userId={forum.userId}
@@ -873,7 +875,7 @@ const AnimeOneForum = ({
               userName={forum.userName}
               userImg={forum.userAvatar}
               marginTop="24px"
-              type={ReportContextType.FORUM_ITEM}
+              type={ReportContextType.FORUM}
               contextId={forum._id}
             />
             <ForumTime>{_getDate(date)}</ForumTime>

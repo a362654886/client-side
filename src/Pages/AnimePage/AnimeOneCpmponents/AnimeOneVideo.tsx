@@ -233,7 +233,7 @@ const AnimeOneVideo = ({
 
   const getExistVideos = () =>
     videos.map((video, index) => {
-      const date = new Date(video.uploadTime);
+      //const date = new Date(video.uploadTime);
       const videoLink =
         getWidth() > 600
           ? video.link.replace(

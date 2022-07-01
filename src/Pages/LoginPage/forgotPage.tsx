@@ -61,7 +61,7 @@ const ForgetPage = (): JSX.Element => {
         NotificationTitle.Error
       );
     } else {
-      await emailPost(window.btoa(email), "reset password", "", "forget");
+      await emailPost(window.btoa(email), "reset password", "Anime Park password assistance", "forget");
     }
     dispatch({
       payload: LoadingType.CLOSE,

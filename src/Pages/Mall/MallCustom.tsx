@@ -35,6 +35,9 @@ import mallPhoneBack from "../../files/mallPhoneBack.svg";
 import mallPillowBack from "../../files/mallPillowBack.svg";
 import mallTshirtBack from "../../files/mallTshirtBack.svg";
 import mallWallBack from "../../files/mallWallBack.svg";
+import { imageAdd } from "../../api/imageAPI";
+import { LoadingType } from "../../types/EnumTypes";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 
 const customerTypes: MallCustomType[] = [
   {
@@ -98,13 +101,23 @@ const MallCustom = (): JSX.Element => {
   };
 
   const sendEmail = async () => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const imgUrl = await imageAdd({
+      _id: "",
+      imageValue: resizeUploadImg,
+      forumId: "forumImage",
+    });
     //send to customer service
     await emailPost(
       window.btoa(email),
       `
-  email:${email},
-  attributes:${attributes}
-`,
+        <p>imageLink:https://animeimagebucket.s3.amazonaws.com/${imgUrl}</p>
+        <div>${attributes}</div>
+        <div>Contact Email: ${email}</div>
+      `,
       "mall",
       "customerService"
     );
@@ -115,6 +128,10 @@ const MallCustom = (): JSX.Element => {
       "Thanks for your inquiry",
       "autoReply"
     );
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
   };
 
   const sendDesignHistory = async () => {
@@ -245,7 +262,7 @@ const MallCustom = (): JSX.Element => {
           <MiddleDiv>
             <AnimeButton
               para=""
-              text={"Quota"}
+              text={"Get a Quote"}
               width="120px"
               height="32px"
               textColor="white"

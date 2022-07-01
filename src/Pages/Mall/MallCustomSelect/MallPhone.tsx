@@ -150,19 +150,18 @@ const MallPhone = ({ changeAttributes }: IProps): JSX.Element => {
 
   const sendValues = () => {
     let value = ``;
+    value += `<p>Quantity by Types</p>`;
     iphoneQuantities.forEach((item) => {
-      value = `${value}
-    ${item.name}: ${item.value}
+      value += `<p>${item.name}-${item.value}</p>
     `;
     });
     samsungQuantities.forEach((item) => {
-      value = `${value}
-    ${item.name}: ${item.value}
+      value += `<p>${item.name}-${item.value}</p>
     `;
     });
-    value = `${value}
-      ${otherType}: ${otherTypeQuantity}
-    `;
+    value += `<p>${
+      otherType == "" ? "other type" : otherType
+    }-${otherTypeQuantity}</p>`;
 
     changeAttributes(value);
   };
@@ -170,7 +169,7 @@ const MallPhone = ({ changeAttributes }: IProps): JSX.Element => {
   return (
     <>
       <div>
-        <MallCustomerInputTitle>Quantity Types</MallCustomerInputTitle>
+        <MallCustomerInputTitle>Quantity by Types</MallCustomerInputTitle>
         <MallCustomerInputTitle>Iphone</MallCustomerInputTitle>
         {iphoneQuantities.map((item, index) => {
           return (

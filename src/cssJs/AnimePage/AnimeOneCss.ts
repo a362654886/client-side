@@ -147,4 +147,5 @@ export const DiscoveryHead = styled.p`
   line-height: 32px;
   margin-bottom: 0px;
   padding-top: 16px;
+  text-align: center;
 `;

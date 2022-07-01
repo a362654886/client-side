@@ -155,6 +155,9 @@ export const ProfileSlider = styled.div`
     width: 0px;
     border: 0px solid white;
   }
+  .ant-slider-rail {
+    width: 5px;
+  }
 `;
 
 export const NameText = styled.p`

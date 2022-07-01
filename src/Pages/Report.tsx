@@ -18,6 +18,7 @@ import {
   ReportUserImg,
 } from "../cssJs/reportPage";
 import { flagGet } from "../helperFns/flag";
+import { formatName } from "../helperFns/nameFn";
 import {
   NotificationColor,
   NotificationTitle,
@@ -137,7 +138,7 @@ const Report = (): JSX.Element => {
                 }`}
               />
               <UserNameText>
-                {user ? `${user.firstName} ${user.lastName}` : ""}
+                {user ? `${ formatName(user.showName?user.showName:"")}` : ""}
                 <Flag
                   style={{ marginLeft: "5px" }}
                   country={flagGet(user ? user.country : "")}

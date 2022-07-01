@@ -378,7 +378,7 @@ const MainPage = (): JSX.Element => {
                 <p
                   style={{ fontSize: size.width > 830 ? "16px" : "12px" }}
                   onClick={() => {
-                    toProfile("/discovery");
+                    toProfile("/explore");
                   }}
                 >
                   Explore
@@ -448,7 +448,7 @@ const MainPage = (): JSX.Element => {
                   <div>
                     <p
                       onClick={() => {
-                        toProfile("/discovery");
+                        toProfile("/explore");
                       }}
                     >
                       Discovery
