@@ -1,4 +1,4 @@
-import { Input, Popover } from "antd";
+import { Input, Popover, Spin } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { ImageBody } from "../../components/ImageUpload";
@@ -9,7 +9,6 @@ import {
   MarketDescription,
   MarketEditAndDeleteDiv,
   MarketFilterCloseImg,
-  MarketFilterDiv,
   MarketFollow,
   MarketImgDiv,
   MarketItemImg,
@@ -36,7 +35,7 @@ import {
 } from "../../cssJs/MarketPage/MarketPlaceCss";
 import AnimeButton from "../../components/Button";
 import { MarketPriceType, MarketType } from "../../types/MarketType";
-import { User } from "../../types/User";
+import { Avatar, User } from "../../types/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IStoreState } from "../../types/IStoreState";
 import {
@@ -80,6 +79,40 @@ import { ReportContextType } from "../../types/blockType";
 import { TagType } from "../../types/tagType";
 import iconClose from "../../files/Icon-Close.svg";
 import { marketTagAllGet } from "../../api/tagAPI";
+import {
+  showCaseReplyAdd,
+  showCaseReplyDelete,
+  showCaseReplyGet,
+  showCaseReplyUpdate,
+  showCaseSecondReplyAdd,
+  showCaseSecondReplyDelete,
+  showCaseSecondReplyGet,
+  showCaseSecondReplyUpdate,
+} from "../../api/showcaseAPI";
+import { ShowCaseReply, ShowSecondCaseReply } from "../../types/showCaseType";
+import { cloneDeep } from "lodash";
+import {
+  EditAndDeleteDiv,
+  EpisodesComments,
+  ReplyAddDiv,
+  ReplyBox,
+  ReplyDiv,
+  ReplySecondBox,
+  ShowAvatarDiv,
+  ShowcaseEditDiv,
+  ShowcaseMoreButtonDiv,
+  ShowcaseReply,
+  ShowImg,
+  ShowName,
+  ShowTime,
+} from "../../cssJs/ShowCasePage/showCaseCss";
+import switchIcon from "../../files/arrows.svg";
+import {
+  AnimeEditAndDeleteDiv,
+  TextInput,
+} from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
+import { IfLoginCheck } from "../../helperFns/loginCheck";
+import forumMore from "../../files/forumMore.svg";
 
 interface Para {
   id: string;
@@ -113,10 +146,21 @@ const MarketplaceShowOne = (): JSX.Element => {
   const [marketTags, setMarketTags] = useState<TagType[]>([]);
   const [hotTagVisible, setHotTagVisible] = useState<boolean>(false);
 
+  const [itemLoading, setItemLoading] = useState<boolean>(false);
+  const [secondItemLoading, setSecondItemLoading] = useState<boolean>(false);
+  const [replies, setReplies] = useState<ShowCaseReply[]>([]);
+  const [replyPage, setReplyPage] = useState<number>(1);
+  const [commentShow, setCommentShow] = useState<boolean>(false);
+  const [newReplyHtml, setNewReplyHtml] = useState<string>("");
+  const [newSecondReplyHtml, setNewSecondReplyHtml] = useState<string[]>([]);
+  const [showcasePage, setShowcasePage] = useState<number>(1);
+  const [count, setCount] = useState<number>(0);
+
   useEffect(() => {
     (async function anyNameFunction() {
       await getAllTags();
       const market = await marketGet(para.id);
+      await getMoreItems(para.id, replyPage);
       if (market && market.imageArr) {
         setImgArr(market.imageArr);
         setTitle(market.title);
@@ -154,6 +198,21 @@ const MarketplaceShowOne = (): JSX.Element => {
       }
     })();
   }, [marketState, page]);
+
+  // comments
+  const getMoreItems = async (marketId: string, page: number | undefined) => {
+    if (page) {
+      setItemLoading(true);
+      const showcaseResult = await showCaseReplyGet(marketId, page, 6);
+
+      //set
+      const newReplies = cloneDeep(replies);
+      if (showcaseResult) {
+        setReplies(newReplies.concat(showcaseResult.result));
+        setCount(showcaseResult.count);
+      }
+    }
+  };
 
   const getAllTags = async () => {
     const marketResult = await marketTagAllGet();
@@ -321,6 +380,73 @@ const MarketplaceShowOne = (): JSX.Element => {
     });
   };
 
+  const submitNewShowcaseReply = async () => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    if (loginUser) {
+      const Id = `${para.id}${new Date().valueOf()}`;
+      const showcaseReply: ShowCaseReply = {
+        _id: Id,
+        replyId: Id,
+        showCaseId: para.id,
+        text: newReplyHtml,
+        uploadTime: new Date(),
+        userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
+        userId: loginUser._id,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
+        userCountry: loginUser.country,
+        fullItems: true,
+      };
+      const r = await showCaseReplyAdd(showcaseReply);
+      if (r && r < 300) {
+        const newReply = cloneDeep(replies);
+        newReply.push(showcaseReply);
+        setReplies(newReply);
+        setNewReplyHtml("");
+      }
+    } else {
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
+  const getAddReplyBox = () => (
+    <div style={{ marginTop: "16px" }}>
+      <TextInput>
+        <TextArea
+          value={newReplyHtml}
+          onChange={(e) =>
+            IfLoginCheck(loginUser) ? setNewReplyHtml(e.target.value) : ""
+          }
+        />
+        <br />
+        <ReplyAddDiv>
+          <AnimeButton
+            para=""
+            text={"Post"}
+            width="100%"
+            height="32px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="#FFC300"
+            buttonClick={() => submitNewShowcaseReply()}
+          />
+        </ReplyAddDiv>
+      </TextInput>
+    </div>
+  );
+
   const getMoreElement = () => {
     if (page * 3 < marketPricesCount) {
       return (
@@ -361,6 +487,656 @@ const MarketplaceShowOne = (): JSX.Element => {
     dispatch({
       payload: marketArr,
       type: MARKET_FOLLOW_ARR,
+    });
+  };
+
+  const editShowcaseReplyText = (secondIndex: number, text: string) => {
+    const newReplies = cloneDeep(replies);
+    newReplies[secondIndex].text = text;
+    setReplies(newReplies);
+  };
+
+  const updateShowcaseReply = async (secondIndex: number) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const updateResult = await showCaseReplyUpdate({
+      _id: replies[secondIndex]._id,
+      text: replies[secondIndex].text,
+    });
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+    if (updateResult == 200) {
+      editShowcaseReply(secondIndex);
+    } else {
+      console.log("update wrong");
+    }
+  };
+
+  const editShowcaseReply = (secondIndex: number) => {
+    const newReplies = cloneDeep(replies);
+    newReplies[secondIndex].edit = !newReplies[secondIndex].edit;
+    setReplies(newReplies);
+  };
+
+  //delete
+  const deleteShowcaseReply = async (id: string, index: number) => {
+    const newReplies = cloneDeep(replies);
+    const deleteIndex = newReplies.map((x) => x.replyId).indexOf(id);
+    newReplies.splice(deleteIndex, 1);
+    setReplies(newReplies);
+    await showCaseReplyDelete(id);
+  };
+
+  const openSecondReply = (secondIndex: number) => {
+    const newReplies = cloneDeep(replies);
+    newReplies[secondIndex].showReplay = !newReplies[secondIndex].showReplay;
+    setReplies(newReplies);
+    const newArr: string[] = [];
+    const secondReplies = newReplies
+      ? newReplies[secondIndex].secondReplies
+      : undefined;
+    if (secondReplies) {
+      for (let i = 0; i < secondReplies.length; i++) {
+        newArr.push(secondReplies[i].text);
+      }
+    } else {
+      newArr.push("");
+    }
+    //setNewSecondReplyHtml(newArr);
+    setUpdate(update + 1);
+  };
+
+  const sendNewSecondReply = (e: string, secondIndex: number) => {
+    const newSecondReplyHtmls = cloneDeep(newSecondReplyHtml);
+    newSecondReplyHtmls[secondIndex] = e;
+    setNewSecondReplyHtml(newSecondReplyHtmls);
+  };
+
+  const addSecondShowcaseToState = (
+    showcaseReply: ShowSecondCaseReply,
+    secondIndex: number
+  ) => {
+    const newReplies = cloneDeep(replies);
+    if (newReplies[secondIndex].secondReplies) {
+      newReplies[secondIndex].secondReplies?.unshift(showcaseReply);
+    } else {
+      newReplies[secondIndex].secondReplies = [];
+      newReplies[secondIndex].secondReplies?.unshift(showcaseReply);
+    }
+    setReplies(newReplies);
+  };
+
+  const submitNewSecondReplyItem = async (
+    showcase: ShowCaseReply,
+    secondIndex: number
+  ) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    if (loginUser) {
+      const secondShowcase: ShowSecondCaseReply = {
+        _id: `${showcase._id}${
+          replies
+            ? replies.length + +new Date().valueOf()
+            : +new Date().valueOf()
+        }`,
+        replyId: showcase.replyId,
+        showCaseId: showcase.showCaseId,
+        text: newSecondReplyHtml[secondIndex],
+        uploadTime: new Date(),
+        userId: loginUser._id,
+        userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
+        userName: `${loginUser.firstName}.${loginUser.lastName
+          .substring(0, 1)
+          .toUpperCase()}`,
+      };
+      const r = await showCaseSecondReplyAdd(secondShowcase);
+      if (r && r < 300) {
+        addSecondShowcaseToState(secondShowcase, secondIndex);
+        const newSecondItems = cloneDeep(newSecondReplyHtml);
+        newSecondItems[secondIndex] = "";
+        setNewSecondReplyHtml(newSecondItems);
+      }
+    } else {
+      openNotification(
+        "please login and then reply",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    }
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
+  const getAddSecondReplyBox = (
+    showcaseReply: ShowCaseReply,
+    secondIndex: number
+  ) => (
+    <div style={{ marginTop: "16px" }}>
+      <TextInput>
+        <TextArea
+          value={newSecondReplyHtml[secondIndex]}
+          onChange={(e) => {
+            IfLoginCheck(loginUser)
+              ? sendNewSecondReply(e.target.value, secondIndex)
+              : "";
+          }}
+        />
+        <br />
+        <ReplyAddDiv>
+          <AnimeButton
+            para=""
+            text={"Post"}
+            width="100%"
+            height="32px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="#FFC300"
+            buttonClick={() =>
+              submitNewSecondReplyItem(showcaseReply, secondIndex)
+            }
+          />
+        </ReplyAddDiv>
+      </TextInput>
+    </div>
+  );
+
+  const editShowcaseSecondReplyText = (
+    secondIndex: number,
+    thirdIndex: number,
+    text: string
+  ) => {
+    const newReplies = cloneDeep(replies);
+    (newReplies[secondIndex].secondReplies as ShowSecondCaseReply[])[
+      thirdIndex
+    ].text = text;
+    setReplies(newReplies);
+  };
+
+  const updateShowcaseSecondItem = async (
+    secondIndex: number,
+    thirdIndex: number
+  ) => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const updateResult = await showCaseSecondReplyUpdate({
+      _id: (replies[secondIndex].secondReplies as ShowSecondCaseReply[])[
+        thirdIndex
+      ]._id,
+      text: (replies[secondIndex].secondReplies as ShowSecondCaseReply[])[
+        thirdIndex
+      ].text,
+    });
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+    if (updateResult == 200) {
+      editShowcaseSecondReply(secondIndex, thirdIndex);
+    } else {
+      console.log("update wrong");
+    }
+  };
+
+  const editShowcaseSecondReply = (secondIndex: number, thirdIndex: number) => {
+    const newReplies = cloneDeep(replies);
+    (newReplies[secondIndex].secondReplies as ShowSecondCaseReply[])[
+      thirdIndex
+    ].edit = !(newReplies[secondIndex].secondReplies as ShowSecondCaseReply[])[
+      thirdIndex
+    ].edit;
+    setReplies(newReplies);
+  };
+
+  const deleteShowcaseSecondReply = async (id: string, index: number) => {
+    const newReplies = cloneDeep(replies);
+    const deleteIndex = (
+      newReplies[index].secondReplies as ShowSecondCaseReply[]
+    )
+      .map((x) => x.replyId)
+      .indexOf(id);
+    (newReplies[index].secondReplies as ShowSecondCaseReply[]).splice(
+      deleteIndex,
+      1
+    );
+    setReplies(newReplies);
+    await showCaseSecondReplyDelete(id);
+  };
+
+  const replySecondReply = (
+    name: string,
+    secondIndex: number,
+    thirdIndex: number
+  ) => {
+    const _newSecondReplyHtml = cloneDeep(newSecondReplyHtml);
+    _newSecondReplyHtml[secondIndex] = `@${name} `;
+
+    const newReplies = cloneDeep(replies);
+    (newReplies[secondIndex].secondReplies as ShowSecondCaseReply[])[
+      thirdIndex
+    ].reply = !(newReplies[secondIndex].secondReplies as ShowSecondCaseReply[])[
+      thirdIndex
+    ].reply;
+
+    setReplies(newReplies);
+    setNewSecondReplyHtml(_newSecondReplyHtml);
+  };
+
+  const getMoreSecondItem = async (
+    marketId: string,
+    replyId: string,
+    page: number | undefined
+  ) => {
+    if (page && marketId) {
+      setSecondItemLoading(true);
+      const showcaseResult = await showCaseSecondReplyGet(replyId, page + 1, 3);
+
+      //set
+      let newReplies = cloneDeep(replies);
+      if (showcaseResult) {
+        newReplies = newReplies.concat(showcaseResult.result);
+        const secondIndex = newReplies.findIndex((item) => item._id == replyId);
+        newReplies[secondIndex].secondReplies = newReplies[
+          secondIndex
+        ].secondReplies?.concat(showcaseResult.result);
+        const secondPage = newReplies[secondIndex].page;
+        newReplies[secondIndex].page = secondPage ? secondPage + 1 : 1;
+        newReplies[secondIndex].fullItems =
+          showcaseResult.count <=
+          (newReplies[secondIndex].secondReplies as ShowSecondCaseReply[])
+            .length
+            ? true
+            : false;
+
+        setReplies(newReplies);
+      }
+      setSecondItemLoading(false);
+    }
+  };
+
+  const getMoreItem = async (showCaseId: string, page: number | undefined) => {
+    if (page) {
+      setItemLoading(true);
+      const showcaseResult = await showCaseReplyGet(showCaseId, page + 1, 6);
+
+      //set
+      let newReplies = cloneDeep(replies);
+      if (showcaseResult) {
+        newReplies = newReplies.concat(showcaseResult.result);
+      }
+
+      setReplies(newReplies);
+      setShowcasePage(page + 1);
+    }
+  };
+
+  const getSecondReplyItems = (
+    showcaseReplies: ShowSecondCaseReply[] | undefined,
+    date: Date,
+    secondIndex: number
+  ) => {
+    return showcaseReplies ? (
+      showcaseReplies.map((showcaseSecondReply, thirdIndex) => {
+        return (
+          <>
+            <ReplySecondBox key={thirdIndex}>
+              <ShowAvatarDiv>
+                <ProfileWrapperDiv
+                  userId={showcaseSecondReply.userId}
+                  element={
+                    <>
+                      <ShowImg src={`${showcaseSecondReply.userAvatar}`} />
+                      <ShowName>
+                        {showcaseSecondReply.userName}
+                        <Flag
+                          style={{ marginLeft: "5px" }}
+                          country={flagGet(
+                            showcaseSecondReply.userCountry
+                              ? showcaseSecondReply.userCountry
+                              : ""
+                          )}
+                        />
+                      </ShowName>
+                    </>
+                  }
+                ></ProfileWrapperDiv>
+                <SettingImg
+                  userId={showcaseSecondReply.userId}
+                  userName={showcaseSecondReply.userName}
+                  userImg={showcaseSecondReply.userAvatar}
+                  marginTop="8px"
+                  type={ReportContextType.SHOWCASE_SECOND_REPLY}
+                  contextId={showcaseSecondReply._id}
+                />
+                <ShowTime>{`${date.getDate()}-${
+                  date.getMonth() + 1
+                }-${date.getFullYear()}`}</ShowTime>
+              </ShowAvatarDiv>
+              <div style={{ marginLeft: "40px" }}>
+                {showcaseSecondReply.edit ? (
+                  <ShowcaseEditDiv>
+                    <TextArea
+                      value={showcaseSecondReply.text}
+                      onChange={(e) =>
+                        editShowcaseSecondReplyText(
+                          secondIndex,
+                          thirdIndex,
+                          e.target.value
+                        )
+                      }
+                    />
+                    <AnimeButton
+                      para=""
+                      text={`Save`}
+                      width="120px"
+                      height="32px"
+                      textColor="black"
+                      backGroundColor="white"
+                      borderColor="black"
+                      buttonClick={() =>
+                        updateShowcaseSecondItem(secondIndex, thirdIndex)
+                      }
+                    />
+                    <AnimeButton
+                      para=""
+                      text={`Cancel`}
+                      width="120px"
+                      height="32px"
+                      textColor="black"
+                      backGroundColor="white"
+                      borderColor="black"
+                      buttonClick={() =>
+                        editShowcaseSecondReply(secondIndex, thirdIndex)
+                      }
+                    />
+                  </ShowcaseEditDiv>
+                ) : (
+                  <>
+                    <ShowcaseReply>{showcaseSecondReply.text}</ShowcaseReply>
+                  </>
+                )}
+                {showcaseSecondReply.edit ? (
+                  <></>
+                ) : (
+                  <EditAndDeleteDiv>
+                    <AnimeEditAndDeleteDiv style={{ height: "32px" }}>
+                      <img
+                        onClick={() =>
+                          editShowcaseSecondReply(secondIndex, thirdIndex)
+                        }
+                        src={`${editIcon}`}
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      />
+                      <p
+                        onClick={() =>
+                          editShowcaseSecondReply(secondIndex, thirdIndex)
+                        }
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      >
+                        Edit
+                      </p>
+                    </AnimeEditAndDeleteDiv>
+                    <DeleteWrapperDiv
+                      element={
+                        <AnimeEditAndDeleteDiv style={{ height: "32px" }}>
+                          <img
+                            style={{ width: "24px" }}
+                            src={`${deleteIcon}`}
+                          />
+                          <p style={{ cursor: "pointer", height: "32px" }}>
+                            Delete
+                          </p>
+                        </AnimeEditAndDeleteDiv>
+                      }
+                      deleteFn={() =>
+                        deleteShowcaseSecondReply(
+                          showcaseSecondReply._id,
+                          secondIndex
+                        )
+                      }
+                    />
+                  </EditAndDeleteDiv>
+                )}
+                <ReplyAddDiv>
+                  <AnimeButton
+                    para=""
+                    text={`Reply`}
+                    width="45px"
+                    height="22px"
+                    textColor="#4BA3C3"
+                    backGroundColor="white"
+                    borderColor="white"
+                    buttonClick={() =>
+                      replySecondReply(
+                        showcaseSecondReply.userName,
+                        secondIndex,
+                        thirdIndex
+                      )
+                    }
+                  />
+                </ReplyAddDiv>
+                {showcaseSecondReply.reply ? (
+                  <>
+                    <TextArea
+                      value={
+                        newSecondReplyHtml[secondIndex]
+                          ? newSecondReplyHtml[secondIndex]
+                          : ""
+                      }
+                      onChange={(e) => {
+                        IfLoginCheck(loginUser)
+                          ? sendNewSecondReply(e.target.value, secondIndex)
+                          : "";
+                      }}
+                    />
+                    <br />
+                    <ReplyAddDiv>
+                      <AnimeButton
+                        para=""
+                        text={"Post"}
+                        width="100%"
+                        height="32px"
+                        textColor="white"
+                        backGroundColor="#FFC300"
+                        borderColor="#FFC300"
+                        buttonClick={() =>
+                          submitNewSecondReplyItem(
+                            showcaseSecondReply,
+                            secondIndex
+                          )
+                        }
+                      />
+                    </ReplyAddDiv>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </ReplySecondBox>
+          </>
+        );
+      })
+    ) : (
+      <></>
+    );
+  };
+
+  const getShowcaseReplies = (replies: ShowCaseReply[], date: Date) => {
+    return replies.map((reply, secondIndex) => {
+      return (
+        <>
+          <ReplyBox key={secondIndex}>
+            <ShowAvatarDiv>
+              <ProfileWrapperDiv
+                userId={reply.userId}
+                element={
+                  <>
+                    <ShowImg src={`${reply.userAvatar}`} />
+                    <ShowName>
+                      {reply.userName}
+                      <Flag
+                        style={{ marginLeft: "5px" }}
+                        country={flagGet(
+                          reply.userCountry ? reply.userCountry : ""
+                        )}
+                      />
+                    </ShowName>
+                  </>
+                }
+              ></ProfileWrapperDiv>
+              <SettingImg
+                userId={reply.userId}
+                userName={reply.userName}
+                userImg={reply.userAvatar}
+                marginTop="8px"
+                type={ReportContextType.SHOWCASE_REPLY}
+                contextId={reply ? reply._id : ""}
+              />
+              <ShowTime>{`${date.getDate()}-${
+                date.getMonth() + 1
+              }-${date.getFullYear()}`}</ShowTime>
+            </ShowAvatarDiv>
+            <div style={{ marginLeft: "40px" }}>
+              {reply.edit ? (
+                <ShowcaseEditDiv>
+                  <TextArea
+                    value={reply.text}
+                    onChange={(e) =>
+                      editShowcaseReplyText(secondIndex, e.target.value)
+                    }
+                  />
+                  <AnimeButton
+                    para=""
+                    text={`Save`}
+                    width="120px"
+                    height="32px"
+                    textColor="black"
+                    backGroundColor="white"
+                    borderColor="black"
+                    buttonClick={() => updateShowcaseReply(secondIndex)}
+                  />
+                  <AnimeButton
+                    para=""
+                    text={`Cancel`}
+                    width="120px"
+                    height="32px"
+                    textColor="black"
+                    backGroundColor="white"
+                    borderColor="black"
+                    buttonClick={() => editShowcaseReply(secondIndex)}
+                  />
+                </ShowcaseEditDiv>
+              ) : (
+                <>
+                  <ShowcaseReply>{reply.text}</ShowcaseReply>
+                </>
+              )}
+              {reply.edit ? (
+                <></>
+              ) : (
+                <EditAndDeleteDiv>
+                  <AnimeEditAndDeleteDiv style={{ height: "32px" }}>
+                    <img
+                      style={{ width: "24px" }}
+                      onClick={() => editShowcaseReply(secondIndex)}
+                      src={`${editIcon}`}
+                    />
+                    <p
+                      style={{ cursor: "pointer", height: "32px" }}
+                      onClick={() => editShowcaseReply(secondIndex)}
+                    >
+                      Edit
+                    </p>
+                  </AnimeEditAndDeleteDiv>
+                  <DeleteWrapperDiv
+                    element={
+                      <AnimeEditAndDeleteDiv style={{ height: "32px" }}>
+                        <img style={{ width: "24px" }} src={`${deleteIcon}`} />
+                        <p style={{ cursor: "pointer", height: "32px" }}>
+                          Delete
+                        </p>
+                      </AnimeEditAndDeleteDiv>
+                    }
+                    deleteFn={() => deleteShowcaseReply(reply._id, secondIndex)}
+                  />
+                </EditAndDeleteDiv>
+              )}
+              <ReplyDiv
+                onClick={() => {
+                  openSecondReply(secondIndex);
+                }}
+              >
+                <AnimeButton
+                  para=""
+                  text={`Replies(${
+                    reply.secondReplies ? reply.secondReplies.length : 0
+                  })`}
+                  width="81px"
+                  height="22px"
+                  textColor="#4BA3C3"
+                  backGroundColor="white"
+                  borderColor="white"
+                  buttonClick={() => console.log("")}
+                />
+                <img src={`${switchIcon}`} />
+              </ReplyDiv>
+              <div
+                style={{
+                  display: reply.showReplay == true ? "inline" : "none",
+                }}
+              >
+                {getAddSecondReplyBox(reply, secondIndex)}
+                {reply.showReplay ? (
+                  <>
+                    <>
+                      {getSecondReplyItems(
+                        reply.secondReplies,
+                        date,
+                        secondIndex
+                      )}
+                    </>
+                  </>
+                ) : (
+                  <></>
+                )}
+                {reply.fullItems != true ? (
+                  secondItemLoading ? (
+                    <Spin />
+                  ) : (
+                    <ShowcaseMoreButtonDiv
+                      onClick={() =>
+                        getMoreSecondItem(
+                          reply.showCaseId,
+                          reply.replyId,
+                          reply.page
+                        )
+                      }
+                    >
+                      <img src={forumMore} />
+                      <p>More</p>
+                    </ShowcaseMoreButtonDiv>
+                  )
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+          </ReplyBox>
+        </>
+      );
     });
   };
 
@@ -665,6 +1441,35 @@ const MarketplaceShowOne = (): JSX.Element => {
             </>
           )}
         </MarketBodyDiv>
+        <EpisodesComments
+          onClick={() => {
+            setCommentShow(!commentShow);
+          }}
+        >
+          <h6>{`Comments (${replies.length}) `}</h6>
+          <img
+            style={{ height: "20px", width: "20px" }}
+            src={`${switchIcon}`}
+          />
+        </EpisodesComments>
+        {commentShow ? (
+          <>
+            {getAddReplyBox()}
+            {getShowcaseReplies(replies, new Date(parseInt(para.id)))}
+            {replies.length < count ? (
+              <ShowcaseMoreButtonDiv
+                onClick={() => getMoreItem(para.id, showcasePage)}
+              >
+                <img src={forumMore} />
+                <p>More</p>
+              </ShowcaseMoreButtonDiv>
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <></>
+        )}
         <MessageModal
           footer={[]}
           onCancel={() => setMessageVisible(false)}

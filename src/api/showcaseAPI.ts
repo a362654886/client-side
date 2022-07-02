@@ -6,7 +6,6 @@ import {
   ShowCaseType,
   ShowSecondCaseReply,
 } from "../types/showCaseType";
-import { TagType } from "../types/tagType";
 
 const basicURL = backEndLink;
 

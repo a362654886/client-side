@@ -1364,16 +1364,16 @@ const ShowcaseMangaOne = (): JSX.Element => {
             text={button.text}
             width="120px"
             height="32px"
-            textColor={index == 1 ? "black" : "#4BA3C3"}
-            backGroundColor={index == 1 ? "#AAFFC9" : "white"}
-            borderColor={index == 1 ? "#AAFFC9" : "#4BA3C3"}
+            textColor={index == 2 ? "black" : "#4BA3C3"}
+            backGroundColor={index == 2 ? "#AAFFC9" : "white"}
+            borderColor={index == 2 ? "#AAFFC9" : "#4BA3C3"}
             buttonClick={() =>
-              index == 1
+              index == 2
                 ? console.log("")
                 : toPage(
                     index == 0
                       ? `/showcase/showCollection?page=1`
-                      : "/showcase/showManga?page=1"
+                      : "/showcase/showIllustrations?page=1"
                   )
             }
           />
@@ -1538,7 +1538,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
             episodeNum={episodeNum}
             deleteEpidose={() => {
               setEpisodeNum(episodeNum - 1);
-              setEditEpisodesManga(false)
+              setEditEpisodesManga(false);
             }}
           />
         </Modal>
