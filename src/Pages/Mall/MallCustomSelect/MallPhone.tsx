@@ -137,7 +137,7 @@ const MallPhone = ({ changeAttributes }: IProps): JSX.Element => {
     newQuantities[index].value = value;
     setIphoneQuantities(newQuantities);
 
-    sendValues();
+    sendValues(newQuantities, samsungQuantities);
   };
 
   const changeSamsungValue = (index: number, value: string) => {
@@ -145,23 +145,30 @@ const MallPhone = ({ changeAttributes }: IProps): JSX.Element => {
     newQuantities[index].value = value;
     setSamsungQuantities(newQuantities);
 
-    sendValues();
+    sendValues(iphoneQuantities, newQuantities);
   };
 
-  const sendValues = () => {
+  const sendValues = (
+    iphoneQuantities: MallCustomInputCheckBoxType[],
+    samsungQuantities: MallCustomInputCheckBoxType[]
+  ) => {
     let value = ``;
     value += `<p>Quantity by Types</p>`;
     iphoneQuantities.forEach((item) => {
-      value += `<p>${item.name}-${item.value}</p>
-    `;
+      if (parseInt(item.value) > 0) {
+        value += `<p>${item.name}-${item.value}</p>`;
+      }
     });
     samsungQuantities.forEach((item) => {
-      value += `<p>${item.name}-${item.value}</p>
-    `;
+      if (parseInt(item.value) > 0) {
+        value += `<p>${item.name}-${item.value}</p>`;
+      }
     });
-    value += `<p>${
-      otherType == "" ? "other type" : otherType
-    }-${otherTypeQuantity}</p>`;
+    if (parseInt(otherTypeQuantity) > 0) {
+      value += `<p>${
+        otherType == "" ? "other type" : otherType
+      }-${otherTypeQuantity}</p>`;
+    }
 
     changeAttributes(value);
   };

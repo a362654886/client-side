@@ -186,14 +186,15 @@ const ProfileMallPage = (): JSX.Element => {
                             ? mallCustomer[item.type].imgURL
                             : ""
                         }
+                        style={{ height: getWidth() > 600 ? "600px" : "300px" }}
                       />
                       <img
                         style={{
-                          height: "525px",
+                          height: getWidth() > 600 ? "525px" : "262.5px",
                           position: "absolute",
-                          left: "90px",
-                          top: "85px",
-                          width: "345px",
+                          left: getWidth() > 600 ? "90px" : "45px",
+                          top: getWidth() > 600 ? "85px" : "83.5px",
+                          width: getWidth() > 600 ? "345px" : "172.5px",
                         }}
                         src={item.imageString}
                       />
@@ -214,14 +215,15 @@ const ProfileMallPage = (): JSX.Element => {
                             ? mallCustomer[item.type].imgURL
                             : ""
                         }
+                        style={{ height: getWidth() > 600 ? "600px" : "300px" }}
                       />
                       <img
                         style={{
-                          height: "325px",
+                          height: getWidth() > 600 ? "325px" : "162.5px",
                           position: "absolute",
-                          left: "183px",
-                          top: "215px",
-                          width: "245px",
+                          left: getWidth() > 600 ? "183px" : "91.5px",
+                          top: getWidth() > 600 ? "215px" : "147.5px",
+                          width: getWidth() > 600 ? "245px" : "122.5px",
                         }}
                         src={item.imageString}
                       />
@@ -246,6 +248,7 @@ const ProfileMallPage = (): JSX.Element => {
                           backgroundImage: `url(${item.imageString})`,
                           backgroundSize: "contain",
                           backgroundRepeat: "no-repeat",
+                          height: getWidth() > 600 ? "600px" : "300px",
                         }}
                       />
                       <ProfileDesignAttribute>

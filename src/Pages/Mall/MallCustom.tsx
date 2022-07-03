@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { designHistoryPost } from "../../api/designHistoryAPI";
 import { emailPost } from "../../api/emailAPI";
-import { mallCustomerAPI } from "../../api/mallCustomeAPI";
 import { AnimeButton, MiddleDiv } from "../../components/Button";
 import CropImgDiv from "../../components/CropImgDiv";
 import ImageUpload, { ImageBody } from "../../components/ImageUpload";
@@ -99,7 +98,7 @@ const MallCustom = (): JSX.Element => {
   }, [chooseIndex]);
 
   useEffect(() => {
-    //console.log(attributes);
+    console.log(attributes);
   }, [attributes]);
 
   const setUploadImg = (value: ImageBody) => {

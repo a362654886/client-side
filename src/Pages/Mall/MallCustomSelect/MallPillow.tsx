@@ -50,7 +50,9 @@ const MallPillow = ({ changeAttributes }: IProps): JSX.Element => {
     let value = ``;
     value += `<p>Quantity by Sizes</p>`;
     quantities.forEach((item) => {
-      value += `<p>${item.name} - ${item.value}</p>`
+      if (parseInt(item.value) > 0) {
+        value += `<p>${item.name} - ${item.value}</p>`;
+      }
     });
 
     changeAttributes(value);

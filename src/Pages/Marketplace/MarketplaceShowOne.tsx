@@ -163,7 +163,7 @@ const MarketplaceShowOne = (): JSX.Element => {
       await getMoreItems(para.id, replyPage);
       if (market && market.imageArr) {
         setImgArr(market.imageArr);
-        addImg(market.imageArr)
+        addImg(market.imageArr);
         setTitle(market.title);
         setPrice(market.price);
         setDescription(market.description);
@@ -197,7 +197,7 @@ const MarketplaceShowOne = (): JSX.Element => {
   }, [marketState, page]);
 
   useEffect(() => {
-    console.log(imgArr)
+    console.log(imgArr);
   }, [imgArr]);
 
   // comments
@@ -250,7 +250,7 @@ const MarketplaceShowOne = (): JSX.Element => {
     setBidIniLoading(false);
   };
 
-  const addImg = (imgArr:string[]) => {
+  const addImg = (imgArr: string[]) => {
     const newImgArr = imgArr;
     let length = newImgArr.length;
     do {
@@ -619,35 +619,76 @@ const MarketplaceShowOne = (): JSX.Element => {
   const getAddSecondReplyBox = (
     showcaseReply: ShowCaseReply,
     secondIndex: number
-  ) => (
-    <div style={{ marginTop: "16px" }}>
-      <TextInput>
-        <TextArea
-          value={newSecondReplyHtml[secondIndex]}
-          onChange={(e) => {
-            IfLoginCheck(loginUser)
-              ? sendNewSecondReply(e.target.value, secondIndex)
-              : "";
-          }}
-        />
-        <br />
-        <ReplyAddDiv>
-          <AnimeButton
-            para=""
-            text={"Post"}
-            width="100%"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() =>
-              submitNewSecondReplyItem(showcaseReply, secondIndex)
-            }
+  ) => {
+    let show = true;
+    showcaseReply.secondReplies?.forEach((item) => {
+      if (item.reply) {
+        show = false;
+      }
+    });
+    return show ? (
+      <div style={{ marginTop: "16px" }}>
+        <TextInput>
+          <TextArea
+            value={newSecondReplyHtml[secondIndex]}
+            onChange={(e) => {
+              IfLoginCheck(loginUser)
+                ? sendNewSecondReply(e.target.value, secondIndex)
+                : "";
+            }}
           />
-        </ReplyAddDiv>
-      </TextInput>
-    </div>
-  );
+          <br />
+          <ReplyAddDiv>
+            <AnimeButton
+              para=""
+              text={"Post"}
+              width="100%"
+              height="32px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() =>
+                submitNewSecondReplyItem(showcaseReply, secondIndex)
+              }
+            />
+          </ReplyAddDiv>
+        </TextInput>
+      </div>
+    ) : (
+      <ReplyAddDiv>
+        <AnimeButton
+          para=""
+          text={"Post New Item"}
+          width="100%"
+          height="32px"
+          textColor="white"
+          backGroundColor="#FFC300"
+          borderColor="#FFC300"
+          buttonClick={() => openNewSecondItem(secondIndex)}
+        />
+      </ReplyAddDiv>
+    );
+  };
+
+  const openNewSecondItem = (secondIndex: number) => {
+    const _replies = cloneDeep(replies);
+
+    const secondReplies = _replies[secondIndex]
+      .secondReplies as ShowSecondCaseReply[];
+
+    const _secondReplies = secondReplies.map((item) => {
+      item.reply = false;
+      return item;
+    });
+
+    _replies[secondIndex].secondReplies = _secondReplies;
+
+    setReplies(_replies);
+
+    const _newSecondReplyHtml = cloneDeep(newSecondReplyHtml);
+    _newSecondReplyHtml[secondIndex] = ` `;
+    setNewSecondReplyHtml(_newSecondReplyHtml);
+  };
 
   const editShowcaseSecondReplyText = (
     secondIndex: number,
@@ -722,11 +763,17 @@ const MarketplaceShowOne = (): JSX.Element => {
     _newSecondReplyHtml[secondIndex] = `@${name} `;
 
     const newReplies = cloneDeep(replies);
-    (newReplies[secondIndex].secondReplies as ShowSecondCaseReply[])[
-      thirdIndex
-    ].reply = !(newReplies[secondIndex].secondReplies as ShowSecondCaseReply[])[
-      thirdIndex
-    ].reply;
+
+    const secondReplies = replies[secondIndex]
+      .secondReplies as ShowSecondCaseReply[];
+
+    const _secondReplies = secondReplies.map((item) => {
+      item.reply = false;
+      return item;
+    });
+
+    _secondReplies[thirdIndex].reply = !_secondReplies[thirdIndex].reply;
+    newReplies[secondIndex].secondReplies = _secondReplies;
 
     setReplies(newReplies);
     setNewSecondReplyHtml(_newSecondReplyHtml);

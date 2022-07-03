@@ -730,7 +730,13 @@ const ShowcaseMangaOne = (): JSX.Element => {
     showcaseReply: ShowCaseReply,
     secondIndex: number
   ) => {
-    return (
+    let show = true;
+    showcaseReply.secondReplies?.forEach((item) => {
+      if (item.reply) {
+        show = false;
+      }
+    });
+    return show ? (
       <div style={{ marginTop: "16px" }}>
         <TextInput>
           <TextArea
@@ -758,7 +764,43 @@ const ShowcaseMangaOne = (): JSX.Element => {
           </ReplyAddDiv>
         </TextInput>
       </div>
+    ) : (
+      <ReplyAddDiv>
+        <AnimeButton
+          para=""
+          text={"Post New Item"}
+          width="100%"
+          height="32px"
+          textColor="white"
+          backGroundColor="#FFC300"
+          borderColor="#FFC300"
+          buttonClick={() => openNewSecondItem(secondIndex)}
+        />
+      </ReplyAddDiv>
     );
+  };
+
+  const openNewSecondItem = (secondIndex: number) => {
+    const _showcase = cloneDeep(showCase);
+
+    const secondReplies = (
+      (_showcase as ShowCaseType).replies as ShowCaseReply[]
+    )[secondIndex].secondReplies as ShowSecondCaseReply[];
+
+    const _secondReplies = secondReplies.map((item) => {
+      item.reply = false;
+      return item;
+    });
+
+    ((_showcase as ShowCaseType).replies as ShowCaseReply[])[
+      secondIndex
+    ].secondReplies = _secondReplies;
+
+    setShowCase(_showcase);
+
+    const _newSecondReplyHtml = cloneDeep(newSecondReplyHtml);
+    _newSecondReplyHtml[secondIndex] = ` `;
+    setNewSecondReplyHtml(_newSecondReplyHtml);
   };
 
   const getShowcaseReplies = (replies: ShowCaseReply[], date: Date) => {
@@ -936,13 +978,21 @@ const ShowcaseMangaOne = (): JSX.Element => {
     _newSecondReplyHtml[secondIndex] = `@${name} `;
 
     const _showcase = cloneDeep(showCase);
-    (
-      ((_showcase as ShowCaseType).replies as ShowCaseReply[])[secondIndex]
-        .secondReplies as ShowSecondCaseReply[]
-    )[thirdIndex].reply = !(
-      ((_showcase as ShowCaseType).replies as ShowCaseReply[])[secondIndex]
-        .secondReplies as ShowSecondCaseReply[]
-    )[thirdIndex].reply;
+
+    const secondReplies = (
+      (_showcase as ShowCaseType).replies as ShowCaseReply[]
+    )[secondIndex].secondReplies as ShowSecondCaseReply[];
+
+    const _secondReplies = secondReplies.map((item) => {
+      item.reply = false;
+      return item;
+    });
+
+    _secondReplies[thirdIndex].reply = !_secondReplies[thirdIndex].reply;
+
+    ((_showcase as ShowCaseType).replies as ShowCaseReply[])[
+      secondIndex
+    ].secondReplies = _secondReplies;
 
     setShowCase(_showcase);
     setNewSecondReplyHtml(_newSecondReplyHtml);

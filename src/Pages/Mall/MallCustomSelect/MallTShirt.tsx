@@ -79,7 +79,9 @@ const MallTShirt = ({ changeAttributes }: IProps): JSX.Element => {
     value += `<p>Color: ${colorBase}</p>`;
     value += `<p>Quantity by Sizes</p>`;
     quantities.forEach((item) => {
-      value += `<p>${item.name}: ${item.value}</p>`;
+      if (parseInt(item.value) > 0) {
+        value += `<p>${item.name}: ${item.value}</p>`;
+      }
     });
     value += `<p>Style: ${style}</p>`;
 

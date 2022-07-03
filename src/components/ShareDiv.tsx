@@ -63,12 +63,6 @@ const ShareDiv = ({ marginTop, marginBottom }: IProps): JSX.Element => {
         />
         <img
           onClick={() => {
-            console.log("insImage");
-          }}
-          src={`${insImage}`}
-        />
-        <img
-          onClick={() => {
             shareToTwitter("https://anime.come", "share to twitter");
           }}
           src={`${twitter}`}
