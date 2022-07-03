@@ -169,7 +169,6 @@ export const ReactQuillDiv = styled.div`
   .ql-editor,
   .ql-container {
     min-height: 200px;
-    max-height: 1000px;
     height: auto !important;
   }
 `;

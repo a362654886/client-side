@@ -42,6 +42,7 @@ import { marketTagAllGet } from "../../api/tagAPI";
 import { TagType } from "../../types/tagType";
 import hotIcon from "../../files/MarketHotTags.svg";
 import { ShowcaseTagText } from "../../cssJs/ShowCasePage/showCaseCss";
+import { relative } from "path";
 
 export enum FilterEnum {
   Latest = "Latest",
@@ -345,7 +346,13 @@ const MarketplaceShow = (): JSX.Element => {
             <img onClick={() => search(value)} src={`${searchImg}`} />
           </MarketSearch>
         </MarketSearchInputDiv>
-        <MarketBorder>
+        <MarketBorder
+          style={{
+            height: getWidth() > 600 ? "54px" : "108px",
+            display: getWidth() > 600 ? "flex" : "block",
+            position: "relative",
+          }}
+        >
           <Popover
             placement="bottomRight"
             content={sortByDiv()}
@@ -363,7 +370,14 @@ const MarketplaceShow = (): JSX.Element => {
             trigger="click"
             visible={filterVisible}
           >
-            <div onClick={() => setFilterVisible(true)}>
+            <div
+              style={
+                getWidth() > 600
+                  ? {}
+                  : { position: "relative", top: "-32px", left: "146px" }
+              }
+              onClick={() => setFilterVisible(true)}
+            >
               <img src={marketFilter} />
               <p>Filters</p>
             </div>

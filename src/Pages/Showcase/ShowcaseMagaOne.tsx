@@ -729,35 +729,37 @@ const ShowcaseMangaOne = (): JSX.Element => {
   const getAddSecondReplyBox = (
     showcaseReply: ShowCaseReply,
     secondIndex: number
-  ) => (
-    <div style={{ marginTop: "16px" }}>
-      <TextInput>
-        <TextArea
-          value={newSecondReplyHtml[secondIndex]}
-          onChange={(e) => {
-            IfLoginCheck(loginUser)
-              ? sendNewSecondReply(e.target.value, secondIndex)
-              : "";
-          }}
-        />
-        <br />
-        <ReplyAddDiv>
-          <AnimeButton
-            para=""
-            text={"Post"}
-            width="100%"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() =>
-              submitNewSecondReplyItem(showcaseReply, secondIndex)
-            }
+  ) => {
+    return (
+      <div style={{ marginTop: "16px" }}>
+        <TextInput>
+          <TextArea
+            value={newSecondReplyHtml[secondIndex]}
+            onChange={(e) => {
+              IfLoginCheck(loginUser)
+                ? sendNewSecondReply(e.target.value, secondIndex)
+                : "";
+            }}
           />
-        </ReplyAddDiv>
-      </TextInput>
-    </div>
-  );
+          <br />
+          <ReplyAddDiv>
+            <AnimeButton
+              para=""
+              text={"Post"}
+              width="100%"
+              height="32px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() =>
+                submitNewSecondReplyItem(showcaseReply, secondIndex)
+              }
+            />
+          </ReplyAddDiv>
+        </TextInput>
+      </div>
+    );
+  };
 
   const getShowcaseReplies = (replies: ShowCaseReply[], date: Date) => {
     return replies.map((reply, secondIndex) => {
@@ -1392,7 +1394,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           style={{
             width:
               getWidth() > 1200 ? "100%" : getWidth() > 600 ? "896px" : "100%",
-            minHeight: getWidth() > 1200 ? "1300px" : "100%",
+            minHeight: getWidth() > 1200 ? "1050px" : "100%",
             paddingLeft: getWidth() > 600 ? "" : "8px",
           }}
         >

@@ -156,7 +156,7 @@ const AnimeOneVideo = ({
               <AnimeButton
                 para=""
                 text={"Delete"}
-                width="47px"
+                width="55px"
                 height="32px"
                 textColor="black"
                 backGroundColor="#F6F6F6"

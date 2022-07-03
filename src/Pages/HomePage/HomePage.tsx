@@ -345,6 +345,7 @@ const HomePage = (): JSX.Element => {
           className={"headlineImg"}
           key={index}
           style={{ cursor: "pointer" }}
+          onClick={() => openNewWindowPath(headline.link)}
         >
           <img src={`${headline.image}`} />
           <p>{headline.title}</p>
@@ -485,10 +486,7 @@ const HomePage = (): JSX.Element => {
           name="keywords"
           content="anime, manga, comic, Japanese, animation, anime site, anime website, anime library, anime list, anime trends, anime news, anime market, anime products, anime community, anime social media"
         />
-        <meta
-          name="description"
-          content="anime information collection"
-        ></meta>
+        <meta name="description" content="anime information collection"></meta>
       </Helmet>
       <HomePageDiv>
         <HomePageBodyDiv>

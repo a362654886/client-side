@@ -224,3 +224,16 @@ export const AdminReportTypeButtons = styled(Radio.Group)`
   width: 100%;
   margin-bottom: 42px;
 `;
+
+export const AdminDataContentDiv = styled.div`
+  display: "flex";
+  label {
+    width: 60px;
+    margin-bottom: 0px;
+    margin-right: 24px;
+  }
+  .ant-picker {
+    margin-right: 12px;
+    margin-left: 12px;
+  }
+`;

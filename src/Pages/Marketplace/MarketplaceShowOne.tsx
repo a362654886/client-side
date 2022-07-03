@@ -163,6 +163,7 @@ const MarketplaceShowOne = (): JSX.Element => {
       await getMoreItems(para.id, replyPage);
       if (market && market.imageArr) {
         setImgArr(market.imageArr);
+        addImg(market.imageArr)
         setTitle(market.title);
         setPrice(market.price);
         setDescription(market.description);
@@ -186,10 +187,6 @@ const MarketplaceShowOne = (): JSX.Element => {
   ]);
 
   useEffect(() => {
-    addImg();
-  }, [imgArr]);
-
-  useEffect(() => {
     (async function anyNameFunction() {
       if (page == 1) {
         await getIniMarketPrices();
@@ -198,6 +195,10 @@ const MarketplaceShowOne = (): JSX.Element => {
       }
     })();
   }, [marketState, page]);
+
+  useEffect(() => {
+    console.log(imgArr)
+  }, [imgArr]);
 
   // comments
   const getMoreItems = async (marketId: string, page: number | undefined) => {
@@ -249,7 +250,7 @@ const MarketplaceShowOne = (): JSX.Element => {
     setBidIniLoading(false);
   };
 
-  const addImg = () => {
+  const addImg = (imgArr:string[]) => {
     const newImgArr = imgArr;
     let length = newImgArr.length;
     do {
@@ -258,7 +259,7 @@ const MarketplaceShowOne = (): JSX.Element => {
         `https://animeimagebucket.s3.amazonaws.com/marketCreateImg.png`
       );
     } while (length < 4);
-    setImgArr(newImgArr);
+    setImgArr(newImgArr.length > 4 ? newImgArr.slice(0, 4) : newImgArr);
   };
 
   const insertMarketPrice = async () => {
@@ -1144,6 +1145,10 @@ const MarketplaceShowOne = (): JSX.Element => {
     <>
       <div
         className={getWidth() > 600 ? "col-xl-9 col-md-9 col-sm-9 col-9" : ""}
+        style={{
+          marginLeft: getWidth() > 600 ? "" : "8px",
+          marginRight: getWidth() > 600 ? "" : "8px",
+        }}
       >
         <MarketPlaceTitleDiv>
           <MarketPlaceTitle>Marketplace</MarketPlaceTitle>
@@ -1163,7 +1168,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           <MarketImgDiv
             style={{
               width: getWidth() > 600 ? "610px" : "300px",
-              height: getWidth() > 600 ? "650px" : "1300px",
+              height: getWidth() > 600 ? "650px" : "1050px",
             }}
           >
             {imgArr.map((image, index) => {

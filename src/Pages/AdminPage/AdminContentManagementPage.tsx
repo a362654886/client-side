@@ -1,35 +1,63 @@
 import * as React from "react";
+import { useState } from "react";
+import AnimeButton from "../../components/Button";
+import { ButtonsDiv } from "../../cssJs/AdminPage/adminAdminCss";
 import {
   AdminDateChildDiv,
   AdminDateDiv,
-  AdminPageDiv,
 } from "../../cssJs/AdminPage/adminCss";
+import AdminDataAccountComponent from "./dataComponent/AdminDataAccountComponent";
+import AdminDataContentComponent from "./dataComponent/AdminDataContentsComponent";
 
 const AdminContentManagementPage = (): JSX.Element => {
+  const [buttonString, setButton] = useState<string>("Views");
+
+  const menu = ["Views", "Contents"];
+
+  const getButtonComponentDiv = () => {
+    return menu.map((menuString: string, index: number) => {
+      if (menuString == buttonString) {
+        return (
+          <div key={index}>
+            <AnimeButton
+              para=""
+              text={menuString}
+              width="120px"
+              height="32px"
+              textColor="black"
+              backGroundColor="#AAFFC9"
+              borderColor="#AAFFC9"
+              buttonClick={() => setButton(menu[index])}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div key={index}>
+            <AnimeButton
+              para=""
+              text={menuString}
+              width="120px"
+              height="32px"
+              textColor="black"
+              backGroundColor="white"
+              borderColor="black"
+              buttonClick={() => setButton(menu[index])}
+            />
+          </div>
+        );
+      }
+    });
+  };
+
   return (
     <AdminDateDiv>
-      <AdminDateChildDiv>
-        <h6>Account: infoAdmin@animepark.com</h6>
-      </AdminDateChildDiv>
-      <AdminDateChildDiv>
-        <h6>Password: NUBQDE8c</h6>
-      </AdminDateChildDiv>
-      <AdminDateChildDiv>
-        <h6>
-          Link:{" "}
-          <a
-            style={{ color: "blue", textDecoration: "underline" }}
-            onClick={() => {
-              window.open(
-                `https://analytics.google.com/analytics/web/?authuser=5#/p318774988/realtime/overview?params=_u..nav%3Dmaui&collectionId=user`,
-                `_blank`
-              );
-            }}
-          >
-            Google/analyst
-          </a>
-        </h6>
-      </AdminDateChildDiv>
+      <ButtonsDiv>{getButtonComponentDiv()}</ButtonsDiv>
+      {buttonString == "Views" ? (
+        <AdminDataAccountComponent />
+      ) : (
+        <AdminDataContentComponent />
+      )}
     </AdminDateDiv>
   );
 };

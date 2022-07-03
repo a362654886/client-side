@@ -101,7 +101,9 @@ const EpisodeCreate = (): JSX.Element => {
               <div>
                 <img
                   src={image.imgBase64}
-                  style={{ width: getWidth() > 600 ? "723px" : "100%" }}
+                  style={{
+                    width: getWidth() > 600 ? "723px" : "100%",
+                  }}
                 />
               </div>
               <div>

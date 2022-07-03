@@ -2,7 +2,7 @@ import { Drawer } from "antd";
 import styled from "styled-components";
 
 export const EpisodeDiv = styled.div`
-  width: 100%;
+  width: 96%;
   margin: 24px 4px;
 `;
 

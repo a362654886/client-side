@@ -56,7 +56,7 @@ const MarketplaceCreate = (): JSX.Element => {
   const [description, setDescription] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [country, setCountry] = useState<string>("");
-  const [imgArr, setImgArr] = useState<(string)[]>(["add"]);
+  const [imgArr, setImgArr] = useState<string[]>(["add"]);
   const [tags, setTags] = useState<string[]>([]);
   const [state, setState] = useState<string>("available");
   const [uploadImg, setLoadImg] = useState<string>("");
@@ -67,10 +67,10 @@ const MarketplaceCreate = (): JSX.Element => {
   }, [imgArr, state]);
 
   const setResizeUploadImg = (imageBody: string) => {
-    const newArr: string[] = cloneDeep(imgArr)
-    newArr.unshift(imageBody)
-    if(newArr.length>4){
-      newArr.pop()
+    const newArr: string[] = cloneDeep(imgArr);
+    newArr.unshift(imageBody);
+    if (newArr.length > 4) {
+      newArr.pop();
     }
     setImgArr(newArr);
   };
@@ -87,7 +87,7 @@ const MarketplaceCreate = (): JSX.Element => {
   const getArr = () => {
     const arr: string[] = [];
     imgArr.forEach((item) => {
-      if (item !== "add" ) {
+      if (item !== "add") {
         arr.push(item);
       }
     });
@@ -153,8 +153,8 @@ const MarketplaceCreate = (): JSX.Element => {
   return (
     <div
       style={{
-        paddingLeft: getWidth() > 600 ? "" : "8px",
-        paddingRight: getWidth() > 600 ? "" : "8px",
+        marginLeft: getWidth() > 600 ? "" : "8px",
+        marginRight: getWidth() > 600 ? "" : "8px",
         width: getWidth() > 600 ? "1140px" : "",
       }}
     >

@@ -208,12 +208,16 @@ const MarketplaceEdit = (): JSX.Element => {
               if (image == "add") {
                 return (
                   <div
-                    style={{
-                      position: "absolute",
-                      left: (index + 1) % 2 == 0 ? "300px" : "0px",
-                      top: index <= 1 ? "0px" : "320px",
-                      marginLeft: "40px",
-                    }}
+                    style={
+                      getWidth() > 600
+                        ? {
+                            position: "absolute",
+                            left: (index + 1) % 2 == 0 ? "300px" : "0px",
+                            top: index <= 1 ? "0px" : "320px",
+                            marginLeft: "40px",
+                          }
+                        : { marginLeft: "40px", marginBottom: "70px" }
+                    }
                   >
                     <ImageUpload
                       width={"240px"}
@@ -235,11 +239,15 @@ const MarketplaceEdit = (): JSX.Element => {
                 return (
                   <MarketUploadImage
                     key={index}
-                    style={{
-                      position: "absolute",
-                      left: (index + 1) % 2 == 0 ? "300px" : "0px",
-                      top: index <= 1 ? "0px" : "320px",
-                    }}
+                    style={
+                      getWidth() > 600
+                        ? {
+                            position: "absolute",
+                            left: (index + 1) % 2 == 0 ? "300px" : "0px",
+                            top: index <= 1 ? "0px" : "320px",
+                          }
+                        : {}
+                    }
                   >
                     <div>
                       <img
