@@ -86,6 +86,7 @@ const ShowcaseCollectionOne = (): JSX.Element => {
             width:
               getWidth() > 1200 ? "100%" : getWidth() > 600 ? "896px" : "100%",
             paddingLeft: getWidth() > 600 ? "" : "8px",
+            paddingRight: getWidth() > 600 ? "" : "8px",
             marginTop: "32px",
           }}
         >

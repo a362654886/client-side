@@ -163,6 +163,8 @@ const ShowcaseMangaOne = (): JSX.Element => {
   );
   const [episodePage, setEpisodePage] = useState<number>(0);
 
+  const perPage = 50;
+
   useEffect(() => {
     (async function anyNameFunction() {
       await getManga(para.id);
@@ -517,8 +519,8 @@ const ShowcaseMangaOne = (): JSX.Element => {
         </>
       );
     } else {
-      return Array.from({ length: 2 }, (v, k) => k).map((n, index) => {
-        const pageNum = page * 2 + index + 1;
+      return Array.from({ length: perPage }, (v, k) => k).map((n, index) => {
+        const pageNum = page * perPage + index + 1;
         if (pageNum <= episodeNum) {
           return (
             <>
@@ -1446,6 +1448,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               getWidth() > 1200 ? "100%" : getWidth() > 600 ? "896px" : "100%",
             minHeight: getWidth() > 1200 ? "1050px" : "100%",
             paddingLeft: getWidth() > 600 ? "" : "8px",
+            paddingRight: getWidth() > 600 ? "" : "8px",
           }}
         >
           <AnimeButtonsDiv
@@ -1466,16 +1469,16 @@ const ShowcaseMangaOne = (): JSX.Element => {
           </EpisodesText>
           <ShowMangaIframeEpisodesButtons>
             {Array.from(
-              { length: Math.floor((episodeNum + 1) / 2) },
+              { length: Math.ceil((episodeNum + 1) / perPage) },
               (v, k) => k
             ).map((n, index) => {
-              const start = 2 * (n + 1) - 1;
-              const end = 2 * (n + 1);
+              const start = perPage * n;
+              const end = perPage * (n + 1);
               return (
                 <div key={index} style={{ marginRight: "8px" }}>
                   <AnimeButton
                     para=""
-                    text={`${start}-${end}`}
+                    text={`${start == 0 ? 1 : start}-${end}`}
                     width="120px"
                     height="32px"
                     textColor="white"

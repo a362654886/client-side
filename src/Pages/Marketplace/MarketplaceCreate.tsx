@@ -26,7 +26,6 @@ import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { marketAdd } from "../../api/marketAPI";
 import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
 import Flag from "react-flagkit";
-import CropImgBodyDiv from "../../components/CropImgBodyDiv";
 import { useHistory } from "react-router-dom";
 import { getWidth } from "../../helperFns/widthFn";
 import {

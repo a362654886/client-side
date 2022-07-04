@@ -455,8 +455,8 @@ export const ShowcaseEditDiv = styled.div`
   width: 100%;
   button {
     margin-top: 16px;
-    padding-left: 0px;
     margin-left: 0px;
+    margin-right: 16px;
   }
 `;
 
@@ -790,6 +790,6 @@ export const ShowcaseTagText = styled.h2`
 `;
 
 export const ShowcaseManga = styled.div`
-  display:"flex" ;
-  min-height:""
+  display: "flex";
+  min-height: "";
 `;

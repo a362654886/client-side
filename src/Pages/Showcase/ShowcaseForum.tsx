@@ -525,7 +525,7 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
       }
     });
 
-    setAllShowCases(newShowCase)
+    setAllShowCases(newShowCase);
     setUpdate(update + 1);
   };
 
@@ -889,7 +889,7 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                 return (
                   <ShowCaseCreateImage key={imageIndex}>
                     <div>
-                      <img src={image} style={{ maxWidth: "866px" }} />
+                      <ShowcaseImage src={image} />
                     </div>
                     <div>
                       <Button onClick={() => deleteImg(index, imageIndex)}>
@@ -915,15 +915,15 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                 value={showcase.text}
                 onChange={(e) => editShowcaseText(index, e.target.value)}
               />
-              <div>
-                Source: Original from{" "}
+              <ShowcaseEditDiv>
+                <p>Source: Original from</p>
                 <Input
                   value={showcase.source}
                   onChange={(e) => editShowcaseSource(index, e.target.value)}
                 />
-              </div>
-              <div>
-                Tag:
+              </ShowcaseEditDiv>
+              <ShowcaseEditDiv>
+                <p>Tag:</p>
                 <TagSelect
                   mode="tags"
                   value={
@@ -934,7 +934,7 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
                   onChange={(e) => editShowcaseTag(index, e as string[])}
                   dropdownStyle={{ display: "none" }}
                 ></TagSelect>
-              </div>
+              </ShowcaseEditDiv>
               <AnimeButton
                 para=""
                 text={`Save`}

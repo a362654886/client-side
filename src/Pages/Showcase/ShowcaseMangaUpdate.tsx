@@ -2,7 +2,11 @@ import { Button, Input, Radio, RadioChangeEvent, Space } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showCaseAdd, showCaseOneMangaGet, showCaseUpdate } from "../../api/showcaseAPI";
+import {
+  showCaseAdd,
+  showCaseOneMangaGet,
+  showCaseUpdate,
+} from "../../api/showcaseAPI";
 import AnimeButton from "../../components/Button";
 import ImageUpload, { ImageBody } from "../../components/ImageUpload";
 import {
@@ -10,6 +14,7 @@ import {
   DescriptionInput,
   ShowCaseCreateImage,
   ShowCaseCreateImageHeader,
+  ShowcaseImage,
   ShowcaseRadioDiv,
   ShowcaseTextInput,
   ShowCaseTitle,
@@ -228,7 +233,7 @@ const ShowcaseMangaUpdate = (): JSX.Element => {
           return (
             <ShowCaseCreateImage key={index} style={{ height: `auto` }}>
               <div>
-                <img src={image.imgBase64} style={{ maxWidth: "1170px" }} />
+                <ShowcaseImage src={image.imgBase64} />
               </div>
               <div>
                 <Button onClick={() => deleteImg(index)}>Delete</Button>

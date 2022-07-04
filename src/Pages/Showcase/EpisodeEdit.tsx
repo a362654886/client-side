@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { episodeGetById, episodeUpdate } from "../../api/episodeAPI";
 import AnimeButton, { MiddleDiv } from "../../components/Button";
@@ -13,12 +13,16 @@ import {
   EpisodeNumber,
   EpisodeTitle,
 } from "../../cssJs/ShowCasePage/EpisodeCss";
+import { ShowcaseImage } from "../../cssJs/ShowCasePage/showCaseCss";
+import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
+import { LoadingType } from "../../types/EnumTypes";
 import { EpisodeType } from "../../types/EpisodeType";
 import { IStoreState } from "../../types/IStoreState";
 import { ShowCaseType } from "../../types/showCaseType";
 
 const EpisodeEdit = (): JSX.Element => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const manga: ShowCaseType | null = useSelector(
     (state: IStoreState) => state.mangaState
@@ -32,7 +36,15 @@ const EpisodeEdit = (): JSX.Element => {
     const id: string = (history.location.state as any).type;
     if (id) {
       (async function anyNameFunction() {
+        dispatch({
+          payload: LoadingType.OPEN,
+          type: LOADING_OPEN,
+        });
         await getEpisodeById(parseInt(id).toString());
+        dispatch({
+          payload: LoadingType.CLOSE,
+          type: LOADING_CLOSE,
+        });
       })();
     }
   }, []);
@@ -96,9 +108,8 @@ const EpisodeEdit = (): JSX.Element => {
           return (
             <EpisodeImage key={index}>
               <div>
-                <img
+                <ShowcaseImage
                   src={typeof image == "string" ? image : image.imgBase64}
-                  style={{ width: "723px" }}
                 />
               </div>
               <div>
@@ -108,14 +119,15 @@ const EpisodeEdit = (): JSX.Element => {
           );
         })}
         <ImageUpload
-          width={"100%"}
-          height={"36px"}
-          textColor={"#F5A623"}
-          backGroundColor={"#FBFCDB"}
-          border={"1px solid #F5A623"}
-          text={"+ Image"}
+          width={"240px"}
+          height={"240px"}
+          textColor={"black"}
+          backGroundColor={"#F6F6F6"}
+          border={"1px solid #F6F6F6"}
+          text={"Image"}
           setImg={(value: ImageBody) => setNewImage(value)}
-          margin={"0px"}
+          margin={"15px 0px 0px 0px"}
+          imageAdd={false}
         />
         <div style={{ marginTop: "32px", marginBottom: "32px" }}>
           <AnimeButton
@@ -138,9 +150,7 @@ const EpisodeEdit = (): JSX.Element => {
             textColor="#302D46"
             backGroundColor="white"
             borderColor="#dbdbdb"
-            buttonClick={() => {
-              console.log("cancel");
-            }}
+            buttonClick={() => window.history.go(-1)}
           />
         </MiddleDiv>
       </EpisodeImages>
