@@ -1,5 +1,5 @@
 import * as React from "react";
-import loading from "../files/loading.gif";
+import loading from "../files/loadingSvg.svg";
 
 interface IProps {
   width: string;
