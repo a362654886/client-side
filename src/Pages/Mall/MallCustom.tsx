@@ -137,7 +137,8 @@ const MallCustom = (): JSX.Element => {
           <div>Contact Email: ${email}</div>
         `,
         "mall",
-        "customerService"
+        "customerService",
+        true
       );
       //send to customer
       await emailPost(

@@ -67,7 +67,8 @@ const ProfileMallPage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    //console.log(allDesignHistories);
+    console.log(allDesignHistories);
+    console.log(mallCustomer);
   }, [allDesignHistories]);
 
   useEffect(() => {
@@ -193,7 +194,7 @@ const ProfileMallPage = (): JSX.Element => {
                           height: getWidth() > 600 ? "525px" : "262.5px",
                           position: "absolute",
                           left: getWidth() > 600 ? "90px" : "45px",
-                          top: getWidth() > 600 ? "85px" : "83.5px",
+                          top: getWidth() > 600 ? "85px" : "60px",
                           width: getWidth() > 600 ? "345px" : "172.5px",
                         }}
                         src={item.imageString}
@@ -212,7 +213,7 @@ const ProfileMallPage = (): JSX.Element => {
                       <ProfileDesignHistoryImg
                         src={
                           mallCustomer[item.type]
-                            ? mallCustomer[item.type].imgURL
+                            ? mallCustomer[0].imgURL
                             : ""
                         }
                         style={{ height: getWidth() > 600 ? "600px" : "300px" }}
@@ -241,7 +242,7 @@ const ProfileMallPage = (): JSX.Element => {
                       <ProfileDesignHistoryImg
                         src={
                           mallCustomer[item.type]
-                            ? mallCustomer[item.type].imgURL
+                            ? mallCustomer[item.type == 0 ? 1 : 2].imgURL
                             : ""
                         }
                         style={{

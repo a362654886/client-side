@@ -9,8 +9,8 @@ import { ProfileAccountDiv } from "../../../cssJs/ProfilePage/ProfileAccountCss"
 import {
   ContactLocationInput,
   ContactSubmitButtonDiv,
+  ShippingNote,
 } from "../../../cssJs/ProfilePage/ProfileContactCss";
-import { NotificationButton } from "../../../cssJs/ProfilePage/ProfileSettingCss";
 import { LOGIN_USER_ADD } from "../../../redux/loginUser";
 import { IStoreState } from "../../../types/IStoreState";
 import { User } from "../../../types/User";
@@ -147,6 +147,12 @@ const ProfileShippingAddressPage = (): JSX.Element => {
               buttonClick={() => updateUser()}
             />
           </ContactSubmitButtonDiv>
+          <ShippingNote>
+            <p>
+              Your address is only used to receive redeemed items and is
+              invisible to other users.
+            </p>
+          </ShippingNote>
         </>
       );
     }

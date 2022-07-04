@@ -82,7 +82,7 @@ const MarketplaceShow = (): JSX.Element => {
     (async function anyNameFunction() {
       setSearchUser(true);
       await getAllTags();
-      await search("");
+      await search("", 1);
     })();
   }, [para.id]);
 
@@ -91,18 +91,23 @@ const MarketplaceShow = (): JSX.Element => {
   }, [searchString, page, country, city, priceFrom, priceTo, marketTags]);
 
   useEffect(() => {
+    console.log(count);
+    console.log(allMarket);
+  }, [count, allMarket]);
+
+  useEffect(() => {
     (async function anyNameFunction() {
       setSearchUser(false);
-      await search("");
+      await search("", 1);
       await getAllTags();
     })();
   }, [filterType, searchString]);
 
-  const search = async (value: string) => {
+  const search = async (value: string, page: number) => {
     if (para.id != "null") {
-      searchBySearchValue(value, para.id);
+      searchBySearchValue(value, para.id, page);
     } else {
-      await searchBySearchValue(value, "");
+      await searchBySearchValue(value, "", page);
     }
   };
 
@@ -112,15 +117,19 @@ const MarketplaceShow = (): JSX.Element => {
   };
 
   const getMore = async () => {
-    await searchBySearchValue("", para.id == "null" ? "" : para.id);
+    search(value, page + 1);
     setPage(page + 1);
   };
 
-  const searchBySearchValue = async (value: string, tag: string) => {
+  const searchBySearchValue = async (
+    value: string,
+    tag: string,
+    page: number
+  ) => {
     setLoading(true);
     const marketResult = await marketAllGet(
       value,
-      1,
+      page,
       pageSize,
       city,
       country,
@@ -130,19 +139,7 @@ const MarketplaceShow = (): JSX.Element => {
       tag
     );
     if (marketResult) {
-      //setAllMarket(allMarket.concat(marketResult.markets));
-      setAllMarket(marketResult.markets);
-      setCount(marketResult.count);
-    }
-    setLoading(false);
-  };
-
-  const searchByUser = async (userId: string) => {
-    setLoading(true);
-    const marketResult = await marketAllGetByArr(userId, page, pageSize, 0);
-    if (marketResult) {
-      //setAllMarket(allMarket.concat(marketResult.markets));
-      setAllMarket(marketResult.markets);
+      setAllMarket(allMarket.concat(marketResult.markets));
       setCount(marketResult.count);
     }
     setLoading(false);
@@ -343,7 +340,7 @@ const MarketplaceShow = (): JSX.Element => {
         <MarketSearchInputDiv>
           <Input value={value} onChange={(e) => setValue(e.target.value)} />
           <MarketSearch>
-            <img onClick={() => search(value)} src={`${searchImg}`} />
+            <img onClick={() => search(value, 1)} src={`${searchImg}`} />
           </MarketSearch>
         </MarketSearchInputDiv>
         <MarketBorder
@@ -406,17 +403,15 @@ const MarketplaceShow = (): JSX.Element => {
           </StringClear>
         </StringBar>
         <MarketShowBox className={getWidth() > 600 ? "row" : ""}>
-          {loading ? (
-            <div>
-              <img src={loadingImg} />
-            </div>
-          ) : (
-            getExistMarket()
-          )}
+          {getExistMarket()}
         </MarketShowBox>
         {getLoading()}
-        {count >= allMarket.length ? (
+        {count <= allMarket.length ? (
           <></>
+        ) : loading ? (
+          <div>
+            <img src={loadingImg} />
+          </div>
         ) : (
           <MoreButtonDiv onClick={() => getMore()}>
             <div>

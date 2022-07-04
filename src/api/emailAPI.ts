@@ -12,7 +12,8 @@ export const emailPost = async (
   toEmail: string,
   text: string,
   subject: string,
-  type?: string
+  type?: string,
+  alert?: boolean
 ): Promise<number | null> => {
   const endpoint = basicURL + "emailPost";
   return Axios.post(endpoint, {
@@ -22,19 +23,23 @@ export const emailPost = async (
     type: type ? type : "",
   })
     .then((response) => {
-      openNotification(
-        "email send success",
-        NotificationColor.Success,
-        NotificationTitle.Success
-      );
+      if (!alert) {
+        openNotification(
+          "email send success",
+          NotificationColor.Success,
+          NotificationTitle.Success
+        );
+      }
       return response.status;
     })
     .catch(() => {
-      openNotification(
-        "email send fail",
-        NotificationColor.Error,
-        NotificationTitle.Error
-      );
+      if (!alert) {
+        openNotification(
+          "email send fail",
+          NotificationColor.Error,
+          NotificationTitle.Error
+        );
+      }
       return null;
     });
 };

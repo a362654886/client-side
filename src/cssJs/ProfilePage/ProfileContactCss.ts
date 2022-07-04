@@ -89,3 +89,12 @@ export const ContactSubmitButtonDiv = styled.div`
   margin-top: 68px;
   margin-left: 100px;
 `;
+
+export const ShippingNote = styled.div`
+  margin-top: 51px;
+  width: 320px;
+  background-color: #c1eeff;
+  padding: 8px 4px;
+  font-size: 16px;
+  line-height: 32px;
+`;

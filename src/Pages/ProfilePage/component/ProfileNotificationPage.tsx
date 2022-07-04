@@ -28,6 +28,7 @@ const ProfileNotificationPage = (): JSX.Element => {
   const [bids, setBids] = useState<boolean>(false);
   const [newFollow, setNewFollow] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
+  const [firstAnimeNews, setFirstAnimeNews] = useState<boolean>(false);
 
   const [ifLoading, setLoading] = useState<boolean>(false);
 
@@ -37,6 +38,7 @@ const ProfileNotificationPage = (): JSX.Element => {
     setBids(loginUser ? loginUser.interactionBids : false);
     setNewFollow(loginUser ? loginUser.interactionNewFollowers : false);
     setMessage(loginUser ? loginUser.interactionMessages : false);
+    setFirstAnimeNews(loginUser ? loginUser.interactionFirstAnimeNews : false);
   }, [loginUser]);
 
   const updateUser = async () => {
@@ -66,8 +68,7 @@ const ProfileNotificationPage = (): JSX.Element => {
       interactionBids: bids,
       interactionNewFollowers: newFollow,
       interactionMessages: message,
-      interactionFirstAnimeNews:
-        loginUser != undefined ? loginUser?.interactionFirstAnimeNews : false,
+      interactionFirstAnimeNews: firstAnimeNews,
       shipAddress: loginUser?.shipAddress ? loginUser?.shipAddress : "",
       shipCity: loginUser?.shipCity ? loginUser?.shipCity : "",
       shipSuburb: loginUser?.shipSuburb ? loginUser?.shipSuburb : "",
@@ -147,7 +148,14 @@ const ProfileNotificationPage = (): JSX.Element => {
           </NotificationCheckBox>
           <NotificationSystemNews>
             <h6>System News</h6>
-            <Checkbox>Be the first to get anime news</Checkbox>
+            <Checkbox
+              checked={firstAnimeNews}
+              onClick={(e) => {
+                setFirstAnimeNews((e.target as any).checked);
+              }}
+            >
+              Be the first to get anime news
+            </Checkbox>
           </NotificationSystemNews>
           <ContactSubmitButtonDiv>
             <AnimeButton

@@ -565,7 +565,6 @@ export const PriceInput = styled.div`
 
 export const MarketPriceDiv = styled.div`
   margin-top: 24px;
-  padding: 28px 0px;
   width: 70%;
   margin: 0px auto;
 `;

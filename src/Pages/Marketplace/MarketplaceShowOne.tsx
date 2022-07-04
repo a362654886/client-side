@@ -1482,7 +1482,11 @@ const MarketplaceShowOne = (): JSX.Element => {
             </LoadingBidImg>
           ) : (
             <>
-              <MarketPriceDiv>{getMarketPricesDiv()}</MarketPriceDiv>
+              {marketPrices.length > 0 ? (
+                <MarketPriceDiv>{getMarketPricesDiv()}</MarketPriceDiv>
+              ) : (
+                <></>
+              )}
               {bidLoading ? (
                 <LoadingBidImg>
                   <img src={loading} />
@@ -1494,6 +1498,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           )}
         </MarketBodyDiv>
         <EpisodesComments
+          style={{ marginTop: "0px" }}
           onClick={() => {
             setCommentShow(!commentShow);
           }}
@@ -1505,7 +1510,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           />
         </EpisodesComments>
         {commentShow ? (
-          <>
+          <div style={{ marginBottom: "16px" }}>
             {getAddReplyBox()}
             {getShowcaseReplies(replies, new Date(parseInt(para.id)))}
             {replies.length < count ? (
@@ -1518,7 +1523,7 @@ const MarketplaceShowOne = (): JSX.Element => {
             ) : (
               <></>
             )}
-          </>
+          </div>
         ) : (
           <></>
         )}
