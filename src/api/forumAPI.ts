@@ -135,13 +135,17 @@ export const forumSecondDelete = async (
 export const forumsAllGet = async (
   anime: string,
   page: number,
-  pageSize: number
+  pageSize: number,
+  forumId?: string
 ): Promise<{
   result: ForumType[];
   count: number;
 } | null> => {
   const endpoint =
-    basicURL + `forumsGet?animeId=${anime}&page=${page}&pageSize=${pageSize}`;
+    basicURL +
+    `forumsGet?animeId=${anime}&page=${page}&pageSize=${pageSize}&forumId=${
+      forumId ? forumId : ""
+    }`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;

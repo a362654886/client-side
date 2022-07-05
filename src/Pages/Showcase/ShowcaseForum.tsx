@@ -26,6 +26,7 @@ import {
   ShowcaseImage,
   ShowcaseMoreButtonDiv,
   ShowcaseReply,
+  ShowcaseSignalPageP,
   ShowcaseSource,
   ShowcaseTaDiv,
   ShowcaseTag,
@@ -86,13 +87,19 @@ import { formatName } from "../../helperFns/nameFn";
 import { openNewWindow } from "../../helperFns/windowsFn";
 import { ReportContextType } from "../../types/blockType";
 import TextArea from "antd/lib/input/TextArea";
+import { windowLink } from "../../globalValues";
 
 interface IProps {
   showcases: ShowCaseType[];
   editLink: boolean;
+  showLink?: boolean;
 }
 
-const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
+const ShowcaseForum = ({
+  showcases,
+  editLink,
+  showLink,
+}: IProps): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -1091,6 +1098,19 @@ const ShowcaseForum = ({ showcases, editLink }: IProps): JSX.Element => {
               <></>
             )}
           </div>
+          {showLink ? (
+            <ShowcaseSignalPageP
+              onClick={() =>
+                openNewWindow(
+                  `${windowLink}/showcase/showcaseSignalPage/${showcase._id}`
+                )
+              }
+            >
+              {`${windowLink}/showcaseSignalPage/${showcase._id}`}
+            </ShowcaseSignalPageP>
+          ) : (
+            <></>
+          )}
         </ShowIframe>
       );
     });

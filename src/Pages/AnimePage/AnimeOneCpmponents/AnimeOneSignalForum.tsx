@@ -59,10 +59,7 @@ import editIcon from "../../../files/editIcon.svg";
 import deleteIcon from "../../../files/deleteIcon.svg";
 import arrows from "../../../files/arrows.svg";
 import forumMore from "../../../files/forumMore.svg";
-import getMoreImg from "../../../files/getMore.svg";
 import { Spin } from "antd";
-import { MoreRight } from "../../../cssJs/basicCss";
-import moreRightImg from "../../../files/moreRightArrow.svg";
 import SettingImg from "../../../components/SettingImg";
 import ProfileWrapperDiv from "../../../components/ProfileWrapperDiv";
 import { _getDate } from "../../../helperFns/timeFn";
@@ -78,6 +75,13 @@ import { DiscoveryHead } from "../../../cssJs/AnimePage/AnimeOneCss";
 import { ShowcaseSignalPageP } from "../../../cssJs/ShowCasePage/showCaseCss";
 import { openNewWindow } from "../../../helperFns/windowsFn";
 import { windowLink } from "../../../globalValues";
+import { useParams } from "react-router-dom";
+import { animeOneGet } from "../../../api/animeAPI";
+import { ANIME_ADD } from "../../../redux/anime";
+
+interface Para {
+  id: string;
+}
 
 interface IProps {
   anime: Anime | null;
@@ -89,7 +93,17 @@ interface IProps {
   showLink?: boolean;
 }
 
-const AnimeOneForum = ({
+const getForumId = (propId: string) => {
+  const paraArr = propId.split("&");
+  return paraArr[1].replace("forumId=", "");
+};
+
+const getAnimeId = (propId: string) => {
+  const paraArr = propId.split("&");
+  return paraArr[0].replace("animeId=", "");
+};
+
+const AnimeOneSignalForum = ({
   anime,
   pageSizeSetting,
   ifShowHeader,
@@ -98,6 +112,8 @@ const AnimeOneForum = ({
   discovery,
   showLink,
 }: IProps): JSX.Element => {
+  const para: Para = useParams();
+
   const dispatch = useDispatch();
 
   const loginUser: User | null = useSelector(
@@ -113,7 +129,6 @@ const AnimeOneForum = ({
   const [newItemHtml, setNewItemHtml] = useState<string[]>([]);
   const [newSecondItemHtml, setNewSecondItemHtml] = useState<string[][]>([[]]);
   const [showPost, setShowPost] = useState<boolean>(false);
-  const [pageNum, setPageNum] = useState<number>(1);
   const [update, setUpdate] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
@@ -123,23 +138,16 @@ const AnimeOneForum = ({
   const pageSize = pageSizeSetting;
 
   useEffect(() => {
-    if (pageNum > 1) {
-      (async function anyNameFunction() {
-        await getForums();
-      })();
-      const newArr: string[][] = [[]];
-      for (let k = 0; k < forums.length; k++) {
-        newArr.push([]);
-        const l = forums[k].items;
-        if (l) {
-          for (let j = 0; j < l.length; j++) {
-            newArr[k].push("");
-          }
-        }
-      }
-      setNewSecondItemHtml(newArr);
-    }
-  }, [pageNum]);
+    (async function anyNameFunction() {
+      console.log(getAnimeId(para.id));
+      const anime = await animeOneGet(getAnimeId(para.id));
+      console.log(anime);
+      dispatch({
+        payload: anime,
+        type: ANIME_ADD,
+      });
+    })();
+  }, []);
 
   useEffect(() => {
     if (chooseAnime != null || discovery) {
@@ -164,26 +172,13 @@ const AnimeOneForum = ({
     //console.log(forums);
   }, [forums, update]);
 
-  const getForums = async () => {
-    setLoading(true);
-    const forumResult = await forumsAllGet(
-      discovery ? "" : chooseAnime ? chooseAnime._id : "",
-      pageNum,
-      pageSize
-    );
-    if (forumResult && forums.length < forumResult.count) {
-      setForums(forums.concat(forumResult.result));
-      setCount(forumResult.count);
-    }
-    setLoading(false);
-  };
-
   const getIniForums = async () => {
     setLoading(true);
     const forumResult = await forumsAllGet(
       discovery ? "" : chooseAnime ? chooseAnime._id : "",
-      pageNum,
-      pageSize
+      1,
+      1,
+      getForumId(para.id)
     );
     if (forumResult) {
       setForums(forumResult.result);
@@ -974,17 +969,9 @@ const AnimeOneForum = ({
           </div>
           {showLink ? (
             <ShowcaseSignalPageP
-              onClick={() =>
-                openNewWindow(
-                  `${windowLink}/animeOneForum/animeId=${
-                    chooseAnime ? chooseAnime._id : ""
-                  }&forumId=${forum._id}`
-                )
-              }
+              onClick={() => openNewWindow(`${windowLink}/animeOneForum`)}
             >
-              {`${windowLink}/animeOneForum/animeId=${
-                chooseAnime ? chooseAnime._id : ""
-              }&forumId=${forum._id}`}
+              {`${windowLink}/animeOneForum`}
             </ShowcaseSignalPageP>
           ) : (
             <></>
@@ -1330,11 +1317,6 @@ const AnimeOneForum = ({
     );
   };
 
-  const getMore = () => {
-    const newPage = pageNum + 1;
-    setPageNum(newPage);
-  };
-
   const getLoading = () =>
     loading ? (
       <LoadingImgDiv>
@@ -1365,34 +1347,8 @@ const AnimeOneForum = ({
       {getAddBox()}
       {getExistForums()}
       {getLoading()}
-      {(ifShowAdd && ifShowHeader && count > 0) ||
-      (!ifShowAdd && !ifShowHeader) ? (
-        <>
-          {forums.length < count ? (
-            <MoreButtonDiv onClick={() => getMore()}>
-              <div>
-                <img src={`${getMoreImg}`} />
-                <p>Load More</p>
-              </div>
-            </MoreButtonDiv>
-          ) : (
-            <></>
-          )}
-        </>
-      ) : forums.length > 0 ? (
-        <>
-          <MiddleBiggerDiv>
-            <MoreRight onClick={() => (toForum ? toForum(3) : {})}>
-              <img src={moreRightImg} />
-              <p>More</p>
-            </MoreRight>
-          </MiddleBiggerDiv>
-        </>
-      ) : (
-        <>Welcome the first one.</>
-      )}
     </AnimOneForum>
   );
 };
 
-export default AnimeOneForum;
+export default AnimeOneSignalForum;

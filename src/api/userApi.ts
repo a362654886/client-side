@@ -106,7 +106,6 @@ export const userUpdateBlock = async (
   block: boolean,
   reason: string
 ): Promise<number> => {
-  console.log(block);
   const endpoint = basicURL + "userUpdateBlock";
   return Axios.put(endpoint, {
     body: {

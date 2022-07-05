@@ -405,6 +405,12 @@ export const ShowcaseMoreButtonDiv = styled.div`
   }
 `;
 
+export const ShowcaseSignalPageP = styled.p`
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+`;
+
 export const ReplyDiv = styled.div`
   display: flex;
   height: 32px;

@@ -45,7 +45,7 @@ const AdminHomeLinePage = ({
   }, [headLine, num]);
 
   useEffect(() => {
-    console.log(localHeadLine);
+    //console.log(localHeadLine);
   }, [localHeadLine]);
 
   const setIniHeadline = () => {

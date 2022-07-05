@@ -45,9 +45,10 @@ import { animeSourcesGet } from "../../../api/animeSourceAPI";
 
 interface IProps {
   toPage: (page: number) => void;
+  updateAnime: boolean;
 }
 
-const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
+const AnimeOnePage = ({ toPage, updateAnime }: IProps): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -70,11 +71,13 @@ const AnimeOnePage = ({ toPage }: IProps): JSX.Element => {
   useEffect(() => {
     const para = history.location.search.substring(1);
     (async function anyNameFunction() {
-      const anime = await animeOneGet(para);
-      dispatch({
-        payload: anime,
-        type: ANIME_ADD,
-      });
+      if (updateAnime) {
+        const anime = await animeOneGet(para);
+        dispatch({
+          payload: anime,
+          type: ANIME_ADD,
+        });
+      }
       const allSources = await animeSourcesGet();
       setWhereToWatches(allSources);
     })();

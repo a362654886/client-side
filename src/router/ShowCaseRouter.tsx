@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import EpisodeCreate from "../Pages/Showcase/EpisodeCreate";
 import EpisodeEdit from "../Pages/Showcase/EpisodeEdit";
 import ShowcaseCollectionOne from "../Pages/Showcase/ShowcaseCollectionOne";
+import ShowcaseSignalPage from "../Pages/Showcase/ShowcaseCollectionOneSignalPage";
 import ShowcaseCreate from "../Pages/Showcase/ShowcaseCreate";
 import ShowcaseMangaOne from "../Pages/Showcase/ShowcaseMagaOne";
 import ShowcaseMangaUpdate from "../Pages/Showcase/ShowcaseMangaUpdate";
@@ -31,6 +32,10 @@ const ShowCaseRouter = (): JSX.Element => {
         <Route
           component={ShowcaseCollectionOne}
           path="/showcase/showcaseCollectionOne/:id"
+        />
+        <Route
+          component={ShowcaseSignalPage}
+          path="/showcase/showcaseSignalPage/:id"
         />
         <Route
           component={ShowcaseMangaUpdate}

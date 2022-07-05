@@ -25,15 +25,16 @@ import moreRightImg from "../../files/moreRightArrow.svg";
 import { getWidth } from "../../helperFns/widthFn";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import AnimeOneSignalForum from "./AnimeOneCpmponents/AnimeOneSignalForum";
 
-const AnimeOne = (): JSX.Element => {
+const AnimeOneSignalPage = (): JSX.Element => {
   const history = useHistory();
 
   const chooseAnime: Anime | null = useSelector(
     (state: IStoreState) => state.animeState
   );
 
-  const [chooseButton, setChooseButton] = useState<number>(0);
+  const [chooseButton, setChooseButton] = useState<number>(6);
   const [allNews, setAllNews] = useState<NewType[]>([]);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const AnimeOne = (): JSX.Element => {
   };
 
   useEffect(() => {
-    //
+    console.log(chooseAnime);
   }, [chooseAnime, chooseButton]);
 
   const buttonsColor = [
@@ -127,7 +128,7 @@ const AnimeOne = (): JSX.Element => {
         return (
           <AnimeOnePage
             toPage={(page: number) => changeButton(page)}
-            updateAnime={true}
+            updateAnime={false}
           />
         );
       case 1:
@@ -170,6 +171,15 @@ const AnimeOne = (): JSX.Element => {
         return (
           <AnimeOneProductAdd
             toProduct={(num: number) => setChooseButton(num)}
+          />
+        );
+      case 6:
+        return (
+          <AnimeOneSignalForum
+            anime={chooseAnime}
+            pageSizeSetting={6}
+            ifShowHeader={true}
+            ifShowAdd={true}
           />
         );
       default:
@@ -261,4 +271,4 @@ const AnimeOne = (): JSX.Element => {
   );
 };
 
-export default AnimeOne;
+export default AnimeOneSignalPage;

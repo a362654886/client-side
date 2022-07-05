@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Route, Switch, useParams } from "react-router-dom";
 import AnimeOne from "../Pages/AnimePage/AnimeOne";
+import AnimeOneSignalPage from "../Pages/AnimePage/AnimeOneSignalPage";
 import AnimeShowPage from "../Pages/AnimePage/AnimeShowPage";
 import ContactUs from "../Pages/ContactUs";
 import Discovery from "../Pages/Discovery/Discovery";
@@ -28,6 +29,7 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={ProfilePage} path="/profilePage/:id" />
         <Route component={AnimeShowPage} path="/animelibrary" />
         <Route component={AnimeOne} path="/anime" />
+        <Route component={AnimeOneSignalPage} path="/animeOneForum/:id" />
         <Route component={Discovery} path="/explore" />
         <Route component={Showcase} path="/showcase" />
         <Route component={Marketplace} path="/marketplace" />

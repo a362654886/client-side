@@ -252,7 +252,11 @@ const ShowcaseShowCollection = (): JSX.Element => {
             <img src={`${loadingImg}`} />
           </LoadingImgDiv>
         ) : (
-          <ShowcaseForum showcases={allShowCases} editLink={true} />
+          <ShowcaseForum
+            showcases={allShowCases}
+            editLink={true}
+            showLink={true}
+          />
         )}
         {allShowCases.length < count ? (
           <MoreButtonDiv onClick={() => getMore()}>

@@ -52,7 +52,10 @@ export const actions = {
 //reducer
 const handlers = {
   ANIME_NONE: (state: Anime | null, action: AnimeNoneAction) => action.payload,
-  ANIME_ADD: (state: Anime | null, action: AnimeAddAction) => action.payload,
+  ANIME_ADD: (state: Anime | null, action: AnimeAddAction) => {
+    const anime = cloneDeep(action.payload);
+    return anime;
+  },
   ANIME_UPDATE_LIKE: (state: Anime | null, action: AnimeUpdateAction) => {
     const anime = cloneDeep(state);
     if (anime) {

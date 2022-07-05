@@ -251,7 +251,11 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
           </LoadingImgDiv>
         ) : (
           <>
-            <ShowcaseForum showcases={allShowCases} editLink={true} />
+            <ShowcaseForum
+              showcases={allShowCases}
+              editLink={true}
+              showLink={true}
+            />
           </>
         )}
 
