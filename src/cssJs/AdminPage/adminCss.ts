@@ -227,6 +227,7 @@ export const AdminReportTypeButtons = styled(Radio.Group)`
 
 export const AdminDataContentDiv = styled.div`
   display: "flex";
+  margin-bottom: 40px;
   label {
     width: 60px;
     margin-bottom: 0px;
@@ -236,4 +237,18 @@ export const AdminDataContentDiv = styled.div`
     margin-right: 12px;
     margin-left: 12px;
   }
+`;
+
+export const AdminDataItemsDiv = styled.div`
+  height: 40px;
+  border-bottom: 1px black solid;
+  width: 363px;
+  margin-top: 8px;
+`;
+
+export const AdminDataItemName = styled.label`
+  font-size: 16px;
+  width: 263px;
+  line-height: 32px;
+  font-weight: bold;
 `;

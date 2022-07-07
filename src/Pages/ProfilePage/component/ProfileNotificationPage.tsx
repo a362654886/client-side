@@ -78,6 +78,7 @@ const ProfileNotificationPage = (): JSX.Element => {
       blockTime: loginUser ? loginUser.blockTime : 0,
       blockReason: loginUser ? loginUser.blockReason : "",
       role: loginUser ? loginUser.role : "general",
+      registerTime: loginUser ? loginUser.registerTime : new Date().valueOf(),
     };
     setLoading(true);
     const r = await userUpdateNotification(readyUpdateUser);

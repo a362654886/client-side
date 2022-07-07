@@ -38,6 +38,7 @@ export type User = {
   blockTime: number;
   blockReason: string;
   role: string;
+  registerTime: number;
 };
 
 export type UserRate = {
