@@ -146,6 +146,7 @@ const Discovery = (): JSX.Element => {
             ifShowHeader={false}
             ifShowAdd={false}
             discovery={true}
+            showLink={true}
           />
         );
       default:

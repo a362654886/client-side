@@ -345,6 +345,7 @@ const AnimeOnePage = ({ toPage, updateAnime }: IProps): JSX.Element => {
         ifShowHeader={false}
         ifShowAdd={true}
         toForum={(num: number) => toPage(num)}
+        showLink={true}
       />
     </AnimOnePage>
   );

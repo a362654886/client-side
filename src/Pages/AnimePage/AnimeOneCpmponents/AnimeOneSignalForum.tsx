@@ -971,7 +971,7 @@ const AnimeOneSignalForum = ({
             <ShowcaseSignalPageP
               onClick={() => openNewWindow(`${windowLink}/animeOneForum`)}
             >
-              {`${windowLink}/animeOneForum`}
+              LINK
             </ShowcaseSignalPageP>
           ) : (
             <></>

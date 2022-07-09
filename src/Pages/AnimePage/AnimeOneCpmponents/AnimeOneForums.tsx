@@ -982,9 +982,7 @@ const AnimeOneForum = ({
                 )
               }
             >
-              {`${windowLink}/animeOneForum/animeId=${
-                chooseAnime ? chooseAnime._id : ""
-              }&forumId=${forum._id}`}
+              LINK
             </ShowcaseSignalPageP>
           ) : (
             <></>
