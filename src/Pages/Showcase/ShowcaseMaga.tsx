@@ -37,6 +37,7 @@ import {
   SHOWCASE_AWESOME_CANCEL,
 } from "../../redux/showcaseAwesome";
 import { ReportContextType } from "../../types/blockType";
+import { windowLink } from "../../globalValues";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -197,6 +198,7 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
                 marginTop="8px"
                 type={ReportContextType.SHOWCASE}
                 contextId={showcase._id}
+                resourceLink={`${windowLink}/showcase/showcaseSignalPage/${showcase._id}`}
               />
             </ShowAvatarDiv>
           </ShowcaseMangaHeader>

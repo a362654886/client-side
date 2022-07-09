@@ -94,6 +94,7 @@ const ProfileLevelPage = (): JSX.Element => {
                     marginTop="4px"
                     type={null}
                     contextId={null}
+                    resourceLink={``}
                   />
                 </NameSetting>
                 <NameIdDiv>

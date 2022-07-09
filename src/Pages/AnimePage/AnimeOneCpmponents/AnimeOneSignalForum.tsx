@@ -877,6 +877,9 @@ const AnimeOneSignalForum = ({
               marginTop="24px"
               type={ReportContextType.FORUM}
               contextId={forum._id}
+              resourceLink={`${windowLink}/animeOneForum/animeId=${
+                chooseAnime ? chooseAnime._id : ""
+              }&forumId=${forum._id}`}
             />
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
@@ -1011,6 +1014,9 @@ const AnimeOneSignalForum = ({
                 marginTop="24px"
                 type={ReportContextType.FORUM_ITEM}
                 contextId={forum._id}
+                resourceLink={`${windowLink}/animeOneForum/animeId=${
+                  chooseAnime ? chooseAnime._id : ""
+                }&forumId=${forum._id}`}
               />
               <ForumTime>{_getDate(date)}</ForumTime>
             </div>
@@ -1168,6 +1174,9 @@ const AnimeOneSignalForum = ({
                   marginTop="24px"
                   type={ReportContextType.FORUM_SECOND_ITEM}
                   contextId={forum._id}
+                  resourceLink={`${windowLink}/animeOneForum/animeId=${
+                    chooseAnime ? chooseAnime._id : ""
+                  }&forumId=${forum._id}`}
                 />
                 <ForumTime>{_getDate(date)}</ForumTime>
               </div>

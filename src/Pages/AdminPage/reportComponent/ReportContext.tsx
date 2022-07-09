@@ -68,6 +68,7 @@ const ReportContext = (): JSX.Element => {
       });
     })();
     setBlockState(false);
+    console.log(reportBlock)
   }, [reportBlock]);
 
   useEffect(() => {
@@ -190,6 +191,7 @@ const ReportContext = (): JSX.Element => {
         state: state,
         reason: reportBlock.reason,
         uploadTime: reportBlock.uploadTime,
+        resourceLink: reportBlock.resourceLink,
       };
       const r = await blockUpdate(newReportBlock);
       if (r < 300) {
@@ -229,6 +231,9 @@ const ReportContext = (): JSX.Element => {
           {blockState ? "UnBlock" : "Block"}
         </Button>
       </div>
+      <p>
+        <a href={`${reportBlock?.resourceLink}`}>link</a>
+      </p>
       <AdminReportContextDiv style={{ marginLeft: "8px" }}>
         {reportContext}
       </AdminReportContextDiv>

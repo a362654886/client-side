@@ -179,7 +179,7 @@ const ProfileMallPage = (): JSX.Element => {
               {allDesignHistories?.map((item) => {
                 if (item.type == 3) {
                   return (
-                    <div style={{ position: "relative" }}>
+                    <div style={{ position: "relative", marginBottom: "24px" }}>
                       <p>{_getDate(new Date(item.uploadTime))}</p>
                       <ProfileDesignHistoryImg
                         src={
@@ -208,13 +208,11 @@ const ProfileMallPage = (): JSX.Element => {
                   );
                 } else if (item.type == 1) {
                   return (
-                    <div style={{ position: "relative" }}>
+                    <div style={{ position: "relative", marginBottom: "24px" }}>
                       <p>{_getDate(new Date(item.uploadTime))}</p>
                       <ProfileDesignHistoryImg
                         src={
-                          mallCustomer[item.type]
-                            ? mallCustomer[0].imgURL
-                            : ""
+                          mallCustomer[item.type] ? mallCustomer[0].imgURL : ""
                         }
                         style={{ height: getWidth() > 600 ? "600px" : "300px" }}
                       />
@@ -237,7 +235,7 @@ const ProfileMallPage = (): JSX.Element => {
                   );
                 } else {
                   return (
-                    <>
+                    <div style={{ marginBottom: "24px" }}>
                       <p>{_getDate(new Date(item.uploadTime))}</p>
                       <ProfileDesignHistoryImg
                         src={
@@ -257,7 +255,7 @@ const ProfileMallPage = (): JSX.Element => {
                           dangerouslySetInnerHTML={{ __html: item.value }}
                         ></div>
                       </ProfileDesignAttribute>
-                    </>
+                    </div>
                   );
                 }
               })}

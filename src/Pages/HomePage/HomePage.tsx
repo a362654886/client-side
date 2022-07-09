@@ -425,6 +425,7 @@ const HomePage = (): JSX.Element => {
               marginTop="24px"
               type={ReportContextType.PRODUCT}
               contextId={product._id}
+              resourceLink={``}
             />
           </ProductAvatarDiv>
           <TimeText>{`${date.getDate()}-${

@@ -34,6 +34,7 @@ interface IProps {
   marginTop: string;
   type: ReportContextType | null;
   contextId: string | null;
+  resourceLink: string;
 }
 
 const SettingImg = ({
@@ -43,6 +44,7 @@ const SettingImg = ({
   marginTop,
   type,
   contextId,
+  resourceLink,
 }: IProps): JSX.Element => {
   const dispatch = useDispatch();
 
@@ -124,7 +126,7 @@ const SettingImg = ({
       payload: id,
       type: REPORT_USER_UPDATE,
     });
-    const url = `/report?forumUserId=${id}&reportUserId=${loginUser?._id}&type=${type}&contextId=${contextId}`;
+    const url = `/report?forumUserId=${id}&reportUserId=${loginUser?._id}&type=${type}&contextId=${contextId}&resourceLink=${resourceLink}`;
     history.push(url);
   };
 

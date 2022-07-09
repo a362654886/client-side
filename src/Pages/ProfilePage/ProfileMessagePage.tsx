@@ -218,6 +218,7 @@ const ProfileMessagePage = (): JSX.Element => {
               marginTop="24px"
               type={null}
               contextId={null}
+              resourceLink={``}
             />
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
@@ -257,6 +258,7 @@ const ProfileMessagePage = (): JSX.Element => {
               marginTop="24px"
               type={null}
               contextId={null}
+              resourceLink={``}
             />
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
@@ -348,6 +350,7 @@ const ProfileMessagePage = (): JSX.Element => {
                   marginTop="4px"
                   type={null}
                   contextId={null}
+                  resourceLink={``}
                 />
               </NameSetting>
               <NameIdDiv>{`(ID: ${loginUser ? loginUser._id : ""})`}</NameIdDiv>

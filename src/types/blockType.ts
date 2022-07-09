@@ -7,6 +7,7 @@ export type ReportType = {
   state: string;
   reason: string;
   uploadTime: number;
+  resourceLink: string;
 };
 
 export type ReportShowType = {
@@ -22,6 +23,7 @@ export type ReportShowType = {
   reportUserName: string;
   forumUserAvatar: string;
   forumUserName: string;
+  resourceLink: string;
 };
 
 export enum ReportContextType {

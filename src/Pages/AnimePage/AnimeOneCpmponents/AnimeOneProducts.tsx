@@ -46,6 +46,7 @@ import { IfLoginCheck } from "../../../helperFns/loginCheck";
 import { getWidth } from "../../../helperFns/widthFn";
 import { formatName } from "../../../helperFns/nameFn";
 import { ReportContextType } from "../../../types/blockType";
+import { windowLink } from "../../../globalValues";
 
 interface IProps {
   anime: Anime | null;
@@ -243,6 +244,7 @@ const AnimeOneProducts = ({
                 marginTop="24px"
                 type={ReportContextType.PRODUCT}
                 contextId={product._id}
+                resourceLink={`${windowLink}/anime?${chooseAnime?._id}`}
               />
             </ProductAvatarDiv>
             <TimeMiddleText>{`${date.getDate()}-${

@@ -276,6 +276,7 @@ const ProfileFollowPage = (): JSX.Element => {
                       marginTop="4px"
                       type={null}
                       contextId={null}
+                      resourceLink={``}
                     />
                   </FollowElementProfileNameSetting>
                 </FollowElementProfileDiv>
@@ -341,6 +342,7 @@ const ProfileFollowPage = (): JSX.Element => {
                       marginTop="4px"
                       type={null}
                       contextId={null}
+                      resourceLink={``}
                     />
                   </FollowElementProfileNameSetting>
                 </FollowElementProfileDiv>
@@ -408,6 +410,7 @@ const ProfileFollowPage = (): JSX.Element => {
               marginTop="4px"
               type={null}
               contextId={null}
+              resourceLink={``}
             />
           </NameSetting>
           <NameIdDiv>{`(ID: ${user ? user._id : ""})`}</NameIdDiv>

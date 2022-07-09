@@ -113,6 +113,7 @@ import {
 } from "../../cssJs/AnimePage/AnimeOne/AnimeOneForumCss";
 import { IfLoginCheck } from "../../helperFns/loginCheck";
 import forumMore from "../../files/forumMore.svg";
+import { windowLink } from "../../globalValues";
 
 interface Para {
   id: string;
@@ -335,6 +336,7 @@ const MarketplaceShowOne = (): JSX.Element => {
               marginTop="8px"
               type={ReportContextType.MARKET}
               contextId={item._id}
+              resourceLink={`${windowLink}/marketplace/showOne//${marketState?._id}`}
             />
             <MarketItemTime style={{ marginTop: "4px" }}>
               {_getDate(new Date(item.uploadTime))}
@@ -864,6 +866,7 @@ const MarketplaceShowOne = (): JSX.Element => {
                   marginTop="8px"
                   type={ReportContextType.SHOWCASE_SECOND_REPLY}
                   contextId={showcaseSecondReply._id}
+                  resourceLink={`${windowLink}/marketplace/showOne//${marketState?._id}`}
                 />
                 <ShowTime>{`${date.getDate()}-${
                   date.getMonth() + 1
@@ -1052,6 +1055,7 @@ const MarketplaceShowOne = (): JSX.Element => {
                 marginTop="8px"
                 type={ReportContextType.SHOWCASE_REPLY}
                 contextId={reply ? reply._id : ""}
+                resourceLink={`${windowLink}/marketplace/showOne//${marketState?._id}`}
               />
               <ShowTime>{`${date.getDate()}-${
                 date.getMonth() + 1
@@ -1344,6 +1348,7 @@ const MarketplaceShowOne = (): JSX.Element => {
                 contextId={
                   marketState ? (marketState._id ? marketState._id : "") : ""
                 }
+                resourceLink={`${windowLink}/marketplace/showOne//${marketState?._id}`}
               />
               <MarketItemTime>{_getDate(new Date())}</MarketItemTime>
             </div>

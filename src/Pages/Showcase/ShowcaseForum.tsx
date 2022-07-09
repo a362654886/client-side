@@ -887,6 +887,7 @@ const ShowcaseForum = ({
               marginTop="8px"
               type={ReportContextType.SHOWCASE}
               contextId={showcase._id}
+              resourceLink={`${windowLink}/showcase/showcaseSignalPage/${showcase._id}`}
             />
             <ShowTime>{_getDate(date)}</ShowTime>
           </ShowAvatarDiv>
@@ -1149,6 +1150,7 @@ const ShowcaseForum = ({
                 marginTop="24px"
                 type={ReportContextType.SHOWCASE_REPLY}
                 contextId={reply._id}
+                resourceLink={`${windowLink}/showcase/showcaseSignalPage/${reply.showCaseId}`}
               />
               <ForumTime>{_getDate(date)}</ForumTime>
             </div>
@@ -1321,6 +1323,7 @@ const ShowcaseForum = ({
                   marginTop="24px"
                   type={ReportContextType.SHOWCASE_SECOND_REPLY}
                   contextId={showcaseSecondReply._id}
+                  resourceLink={`${windowLink}/showcase/showcaseSignalPage/${showcaseSecondReply.showCaseId}`}
                 />
                 <ForumTime>{_getDate(date)}</ForumTime>
               </div>

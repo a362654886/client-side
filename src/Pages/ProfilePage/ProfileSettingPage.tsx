@@ -178,6 +178,7 @@ const ProfileSettingPage = (): JSX.Element => {
                   marginTop="4px"
                   type={null}
                   contextId={null}
+                  resourceLink={``}
                 />
               </NameSetting>
               <NameIdDiv>{`(ID: ${loginUser ? loginUser._id : ""})`}</NameIdDiv>

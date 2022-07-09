@@ -47,6 +47,7 @@ import ReactPlayer from "react-player";
 import { cloneDeep } from "lodash";
 import { formatName } from "../../../helperFns/nameFn";
 import { ReportContextType } from "../../../types/blockType";
+import { windowLink } from "../../../globalValues";
 
 interface IProps {
   anime: Anime | null;
@@ -208,6 +209,7 @@ const AnimeOneVideo = ({
             marginTop="24px"
             type={ReportContextType.VIDEO}
             contextId={video._id}
+            resourceLink={`${windowLink}/anime?${chooseAnime?._id}`}
           />
         </VideoBottom>
         {discovery ? <></> : getDeleteButton(video)}

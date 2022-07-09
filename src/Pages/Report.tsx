@@ -97,6 +97,7 @@ const Report = (): JSX.Element => {
         state: "pending",
         reason: checkedList.toString(),
         uploadTime: timeString.valueOf(),
+        resourceLink: urlPamaObj["resourceLink"],
       };
       dispatch({
         payload: LoadingType.OPEN,
@@ -138,7 +139,9 @@ const Report = (): JSX.Element => {
                 }`}
               />
               <UserNameText>
-                {user ? `${ formatName(user.showName?user.showName:"")}` : ""}
+                {user
+                  ? `${formatName(user.showName ? user.showName : "")}`
+                  : ""}
                 <Flag
                   style={{ marginLeft: "5px" }}
                   country={flagGet(user ? user.country : "")}
@@ -156,6 +159,7 @@ const Report = (): JSX.Element => {
           marginTop="24px"
           type={null}
           contextId={null}
+          resourceLink={""}
         />
       </ReportUserDiv>
       <CheckBoxDiv>

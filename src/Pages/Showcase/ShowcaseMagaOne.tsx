@@ -99,6 +99,7 @@ import { SHOWCASE_MANGA_ADD } from "../../redux/showcaseManga";
 import { cloneDeep } from "lodash";
 import forumMore from "../../files/forumMore.svg";
 import { ReportContextType } from "../../types/blockType";
+import { windowLink } from "../../globalValues";
 
 interface Para {
   id: string;
@@ -452,6 +453,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
               marginTop="8px"
               type={ReportContextType.SHOWCASE_REPLY}
               contextId={showCase ? showCase._id : ""}
+              resourceLink={`${windowLink}/showcase/showcaseSignalPage/${
+                showCase ? showCase._id : ""
+              }`}
             />
           </ShowAvatarDiv>
         </ShowcaseMangaHeader>
@@ -835,6 +839,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 marginTop="8px"
                 type={ReportContextType.SHOWCASE_REPLY}
                 contextId={reply ? reply._id : ""}
+                resourceLink={`${windowLink}/showcase/showcaseSignalPage/${
+                  reply ? reply.showCaseId : ""
+                }`}
               />
               <ShowTime>{`${date.getDate()}-${
                 date.getMonth() + 1
@@ -1175,6 +1182,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
                   marginTop="8px"
                   type={ReportContextType.SHOWCASE_SECOND_REPLY}
                   contextId={showcaseSecondReply._id}
+                  resourceLink={`${windowLink}/showcase/showcaseSignalPage/${
+                    showcaseSecondReply ? showcaseSecondReply.showCaseId : ""
+                  }`}
                 />
                 <ShowTime>{`${date.getDate()}-${
                   date.getMonth() + 1
