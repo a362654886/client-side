@@ -8,4 +8,5 @@ export type Product = {
   userAvatar: string;
   userName: string;
   userCountry?: string;
+  hide: boolean;
 };

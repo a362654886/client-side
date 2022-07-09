@@ -9,10 +9,11 @@ export type Video = {
   userAvatar: string;
   userName: string;
   userCountry?: string;
+  hide: boolean;
 };
 
 export enum VideoType {
   Embed = "Embed",
   Link = "Link",
-  LinkError = 'LinkError'
+  LinkError = "LinkError",
 }

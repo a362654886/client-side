@@ -188,6 +188,7 @@ const ShowcaseMangaUpdate = (): JSX.Element => {
         title: title,
         description: description,
         aweSome: showCaseManga.aweSome,
+        hide: false,
       };
       dispatch({
         payload: LoadingType.OPEN,

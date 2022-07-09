@@ -175,6 +175,7 @@ const MarketplaceEdit = (): JSX.Element => {
           num: -1,
         };
       }),
+      hide: false,
     };
     dispatch({
       payload: LoadingType.OPEN,

@@ -16,6 +16,7 @@ export type MarketType = {
   userName?: string;
   userCountry?: string;
   tags: TagType[] | undefined;
+  hide: boolean;
 };
 
 export type MarketPriceType = {

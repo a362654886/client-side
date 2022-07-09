@@ -205,7 +205,9 @@ const MarketplaceShow = (): JSX.Element => {
   };
 
   const getExistMarket = () => (
-    <>{getMarketDiv(allMarket ? allMarket : null)}</>
+    <>
+      {getMarketDiv(allMarket ? allMarket.filter((item) => !item.hide) : null)}
+    </>
   );
 
   const getLoading = () =>

@@ -275,6 +275,7 @@ const ShowcaseForum = ({
           .toUpperCase()}`,
         userCountry: loginUser.country,
         fullItems: true,
+        hide: false,
       };
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
@@ -320,6 +321,7 @@ const ShowcaseForum = ({
           .substring(0, 1)
           .toUpperCase()}`,
         userCountry: loginUser.country,
+        hide: false,
       };
       const r = await showCaseSecondReplyAdd(secondShowcase);
       if (r && r < 300) {
@@ -860,7 +862,9 @@ const ShowcaseForum = ({
   const getExistShowcases = () =>
     allShowCases.map((showcase, index) => {
       const date = new Date(parseInt(showcase._id));
-      return (
+      return showcase.hide ? (
+        <></>
+      ) : (
         <ShowIframe key={index}>
           <ShowAvatarDiv>
             <ProfileWrapperDiv
@@ -1064,7 +1068,9 @@ const ShowcaseForum = ({
             <AnimeButton
               para=""
               text={`Replies(${
-                showcase.replies ? showcase.replies.length : 0
+                showcase.replies
+                  ? showcase.replies.filter((item) => !item.hide).length
+                  : 0
               })`}
               width="81px"
               height="22px"
@@ -1107,7 +1113,7 @@ const ShowcaseForum = ({
                 )
               }
             >
-              {`${windowLink}/showcaseSignalPage/${showcase._id}`}
+              LINK
             </ShowcaseSignalPageP>
           ) : (
             <></>
@@ -1122,7 +1128,9 @@ const ShowcaseForum = ({
     index: number
   ) => {
     return replies.map((reply, secondIndex) => {
-      return (
+      return reply.hide ? (
+        <></>
+      ) : (
         <>
           <ReplyBox key={secondIndex}>
             <div style={{ display: "flex" }}>
@@ -1226,7 +1234,9 @@ const ShowcaseForum = ({
                 <AnimeButton
                   para=""
                   text={`Replies(${
-                    reply.secondReplies ? reply.secondReplies.length : 0
+                    reply.secondReplies
+                      ? reply.secondReplies.filter((item) => !item.hide).length
+                      : 0
                   })`}
                   width="81px"
                   height="22px"
@@ -1293,7 +1303,9 @@ const ShowcaseForum = ({
   ) => {
     return showcaseReplies ? (
       showcaseReplies.map((showcaseSecondReply, thirdIndex) => {
-        return (
+        return showcaseSecondReply.hide ? (
+          <></>
+        ) : (
           <>
             <ReplySecondBox key={thirdIndex}>
               <div style={{ display: "flex" }}>

@@ -14,6 +14,7 @@ export type ForumType = {
   secondItems?: ForumSecondItem[];
   page?: number;
   fullItems?: boolean;
+  hide: boolean;
 };
 
 export type ForumItem = {
@@ -32,6 +33,7 @@ export type ForumItem = {
   secondItems?: ForumSecondItem[];
   page?: number;
   fullItems?: boolean;
+  hide: boolean;
 };
 
 export type ForumSecondItem = {
@@ -48,4 +50,5 @@ export type ForumSecondItem = {
   anime: string;
   edit?: boolean;
   reply?: boolean;
+  hide: boolean;
 };

@@ -87,6 +87,7 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        hide: false,
       };
       await popUpAPIResult<Promise<number | null>>(
         productAdd(product),

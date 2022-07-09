@@ -136,17 +136,21 @@ const AnimeOneProducts = ({
     const arr1: Product[] = [];
     const arr2: Product[] = [];
     const arr3: Product[] = [];
-    products?.forEach((product, index) => {
-      if ((index - 3) % 3 == 0 || index == 0) {
-        arr1.push(product);
-      }
-      if ((index - 3) % 3 == 1 || index == 1) {
-        arr2.push(product);
-      }
-      if ((index - 3) % 3 == 2 || index == 2) {
-        arr3.push(product);
-      }
-    });
+    if (products) {
+      products
+        .filter((item) => !item.hide)
+        .forEach((product, index) => {
+          if ((index - 3) % 3 == 0 || index == 0) {
+            arr1.push(product);
+          }
+          if ((index - 3) % 3 == 1 || index == 1) {
+            arr2.push(product);
+          }
+          if ((index - 3) % 3 == 2 || index == 2) {
+            arr3.push(product);
+          }
+        });
+    }
     setProductArr([arr1, arr2, arr3]);
   };
 

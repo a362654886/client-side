@@ -662,6 +662,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        hide: false,
       };
       const r = await showCaseSecondReplyAdd(secondShowcase);
       if (r && r < 300) {
@@ -811,7 +812,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
   const getShowcaseReplies = (replies: ShowCaseReply[], date: Date) => {
     return replies.map((reply, secondIndex) => {
-      return (
+      return reply.hide ? (
+        <></>
+      ) : (
         <>
           <ReplyBox key={secondIndex}>
             <ShowAvatarDiv>
@@ -920,7 +923,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
                 <AnimeButton
                   para=""
                   text={`Replies(${
-                    reply.secondReplies ? reply.secondReplies.length : 0
+                    reply.secondReplies
+                      ? reply.secondReplies.filter((item) => !item.hide).length
+                      : 0
                   })`}
                   width="81px"
                   height="22px"
@@ -1032,6 +1037,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           .toUpperCase()}`,
         userCountry: loginUser.country,
         fullItems: true,
+        hide: false,
       };
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
@@ -1152,7 +1158,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
   ) => {
     return showcaseReplies ? (
       showcaseReplies.map((showcaseSecondReply, thirdIndex) => {
-        return (
+        return showcaseSecondReply.hide ? (
+          <></>
+        ) : (
           <>
             <ReplySecondBox key={thirdIndex}>
               <ShowAvatarDiv>
@@ -1552,7 +1560,13 @@ const ShowcaseMangaOne = (): JSX.Element => {
               setCommentShow(!commentShow);
             }}
           >
-            <h6>{`Comments (${showCase?.replies?.length}) `}</h6>
+            <h6>{`Comments (${
+              showCase
+                ? showCase.replies
+                  ? showCase.replies.filter((item) => !item.hide).length
+                  : ""
+                : ""
+            }) `}</h6>
             <img
               style={{ height: "20px", width: "20px" }}
               src={`${switchIcon}`}

@@ -156,6 +156,7 @@ const ShowcaseCreate = (): JSX.Element => {
       title: title,
       description: description,
       aweSome: 0,
+      hide: false,
     };
     dispatch({
       payload: LoadingType.OPEN,

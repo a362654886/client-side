@@ -280,6 +280,7 @@ const AnimeOneForum = ({
           .toUpperCase()}`,
         userCountry: `${loginUser.country}`,
         anime: chooseAnime?._id as string,
+        hide: false,
       };
       const r = await forumAdd(forum);
       if (r && r < 300) {
@@ -327,6 +328,7 @@ const AnimeOneForum = ({
         userCountry: `${loginUser.country}`,
         anime: chooseAnime?._id as string,
         fullItems: true,
+        hide: false,
       };
       const r = await forumItemAdd(forumItem);
       if (r && r < 300) {
@@ -385,6 +387,7 @@ const AnimeOneForum = ({
           .toUpperCase()}`,
         userCountry: `${loginUser.country}`,
         anime: chooseAnime?._id as string,
+        hide: false,
       };
       const r = await forumSecondItemAdd(secondForumItem);
       if (r && r < 300) {
@@ -854,7 +857,9 @@ const AnimeOneForum = ({
   const getExistForums = () =>
     forums.map((forum, index) => {
       const date = new Date(forum.uploadTime);
-      return (
+      return forum.hide ? (
+        <></>
+      ) : (
         <ForumIframe key={index}>
           {discovery ? <DiscoveryHead>{forum.anime}</DiscoveryHead> : <></>}
           <div style={{ display: "flex", height: "72px" }}>
@@ -945,7 +950,11 @@ const AnimeOneForum = ({
           <ReplyButton onClick={() => openReply(index)}>
             <AnimeButton
               para=""
-              text={`Replies(${forum.items ? forum.items.length : 0})`}
+              text={`Replies(${
+                forum.items
+                  ? forum.items.filter((item) => !item.hide).length
+                  : 0
+              })`}
               width="81px"
               height="32px"
               textColor="#4BA3C3"
@@ -997,7 +1006,9 @@ const AnimeOneForum = ({
   const getForumItems = (forumItems: ForumItem[], index: number) => {
     return forumItems.map((forum, secondIndex) => {
       const date = new Date(forum.uploadTime);
-      return (
+      return forum.hide ? (
+        <></>
+      ) : (
         <>
           <ForumItemBox key={secondIndex}>
             <div style={{ display: "flex" }}>
@@ -1097,7 +1108,9 @@ const AnimeOneForum = ({
                 <AnimeButton
                   para=""
                   text={`Replies(${
-                    forum.secondItems ? forum.secondItems.length : 0
+                    forum.secondItems
+                      ? forum.secondItems.filter((item) => !item.hide).length
+                      : 0
                   })`}
                   width="81px"
                   height="32px"
@@ -1157,7 +1170,9 @@ const AnimeOneForum = ({
     return forumItems ? (
       forumItems.map((forum, thirdIndex) => {
         const date = new Date(forum.uploadTime);
-        return (
+        return forum.hide ? (
+          <></>
+        ) : (
           <>
             <ForumSecondItemBox key={thirdIndex}>
               <div style={{ display: "flex" }}>

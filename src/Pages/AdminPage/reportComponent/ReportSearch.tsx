@@ -84,9 +84,9 @@ const ReportSearch = (): JSX.Element => {
       payload: report,
       type: REPORT_BLOCK_UPDATE,
     });
-    setTimeout(()=>{
+    setTimeout(() => {
       openReportContextPath();
-    },500)
+    }, 500);
   };
 
   return (
@@ -116,7 +116,7 @@ const ReportSearch = (): JSX.Element => {
         value={searchType}
       >
         <Radio value={"pending"}>Pending</Radio>
-        <Radio value={"delete"}>Deleted</Radio>
+        <Radio value={"delete"}>Hided</Radio>
         <Radio value={"ignore"}>Ignored</Radio>
       </AdminReportTypeButtons>
       {allReports.map((report, index) => {
@@ -143,7 +143,9 @@ const ReportSearch = (): JSX.Element => {
               borderColor="black"
               buttonClick={() => toContextPage(report)}
             />
-            <ReportSearchState>{report.state}</ReportSearchState>
+            <ReportSearchState>
+              {report.state == "delete" ? "hide" : report.state}
+            </ReportSearchState>
           </ReportDiv>
         );
       })}

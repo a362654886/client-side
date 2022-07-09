@@ -234,46 +234,48 @@ const AnimeOneVideo = ({
   };
 
   const getExistVideos = () =>
-    videos.map((video, index) => {
-      //const date = new Date(video.uploadTime);
-      const videoLink =
-        getWidth() > 600
-          ? video.link.replace(
-              "<iframe",
-              "<iframe className='bi_iframe' width='808' height='580'"
-            )
-          : video.link.replace(
-              "<iframe",
-              "<iframe className='bi_iframe' width='200' height='400'"
-            );
-      return video.type == VideoType.Embed ? (
-        <VideoDiv key={index}>
-          {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
-          <VideoIframeDiv
-            style={{ height: getWidth() > 600 ? "600px" : "400px" }}
-            dangerouslySetInnerHTML={{ __html: videoLink }}
-          ></VideoIframeDiv>
-          {getBottomButton(video)}
-        </VideoDiv>
-      ) : (
-        <VideoDiv key={index}>
-          {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
-          {video.type == VideoType.Link ? (
-            linkWithEmbed(video, index)
-          ) : (
-            <h2
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                toOther(video.link);
-              }}
-            >
-              {video.title}
-            </h2>
-          )}
-          {getBottomButton(video)}
-        </VideoDiv>
-      );
-    });
+    videos
+      .filter((item) => !item.hide)
+      .map((video, index) => {
+        //const date = new Date(video.uploadTime);
+        const videoLink =
+          getWidth() > 600
+            ? video.link.replace(
+                "<iframe",
+                "<iframe className='bi_iframe' width='808' height='580'"
+              )
+            : video.link.replace(
+                "<iframe",
+                "<iframe className='bi_iframe' width='200' height='400'"
+              );
+        return video.type == VideoType.Embed ? (
+          <VideoDiv key={index}>
+            {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
+            <VideoIframeDiv
+              style={{ height: getWidth() > 600 ? "600px" : "400px" }}
+              dangerouslySetInnerHTML={{ __html: videoLink }}
+            ></VideoIframeDiv>
+            {getBottomButton(video)}
+          </VideoDiv>
+        ) : (
+          <VideoDiv key={index}>
+            {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
+            {video.type == VideoType.Link ? (
+              linkWithEmbed(video, index)
+            ) : (
+              <h2
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  toOther(video.link);
+                }}
+              >
+                {video.title}
+              </h2>
+            )}
+            {getBottomButton(video)}
+          </VideoDiv>
+        );
+      });
 
   const getMore = () => {
     const newPage = pageNum + 1;

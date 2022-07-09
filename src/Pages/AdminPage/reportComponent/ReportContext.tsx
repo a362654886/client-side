@@ -40,6 +40,7 @@ import { Button } from "antd";
 import { userUpdateBlock } from "../../../api/userApi";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
+import { openNewWindowPath } from "../../../helperFns/windowsFn";
 
 const ReportContext = (): JSX.Element => {
   const history = useHistory();
@@ -68,7 +69,7 @@ const ReportContext = (): JSX.Element => {
       });
     })();
     setBlockState(false);
-    console.log(reportBlock)
+    console.log(reportBlock);
   }, [reportBlock]);
 
   useEffect(() => {
@@ -231,8 +232,11 @@ const ReportContext = (): JSX.Element => {
           {blockState ? "UnBlock" : "Block"}
         </Button>
       </div>
-      <p>
-        <a href={`${reportBlock?.resourceLink}`}>link</a>
+      <p
+        style={{ color: "blue", marginLeft: "8px", cursor: "pointer" }}
+        onClick={() => openNewWindowPath(`${reportBlock?.resourceLink}`)}
+      >
+        Resource Link
       </p>
       <AdminReportContextDiv style={{ marginLeft: "8px" }}>
         {reportContext}
@@ -240,7 +244,7 @@ const ReportContext = (): JSX.Element => {
       <div style={{ marginLeft: "8px", display: "flex" }}>
         <AdminReportButton onClick={() => updateReport("delete")}>
           <img src={`${deleteIcon}`} />
-          <p>Delete</p>
+          <p>Hide</p>
         </AdminReportButton>
         <AdminReportButton
           style={{ marginLeft: "122px" }}

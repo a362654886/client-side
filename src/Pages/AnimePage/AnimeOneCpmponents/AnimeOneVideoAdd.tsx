@@ -90,6 +90,7 @@ const AnimeOneVideoAdd = ({ toVideo }: IProps): JSX.Element => {
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        hide: false,
       };
       dispatch({
         payload: LoadingType.OPEN,

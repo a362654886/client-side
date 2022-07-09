@@ -403,6 +403,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           .toUpperCase()}`,
         userCountry: loginUser.country,
         fullItems: true,
+        hide: false,
       };
       const r = await showCaseReplyAdd(showcaseReply);
       if (r && r < 300) {
@@ -597,6 +598,7 @@ const MarketplaceShowOne = (): JSX.Element => {
         userName: `${loginUser.firstName}.${loginUser.lastName
           .substring(0, 1)
           .toUpperCase()}`,
+        hide: false,
       };
       const r = await showCaseSecondReplyAdd(secondShowcase);
       if (r && r < 300) {

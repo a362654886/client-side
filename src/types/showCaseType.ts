@@ -21,6 +21,7 @@ export type ShowCaseType = {
   page?: number;
   fullItems?: boolean;
   episode?: number;
+  hide: boolean;
 };
 
 export type ShowCaseReply = {
@@ -38,6 +39,7 @@ export type ShowCaseReply = {
   secondReplies?: ShowSecondCaseReply[];
   page?: number;
   fullItems?: boolean;
+  hide: boolean;
 };
 
 export type ShowSecondCaseReply = {
@@ -53,7 +55,8 @@ export type ShowSecondCaseReply = {
   edit?: boolean;
   page?: number;
   fullItems?: boolean;
-  reply?:boolean
+  reply?: boolean;
+  hide: boolean;
 };
 
 export enum ShowCaseEnum {
