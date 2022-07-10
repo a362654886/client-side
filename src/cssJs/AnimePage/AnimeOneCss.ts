@@ -148,4 +148,5 @@ export const DiscoveryHead = styled.p`
   margin-bottom: 0px;
   padding-top: 16px;
   text-align: center;
+  cursor: pointer;
 `;

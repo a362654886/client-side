@@ -15,6 +15,7 @@ export type ForumType = {
   page?: number;
   fullItems?: boolean;
   hide: boolean;
+  animeName?: string;
 };
 
 export type ForumItem = {

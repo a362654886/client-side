@@ -118,6 +118,7 @@ export const ProductHeader = styled.p`
   color: #4a4a4a;
   text-align: left;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 export const ProductImgDiv = styled.img`

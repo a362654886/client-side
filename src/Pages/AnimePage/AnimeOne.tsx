@@ -185,7 +185,7 @@ const AnimeOne = (): JSX.Element => {
           name="keywords"
           content="anime videos, anime products, anime fans, anime community, anime social media, anime sharing resource"
         />
-        <meta name="description" content="anime information collection"></meta>
+        <meta name="description" content="Animepark.com is a social community for connecting anime fans and sharing various anime information. Talk about animation works. Share shopping channels for anime products. Post personal anime collections. Trade second-hand anime items. Publish original fan artworks."></meta>
       </Helmet>
       <AnimOne
         style={{

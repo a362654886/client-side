@@ -911,17 +911,19 @@ const ShowcaseForum = ({
                   </ShowCaseCreateImage>
                 );
               })}
-              <ImageUpload
-                width={"240px"}
-                height={"240px"}
-                textColor={"black"}
-                backGroundColor={"#F6F6F6"}
-                border={"1px solid #F6F6F6"}
-                text={""}
-                setImg={(value: ImageBody) => setNewImage(value, index)}
-                imageAdd={false}
-                margin={"20px auto"}
-              />
+              <div style={{ margin: "0px auto", width: "240px" }}>
+                <ImageUpload
+                  width={"240px"}
+                  height={"240px"}
+                  textColor={"black"}
+                  backGroundColor={"#F6F6F6"}
+                  border={"1px solid #F6F6F6"}
+                  text={""}
+                  setImg={(value: ImageBody) => setNewImage(value, index)}
+                  imageAdd={false}
+                  margin={"20px auto"}
+                />
+              </div>
               <TextArea
                 style={{ height: "200px" }}
                 value={showcase.text}

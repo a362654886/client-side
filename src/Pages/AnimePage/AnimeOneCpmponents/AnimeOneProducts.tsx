@@ -47,6 +47,7 @@ import { getWidth } from "../../../helperFns/widthFn";
 import { formatName } from "../../../helperFns/nameFn";
 import { ReportContextType } from "../../../types/blockType";
 import { windowLink } from "../../../globalValues";
+import { openNewWindow } from "../../../helperFns/windowsFn";
 
 interface IProps {
   anime: Anime | null;
@@ -255,7 +256,13 @@ const AnimeOneProducts = ({
               date.getMonth() + 1
             }-${date.getFullYear()}`}</TimeMiddleText>
             {discovery ? (
-              <ProductHeader>{product.anime}</ProductHeader>
+              <ProductHeader
+                onClick={() => {
+                  openNewWindow(`${windowLink}/anime?${product.anime}`);
+                }}
+              >
+                {product.animeName}
+              </ProductHeader>
             ) : (
               <div style={{ textAlign: "center" }}>
                 {getDeleteButton(product)}

@@ -861,7 +861,17 @@ const AnimeOneForum = ({
         <></>
       ) : (
         <ForumIframe key={index}>
-          {discovery ? <DiscoveryHead>{forum.anime}</DiscoveryHead> : <></>}
+          {discovery ? (
+            <DiscoveryHead
+              onClick={() => {
+                openNewWindow(`${windowLink}/anime?${forum.anime}`);
+              }}
+            >
+              {forum.animeName}
+            </DiscoveryHead>
+          ) : (
+            <></>
+          )}
           <div style={{ display: "flex", height: "72px" }}>
             <ProfileWrapperDiv
               userId={forum.userId}

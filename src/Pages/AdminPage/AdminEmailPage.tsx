@@ -55,14 +55,7 @@ const AdminEmailPage = (): JSX.Element => {
           payload: LoadingType.OPEN,
           type: LOADING_OPEN,
         });
-        const emails = await userEmailsGet(
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        );
+        const emails = await userEmailsGet(true, true, true, true, true, true);
         if (emails) {
           const newEmailAddress =
             cloneDeep(emailAddress) + emails.join(",") + ",";
@@ -77,9 +70,12 @@ const AdminEmailPage = (): JSX.Element => {
   }, [userAuthorized]);
 
   const submit = async () => {
-    const lastone = emailAddress.substr(emailAddress.length-1,1)
-    const emails = lastone==','?emailAddress.substr(0,emailAddress.length-1).split(","):emailAddress.split(",")
-    await emailsPost(emails,emailContext,emailTitle)
+    const lastone = emailAddress.substr(emailAddress.length - 1, 1);
+    const emails =
+      lastone == ","
+        ? emailAddress.substr(0, emailAddress.length - 1).split(",")
+        : emailAddress.split(",");
+    await emailsPost(emails, emailContext, emailTitle);
   };
 
   const uploadAddress = () => {

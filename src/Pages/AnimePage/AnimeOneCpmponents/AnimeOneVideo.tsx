@@ -48,6 +48,7 @@ import { cloneDeep } from "lodash";
 import { formatName } from "../../../helperFns/nameFn";
 import { ReportContextType } from "../../../types/blockType";
 import { windowLink } from "../../../globalValues";
+import { openNewWindow } from "../../../helperFns/windowsFn";
 
 interface IProps {
   anime: Anime | null;
@@ -250,7 +251,17 @@ const AnimeOneVideo = ({
               );
         return video.type == VideoType.Embed ? (
           <VideoDiv key={index}>
-            {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
+            {discovery ? (
+              <DiscoveryHead
+                onClick={() => {
+                  openNewWindow(`${windowLink}/anime?${video.anime}`);
+                }}
+              >
+                {video.animeName}
+              </DiscoveryHead>
+            ) : (
+              <></>
+            )}
             <VideoIframeDiv
               style={{ height: getWidth() > 600 ? "600px" : "400px" }}
               dangerouslySetInnerHTML={{ __html: videoLink }}
@@ -259,7 +270,17 @@ const AnimeOneVideo = ({
           </VideoDiv>
         ) : (
           <VideoDiv key={index}>
-            {discovery ? <DiscoveryHead>{video.anime}</DiscoveryHead> : <></>}
+            {discovery ? (
+              <DiscoveryHead
+                onClick={() => {
+                  openNewWindow(`${windowLink}/anime?${video.anime}`);
+                }}
+              >
+                {video.animeName}
+              </DiscoveryHead>
+            ) : (
+              <></>
+            )}
             {video.type == VideoType.Link ? (
               linkWithEmbed(video, index)
             ) : (

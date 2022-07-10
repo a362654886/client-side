@@ -9,4 +9,5 @@ export type Product = {
   userName: string;
   userCountry?: string;
   hide: boolean;
+  animeName?: string;
 };

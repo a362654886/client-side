@@ -38,6 +38,10 @@ const Discovery = (): JSX.Element => {
     (async function anyNameFunction() {
       await getNews();
     })();
+    const productPara = history.location.pathname;
+    if (productPara == "/explore/product") {
+      setChooseButton(1);
+    }
   }, []);
 
   const getNews = async () => {
@@ -162,7 +166,10 @@ const Discovery = (): JSX.Element => {
           name="keywords"
           content="anime trends, anime top 10, best anime, favorite anime, anime database, anime library, anime list, anime videos, anime products, anime fans"
         />
-        <meta name="description" content="anime information collection"></meta>
+        <meta
+          name="description"
+          content="Animepark.com is a social community for connecting anime fans and sharing various anime information. Talk about animation works. Share shopping channels for anime products. Post personal anime collections. Trade second-hand anime items. Publish original fan artworks."
+        ></meta>
       </Helmet>
       <AnimOne>
         <DiscoveryBox className="col-xl-9 col-lg-9 col-md-12 col-sm-12">

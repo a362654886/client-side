@@ -71,9 +71,10 @@ import "swiper/components/pagination/pagination.min.css";
 
 // import required modules
 import { ReportContextType } from "../../types/blockType";
-import { openNewWindowPath } from "../../helperFns/windowsFn";
+import { openNewWindow, openNewWindowPath } from "../../helperFns/windowsFn";
 
 import { Helmet } from "react-helmet";
+import { windowLink } from "../../globalValues";
 
 const HomePage = (): JSX.Element => {
   const history = useHistory();
@@ -315,7 +316,7 @@ const HomePage = (): JSX.Element => {
                 allHeadlines[index - 1 == -1 ? 2 : index - 1].title
               }`}</p>
             </div>
-            <div onClick={() => openNewWindowPath(headline.link)}>
+            <div onClick={() => openNewWindow(headline.link)}>
               <img src={`${headline.image}`} />
               <p>{headline.title}</p>
             </div>
@@ -345,7 +346,7 @@ const HomePage = (): JSX.Element => {
           className={"headlineImg"}
           key={index}
           style={{ cursor: "pointer" }}
-          onClick={() => openNewWindowPath(headline.link)}
+          onClick={() => openNewWindow(headline.link)}
         >
           <img src={`${headline.image}`} />
           <p>{headline.title}</p>
@@ -373,7 +374,14 @@ const HomePage = (): JSX.Element => {
                 backgroundColor: "#762324",
               }}
             >
-              <div style={{ width: "260px" }}>
+              <div
+                style={{ width: "260px", cursor: "pointer" }}
+                onClick={() => {
+                  openNewWindow(
+                    `${windowLink}/showcase/showcaseSignalPage/${showcase._id}`
+                  );
+                }}
+              >
                 <img
                   style={{ marginTop: `${marginTop}px` }}
                   src={`${showcase.imageArr[0]}`}
@@ -470,7 +478,14 @@ const HomePage = (): JSX.Element => {
   const getShowcasesDiv = () => {
     return allShowcases.map((showcase, index) => {
       return (
-        <ShowcaseHomeBox key={index}>
+        <ShowcaseHomeBox
+          key={index}
+          onClick={() => {
+            openNewWindow(
+              `${windowLink}/showcase/showcaseSignalPage/${showcase._id}`
+            );
+          }}
+        >
           <img src={`${showcase.imageArr[0]}`} />
         </ShowcaseHomeBox>
       );
@@ -487,7 +502,10 @@ const HomePage = (): JSX.Element => {
           name="keywords"
           content="anime, manga, comic, Japanese, animation, anime site, anime website, anime library, anime list, anime trends, anime news, anime market, anime products, anime community, anime social media"
         />
-        <meta name="description" content="anime information collection"></meta>
+        <meta
+          name="description"
+          content="Animepark.com is a social community for connecting anime fans and sharing various anime information. Talk about animation works. Share shopping channels for anime products. Post personal anime collections. Trade second-hand anime items. Publish original fan artworks."
+        ></meta>
       </Helmet>
       <HomePageDiv>
         <HomePageBodyDiv>
@@ -620,7 +638,7 @@ const HomePage = (): JSX.Element => {
               <HomeCenterDiv>
                 <MiddleHomeDiv>
                   <MarketPlaceMore
-                    onClick={() => history.push("/animelibrary")}
+                    onClick={() => history.push("/marketplace/show/null")}
                   >
                     <img src={moreRightImg} />
                     <p>View All</p>
@@ -641,7 +659,7 @@ const HomePage = (): JSX.Element => {
               <HomeCenterDiv>
                 <MiddleHomeDiv>
                   <MarketPlaceMore
-                    onClick={() => history.push("/animelibrary")}
+                    onClick={() => history.push("/marketplace/show/null")}
                   >
                     <img src={moreRightImg} />
                     <p>View All</p>
@@ -659,7 +677,7 @@ const HomePage = (): JSX.Element => {
               <HomeCenterDiv>
                 <MiddleHomeDiv>
                   <MarketPlaceMore
-                    onClick={() => history.push("/animelibrary")}
+                    onClick={() => history.push("/explore/product")}
                   >
                     <img src={moreRightImg} />
                     <p>View All</p>
@@ -680,7 +698,7 @@ const HomePage = (): JSX.Element => {
               <HomeCenterDiv>
                 <MiddleHomeDiv>
                   <MarketPlaceMore
-                    onClick={() => history.push("/animelibrary")}
+                    onClick={() => history.push("/explore/product")}
                   >
                     <img src={moreRightImg} />
                     <p>View All</p>

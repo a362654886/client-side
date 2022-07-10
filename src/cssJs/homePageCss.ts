@@ -129,10 +129,9 @@ export const HomePageAnimeDiv = styled.div`
 export const HomePageShowcaseDiv = styled.div`
   margin-top: 40px;
   text-align: center;
-  width:260px;
-  margin:0 auto;
-  .swiper-slide{
-    
+  width: 260px;
+  margin: 0 auto;
+  .swiper-slide {
   }
   img {
     width: 260px;
@@ -357,6 +356,7 @@ export const ShowcaseHomeBox = styled.div`
   height: auto;
   margin-right: 60px;
   padding: 0px;
+  cursor: pointer;
   img {
     width: 240px;
   }

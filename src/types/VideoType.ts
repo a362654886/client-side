@@ -10,6 +10,7 @@ export type Video = {
   userName: string;
   userCountry?: string;
   hide: boolean;
+  animeName?: string;
 };
 
 export enum VideoType {
