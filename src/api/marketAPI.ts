@@ -4,7 +4,9 @@ import { MarketPriceType, MarketType } from "../types/MarketType";
 
 const basicURL = backEndLink;
 
-export const marketAdd = async (market: MarketType): Promise<number | string> => {
+export const marketAdd = async (
+  market: MarketType
+): Promise<number | string> => {
   const endpoint = basicURL + "marketInsert";
   return Axios.post(endpoint, { marketBody: market })
     .then((response) => {
@@ -44,7 +46,10 @@ export const marketAllGet = async (
 } | null> => {
   const endpoint =
     basicURL +
-    `marketsGet?value=${value}&city=${city}&country=${country}&priceLow=${priceLow}&priceHeight=${priceHeight}&sortType=${sortType}&page=${page}&pageSize=${pageSize}&tag=${tag.replace("#","")}`;
+    `marketsGet?value=${value}&city=${city}&country=${country}&priceLow=${priceLow}&priceHeight=${priceHeight}&sortType=${sortType}&page=${page}&pageSize=${pageSize}&tag=${tag.replace(
+      "#",
+      ""
+    )}`;
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;
@@ -80,6 +85,17 @@ export const marketGet = async (id: string): Promise<MarketType | null> => {
   return Axios.get(endpoint)
     .then((response) => {
       return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const marketDelete = async (id: string): Promise<number | null> => {
+  const endpoint = basicURL + `marketDelete?marketId=${id}`;
+  return Axios.delete(endpoint)
+    .then((response) => {
+      return response.status;
     })
     .catch(() => {
       return null;

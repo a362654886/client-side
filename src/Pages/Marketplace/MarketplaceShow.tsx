@@ -139,7 +139,11 @@ const MarketplaceShow = (): JSX.Element => {
       tag
     );
     if (marketResult) {
-      setAllMarket(allMarket.concat(marketResult.markets));
+      setAllMarket(
+        page == 1
+          ? marketResult.markets
+          : allMarket.concat(marketResult.markets)
+      );
       setCount(marketResult.count);
     }
     setLoading(false);

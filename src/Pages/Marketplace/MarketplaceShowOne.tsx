@@ -39,6 +39,7 @@ import { Avatar, User } from "../../types/User";
 import { useDispatch, useSelector } from "react-redux";
 import { IStoreState } from "../../types/IStoreState";
 import {
+  marketDelete,
   marketGet,
   marketPriceInsert,
   marketPricesGetById,
@@ -423,6 +424,14 @@ const MarketplaceShowOne = (): JSX.Element => {
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,
     });
+  };
+
+  const deleteMarket = async () => {
+    if (marketState) {
+      const r = await marketDelete(marketState._id);
+      console.log(r);
+      history.push(`/marketplace/show/null`);
+    }
   };
 
   const getAddReplyBox = () => (
@@ -1276,9 +1285,9 @@ const MarketplaceShowOne = (): JSX.Element => {
                     <MarketTag key={index}>
                       <span
                         onClick={() => {
-                          /*toPage(
-                          `/showcase/showTag?tag=${tag.text.replace("#", "")}`
-                        );*/
+                          history.push({
+                            pathname: `/marketplace/show/${tag.text}`,
+                          });
                         }}
                       >
                         {tag.text}
@@ -1413,7 +1422,7 @@ const MarketplaceShowOne = (): JSX.Element => {
                     <p>Delete</p>
                   </>
                 }
-                deleteFn={() => console.log("delete")}
+                deleteFn={() => deleteMarket()}
               />
             </MarketEditAndDeleteDiv>
           ) : (

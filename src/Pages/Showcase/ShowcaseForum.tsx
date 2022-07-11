@@ -25,6 +25,7 @@ import {
   ShowcaseEditDiv,
   ShowcaseImage,
   ShowcaseMoreButtonDiv,
+  ShowcaseRadioDiv,
   ShowcaseReply,
   ShowcaseSignalPageP,
   ShowcaseSource,
@@ -34,6 +35,7 @@ import {
   ShowImg,
   ShowName,
   ShowTime,
+  TagRadioInput,
   TagSelect,
 } from "../../cssJs/ShowCasePage/showCaseCss";
 import {
@@ -64,7 +66,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { ReactQuillCss } from "../../cssJs/fullTextEditor";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
-import { Button, Input, Spin } from "antd";
+import { Button, Input, Radio, Space, Spin } from "antd";
 import arrows from "../../files/arrows.svg";
 import forumMore from "../../files/forumMore.svg";
 import ShareDiv from "../../components/ShareDiv";
@@ -929,13 +931,49 @@ const ShowcaseForum = ({
                 value={showcase.text}
                 onChange={(e) => editShowcaseText(index, e.target.value)}
               />
-              <ShowcaseEditDiv>
+              {/**
+               * 
+               * <ShowcaseEditDiv>
                 <p>Source: Original from</p>
                 <Input
                   value={showcase.source}
                   onChange={(e) => editShowcaseSource(index, e.target.value)}
                 />
               </ShowcaseEditDiv>
+               */}
+              <ShowcaseRadioDiv>
+                <Radio.Group
+                  onChange={(e) => editShowcaseSource(index, e.target.value)}
+                  value={
+                    showcase.source.indexOf("origin") == -1
+                      ? "source"
+                      : "origin"
+                  }
+                >
+                  <Space direction="vertical">
+                    <Radio value="origin">I am the Author.</Radio>
+                    <TagRadioInput value="source">
+                      <p>I am Not the Author. This is from</p>
+                      <Input
+                        placeholder={"Authors and/or Publishers"}
+                        defaultValue={
+                          showcase.source.indexOf("origin") == -1
+                            ? showcase.source.replace("source", "")
+                            : ""
+                        }
+                        onChange={(e) => {
+                          const value = showcase.source;
+                          const newValue = (value + e.target.value).replace(
+                            value,
+                            ""
+                          );
+                          editShowcaseSource(index, `source ${newValue}`);
+                        }}
+                      ></Input>
+                    </TagRadioInput>
+                  </Space>
+                </Radio.Group>
+              </ShowcaseRadioDiv>
               <ShowcaseEditDiv>
                 <p>Tag:</p>
                 <TagSelect

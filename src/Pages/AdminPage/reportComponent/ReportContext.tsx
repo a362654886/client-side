@@ -40,7 +40,10 @@ import { Button } from "antd";
 import { userUpdateBlock } from "../../../api/userApi";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
-import { openNewWindowPath } from "../../../helperFns/windowsFn";
+import {
+  openNewWindowBlank,
+  openNewWindowPath,
+} from "../../../helperFns/windowsFn";
 
 const ReportContext = (): JSX.Element => {
   const history = useHistory();
@@ -234,7 +237,7 @@ const ReportContext = (): JSX.Element => {
       </div>
       <p
         style={{ color: "blue", marginLeft: "8px", cursor: "pointer" }}
-        onClick={() => openNewWindowPath(`${reportBlock?.resourceLink}`)}
+        onClick={() => openNewWindowBlank(`${reportBlock?.resourceLink}`)}
       >
         Resource Link
       </p>

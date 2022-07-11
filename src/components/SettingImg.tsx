@@ -126,7 +126,12 @@ const SettingImg = ({
       payload: id,
       type: REPORT_USER_UPDATE,
     });
-    const url = `/report?forumUserId=${id}&reportUserId=${loginUser?._id}&type=${type}&contextId=${contextId}&resourceLink=${resourceLink}`;
+    const url = `/report?forumUserId=${id}&reportUserId=${
+      loginUser?._id
+    }&type=${type}&contextId=${contextId}&resourceLink=${resourceLink
+      .replace("=", "@20")
+      .replace("=", "@20")
+      .replace("&", "%%")}`;
     history.push(url);
   };
 

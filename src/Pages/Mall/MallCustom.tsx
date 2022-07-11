@@ -338,21 +338,19 @@ const MallCustom = (): JSX.Element => {
           />
         </div>
         <ButtonDiv>
-          <MiddleDiv>
-            <AnimeButton
-              para=""
-              text={"Get a Quote"}
-              width="120px"
-              height="32px"
-              textColor="white"
-              backGroundColor="#FFC300"
-              borderColor="#FFC300"
-              buttonClick={() => {
-                sendEmail();
-                sendDesignHistory();
-              }}
-            />
-          </MiddleDiv>
+          <AnimeButton
+            para=""
+            text={"Get a Quote"}
+            width="120px"
+            height="32px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="#FFC300"
+            buttonClick={() => {
+              sendEmail();
+              sendDesignHistory();
+            }}
+          />
         </ButtonDiv>
       </div>
       {mallCustomer[chooseIndex].radio == 2 / 4 && (

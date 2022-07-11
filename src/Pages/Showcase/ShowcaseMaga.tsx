@@ -169,7 +169,11 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
             {showcase.title ? showcase.title : ""}
           </ShowcaseMangaHeaderTitle>
           <ShowMangaIframeSource>
-            {showcase.source ? showcase.source : ""}
+            {showcase.source
+              ? showcase.source == "origin"
+                ? "Origin"
+                : `Source: ${showcase.source.replace("source", "")}`
+              : ""}
           </ShowMangaIframeSource>
           <ShowcaseMangaHeader>
             <ShowcaseMangaHeaderP>shared by </ShowcaseMangaHeaderP>

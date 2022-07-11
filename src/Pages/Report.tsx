@@ -97,7 +97,10 @@ const Report = (): JSX.Element => {
         state: "pending",
         reason: checkedList.toString(),
         uploadTime: timeString.valueOf(),
-        resourceLink: urlPamaObj["resourceLink"],
+        resourceLink: urlPamaObj["resourceLink"]
+          .replace("@20", "=")
+          .replace("@20", "=")
+          .replace("%%", "&"),
       };
       dispatch({
         payload: LoadingType.OPEN,

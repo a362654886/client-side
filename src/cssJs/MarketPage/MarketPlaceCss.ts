@@ -263,7 +263,7 @@ export const MarketFilterDiv = styled.div`
 
 export const MarketOneHotDiv = styled.div`
   width: 320px;
-  height: 150px;
+  height: auto;
   border: 10px solid #a0a0a0;
 `;
 

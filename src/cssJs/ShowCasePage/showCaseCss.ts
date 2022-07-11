@@ -512,12 +512,15 @@ export const ShowMangaIframe = styled.div`
   }
 `;
 
-export const ShowMangaIframeSource = styled.p`
+export const ShowMangaIframeSource = styled.label`
   font-family: "Arial MT";
   font-size: 16px;
   line-height: 32px;
   color: #302d46;
   margin-bottom: 0px;
+  background-color: #fae7d5;
+  width: 200px;
+  padding-left: 8px;
 `;
 
 export const ShowMangaMiddleButton = styled.div`

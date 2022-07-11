@@ -432,7 +432,11 @@ const ShowcaseMangaOne = (): JSX.Element => {
           {showCase ? showCase.title : ""}
         </ShowcaseMangaHeaderTitle>
         <ShowMangaIframeSource>
-          {showCase?.source ? showCase.source : ""}
+          {showCase?.source
+            ? showCase.source == "origin"
+              ? "Origin"
+              : `Source: ${showCase.source.replace("source", "")}`
+            : ""}
         </ShowMangaIframeSource>
         <ShowcaseMangaHeader>
           <ShowcaseMangaHeaderP>shared by </ShowcaseMangaHeaderP>

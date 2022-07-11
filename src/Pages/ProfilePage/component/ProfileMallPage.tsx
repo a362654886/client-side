@@ -187,15 +187,17 @@ const ProfileMallPage = (): JSX.Element => {
                             ? mallCustomer[item.type].imgURL
                             : ""
                         }
-                        style={{ height: getWidth() > 600 ? "600px" : "300px" }}
+                        style={{
+                          height: getWidth() > 1600 ? "600px" : "300px",
+                        }}
                       />
                       <img
                         style={{
-                          height: getWidth() > 600 ? "525px" : "262.5px",
+                          height: getWidth() > 1600 ? "525px" : "262.5px",
                           position: "absolute",
-                          left: getWidth() > 600 ? "90px" : "45px",
-                          top: getWidth() > 600 ? "85px" : "60px",
-                          width: getWidth() > 600 ? "345px" : "172.5px",
+                          left: getWidth() > 1600 ? "90px" : "45px",
+                          top: getWidth() > 1600 ? "85px" : "60px",
+                          width: getWidth() > 1600 ? "345px" : "172.5px",
                         }}
                         src={item.imageString}
                       />
@@ -214,15 +216,17 @@ const ProfileMallPage = (): JSX.Element => {
                         src={
                           mallCustomer[item.type] ? mallCustomer[0].imgURL : ""
                         }
-                        style={{ height: getWidth() > 600 ? "600px" : "300px" }}
+                        style={{
+                          height: getWidth() > 1600 ? "600px" : "300px",
+                        }}
                       />
                       <img
                         style={{
-                          height: getWidth() > 600 ? "325px" : "162.5px",
+                          height: getWidth() > 1600 ? "325px" : "162.5px",
                           position: "absolute",
-                          left: getWidth() > 600 ? "183px" : "91.5px",
-                          top: getWidth() > 600 ? "215px" : "147.5px",
-                          width: getWidth() > 600 ? "245px" : "122.5px",
+                          left: getWidth() > 1600 ? "183px" : "91.5px",
+                          top: getWidth() > 1600 ? "215px" : "147.5px",
+                          width: getWidth() > 1600 ? "245px" : "122.5px",
                         }}
                         src={item.imageString}
                       />
@@ -247,7 +251,7 @@ const ProfileMallPage = (): JSX.Element => {
                           backgroundImage: `url(${item.imageString})`,
                           backgroundSize: "contain",
                           backgroundRepeat: "no-repeat",
-                          height: getWidth() > 600 ? "600px" : "300px",
+                          height: getWidth() > 1600 ? "600px" : "300px",
                         }}
                       />
                       <ProfileDesignAttribute>

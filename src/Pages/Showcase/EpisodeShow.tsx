@@ -53,6 +53,10 @@ const EpisodeShow = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    console.log(scrollPosition);
+  }, [scrollPosition]);
+
+  useEffect(() => {
     (async function anyNameFunction() {
       dispatch({
         payload: LoadingType.OPEN,
@@ -135,7 +139,7 @@ const EpisodeShow = (): JSX.Element => {
     const result = ((scrollH / vaildH) * 100).toFixed(2);
     const totalPages = episode?.imageArr.length;
     const position = (parseFloat(result) * (totalPages ? totalPages : 0)) / 100;
-    setScrollPosition(parseInt(position.toString()));
+    setScrollPosition(isNaN(position) ? 1 : parseInt(position.toString()));
   };
 
   const prePage = async () => {
