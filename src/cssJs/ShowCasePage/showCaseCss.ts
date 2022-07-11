@@ -406,9 +406,9 @@ export const ShowcaseMoreButtonDiv = styled.div`
 `;
 
 export const ShowcaseSignalPageP = styled.p`
-  color: blue;
+  color: #4a4a4a;
   cursor: pointer;
-  text-decoration: underline;
+  font-size: 16px;
 `;
 
 export const ReplyDiv = styled.div`

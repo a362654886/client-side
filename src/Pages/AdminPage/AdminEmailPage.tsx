@@ -105,7 +105,7 @@ const AdminEmailPage = (): JSX.Element => {
               setManuallyAddress((e.target as any).checked);
             }}
           >
-            <p>{`Full in the address manually(separate by ',')`}</p>
+            <p>{`Fill in the address manually(separate by ',')`}</p>
           </Checkbox>
           <SCVUpload
             onWrongFormat={() => {
