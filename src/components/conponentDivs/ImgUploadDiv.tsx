@@ -57,6 +57,7 @@ const fileCheck = (file: File | undefined | null) => {
 };
 
 const ImgUploadDiv = ({ setImg }: IProps): JSX.Element => {
+  
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     let resultImg: ImageBody = {

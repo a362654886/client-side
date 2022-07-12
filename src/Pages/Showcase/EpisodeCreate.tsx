@@ -49,6 +49,7 @@ const EpisodeCreate = (): JSX.Element => {
   };
 
   const setNewImage = (imageBody: ImageBody) => {
+    console.log(imageBody)
     const exist = imgArr
       .map((image) => image.imgName)
       .indexOf(imageBody.imgName);

@@ -28,7 +28,7 @@ import {
 } from "../../cssJs/MarketPage/MarketPlaceCss";
 import { useHistory, useParams } from "react-router-dom";
 import { MarketType } from "../../types/MarketType";
-import { marketAllGet, marketAllGetByArr } from "../../api/marketAPI";
+import { marketAllGet } from "../../api/marketAPI";
 import marketSort from "../../files/marketSort.svg";
 import marketFilter from "../../files/marketFilter.svg";
 import iconSelect from "../../files/Icon-Selected.svg";
@@ -42,7 +42,6 @@ import { marketTagAllGet } from "../../api/tagAPI";
 import { TagType } from "../../types/tagType";
 import hotIcon from "../../files/MarketHotTags.svg";
 import { ShowcaseTagText } from "../../cssJs/ShowCasePage/showCaseCss";
-import { relative } from "path";
 
 export enum FilterEnum {
   Latest = "Latest",

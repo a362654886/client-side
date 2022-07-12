@@ -257,7 +257,7 @@ export const MarketSortPrice = styled.h3`
 
 export const MarketFilterDiv = styled.div`
   width: 320px;
-  height: 200px;
+  height: auto;
   border: 10px solid #a0a0a0;
 `;
 

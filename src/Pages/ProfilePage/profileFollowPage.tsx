@@ -83,8 +83,8 @@ const ProfileFollowPage = (): JSX.Element => {
         payload: LoadingType.OPEN,
         type: LOADING_OPEN,
       });
-      await getFollowers(para.id);
-      await getFollowing(para.id);
+      await getFollowers(para.id.replace("true", "").replace("false", ""));
+      await getFollowing(para.id.replace("true", "").replace("false", ""));
       dispatch({
         payload: LoadingType.CLOSE,
         type: LOADING_CLOSE,
@@ -106,14 +106,20 @@ const ProfileFollowPage = (): JSX.Element => {
   ]);
 
   useEffect(() => {
+    if (para.id.indexOf("false") !== -1) {
+      setChooseButton(1);
+    }
+  }, [para]);
+
+  useEffect(() => {
     (async function anyNameFunction() {
-      await getMoreFollowing(para.id);
+      await getMoreFollowing(para.id.replace("true", "").replace("false", ""));
     })();
   }, [followIngPage]);
 
   useEffect(() => {
     (async function anyNameFunction() {
-      await getMoreFollower(para.id);
+      await getMoreFollower(para.id.replace("true", "").replace("false", ""));
     })();
   }, [followersPage]);
 
@@ -179,7 +185,10 @@ const ProfileFollowPage = (): JSX.Element => {
 
   const getImage = () => {
     const user =
-      (loginUser ? loginUser._id : "") == para.id ? loginUser : profileUser;
+      (loginUser ? loginUser._id : "") ==
+      para.id.replace("true", "").replace("false", "")
+        ? loginUser
+        : profileUser;
     const imageArr = user ? user.avatarImage : null;
     return imageArr ? imageArr[0].imageUrl : "";
   };

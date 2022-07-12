@@ -434,7 +434,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
         <ShowMangaIframeSource>
           {showCase?.source
             ? showCase.source == "origin"
-              ? "Origin"
+              ? "Original"
               : `Source: ${showCase.source.replace("source", "")}`
             : ""}
         </ShowMangaIframeSource>

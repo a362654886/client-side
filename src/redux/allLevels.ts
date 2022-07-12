@@ -43,7 +43,7 @@ export const actions = {
 const handlers = {
   ALL_LEVELS_NONE: (state: AwesomeLevelType[] | null, action: AllLevel) => null,
   ALL_LEVELS_UPDATE: (state: AwesomeLevelType[] | null, action: AllLevel) =>
-    action.payload,
+    action.payload?.reverse(),
 };
 
 export const allLevelState = (

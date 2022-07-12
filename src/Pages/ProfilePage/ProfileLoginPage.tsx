@@ -300,7 +300,7 @@ const ProfileLoginPage = (): JSX.Element => {
       <SettingFollowDiv>
         <SettingFollowingDiv
           onClick={() => {
-            toPage(`/profileFollow/${loginUser?._id}`);
+            toPage(`/profileFollow/${loginUser?._id}true`);
           }}
         >
           <h6>
@@ -314,7 +314,7 @@ const ProfileLoginPage = (): JSX.Element => {
         </SettingFollowingDiv>
         <SettingFollowerDiv
           onClick={() => {
-            toPage(`/profileFollow/${loginUser?._id}`);
+            toPage(`/profileFollow/${loginUser?._id}false`);
           }}
         >
           <h6>{follow}</h6>

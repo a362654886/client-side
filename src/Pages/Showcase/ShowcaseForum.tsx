@@ -1007,6 +1007,16 @@ const ShowcaseForum = ({
                 borderColor="black"
                 buttonClick={() => editShowcase(index)}
               />
+              <p
+                style={{
+                  textAlign: "center",
+                  marginBottom: "0px",
+                  marginTop: "16px",
+                }}
+              >
+                Please indicate the source and author of the work if you share
+                the content created by others and are authorized
+              </p>
             </ShowcaseEditDiv>
           ) : (
             <>
@@ -1031,7 +1041,13 @@ const ShowcaseForum = ({
                 dangerouslySetInnerHTML={{ __html: showcase.text }}
               ></ReactQuillCss>
               <ShowcaseSource>
-                <p>{`Source: Original from ${showcase.source}`}</p>
+                <p>
+                  {showcase.source
+                    ? showcase.source == "origin"
+                      ? "Original"
+                      : `Source: ${showcase.source.replace("source", "")}`
+                    : ""}
+                </p>
               </ShowcaseSource>
               {showcase.tags.length > 0 ? (
                 <ShowcaseTaDiv>

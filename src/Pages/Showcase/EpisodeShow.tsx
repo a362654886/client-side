@@ -249,9 +249,7 @@ const EpisodeShow = (): JSX.Element => {
           <EpisodeShowFooterMiddle
             style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
           >
-            {`${scrollPosition + 1}/${
-              episode ? episode.imageArr.length + 1 : 0
-            }`}
+            {`${scrollPosition + 1}/${episode ? episode.imageArr.length : 0}`}
           </EpisodeShowFooterMiddle>
           <EpisodeShowFooterRight
             style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}

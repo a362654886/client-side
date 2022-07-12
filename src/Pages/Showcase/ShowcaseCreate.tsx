@@ -67,7 +67,7 @@ const ShowcaseCreate = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-   // console.log(tags);
+    // console.log(tags);
   }, [imgArr, tags]);
 
   const formatTag = (tagArr: string[]) => {
@@ -108,7 +108,8 @@ const ShowcaseCreate = (): JSX.Element => {
     }*/
     const newArr = [];
     imgArr.forEach((image) => newArr.push(image));
-    imageBody.imgName = exist == -1?imageBody.imgName:`${imageBody.imgName}New`
+    imageBody.imgName =
+      exist == -1 ? imageBody.imgName : `${imageBody.imgName}New`;
     newArr.push(imageBody);
     setImgArr(newArr);
   };
@@ -359,6 +360,10 @@ const ShowcaseCreate = (): JSX.Element => {
           />
         </CancelButton>
       </ShowcaseTextInput>
+      <p style={{ textAlign: "center" }}>
+        Please indicate the source and author of the work if you share the
+        content created by others and are authorized
+      </p>
       <CropImgBodyDiv
         uploadImg={uploadImg}
         setLoadImg={(imageBody: ImageBody) => {

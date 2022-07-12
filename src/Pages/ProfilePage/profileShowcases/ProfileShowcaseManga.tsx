@@ -125,7 +125,7 @@ const ProfileShowcaseManga = ({ profile }: IProps): JSX.Element => {
       payload: allShowCases[index],
       type: SHOWCASE_MANGA_ADD,
     });
-    history.push("/showcase/Manga");
+    history.push(`/showcase/Manga/${allShowCases[index]._id}`);
   };
 
   const getShocaseForums = () => {

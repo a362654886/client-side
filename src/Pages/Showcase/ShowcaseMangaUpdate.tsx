@@ -341,6 +341,14 @@ const ShowcaseMangaUpdate = (): JSX.Element => {
           />
         </CancelButton>
       </ShowcaseTextInput>
+      <p
+        style={{
+          textAlign: "center",
+        }}
+      >
+        Please indicate the source and author of the work if you share the
+        content created by others and are authorized
+      </p>
       <CropImgBodyDiv
         uploadImg={uploadImg}
         setLoadImg={(imageBody: ImageBody) => {

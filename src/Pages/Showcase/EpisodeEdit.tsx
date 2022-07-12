@@ -83,8 +83,9 @@ const EpisodeEdit = (): JSX.Element => {
   };
 
   const editEpisode = async () => {
+    const id: string = (history.location.state as any).type;
     const newEpisode: EpisodeType = {
-      _id: `${manga?._id}Episode${episodeNum}`,
+      _id: `${manga?._id}Episode${id}`,
       page: episodeNum,
       title: manga?.title ? manga?.title : "",
       mangaType: manga?._id ? manga?._id : "",
@@ -93,7 +94,7 @@ const EpisodeEdit = (): JSX.Element => {
       ),
     };
     await episodeUpdate(newEpisode);
-    history.push("/showcase/Manga");
+    history.push(`/showcase/Manga/${manga?._id}`);
   };
 
   return (
@@ -118,21 +119,23 @@ const EpisodeEdit = (): JSX.Element => {
             </EpisodeImage>
           );
         })}
-        <ImageUpload
-          width={"240px"}
-          height={"240px"}
-          textColor={"black"}
-          backGroundColor={"#F6F6F6"}
-          border={"1px solid #F6F6F6"}
-          text={"Image"}
-          setImg={(value: ImageBody) => setNewImage(value)}
-          margin={"15px 0px 0px 0px"}
-          imageAdd={false}
-        />
+        <MiddleDiv style={{ width: "240px" }}>
+          <ImageUpload
+            width={"240px"}
+            height={"240px"}
+            textColor={"black"}
+            backGroundColor={"#F6F6F6"}
+            border={"1px solid #F6F6F6"}
+            text={"Image"}
+            setImg={(value: ImageBody) => setNewImage(value)}
+            margin={"15px 0px 0px 0px"}
+            imageAdd={false}
+          />
+        </MiddleDiv>
         <div style={{ marginTop: "32px", marginBottom: "32px" }}>
           <AnimeButton
             para=""
-            text={"Edit"}
+            text={"Save"}
             width={"100%"}
             height={"36px"}
             textColor="white"
