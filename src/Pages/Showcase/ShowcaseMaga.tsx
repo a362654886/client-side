@@ -206,7 +206,7 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
               />
             </ShowAvatarDiv>
           </ShowcaseMangaHeader>
-          <p>{`Updated to Episode ${
+          <p style={{ marginBottom: "16px" }}>{`Updated to Episode ${
             showcase.episode ? showcase.episode : 0
           }`}</p>
           <ShowcaseMangaDescription>

@@ -482,6 +482,7 @@ export const ShowcaseMangaDescription = styled.p`
   width: 100%;
   max-width: 866px;
   word-wrap: break-word;
+  margin-bottom: 16px;
 `;
 
 export const ShowcaseMangaHeaderTitle = styled.h2`
