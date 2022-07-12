@@ -463,7 +463,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
             />
           </ShowAvatarDiv>
         </ShowcaseMangaHeader>
-        <p>{`Updated to Episode ${episodeNum}`}</p>
+        <p
+          style={{ marginBottom: "16px" }}
+        >{`Updated to Episode ${episodeNum}`}</p>
         <ShowcaseMangaDescription>
           {showCase ? showCase.description : ""}
         </ShowcaseMangaDescription>
@@ -512,7 +514,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
     if (page == 0 && episodeNum == 0) {
       return (
         <>
-          {loginUser ? (
+          {loginUser && loginUser?._id == manga?.userId ? (
             <EpisodesAddButton
               onClick={() => {
                 history.push("/showcase/episodeAdd");
@@ -545,7 +547,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
               </EpisodesGeneralButton>
               {`${pageNum}` == episodeNum.toString() ? (
                 <>
-                  {loginUser ? (
+                  {loginUser && loginUser?._id == manga?.userId ? (
                     <EpisodesAddButton
                       onClick={() => {
                         history.push("/showcase/episodeAdd");

@@ -46,7 +46,9 @@ const ShowcaseFollowing = ({ showcases, toMangaOne }: IProps): JSX.Element => {
             <></>
           )}
           <h2>{showcase.title ? showcase.title : ""}</h2>
-          <p>Updated to Episode 33</p>
+          <p style={{ marginBottom: "16px" }}>{`Updated to Episode ${
+            showcase.episode ? showcase.episode : 0
+          }`}</p>
           <ShowMangaMiddleButton>
             <AnimeButton
               para=""

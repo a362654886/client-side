@@ -47,13 +47,13 @@ const ProfileLevelPage = (): JSX.Element => {
     let levelTo = "";
     let find = false;
     if (allLevels) {
-      allLevels.forEach((level) => {
+      allLevels.forEach((level, index) => {
         if (
           find == false &&
           level.awesomeRequire > (loginUser ? loginUser.awesomeNum : 0)
         ) {
           find = true;
-          levelTo = level._id;
+          levelTo = allLevels[index + 1]._id;
         }
       });
     }
