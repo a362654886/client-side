@@ -43,7 +43,7 @@ const EpisodeCreate = (): JSX.Element => {
 
   useEffect(() => {
     //console.log(episodeNum);
-  }, [episodeNum]);
+  }, [episodeNum, imgArr]);
 
   const getEpisode = async () => {
     const episodeResult = await episodeGet(manga ? manga._id : "");
@@ -53,16 +53,15 @@ const EpisodeCreate = (): JSX.Element => {
   };
 
   const setNewImage = (imageBody: ImageBody) => {
-    console.log(imageBody);
     const exist = imgArr
       .map((image) => image.imgName)
       .indexOf(imageBody.imgName);
-    if (exist == -1) {
-      const newArr = [];
-      imgArr.forEach((image) => newArr.push(image));
-      newArr.push(imageBody);
-      setImgArr(newArr);
-    }
+    const newArr = [];
+    imgArr.forEach((image) => newArr.push(image));
+    imageBody.imgName =
+      exist == -1 ? imageBody.imgName : `${imageBody.imgName}New`;
+    newArr.push(imageBody);
+    setImgArr(newArr);
   };
 
   const deleteImg = (index: number) => {

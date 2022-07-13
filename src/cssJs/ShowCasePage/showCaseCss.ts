@@ -789,7 +789,8 @@ export const ShowcaseSideNum = styled.p`
 `;
 
 export const ShowcaseTagText = styled.h2`
-  height: 56px;
+  min-height: 56px;
+  height: auto;
   margin-top: 8px;
   margin-bottom: 8px;
   background-color: #c1eeff;
