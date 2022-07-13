@@ -14,7 +14,6 @@ import {
   PublishButtonsDiv,
 } from "../../cssJs/MarketPage/MarketPlaceCss";
 import lodash from "lodash";
-import add from "../../files/Add.svg";
 import TextArea from "antd/lib/input/TextArea";
 import AnimeButton, { MiddleDiv } from "../../components/Button";
 import { MarketType } from "../../types/MarketType";
@@ -23,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStoreState } from "../../types/IStoreState";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
-import { marketAdd, marketEditAsync, marketGet } from "../../api/marketAPI";
+import { marketEditAsync, marketGet } from "../../api/marketAPI";
 import { flagArr, flagGet, flagGetName } from "../../helperFns/flag";
 import Flag from "react-flagkit";
 import CropImgBodyDiv from "../../components/CropImgBodyDiv";
@@ -34,6 +33,12 @@ import {
   TagSelect,
   TagSelectDiv,
 } from "../../cssJs/ShowCasePage/showCaseCss";
+import blankMarket from "../../files/blankMarket.png";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 
 const { Option } = Select;
 
@@ -94,6 +99,10 @@ const MarketplaceEdit = (): JSX.Element => {
   useEffect(() => {
     //console.log(imgArr);
   }, [imgArr, state]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const setResizeUploadImg = (imageBody: ImageBody) => {
     const exist = imgArr
@@ -177,6 +186,31 @@ const MarketplaceEdit = (): JSX.Element => {
       }),
       hide: false,
     };
+    if (marketBody.title == "") {
+      openNotification(
+        "please input title value",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+    if (!marketBody.price || marketBody.price == 0) {
+      openNotification(
+        "please input price value",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+    if (marketBody.imageArr.length == 0) {
+      openNotification(
+        "please input at least one image",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
@@ -202,7 +236,7 @@ const MarketplaceEdit = (): JSX.Element => {
           <MarketImgDiv
             style={{
               width: getWidth() > 600 ? "610px" : "300px",
-              height: getWidth() > 600 ? "650px" : "1300px",
+              height: getWidth() > 600 ? "650px" : "1260px",
             }}
           >
             {imgArr.map((image, index) => {
@@ -267,6 +301,36 @@ const MarketplaceEdit = (): JSX.Element => {
                 );
               }
             })}
+            {Array.from({ length: 4 - imgArr.length }, (v, k) => k).map(
+              (image, index) => {
+                const _index = imgArr.length + index;
+                return (
+                  <MarketUploadImage
+                    key={index}
+                    style={
+                      getWidth() > 600
+                        ? {
+                            position: "absolute",
+                            left: (_index + 1) % 2 == 0 ? "300px" : "0px",
+                            top: _index <= 1 ? "0px" : "320px",
+                          }
+                        : {}
+                    }
+                  >
+                    <div>
+                      <img
+                        src={blankMarket}
+                        style={{
+                          width: "250px",
+                          height: "250px",
+                          borderRadius: "20px",
+                        }}
+                      />
+                    </div>
+                  </MarketUploadImage>
+                );
+              }
+            )}
           </MarketImgDiv>
           <MarketImgLimitDiv>
             <p>4 Pictures for an Item to the Maximum</p>

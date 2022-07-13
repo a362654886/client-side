@@ -113,6 +113,7 @@ export const MarketImgDiv = styled.div`
 export const MarketImgLimitDiv = styled.div`
   max-width: 610px;
   margin: 0 auto;
+  margin-bottom: 24px;
   p {
     background-color: #c1eeff;
     margin-left: 40px;
@@ -543,7 +544,6 @@ export const WishBidsContext = styled.div`
 `;
 
 export const PriceInput = styled.div`
-  height: 48px;
   margin: 0px auto;
   max-width: 366px;
   margin-bottom: 24px;

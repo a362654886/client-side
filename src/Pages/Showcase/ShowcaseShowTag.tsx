@@ -67,6 +67,10 @@ const ShowcaseShowTag = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (tagValue != "") {
       (async function anyNameFunction() {
         await searchType(showCaseType);
@@ -260,6 +264,7 @@ const ShowcaseShowTag = (): JSX.Element => {
             width:
               getWidth() > 1200 ? "100%" : getWidth() > 600 ? "896px" : "100%",
             paddingLeft: getWidth() > 600 ? "" : "8px",
+            paddingRight: getWidth() > 600 ? "" : "8px",
           }}
         >
           <ShowCaseTitleDiv>

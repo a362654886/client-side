@@ -38,6 +38,7 @@ import {
 } from "../../redux/showcaseAwesome";
 import { ReportContextType } from "../../types/blockType";
 import { windowLink } from "../../globalValues";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -46,6 +47,7 @@ interface IProps {
 
 const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
@@ -69,6 +71,8 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
   useEffect(() => {
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
   }, []);
+
+  const toPage = (url: string) => history.push(url);
 
   // awesome
   const getAwesomeButton = (showCaseIdAndTitle: string, index: number) => {
@@ -216,7 +220,15 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
             {showcase.tags.map((tag, index) => {
               return (
                 <ShowcaseTag key={index}>
-                  <span>{tag.text}</span>
+                  <span
+                    onClick={() => {
+                      toPage(
+                        `/showcase/showTag?tag=${tag.text.replace("#", "")}`
+                      );
+                    }}
+                  >
+                    {tag.text}
+                  </span>
                 </ShowcaseTag>
               );
             })}

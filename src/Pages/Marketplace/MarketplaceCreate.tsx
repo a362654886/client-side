@@ -1,4 +1,12 @@
-import { Button, Input, InputNumber, Radio, Select, Space } from "antd";
+import {
+  Button,
+  Input,
+  InputNumber,
+  notification,
+  Radio,
+  Select,
+  Space,
+} from "antd";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import ImageUpload, { ImageBody } from "../../components/ImageUpload";
@@ -65,6 +73,10 @@ const MarketplaceCreate = (): JSX.Element => {
     //console.log(imgArr);
   }, [imgArr, state]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const setResizeUploadImg = (imageBody: string) => {
     const newArr: string[] = cloneDeep(imgArr);
     newArr.unshift(imageBody);
@@ -115,6 +127,30 @@ const MarketplaceCreate = (): JSX.Element => {
       }),
       hide: false,
     };
+    if (marketBody.title == "") {
+      openNotification(
+        "please input title value",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+    if (!marketBody.price || marketBody.price == 0) {
+      openNotification(
+        "please input price value",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+    if (marketBody.imageArr.length == 0) {
+      openNotification(
+        "please input at least one image",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
@@ -167,7 +203,7 @@ const MarketplaceCreate = (): JSX.Element => {
           <MarketImgDiv
             style={{
               width: getWidth() > 600 ? "610px" : "300px",
-              height: getWidth() > 600 ? "650px" : "1300px",
+              height: getWidth() > 600 ? "650px" : "1260px",
             }}
           >
             {imgArr.map((image, index) => {

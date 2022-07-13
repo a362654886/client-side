@@ -10,7 +10,6 @@ import {
   NameSetting,
   ProfileAwesomePic,
   ProfileImgDiv,
-  ProfileLevelAwesome,
   ProfileLevelBox,
   ProfileLevelDiv,
   ProfileLevelH2,
@@ -28,11 +27,16 @@ import { AwesomeLevelType } from "../../types/awesomeLevel";
 import { Slider } from "antd";
 import { getLevel } from "../../helperFns/profileFn";
 import { Helmet } from "react-helmet";
+import { useEffect } from "react";
 
 const ProfileLevelPage = (): JSX.Element => {
   const loginUser: User | null = useSelector(
     (state: IStoreState) => state.loginUserState
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const allLevels: AwesomeLevelType[] | null = useSelector(
     (state: IStoreState) => state.allLevelState

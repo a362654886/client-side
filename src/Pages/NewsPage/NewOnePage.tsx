@@ -56,6 +56,10 @@ const NewOnePage = (): JSX.Element => {
   }, [para.id]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     //
   }, [loading]);
 

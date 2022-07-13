@@ -70,6 +70,10 @@ const ShowcaseCreate = (): JSX.Element => {
     // console.log(tags);
   }, [imgArr, tags]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const formatTag = (tagArr: string[]) => {
     let newTagArr: string[] = [];
     tagArr.forEach((item) => {
@@ -163,7 +167,13 @@ const ShowcaseCreate = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (TagCheck(tags)) {
+    if (showCase.source.trim() == `source`) {
+      openNotification(
+        "Authors and/or Publishers can't be empty ",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (TagCheck(tags)) {
       await showCaseAdd(showCase);
       backToShowcasePage();
     } else {
@@ -327,6 +337,7 @@ const ShowcaseCreate = (): JSX.Element => {
               <TagRadioInput value="source">
                 <p>I am Not the Author. This is from</p>
                 <Input
+                style={{zIndex: 0}}
                   placeholder={"Authors and/or Publishers"}
                   onChange={(e) => {
                     setSourceValue(e.target.value);

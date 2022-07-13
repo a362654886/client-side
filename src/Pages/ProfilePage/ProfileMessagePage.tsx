@@ -71,7 +71,7 @@ const ProfileMessagePage = (): JSX.Element => {
   const [inCount, setInCount] = useState<number>(0);
   const [outCount, setOutCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const pageSize = 2;
+  const pageSize = 6;
 
   //message
   const [messageVisible, setMessageVisible] = useState(false);
@@ -99,6 +99,10 @@ const ProfileMessagePage = (): JSX.Element => {
       }
     })();
   }, [ifIn]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     //

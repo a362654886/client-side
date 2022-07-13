@@ -35,6 +35,10 @@ const Discovery = (): JSX.Element => {
   }, [chooseButton]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     (async function anyNameFunction() {
       await getNews();
     })();

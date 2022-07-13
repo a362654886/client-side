@@ -74,6 +74,14 @@ const ProfileSettingPage = (): JSX.Element => {
     //
   }, [buttonType]);
 
+  useEffect(() => {
+    console.log(loginUser);
+  }, [loginUser]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const toPage = (url: string) => history.push(url);
 
   const changeButton = (index: number) => {

@@ -27,6 +27,10 @@ const ShowcaseCollectionOne = (): JSX.Element => {
   }, [loading, showCase]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     (async function anyNameFunction() {
       await getShowCase(para.id);
     })();

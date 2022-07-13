@@ -90,6 +90,10 @@ const ShowcaseShowManga = (): JSX.Element => {
   }, [ifNew]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     (async function anyNameFunction() {
       await searchPage();
       SetIniState(false);

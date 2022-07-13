@@ -49,6 +49,10 @@ const EpisodeEdit = (): JSX.Element => {
     }
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const getEpisodeById = async (id: string) => {
     const episodeResult = await episodeGetById(`${manga?._id}Episode${id}`);
     if (episodeResult) {

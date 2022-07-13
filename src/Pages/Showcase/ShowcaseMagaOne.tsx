@@ -172,6 +172,10 @@ const ShowcaseMangaOne = (): JSX.Element => {
     })();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   /*useEffect(() => {
     (async function anyNameFunction() {
       await getEpisode();
@@ -1298,7 +1302,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
                     para=""
                     text={`Reply`}
                     width="45px"
-                    height="22px"
+                    height="32px"
                     textColor="#4BA3C3"
                     backGroundColor="white"
                     borderColor="white"

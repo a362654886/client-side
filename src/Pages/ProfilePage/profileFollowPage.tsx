@@ -93,6 +93,10 @@ const ProfileFollowPage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     //console.log(followIng);
     //console.log(followers);
   }, [

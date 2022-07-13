@@ -105,6 +105,10 @@ const ProfileLoginPage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const market = history.location.search.replace("?market=", "");
     if (market == "true") {
       setChooseButton(1);

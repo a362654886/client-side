@@ -83,6 +83,10 @@ const MainPage = (): JSX.Element => {
   const history = useHistory();
 
   useEffect(() => {
+    console.log("erererer")
+  }, []);
+
+  useEffect(() => {
     (async function anyNameFunction() {
       if (!allLevels) {
         const _allLevels = await awesomeLevelAllGet();

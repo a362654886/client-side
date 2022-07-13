@@ -77,6 +77,10 @@ const ShowcaseShowCollection = (): JSX.Element => {
   }, [loading]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const { search } = history.location;
     const propPage = getShowCasePage(search);
     setPageNum(parseInt(propPage));

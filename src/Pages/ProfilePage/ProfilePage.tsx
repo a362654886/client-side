@@ -98,6 +98,10 @@ const ProfilePage = (): JSX.Element => {
   );
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     (async function anyNameFunction() {
       const user = await userGet(para.id);
       dispatch({

@@ -38,6 +38,10 @@ const EpisodeCreate = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     //console.log(episodeNum);
   }, [episodeNum]);
 
@@ -49,7 +53,7 @@ const EpisodeCreate = (): JSX.Element => {
   };
 
   const setNewImage = (imageBody: ImageBody) => {
-    console.log(imageBody)
+    console.log(imageBody);
     const exist = imgArr
       .map((image) => image.imgName)
       .indexOf(imageBody.imgName);

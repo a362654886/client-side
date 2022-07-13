@@ -87,6 +87,10 @@ const SignUpPage = (): JSX.Element => {
   }, [avatars]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     //
   }, [uploadImg, time, chooseAvatar, emailCheck]);
 
@@ -138,7 +142,7 @@ const SignUpPage = (): JSX.Element => {
       setEmailCheck("please input valid email address");
     } else {
       const user = await userGet(email);
-      setEmailCheck(user !== null ? "this email already exist" : "");
+      setEmailCheck(user !== null ? "this email already exists" : "");
     }
   };
 

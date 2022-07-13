@@ -115,6 +115,10 @@ const HomePage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     //
   }, [newLoading]);
 

@@ -78,6 +78,10 @@ const MarketplaceShow = (): JSX.Element => {
   const pageSize = 24;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     (async function anyNameFunction() {
       setSearchUser(true);
       await getAllTags();
@@ -90,8 +94,8 @@ const MarketplaceShow = (): JSX.Element => {
   }, [searchString, page, country, city, priceFrom, priceTo, marketTags]);
 
   useEffect(() => {
-    console.log(count);
-    console.log(allMarket);
+    //console.log(count);
+    //console.log(allMarket);
   }, [count, allMarket]);
 
   useEffect(() => {
@@ -197,7 +201,7 @@ const MarketplaceShow = (): JSX.Element => {
             <MarketBox>
               <img src={`${market.imageArr[0]}`} />
               <h6>{`$ ${market.price}`}</h6>
-              <p>{`Item Title - ${market.title}`}</p>
+              <p>{`${market.title}`}</p>
             </MarketBox>
           </div>
         );

@@ -80,6 +80,10 @@ const ShowcaseMangaUpdate = (): JSX.Element => {
     })();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const getManga = async (id: string) => {
     const manga = await showCaseOneMangaGet(id);
     setShowCaseManga(manga);
@@ -194,7 +198,13 @@ const ShowcaseMangaUpdate = (): JSX.Element => {
         payload: LoadingType.OPEN,
         type: LOADING_OPEN,
       });
-      if (TagCheck(tags)) {
+      if (showCase.source.trim() == `source`) {
+        openNotification(
+          "Authors and/or Publishers can't be empty ",
+          NotificationColor.Warning,
+          NotificationTitle.Warning
+        );
+      } else if (TagCheck(tags)) {
         await showCaseUpdate(showCase);
         backToShowcasePage();
       } else {
@@ -309,6 +319,7 @@ const ShowcaseMangaUpdate = (): JSX.Element => {
                 <p>I am Not the Author. This is from</p>
                 <Input
                   placeholder={"Authors and/or Publishers"}
+                  style={{ zIndex: 0 }}
                   onChange={(e) => {
                     setSourceValue(e.target.value);
                   }}

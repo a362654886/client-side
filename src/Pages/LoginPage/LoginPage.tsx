@@ -1,6 +1,6 @@
 import { Input, notification } from "antd";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { userAuth } from "../../api/userApi";
@@ -20,7 +20,11 @@ import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { PROFILE_USER_UPDATE } from "../../redux/profileUser";
 import avatarUpload from "../../files/avatarUpload.png";
-import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 
 const LoginPage = (): JSX.Element => {
   const history = useHistory();
@@ -28,6 +32,10 @@ const LoginPage = (): JSX.Element => {
 
   const [email, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const toPage = (url: string) => history.push(url);
 

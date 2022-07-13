@@ -202,6 +202,10 @@ const MarketplaceShowOne = (): JSX.Element => {
     console.log(imgArr);
   }, [imgArr]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // comments
   const getMoreItems = async (marketId: string, page: number | undefined) => {
     if (page) {
@@ -977,7 +981,7 @@ const MarketplaceShowOne = (): JSX.Element => {
                     para=""
                     text={`Reply`}
                     width="45px"
-                    height="22px"
+                    height="32px"
                     textColor="#4BA3C3"
                     backGroundColor="white"
                     borderColor="white"
@@ -1274,7 +1278,7 @@ const MarketplaceShowOne = (): JSX.Element => {
               }}
             >{`$ ${price}`}</span>
             <span style={{ fontSize: "36px", color: "#892E2F" }}>{` ${
-              state ? "Available" : "Sold Out"
+              state == "soldOut" ? "Sold Out" : "Available"
             }`}</span>
           </MarketText>
           {marketState && marketState.tags && marketState.tags.length > 0 ? (
@@ -1448,6 +1452,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           <PriceInput
             style={{
               display: getWidth() > 600 ? "flex" : "inline",
+              height: getWidth() > 600 ? "48px" : "226px",
             }}
           >
             <div style={{ display: "flex", marginLeft: "16px" }}>
@@ -1477,6 +1482,7 @@ const MarketplaceShowOne = (): JSX.Element => {
                 fontSize: " 16px",
                 textAlign: "center",
                 marginLeft: "36px",
+                marginBottom: "24px",
               }}
               onClick={() => insertMarketPrice()}
             >

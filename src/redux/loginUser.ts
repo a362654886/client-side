@@ -69,9 +69,7 @@ export const actions = {
     payload,
     type: LOGIN_USER_UPDATE_FOLLOW,
   }),
-  LoginUserUpdateLikeAction: (
-    payload: string
-  ): LoginUserUpdateLikeAction => ({
+  LoginUserUpdateLikeAction: (payload: string): LoginUserUpdateLikeAction => ({
     payload,
     type: LOGIN_USER_UPDATE_LIKE,
   }),
@@ -81,7 +79,7 @@ export const actions = {
 const handlers = {
   LOGIN_USER_NONE: (state: User | null, action: LoginUser) => action.payload,
   LOGIN_USER_ADD: (state: User | null, action: LoginUser) => {
-    const newUser = Object.assign({}, action.payload);
+    const newUser = cloneDeep(action.payload);
     return newUser;
   },
   LOGIN_USER_UPDATE_FOLLOW: (
@@ -117,7 +115,7 @@ const handlers = {
       newUser.likeAnime = likeArr;
     }
     return newUser;
-  }
+  },
 };
 
 export const loginUserState = (

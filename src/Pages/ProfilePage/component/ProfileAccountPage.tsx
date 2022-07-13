@@ -181,7 +181,11 @@ const ProfileAccountPage = (): JSX.Element => {
   };
 
   const updateUser = async () => {
-    const avatar = avatars?.find((avatar) => avatar.imageName == chooseAvatar);
+    const avatar = avatars?.find(
+      (avatar) =>
+        avatar.imageName ==
+        (chooseAvatarIndex ? chooseAvatarIndex.imageName : "")
+    );
     const newArr = new Array(avatar as Avatar);
     const readyUpdateUser: User = {
       _id: loginUser ? loginUser._id : "",
@@ -229,7 +233,9 @@ const ProfileAccountPage = (): JSX.Element => {
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);
+    console.log(r);
     if (r == "success") {
+      console.log(readyUpdateUser);
       dispatch({
         payload: readyUpdateUser,
         type: LOGIN_USER_ADD,

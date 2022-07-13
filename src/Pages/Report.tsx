@@ -70,6 +70,7 @@ const Report = (): JSX.Element => {
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const urlObj = getPamas(history.location.search);
     setUrlPamaObj(urlObj);
   }, []);

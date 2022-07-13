@@ -114,7 +114,6 @@ const ShowcaseForum = ({
   const [newSecondReplyHtml, setNewSecondReplyHtml] = useState<string[][]>([
     [],
   ]);
-  const [update, setUpdate] = useState(0);
   const [awesomeArrState, setAwesomeArrState] = useState<string[]>(
     loginUser?.likeShowcase ? loginUser?.likeShowcase : []
   );
@@ -125,7 +124,6 @@ const ShowcaseForum = ({
   const pageSize = 6;
 
   useEffect(() => {
-    setAllShowCases(showcases);
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
     const newArr: string[][] = [[]];
     for (let k = 0; k < showcases.length; k++) {
@@ -141,8 +139,8 @@ const ShowcaseForum = ({
   }, [showcases]);
 
   useEffect(() => {
-    //console.log(newSecondReplyHtml);
-  }, [update, allShowCases, newSecondReplyHtml, newReplyHtml]);
+    console.log(allShowCases);
+  }, [allShowCases]);
 
   useEffect(() => {
     setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
@@ -151,10 +149,9 @@ const ShowcaseForum = ({
   const toPage = (url: string) => history.push(url);
 
   const sendNewReply = (e: string, index: number) => {
-    const newReplyHtmls = newReplyHtml;
+    const newReplyHtmls = cloneDeep(newReplyHtml);
     newReplyHtmls[index] = e;
     setNewReplyHtml(newReplyHtmls);
-    setUpdate(update + 1);
   };
 
   const getMoreItem = async (showCaseId: string, page: number | undefined) => {
@@ -167,7 +164,7 @@ const ShowcaseForum = ({
       );
 
       //set
-      const newShowcases = allShowCases;
+      const newShowcases = cloneDeep(allShowCases);
       const index = newShowcases.findIndex((item) => item._id == showCaseId);
       if (newShowcases[index].replies && showcaseResult) {
         newShowcases[index].replies = (
@@ -180,7 +177,6 @@ const ShowcaseForum = ({
             ? true
             : false;
         setAllShowCases(newShowcases);
-        setUpdate(update + 1);
       }
       setItemLoading(false);
     }
@@ -200,7 +196,7 @@ const ShowcaseForum = ({
       );
 
       //set
-      const newShowcases = allShowCases;
+      const newShowcases = cloneDeep(allShowCases);
       const index = newShowcases.findIndex((item) => item._id == showcaseId);
       const secondIndex = (
         newShowcases[index].replies as ShowCaseReply[]
@@ -230,7 +226,6 @@ const ShowcaseForum = ({
             ? true
             : false;
         setAllShowCases(newShowcases);
-        setUpdate(update + 1);
       }
       setSecondItemLoading(false);
     }
@@ -244,7 +239,6 @@ const ShowcaseForum = ({
     const newSecondReplyHtmls = cloneDeep(newSecondReplyHtml);
     newSecondReplyHtmls[index][secondIndex] = e;
     setNewSecondReplyHtml(newSecondReplyHtmls);
-    setUpdate(update + 1);
   };
   //
   const submitNewShowcaseReply = async (
@@ -484,28 +478,29 @@ const ShowcaseForum = ({
 
   // reply
   const openReply = (index: number) => {
-    allShowCases[index].showReplay = !allShowCases[index].showReplay;
-    setAllShowCases(allShowCases);
+    const newAllShowCases = cloneDeep(allShowCases);
+    newAllShowCases[index].showReplay = !newAllShowCases[index].showReplay;
+    setAllShowCases(newAllShowCases);
     const newArr: string[] = [];
-    for (let k = 0; k < allShowCases.length; k++) {
+    for (let k = 0; k < newAllShowCases.length; k++) {
       newArr.push("");
     }
     setNewReplyHtml(newArr);
-    setUpdate(update + 1);
   };
 
   const openSecondReply = (index: number, secondIndex: number) => {
-    const showcase: ShowCaseType = allShowCases[index];
+    const newAllShowCases = cloneDeep(allShowCases);
+    const showcase: ShowCaseType = newAllShowCases[index];
     if (showcase.replies) {
       showcase.replies[secondIndex].showReplay =
         !showcase.replies[secondIndex].showReplay;
     }
-    allShowCases[index] = showcase;
-    setAllShowCases(allShowCases);
+    newAllShowCases[index] = showcase;
+    setAllShowCases(newAllShowCases);
     const newArr: string[][] = [[]];
-    for (let k = 0; k < allShowCases.length; k++) {
+    for (let k = 0; k < newAllShowCases.length; k++) {
       newArr.push([]);
-      const l = allShowCases[k].replies;
+      const l = newAllShowCases[k].replies;
       if (l) {
         for (let j = 0; j < l.length; j++) {
           newArr[k].push("");
@@ -513,7 +508,6 @@ const ShowcaseForum = ({
       }
     }
     setNewSecondReplyHtml(newArr);
-    setUpdate(update + 1);
   };
 
   const replySecondReply = (
@@ -537,15 +531,14 @@ const ShowcaseForum = ({
     });
 
     setAllShowCases(newShowCase);
-    setUpdate(update + 1);
   };
 
   //edit
   const editShowcase = (index: number) => {
-    const newShowcases = allShowCases;
+    const newShowcases = cloneDeep(allShowCases);
     newShowcases[index].edit = !newShowcases[index].edit;
+    console.log(newShowcases[index]);
     setAllShowCases(newShowcases);
-    setUpdate(update + 1);
   };
 
   const editShowcaseReply = (index: number, secondIndex: number) => {
@@ -554,7 +547,6 @@ const ShowcaseForum = ({
       newShowcases[index].replies as ShowCaseReply[]
     )[secondIndex].edit;
     setAllShowCases(newShowcases);
-    setUpdate(update + 1);
   };
 
   const editShowcaseSecondReply = (
@@ -562,7 +554,7 @@ const ShowcaseForum = ({
     secondIndex: number,
     thirdIndex: number
   ) => {
-    const newShowcases = allShowCases;
+    const newShowcases = cloneDeep(allShowCases);
     (
       (newShowcases[index].replies as ShowCaseReply[])[secondIndex]
         .secondReplies as ShowSecondCaseReply[]
@@ -571,15 +563,13 @@ const ShowcaseForum = ({
         .secondReplies as ShowSecondCaseReply[]
     )[thirdIndex].edit;
     setAllShowCases(newShowcases);
-    setUpdate(update + 1);
   };
 
   //edit source
   const editShowcaseSource = (index: number, text: string) => {
-    const newShowcases = allShowCases;
+    const newShowcases = cloneDeep(allShowCases);
     newShowcases[index].source = text;
     setAllShowCases(newShowcases);
-    setUpdate(update + 1);
   };
 
   //edit tag
@@ -597,43 +587,39 @@ const ShowcaseForum = ({
     });
 
     const id = new Date().valueOf().toString();
-    const newShowcases = allShowCases;
-    (newShowcases[index].tags = newTagArr.map((tag, index) => {
+    const newShowcases = cloneDeep(allShowCases);
+    newShowcases[index].tags = returnTagArr.map((tag, index) => {
       return {
         _id: id + index,
         text: tag,
         num: -1,
       };
-    })),
-      setAllShowCases(newShowcases);
-    setUpdate(update + 1);
+    });
+    setAllShowCases(newShowcases);
   };
   //edit images
   const deleteImg = (index: number, imageIndex: number) => {
-    const newShowcases = allShowCases;
+    const newShowcases = cloneDeep(allShowCases);
     const imgArr = newShowcases[index].imageArr;
     imgArr.splice(imageIndex, 1);
     newShowcases[index].imageArr = imgArr;
     setAllShowCases(newShowcases);
-    setUpdate(update + 1);
   };
 
   const setNewImage = (imageBody: ImageBody, index: number) => {
-    const newShowcases = allShowCases;
+    const newShowcases = cloneDeep(allShowCases);
     const imgArr = newShowcases[index].imageArr;
 
     imgArr.push(imageBody.imgBase64);
     newShowcases[index].imageArr = imgArr;
     setAllShowCases(newShowcases);
-    setUpdate(update + 1);
   };
 
   //edit text
   const editShowcaseText = (index: number, text: string) => {
-    const newShowcases = allShowCases;
+    const newShowcases = cloneDeep(allShowCases);
     newShowcases[index].text = text;
     setAllShowCases(newShowcases);
-    setUpdate(update + 1);
   };
 
   const editShowcaseReplyText = (
@@ -641,10 +627,9 @@ const ShowcaseForum = ({
     secondIndex: number,
     text: string
   ) => {
-    const newShowcases = allShowCases;
+    const newShowcases = cloneDeep(allShowCases);
     (newShowcases[index].replies as ShowCaseReply[])[secondIndex].text = text;
     setAllShowCases(newShowcases);
-    setUpdate(update + 1);
   };
 
   const editShowcaseSecondReplyText = (
@@ -653,13 +638,12 @@ const ShowcaseForum = ({
     thirdIndex: number,
     text: string
   ) => {
-    const newShowcases = allShowCases;
+    const newShowcases = cloneDeep(allShowCases);
     (
       (newShowcases[index].replies as ShowCaseReply[])[secondIndex]
         .secondReplies as ShowSecondCaseReply[]
     )[thirdIndex].text = text;
     setAllShowCases(newShowcases);
-    setUpdate(update + 1);
   };
 
   //update
@@ -669,22 +653,30 @@ const ShowcaseForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    const updateResult = await showCaseUpdate({
-      _id: allShowCases[index]._id,
-      text: allShowCases[index].text,
-      source: allShowCases[index].source,
-      tags: allShowCases[index].tags,
-      imageArr: allShowCases[index].imageArr,
-    });
+    if (allShowCases[index].source == `source`) {
+      openNotification(
+        "Authors and/or Publishers can't be empty ",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else {
+      const updateResult = await showCaseUpdate({
+        _id: allShowCases[index]._id,
+        text: allShowCases[index].text,
+        source: allShowCases[index].source,
+        tags: allShowCases[index].tags,
+        imageArr: allShowCases[index].imageArr,
+      });
+      if (updateResult == 200) {
+        editShowcase(index);
+      } else {
+        console.log("update wrong");
+      }
+    }
     dispatch({
       payload: LoadingType.CLOSE,
       type: LOADING_CLOSE,
     });
-    if (updateResult == 200) {
-      editShowcase(index);
-    } else {
-      console.log("update wrong");
-    }
   };
 
   const updateShowcaseReply = async (index: number, secondIndex: number) => {
@@ -808,7 +800,7 @@ const ShowcaseForum = ({
     awesomeArr: string[]
   ) => {
     //update showcase
-    const newAllShowCases = allShowCases;
+    const newAllShowCases = cloneDeep(allShowCases);
     newAllShowCases[index].aweSome = newAllShowCases[index].aweSome + value;
     setAllShowCases(newAllShowCases);
 
@@ -816,7 +808,6 @@ const ShowcaseForum = ({
     const readyUpdateUser: User = loginUser as User;
     readyUpdateUser.likeShowcase = awesomeArr;
     setAwesomeArrState(awesomeArr);
-    setUpdate(update + 1);
 
     dispatch({
       payload: readyUpdateUser,
@@ -956,6 +947,7 @@ const ShowcaseForum = ({
                       <p>I am Not the Author. This is from</p>
                       <Input
                         placeholder={"Authors and/or Publishers"}
+                        style={{ zIndex: 0 }}
                         defaultValue={
                           showcase.source.indexOf("origin") == -1
                             ? showcase.source.replace("source", "")
@@ -1487,7 +1479,7 @@ const ShowcaseForum = ({
                     para=""
                     text={`Reply`}
                     width="45px"
-                    height="22px"
+                    height="32px"
                     textColor="#4BA3C3"
                     backGroundColor="white"
                     borderColor="white"

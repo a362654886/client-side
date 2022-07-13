@@ -79,6 +79,10 @@ const ShowcaseShowIllustrations = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     //console.log(loading);
   }, [loading]);
 
