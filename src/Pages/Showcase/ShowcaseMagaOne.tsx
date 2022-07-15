@@ -176,11 +176,9 @@ const ShowcaseMangaOne = (): JSX.Element => {
     window.scrollTo(0, 0);
   }, []);
 
-  /*useEffect(() => {
-    (async function anyNameFunction() {
-      await getEpisode();
-    })();
-  }, [showCase]);*/
+  useEffect(() => {
+    //console.log(loginUser);
+  }, [loginUser]);
 
   useEffect(() => {
     setShowCase(manga);

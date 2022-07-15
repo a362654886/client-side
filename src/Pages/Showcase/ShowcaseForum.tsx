@@ -790,9 +790,9 @@ const ShowcaseForum = ({
       awesomeArr = loginUser?.likeShowcase;
     }
     awesomeArr.push(showCaseIdAndTitle);
-    updateAllShowcaseAwesome(index, 1, awesomeArr);
+    const _allShowCase = updateAllShowcaseAwesome(index, 1, awesomeArr);
     dispatch({
-      payload: allShowCases[index],
+      payload: _allShowCase[index],
       type: SHOWCASE_AWESOME_ADD,
     });
   };
@@ -803,10 +803,10 @@ const ShowcaseForum = ({
     if (r != -1) {
       awesomeArr.splice(r, 1);
       //update state
-      updateAllShowcaseAwesome(index, -1, awesomeArr);
+      const _allShowCase = updateAllShowcaseAwesome(index, -1, awesomeArr);
       //post like num
       dispatch({
-        payload: allShowCases[index],
+        payload: _allShowCase[index],
         type: SHOWCASE_AWESOME_CANCEL,
       });
     }
@@ -831,6 +831,8 @@ const ShowcaseForum = ({
       payload: readyUpdateUser,
       type: LOGIN_USER_ADD,
     });
+
+    return newAllShowCases;
   };
 
   const deleteShowcase = async (id: string, index: number) => {
