@@ -234,6 +234,12 @@ const MallCustom = (): JSX.Element => {
         NotificationColor.Warning,
         NotificationTitle.Warning
       );
+    } else if (email.trim() == "") {
+      openNotification(
+        "please insert email",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
     } else {
       if (checkValues()) {
         sendEmail();
