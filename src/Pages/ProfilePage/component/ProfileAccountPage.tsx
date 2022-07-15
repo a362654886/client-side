@@ -186,7 +186,7 @@ const ProfileAccountPage = (): JSX.Element => {
         avatar.imageName ==
         (chooseAvatarIndex ? chooseAvatarIndex.imageName : "")
     );
-    const newArr = new Array(avatar as Avatar);
+    const newArr = new Array((avatar ? avatar : chooseAvatarIndex) as Avatar);
     const readyUpdateUser: User = {
       _id: loginUser ? loginUser._id : "",
       userEmail: loginUser ? loginUser.userEmail : "",
@@ -233,7 +233,6 @@ const ProfileAccountPage = (): JSX.Element => {
     };
     setLoading(true);
     const r = await userUpdate(readyUpdateUser);
-    console.log(r);
     if (r == "success") {
       console.log(readyUpdateUser);
       dispatch({

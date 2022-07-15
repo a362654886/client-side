@@ -167,6 +167,81 @@ const MallCustom = (): JSX.Element => {
     await designHistoryPost(body);
   };
 
+  const checkValues = () => {
+    switch (chooseIndex) {
+      case 0:
+        if (attributes == "") {
+          openNotification(
+            "please input Quantity by Types",
+            NotificationColor.Warning,
+            NotificationTitle.Warning
+          );
+          return false;
+        } else {
+          return true;
+        }
+        break;
+      case 1:
+        if (attributes.replace(/[^0-9]/gi, "") == "") {
+          openNotification(
+            "please input Quantity by Types",
+            NotificationColor.Warning,
+            NotificationTitle.Warning
+          );
+          return false;
+        } else {
+          return true;
+        }
+        break;
+      case 2:
+        if (
+          attributes
+            .replace(/[^0-9]/gi, "")
+            .replace("4545", "")
+            .replace("50150", "") == ""
+        ) {
+          openNotification(
+            "please input Quantity by Types",
+            NotificationColor.Warning,
+            NotificationTitle.Warning
+          );
+          return false;
+        } else {
+          return true;
+        }
+        break;
+      case 3:
+        if (attributes.replace(/[^0-9]/gi, "").replace("6060", "") == "") {
+          openNotification(
+            "please input Quantity by Types",
+            NotificationColor.Warning,
+            NotificationTitle.Warning
+          );
+          return false;
+        } else {
+          return true;
+        }
+        break;
+      default:
+        return true;
+    }
+  };
+
+  const GetAQuote = () => {
+    if (resizeUploadImg.trim() == "") {
+      openNotification(
+        "please insert image",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else {
+      if (checkValues()) {
+        sendEmail();
+        sendDesignHistory();
+      }
+    }
+  };
+
   const getUploadImage = () => {
     if (chooseIndex == 1) {
       return <MallCustomerTshirtImg src={resizeUploadImg} />;
@@ -346,10 +421,7 @@ const MallCustom = (): JSX.Element => {
             textColor="white"
             backGroundColor="#FFC300"
             borderColor="#FFC300"
-            buttonClick={() => {
-              sendEmail();
-              sendDesignHistory();
-            }}
+            buttonClick={() => GetAQuote()}
           />
         </ButtonDiv>
       </div>

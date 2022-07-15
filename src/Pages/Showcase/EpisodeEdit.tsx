@@ -14,6 +14,7 @@ import {
   EpisodeTitle,
 } from "../../cssJs/ShowCasePage/EpisodeCss";
 import { ShowcaseImage } from "../../cssJs/ShowCasePage/showCaseCss";
+import { NotificationColor, NotificationTitle, openNotification } from "../../helperFns/popUpAlert";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { LoadingType } from "../../types/EnumTypes";
 import { EpisodeType } from "../../types/EpisodeType";
@@ -87,18 +88,27 @@ const EpisodeEdit = (): JSX.Element => {
   };
 
   const editEpisode = async () => {
-    const id: string = (history.location.state as any).type;
-    const newEpisode: EpisodeType = {
-      _id: `${manga?._id}Episode${id}`,
-      page: episodeNum,
-      title: manga?.title ? manga?.title : "",
-      mangaType: manga?._id ? manga?._id : "",
-      imageArr: imgArr.map((image) =>
-        typeof image == "string" ? image : image.imgBase64
-      ),
-    };
-    await episodeUpdate(newEpisode);
-    history.push(`/showcase/Manga/${manga?._id}`);
+    if (imgArr.length == 0) {
+      openNotification(
+        "please input at least one image",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    } else {
+      const id: string = (history.location.state as any).type;
+      const newEpisode: EpisodeType = {
+        _id: `${manga?._id}Episode${id}`,
+        page: episodeNum,
+        title: manga?.title ? manga?.title : "",
+        mangaType: manga?._id ? manga?._id : "",
+        imageArr: imgArr.map((image) =>
+          typeof image == "string" ? image : image.imgBase64
+        ),
+      };
+      await episodeUpdate(newEpisode);
+      history.push(`/showcase/Manga/${manga?._id}`);
+    }
   };
 
   return (

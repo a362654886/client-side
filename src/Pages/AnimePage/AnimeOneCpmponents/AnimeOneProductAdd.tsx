@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productAdd } from "../../../api/productAPI";
 import AnimeButton from "../../../components/Button";
-import ImgUploadDiv from "../../../components/conponentDivs/ImgUploadDiv";
 import CropImgDiv from "../../../components/CropImgDiv";
 import ImageUpload from "../../../components/ImageUpload";
 import {
@@ -63,18 +62,26 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
     setLink((e.target as HTMLInputElement).value);
 
   const post = async () => {
+    if (resizeUploadImg == "") {
+      openNotification(
+        "Please input image",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+    if (!urlCheck(link)) {
+      openNotification(
+        "Please enter a valid link starting with http or https",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (!urlCheck(link)) {
-      openNotification(
-        "Please enter a valid link starting with http or https",
-        NotificationColor.Error,
-        NotificationTitle.Error
-      );
-      return;
-    }
     if (loginUser) {
       const product: Product = {
         _id: `${loginUser?._id}${new Date().valueOf()}`,
@@ -114,23 +121,41 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
       </SubtitleDiv>
       <ProductImg>
         <h6>Product Picture</h6>
-        <img src={`${resizeUploadImg}`} />
       </ProductImg>
-      <UploadButton>
-        <ImageUpload
-          width={"120px"}
-          height={"32px"}
-          textColor={"black"}
-          backGroundColor={"white"}
-          border={"1px solid #D1D2D3"}
-          text={"Upload"}
-          setImg={(value: ImageBody) => {
-            setUploadImg(value);
-            setShowCropper(true);
-          }}
-          margin={"0px auto"}
-        />
-      </UploadButton>
+      <div style={{ margin: "0px auto", width: "240px" }}>
+        {resizeUploadImg == "" ? (
+          <>
+            <ImageUpload
+              width={"240px"}
+              height={"240px"}
+              textColor={"black"}
+              backGroundColor={"#F6F6F6"}
+              border={"1px solid #F6F6F6"}
+              text={""}
+              setImg={(value: ImageBody) => {
+                //
+              }}
+              imageAdd={false}
+              margin={"20px auto"}
+            />
+          </>
+        ) : (
+          <img src={`${resizeUploadImg}`} />
+        )}
+      </div>
+      <ImageUpload
+        width={"240px"}
+        height={"32px"}
+        textColor={"black"}
+        backGroundColor={"#F6F6F6"}
+        border={"1px solid #F6F6F6"}
+        text={"Input Product Image"}
+        setImg={(value: ImageBody) => {
+          setLoadImg(value.imgBase64);
+          setShowCropper(true);
+        }}
+        margin={"20px auto"}
+      />
       <ProductInput>
         <h6>Shopping Link</h6>
         <Input placeholder={"link"} onChange={onChange}></Input>

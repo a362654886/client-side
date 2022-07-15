@@ -249,7 +249,13 @@ const ShowcaseForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (loginUser) {
+    if (newReplyHtml[index].trim() == "") {
+      openNotification(
+        "please input comment",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (loginUser) {
       const showcaseReply: ShowCaseReply = {
         _id: `${showcase._id}${
           showcase.replies
@@ -300,7 +306,13 @@ const ShowcaseForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (loginUser) {
+    if (newSecondReplyHtml[index][secondIndex].trim() == "") {
+      openNotification(
+        "please input comment",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (loginUser) {
       const secondShowcase: ShowSecondCaseReply = {
         _id: `${showcase._id}${
           showcase.secondReplies
@@ -656,6 +668,12 @@ const ShowcaseForum = ({
     if (allShowCases[index].source == `source`) {
       openNotification(
         "Authors and/or Publishers can't be empty ",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (allShowCases[index].imageArr.length == 0) {
+      openNotification(
+        "please input at least one image",
         NotificationColor.Warning,
         NotificationTitle.Warning
       );

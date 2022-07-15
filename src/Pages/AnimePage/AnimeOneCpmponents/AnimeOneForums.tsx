@@ -267,7 +267,13 @@ const AnimeOneForum = ({
       type: LOADING_OPEN,
     });
     const textString = await forumTextCompress(html);
-    if (loginUser) {
+    if (textString.trim() == "") {
+      openNotification(
+        "please input comment",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (loginUser) {
       const forum: ForumType = {
         _id: `${loginUser?._id}${new Date().valueOf()}`,
         forumId: `${loginUser?._id}${new Date().valueOf()}`,
@@ -314,26 +320,34 @@ const AnimeOneForum = ({
           : forums[index]._id + new Date().valueOf()
       }`;
       const textString = await forumTextCompress(newItemHtml[index]);
-      const forumItem: ForumItem = {
-        _id: id,
-        forumItemId: id,
-        text: textString,
-        forumId: forums[index]._id,
-        uploadTime: new Date(),
-        userId: loginUser?._id,
-        userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: `${loginUser.firstName}.${loginUser.lastName
-          .substring(0, 1)
-          .toUpperCase()}`,
-        userCountry: `${loginUser.country}`,
-        anime: chooseAnime?._id as string,
-        fullItems: true,
-        hide: false,
-      };
-      const r = await forumItemAdd(forumItem);
-      if (r && r < 300) {
-        addForumItemToForum(forumItem);
-        setNewItemHtml([]);
+      if (textString.trim() == "") {
+        openNotification(
+          "please input comment",
+          NotificationColor.Warning,
+          NotificationTitle.Warning
+        );
+      } else {
+        const forumItem: ForumItem = {
+          _id: id,
+          forumItemId: id,
+          text: textString,
+          forumId: forums[index]._id,
+          uploadTime: new Date(),
+          userId: loginUser?._id,
+          userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
+          userName: `${loginUser.firstName}.${loginUser.lastName
+            .substring(0, 1)
+            .toUpperCase()}`,
+          userCountry: `${loginUser.country}`,
+          anime: chooseAnime?._id as string,
+          fullItems: true,
+          hide: false,
+        };
+        const r = await forumItemAdd(forumItem);
+        if (r && r < 300) {
+          addForumItemToForum(forumItem);
+          setNewItemHtml([]);
+        }
       }
     } else {
       openNotification(
@@ -373,36 +387,44 @@ const AnimeOneForum = ({
       const textString = await forumTextCompress(
         newSecondItemHtml[index][secondIndex]
       );
-      const secondForumItem: ForumSecondItem = {
-        _id: id,
-        forumSecondItemId: id,
-        forumItemId: (forums[index].items as ForumItem[])[secondIndex]._id,
-        text: textString,
-        forumId: forums[index]._id,
-        uploadTime: new Date(),
-        userId: loginUser?._id,
-        userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
-        userName: `${loginUser.firstName}.${loginUser.lastName
-          .substring(0, 1)
-          .toUpperCase()}`,
-        userCountry: `${loginUser.country}`,
-        anime: chooseAnime?._id as string,
-        hide: false,
-      };
-      const r = await forumSecondItemAdd(secondForumItem);
-      if (r && r < 300) {
-        addForumSecondItemToForum(secondForumItem, index, secondIndex);
-        const newArr: string[][] = [[]];
-        for (let k = 0; k < forums.length; k++) {
-          newArr.push([]);
-          const l = forums[k].items;
-          if (l) {
-            for (let j = 0; j < l.length; j++) {
-              newArr[k].push("");
+      if (textString.trim() == "") {
+        openNotification(
+          "please input comment",
+          NotificationColor.Warning,
+          NotificationTitle.Warning
+        );
+      } else {
+        const secondForumItem: ForumSecondItem = {
+          _id: id,
+          forumSecondItemId: id,
+          forumItemId: (forums[index].items as ForumItem[])[secondIndex]._id,
+          text: textString,
+          forumId: forums[index]._id,
+          uploadTime: new Date(),
+          userId: loginUser?._id,
+          userAvatar: (loginUser.avatarImage as Avatar[])[0].imageUrl,
+          userName: `${loginUser.firstName}.${loginUser.lastName
+            .substring(0, 1)
+            .toUpperCase()}`,
+          userCountry: `${loginUser.country}`,
+          anime: chooseAnime?._id as string,
+          hide: false,
+        };
+        const r = await forumSecondItemAdd(secondForumItem);
+        if (r && r < 300) {
+          addForumSecondItemToForum(secondForumItem, index, secondIndex);
+          const newArr: string[][] = [[]];
+          for (let k = 0; k < forums.length; k++) {
+            newArr.push([]);
+            const l = forums[k].items;
+            if (l) {
+              for (let j = 0; j < l.length; j++) {
+                newArr[k].push("");
+              }
             }
           }
+          setNewSecondItemHtml(newArr);
         }
-        setNewSecondItemHtml(newArr);
       }
     } else {
       openNotification(

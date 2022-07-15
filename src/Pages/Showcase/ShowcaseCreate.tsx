@@ -133,6 +133,22 @@ const ShowcaseCreate = (): JSX.Element => {
 
   const showCaseCreate = async () => {
     const id = new Date().valueOf().toString();
+    if (showCaseType == ShowCaseEnum.Manga && title.trim() == "") {
+      openNotification(
+        "please input title",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+    if (imgArr.length == 0) {
+      openNotification(
+        "please insert cover image",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
     const showCase: ShowCaseType = {
       _id: id,
       showCaseId: id,
@@ -163,30 +179,39 @@ const ShowcaseCreate = (): JSX.Element => {
       aweSome: 0,
       hide: false,
     };
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
-    if (showCase.source.trim() == `source`) {
+    if (imgArr.length == 0) {
       openNotification(
-        "Authors and/or Publishers can't be empty ",
+        "please input at least one image",
         NotificationColor.Warning,
         NotificationTitle.Warning
       );
-    } else if (TagCheck(tags)) {
-      await showCaseAdd(showCase);
-      backToShowcasePage();
+      return;
     } else {
-      openNotification(
-        "please add # before tag",
-        NotificationColor.Error,
-        NotificationTitle.Error
-      );
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
+      if (showCase.source.trim() == `source`) {
+        openNotification(
+          "Authors and/or Publishers can't be empty ",
+          NotificationColor.Warning,
+          NotificationTitle.Warning
+        );
+      } else if (TagCheck(tags)) {
+        await showCaseAdd(showCase);
+        backToShowcasePage();
+      } else {
+        openNotification(
+          "please add # before tag",
+          NotificationColor.Error,
+          NotificationTitle.Error
+        );
+      }
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
     }
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
   };
 
   const backToShowcasePage = () => {
@@ -337,7 +362,7 @@ const ShowcaseCreate = (): JSX.Element => {
               <TagRadioInput value="source">
                 <p>I am Not the Author. This is from</p>
                 <Input
-                style={{zIndex: 0}}
+                  style={{ zIndex: 0 }}
                   placeholder={"Authors and/or Publishers"}
                   onChange={(e) => {
                     setSourceValue(e.target.value);

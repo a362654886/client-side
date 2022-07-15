@@ -393,7 +393,13 @@ const MarketplaceShowOne = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (loginUser) {
+    if (newReplyHtml == "") {
+      openNotification(
+        "please input comment",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (loginUser) {
       const Id = `${para.id}${new Date().valueOf()}`;
       const showcaseReply: ShowCaseReply = {
         _id: Id,
@@ -595,7 +601,13 @@ const MarketplaceShowOne = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (loginUser) {
+    if (newSecondReplyHtml[secondIndex] == "") {
+      openNotification(
+        "please input comment",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (loginUser) {
       const secondShowcase: ShowSecondCaseReply = {
         _id: `${showcase._id}${
           replies

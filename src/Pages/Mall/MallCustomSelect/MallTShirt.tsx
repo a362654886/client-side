@@ -55,7 +55,7 @@ const MallTShirt = ({ changeAttributes }: IProps): JSX.Element => {
   const [style, setStyle] = useState<string>("T-SHirt");
 
   useEffect(() => {
-    sendValues();
+    sendValues(quantities);
   }, [colorBase]);
 
   const changeCheckBox = (index: number) => {
@@ -63,7 +63,7 @@ const MallTShirt = ({ changeAttributes }: IProps): JSX.Element => {
     newQuantities[index].choose = !newQuantities[index].choose;
     setQuantities(newQuantities);
 
-    sendValues();
+    sendValues(newQuantities);
   };
 
   const changeValue = (index: number, value: string) => {
@@ -71,10 +71,10 @@ const MallTShirt = ({ changeAttributes }: IProps): JSX.Element => {
     newQuantities[index].value = value;
     setQuantities(newQuantities);
 
-    sendValues();
+    sendValues(newQuantities);
   };
 
-  const sendValues = () => {
+  const sendValues = (quantities: MallCustomInputCheckBoxType[]) => {
     let value = ``;
     value += `<p>Color: ${colorBase}</p>`;
     value += `<p>Quantity by Sizes</p>`;

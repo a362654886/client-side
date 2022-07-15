@@ -13,6 +13,11 @@ import {
   EpisodeNumber,
   EpisodeTitle,
 } from "../../cssJs/ShowCasePage/EpisodeCss";
+import {
+  NotificationColor,
+  NotificationTitle,
+  openNotification,
+} from "../../helperFns/popUpAlert";
 import { getWidth } from "../../helperFns/widthFn";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { LoadingType } from "../../types/EnumTypes";
@@ -72,23 +77,32 @@ const EpisodeCreate = (): JSX.Element => {
   };
 
   const insertEpisode = async () => {
-    dispatch({
-      payload: LoadingType.OPEN,
-      type: LOADING_OPEN,
-    });
-    const newEpisode: EpisodeType = {
-      _id: `${manga?._id}Episode${episodeNum + 1}`,
-      page: episodeNum + 1,
-      title: manga?.title ? manga?.title : "",
-      mangaType: manga?._id ? manga?._id : "",
-      imageArr: imgArr.map((image) => image.imgBase64),
-    };
-    await episodeAdd(newEpisode);
-    dispatch({
-      payload: LoadingType.CLOSE,
-      type: LOADING_CLOSE,
-    });
-    history.push(`/showcase/Manga/${manga?._id}`);
+    if (imgArr.length == 0) {
+      openNotification(
+        "please input at least one image",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    } else {
+      dispatch({
+        payload: LoadingType.OPEN,
+        type: LOADING_OPEN,
+      });
+      const newEpisode: EpisodeType = {
+        _id: `${manga?._id}Episode${episodeNum + 1}`,
+        page: episodeNum + 1,
+        title: manga?.title ? manga?.title : "",
+        mangaType: manga?._id ? manga?._id : "",
+        imageArr: imgArr.map((image) => image.imgBase64),
+      };
+      await episodeAdd(newEpisode);
+      dispatch({
+        payload: LoadingType.CLOSE,
+        type: LOADING_CLOSE,
+      });
+      history.push(`/showcase/Manga/${manga?._id}`);
+    }
   };
 
   return (

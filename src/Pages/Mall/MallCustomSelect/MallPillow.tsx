@@ -35,7 +35,7 @@ const MallPillow = ({ changeAttributes }: IProps): JSX.Element => {
     newQuantities[index].choose = !newQuantities[index].choose;
     setQuantities(newQuantities);
 
-    sendValues();
+    sendValues(newQuantities);
   };
 
   const changeValue = (index: number, value: string) => {
@@ -43,10 +43,10 @@ const MallPillow = ({ changeAttributes }: IProps): JSX.Element => {
     newQuantities[index].value = value;
     setQuantities(newQuantities);
 
-    sendValues();
+    sendValues(newQuantities);
   };
 
-  const sendValues = () => {
+  const sendValues = (quantities: MallCustomInputCheckBoxType[]) => {
     let value = ``;
     value += `<p>Quantity by Sizes</p>`;
     quantities.forEach((item) => {

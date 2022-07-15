@@ -28,6 +28,7 @@ import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import stateAvailable from "../../../files/stateAvailable.svg";
 import stateSoldOut from "../../../files/stateSoldOut.svg";
+import { urlCheck } from "../../../helperFns/urlCheckFn";
 
 interface IProps {
   toVideo: (num: number) => void;
@@ -71,6 +72,39 @@ const AnimeOneVideoAdd = ({ toVideo }: IProps): JSX.Element => {
   };
 
   const submit = async () => {
+    if (videoType && title.trim() == "") {
+      openNotification(
+        "please input title",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+    if (!videoType && embed.trim() == "") {
+      openNotification(
+        "please input embed",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+    if (videoType && link.trim() == "") {
+      openNotification(
+        "please input link",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+    if (!urlCheck(link)) {
+      openNotification(
+        "Please enter a valid link starting with http or https",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
+
     if (embed.indexOf("iframe") == -1 && videoType == false) {
       openNotification(
         "there are embed error, please add iframe element",
