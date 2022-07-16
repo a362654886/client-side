@@ -156,8 +156,8 @@ const AdminEmailPage = (): JSX.Element => {
         />
         <AnimeButton
           para=""
-          text={"Test emails function"}
-          width="300px"
+          text={"Test emails "}
+          width="200px"
           height="32px"
           textColor="black"
           backGroundColor="white"
