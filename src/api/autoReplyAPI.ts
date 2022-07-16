@@ -16,14 +16,3 @@ export const autoReplyAdd = async (
       return null;
     });
 };
-
-export const testSendEmails = async (): Promise<number | null> => {
-  const endpoint = basicURL + "autoReplyEmailsSent";
-  return Axios.post(endpoint, {})
-    .then((response) => {
-      return response.status;
-    })
-    .catch(() => {
-      return null;
-    });
-};
