@@ -39,6 +39,8 @@ import {
 import { ReportContextType } from "../../types/blockType";
 import { windowLink } from "../../globalValues";
 import { useHistory } from "react-router-dom";
+import { autoReplyAdd } from "../../api/autoReplyAPI";
+import { AutoReplyEnum } from "../../types/autoReplyType";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -120,6 +122,14 @@ const ShowcaseManga = ({ showcases, toMangaOne }: IProps): JSX.Element => {
     dispatch({
       payload: allShowCases[index],
       type: SHOWCASE_AWESOME_ADD,
+    });
+    await autoReplyAdd({
+      _id: Math.random().toString().slice(-9),
+      sendUserId: loginUser ? loginUser._id : "",
+      receiveUserId: showcases[index].userId,
+      link: `${windowLink}/showcase/Manga/${allShowCases[index]._id}`,
+      uploadTime: new Date().valueOf(),
+      type: AutoReplyEnum.Awesome,
     });
   };
 

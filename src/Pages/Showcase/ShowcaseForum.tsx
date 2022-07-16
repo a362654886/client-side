@@ -90,6 +90,8 @@ import { openNewWindow } from "../../helperFns/windowsFn";
 import { ReportContextType } from "../../types/blockType";
 import TextArea from "antd/lib/input/TextArea";
 import { windowLink } from "../../globalValues";
+import { AutoReplyEnum } from "../../types/autoReplyType";
+import { autoReplyAdd } from "../../api/autoReplyAPI";
 
 interface IProps {
   showcases: ShowCaseType[];
@@ -283,6 +285,14 @@ const ShowcaseForum = ({
       if (r && r < 300) {
         addShowcaseToState(showcaseReply);
         setNewReplyHtml([]);
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser ? loginUser._id : "",
+          receiveUserId: allShowCases[index].userId,
+          link: `${windowLink}/showcase/showcaseSignalPage/${allShowCases[index]._id}`,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Comments,
+        });
       }
     } else {
       openNotification(
@@ -337,6 +347,16 @@ const ShowcaseForum = ({
         const _newSecondReplyHtml = cloneDeep(newSecondReplyHtml);
         _newSecondReplyHtml[index][secondIndex] = "";
         setNewSecondReplyHtml(_newSecondReplyHtml);
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser ? loginUser._id : "",
+          receiveUserId: (allShowCases[index].replies as ShowCaseReply[])[
+            secondIndex
+          ].userId,
+          link: `${windowLink}/showcase/showcaseSignalPage/${allShowCases[index]._id}`,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Comments,
+        });
       }
     } else {
       openNotification(
@@ -358,6 +378,7 @@ const ShowcaseForum = ({
       (showcase) => showcase._id == showcaseReply.showCaseId
     );
     _allShowCases[index].replies?.unshift(showcaseReply);
+    console;
     setAllShowCases(_allShowCases);
   };
 
@@ -794,6 +815,14 @@ const ShowcaseForum = ({
     dispatch({
       payload: _allShowCase[index],
       type: SHOWCASE_AWESOME_ADD,
+    });
+    await autoReplyAdd({
+      _id: Math.random().toString().slice(-9),
+      sendUserId: loginUser ? loginUser._id : "",
+      receiveUserId: allShowCases[index].userId,
+      link: `${windowLink}/showcase/showcaseSignalPage/${allShowCases[index]._id}`,
+      uploadTime: new Date().valueOf(),
+      type: AutoReplyEnum.Awesome,
     });
   };
 

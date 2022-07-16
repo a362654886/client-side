@@ -26,6 +26,9 @@ import { LOGIN_USER_UPDATE_FOLLOW } from "../redux/loginUser";
 import { REPORT_USER_UPDATE } from "../redux/reportUser";
 import { useHistory } from "react-router-dom";
 import { ReportContextType } from "../types/blockType";
+import { autoReplyAdd } from "../api/autoReplyAPI";
+import { AutoReplyEnum } from "../types/autoReplyType";
+import { windowLink } from "../globalValues";
 
 interface IProps {
   userId: string;
@@ -110,10 +113,20 @@ const SettingImg = ({
     }
   };
 
-  const followUser = () => {
+  const followUser = async () => {
     dispatch({
       payload: userId,
       type: LOGIN_USER_UPDATE_FOLLOW,
+    });
+    await autoReplyAdd({
+      _id: Math.random().toString().slice(-9),
+      sendUserId: loginUser ? loginUser._id : "",
+      receiveUserId: userId,
+      link: `${windowLink}/profileFollow/${
+        loginUser ? loginUser._id : ""
+      }false`,
+      uploadTime: new Date().valueOf(),
+      type: AutoReplyEnum.Follow,
     });
   };
 
@@ -157,6 +170,14 @@ const SettingImg = ({
           NotificationColor.Success,
           NotificationTitle.Success
         );
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser._id,
+          receiveUserId: userId,
+          link: ``,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Message,
+        });
       }
     } else {
       openNotification(

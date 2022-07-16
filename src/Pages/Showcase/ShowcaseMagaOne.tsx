@@ -100,6 +100,8 @@ import { cloneDeep } from "lodash";
 import forumMore from "../../files/forumMore.svg";
 import { ReportContextType } from "../../types/blockType";
 import { windowLink } from "../../globalValues";
+import { autoReplyAdd } from "../../api/autoReplyAPI";
+import { AutoReplyEnum } from "../../types/autoReplyType";
 
 interface Para {
   id: string;
@@ -177,8 +179,12 @@ const ShowcaseMangaOne = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    //console.log(loginUser);
+    setAwesomeArrState(loginUser?.likeShowcase ? loginUser?.likeShowcase : []);
   }, [loginUser]);
+
+  useEffect(() => {
+    console.log(awesomeArrState);
+  }, [awesomeArrState]);
 
   useEffect(() => {
     setShowCase(manga);
@@ -240,6 +246,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
 
   // awesome
   const getAwesomeButton = (showCaseIdAndTitle: string) => {
+    console.log(showCaseIdAndTitle);
     const r = awesomeArrState.find(
       (showcase) => showcase == showCaseIdAndTitle
     );
@@ -317,6 +324,16 @@ const ShowcaseMangaOne = (): JSX.Element => {
       payload: showCase,
       type: SHOWCASE_AWESOME_ADD,
     });
+    if (showCase) {
+      await autoReplyAdd({
+        _id: Math.random().toString().slice(-9),
+        sendUserId: loginUser ? loginUser._id : "",
+        receiveUserId: showCase.userId,
+        link: `${windowLink}/showcase/Manga/${showCase._id}`,
+        uploadTime: new Date().valueOf(),
+        type: AutoReplyEnum.Awesome,
+      });
+    }
   };
 
   const cancelAwesomeFn = async (showCaseIdAndTitle: string) => {
@@ -504,7 +521,7 @@ const ShowcaseMangaOne = (): JSX.Element => {
           })}
         </div>
         <AweSomeDiv>
-          {getAwesomeButton(`${showCase?._id}${showCase?.title}`)}
+          {getAwesomeButton(`${showCase?._id}`)}
           <p>Awesome!</p>
           <h6>{showCase?.aweSome}</h6>
         </AweSomeDiv>
@@ -678,6 +695,16 @@ const ShowcaseMangaOne = (): JSX.Element => {
         const newSecondItems = cloneDeep(newSecondReplyHtml);
         newSecondItems[secondIndex] = "";
         setNewSecondReplyHtml(newSecondItems);
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser ? loginUser._id : "",
+          receiveUserId: (
+            (showCase as ShowCaseType).replies as ShowCaseReply[]
+          )[secondIndex].userId,
+          link: window.location.href,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Comments,
+        });
       }
     } else {
       openNotification(
@@ -1051,6 +1078,14 @@ const ShowcaseMangaOne = (): JSX.Element => {
       if (r && r < 300) {
         addShowcaseToState(showcaseReply);
         setNewReplyHtml("");
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser ? loginUser._id : "",
+          receiveUserId: showCase.userId,
+          link: window.location.href,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Comments,
+        });
       }
     } else {
       openNotification(

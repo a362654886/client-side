@@ -78,6 +78,8 @@ import { DiscoveryHead } from "../../../cssJs/AnimePage/AnimeOneCss";
 import { ShowcaseSignalPageP } from "../../../cssJs/ShowCasePage/showCaseCss";
 import { openNewWindow } from "../../../helperFns/windowsFn";
 import { windowLink } from "../../../globalValues";
+import { autoReplyAdd } from "../../../api/autoReplyAPI";
+import { AutoReplyEnum } from "../../../types/autoReplyType";
 
 interface IProps {
   anime: Anime | null;
@@ -347,6 +349,14 @@ const AnimeOneForum = ({
         if (r && r < 300) {
           addForumItemToForum(forumItem);
           setNewItemHtml([]);
+          await autoReplyAdd({
+            _id: Math.random().toString().slice(-9),
+            sendUserId: loginUser ? loginUser._id : "",
+            receiveUserId: forums[index].userId,
+            link: window.location.href,
+            uploadTime: new Date().valueOf(),
+            type: AutoReplyEnum.Comments,
+          });
         }
       }
     } else {
@@ -424,6 +434,15 @@ const AnimeOneForum = ({
             }
           }
           setNewSecondItemHtml(newArr);
+          await autoReplyAdd({
+            _id: Math.random().toString().slice(-9),
+            sendUserId: loginUser ? loginUser._id : "",
+            receiveUserId: (forums[index].items as ForumItem[])[secondIndex]
+              .userId,
+            link: window.location.href,
+            uploadTime: new Date().valueOf(),
+            type: AutoReplyEnum.Comments,
+          });
         }
       }
     } else {

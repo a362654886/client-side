@@ -67,6 +67,8 @@ import { getWidth } from "../../helperFns/widthFn";
 import { Slider } from "antd";
 import { AwesomeLevelType } from "../../types/awesomeLevel";
 import { getLevel } from "../../helperFns/profileFn";
+import { AutoReplyEnum } from "../../types/autoReplyType";
+import { autoReplyAdd } from "../../api/autoReplyAPI";
 
 interface Para {
   id: string;
@@ -252,6 +254,14 @@ const ProfilePage = (): JSX.Element => {
       if (r && r < 300) {
         setMessageVisible(false);
         setMessageValue("");
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser._id,
+          receiveUserId: (profileUser as User)._id,
+          link: ``,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Message,
+        });
       }
     } else {
       openNotification(

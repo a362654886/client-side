@@ -115,6 +115,8 @@ import {
 import { IfLoginCheck } from "../../helperFns/loginCheck";
 import forumMore from "../../files/forumMore.svg";
 import { windowLink } from "../../globalValues";
+import { autoReplyAdd } from "../../api/autoReplyAPI";
+import { AutoReplyEnum } from "../../types/autoReplyType";
 
 interface Para {
   id: string;
@@ -281,6 +283,15 @@ const MarketplaceShowOne = (): JSX.Element => {
       setPage(1);
 
       getIniMarketPrices();
+
+      await autoReplyAdd({
+        _id: Math.random().toString().slice(-9),
+        sendUserId: loginUser ? loginUser._id : "",
+        receiveUserId: marketState.userId,
+        link: window.location.href,
+        uploadTime: new Date().valueOf(),
+        type: AutoReplyEnum.Bids,
+      });
     }
   };
 
@@ -374,6 +385,14 @@ const MarketplaceShowOne = (): JSX.Element => {
       if (r && r < 300) {
         setMessageVisible(false);
         setMessageValue("");
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser ? loginUser._id : "",
+          receiveUserId: marketState ? marketState.userId : "",
+          link: ``,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Message,
+        });
       }
     } else {
       openNotification(
@@ -422,6 +441,14 @@ const MarketplaceShowOne = (): JSX.Element => {
         newReply.push(showcaseReply);
         setReplies(newReply);
         setNewReplyHtml("");
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser ? loginUser._id : "",
+          receiveUserId: marketState ? marketState.userId : "",
+          link: window.location.href,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Comments,
+        });
       }
     } else {
       openNotification(
@@ -631,6 +658,14 @@ const MarketplaceShowOne = (): JSX.Element => {
         const newSecondItems = cloneDeep(newSecondReplyHtml);
         newSecondItems[secondIndex] = "";
         setNewSecondReplyHtml(newSecondItems);
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser ? loginUser._id : "",
+          receiveUserId: replies[secondIndex].userId,
+          link: window.location.href,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Comments,
+        });
       }
     } else {
       openNotification(

@@ -58,6 +58,8 @@ import { AwesomeLevelType } from "../../types/awesomeLevel";
 import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import { getLevel } from "../../helperFns/profileFn";
 import { Helmet } from "react-helmet";
+import { AutoReplyEnum } from "../../types/autoReplyType";
+import { autoReplyAdd } from "../../api/autoReplyAPI";
 
 const ProfileMessagePage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -178,6 +180,14 @@ const ProfileMessagePage = (): JSX.Element => {
       if (r && r < 300) {
         setMessageVisible(false);
         setMessageValue("");
+        await autoReplyAdd({
+          _id: Math.random().toString().slice(-9),
+          sendUserId: loginUser._id,
+          receiveUserId: messageUserId,
+          link: ``,
+          uploadTime: new Date().valueOf(),
+          type: AutoReplyEnum.Message,
+        });
       }
     } else {
       openNotification(
