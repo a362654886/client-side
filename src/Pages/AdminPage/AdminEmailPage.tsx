@@ -4,6 +4,7 @@ import { cloneDeep } from "lodash";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { testSendEmails } from "../../api/autoReplyAPI";
 import { emailsPost, userEmailsGet } from "../../api/emailAPI";
 import AnimeButton from "../../components/Button";
 import {
@@ -152,6 +153,16 @@ const AdminEmailPage = (): JSX.Element => {
           backGroundColor="#FFC300"
           borderColor="white"
           buttonClick={() => submit()}
+        />
+        <AnimeButton
+          para=""
+          text={"Test emails "}
+          width="200px"
+          height="32px"
+          textColor="black"
+          backGroundColor="white"
+          borderColor="black"
+          buttonClick={() => testSendEmails()}
         />
       </AdminEmailSubmitButton>
     </AdminEmailPageDiv>
