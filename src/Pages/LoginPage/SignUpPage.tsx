@@ -344,13 +344,13 @@ const SignUpPage = (): JSX.Element => {
     });
     await avatarAdd({
       _id: new Date().valueOf().toString(),
-      imageName: imgName,
+      imageName: imgName + new Date().valueOf().toString(),
       imageUrl: value,
       privateAvatar: true,
     });
     setChooseAvatarIndex({
       _id: new Date().valueOf().toString(),
-      imageName: imgName,
+      imageName: imgName + new Date().valueOf().toString(),
       imageUrl: value,
       privateAvatar: true,
     });

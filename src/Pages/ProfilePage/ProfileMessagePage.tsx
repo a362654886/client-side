@@ -161,6 +161,13 @@ const ProfileMessagePage = (): JSX.Element => {
     setMessageVisible(true);
   };
 
+  const replyOut = (message: MessageType) => {
+    setUserImg(message.receiveAvatar ? message.receiveAvatar : "");
+    setUserName(message.receiveName ? message.receiveName : "");
+    setMessageUserId(message.receiveId);
+    setMessageVisible(true);
+  };
+
   const getOneLevel = getLevel(allLevels, loginUser ? loginUser.awesomeNum : 0);
 
   const sendMessage = async () => {
@@ -204,6 +211,7 @@ const ProfileMessagePage = (): JSX.Element => {
 
   const getInMessage = () =>
     inMessages.map((message, index) => {
+      console.log()
       const date = new Date(message.uploadTime);
       return (
         <ProfileMessageBox key={index}>
@@ -237,7 +245,7 @@ const ProfileMessagePage = (): JSX.Element => {
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
           <p>{message.message}</p>
-          <ProfileReply onClick={() => reply(message)}>Reply</ProfileReply>
+          <ProfileReply onClick={() => replyOut(message)}>Reply</ProfileReply>
         </ProfileMessageBox>
       );
     });
