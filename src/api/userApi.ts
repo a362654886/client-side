@@ -41,6 +41,37 @@ export const userGet = async (id: string): Promise<User | null> => {
     });
 };
 
+export const userAdminGet = async (): Promise<User[] | null> => {
+  const endpoint = basicURL + `userAdminGet`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      const user = response.data;
+      return user;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
+export const userAdminUpdate = async (
+  id: string,
+  role: string
+): Promise<string | null> => {
+  const endpoint = basicURL + "userAdminUpdate";
+  return Axios.put(endpoint, {
+    user: {
+      id: id,
+      role: role,
+    },
+  })
+    .then(() => {
+      return "success";
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const userBlockGet = async (
   page: number,
   id: string

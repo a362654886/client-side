@@ -12,6 +12,9 @@ import ReportContext from "../Pages/AdminPage/reportComponent/ReportContext";
 import AvatarSetting from "../Pages/AdminPage/sysSettingComponent/AvatarSetting";
 import BlockSearch from "../Pages/AdminPage/reportComponent/BlockSearch";
 import ReportSearch from "../Pages/AdminPage/reportComponent/ReportSearch";
+import AdminTests from "../Pages/AdminPage/AdminTests";
+import AdminNotificationEmail from "../Pages/AdminPage/AdminNotificationEmail";
+import AdminAdminAuthorization from "../Pages/AdminPage/AdminAdminAuthorization";
 
 const AdminPageRouter = (): JSX.Element => {
   return (
@@ -36,23 +39,23 @@ const AdminPageRouter = (): JSX.Element => {
           path="/adminManagement/Redeem Products"
         />
         <Route component={AvatarSetting} path="/adminManagement/Avatars" />
-        <Route
-          component={BlockSearch}
-          path="/adminManagement/Blocked"
-        />
-        <Route
-          component={ReportSearch}
-          path="/adminManagement/Reports"
-        />
-        <Route
-          component={ReportContext}
-          path="/adminManagement/BlockContext"
-        />
+        <Route component={BlockSearch} path="/adminManagement/Blocked" />
+        <Route component={ReportSearch} path="/adminManagement/Reports" />
+        <Route component={ReportContext} path="/adminManagement/BlockContext" />
         <Route
           component={AdminContentManagementPage}
           path="/adminManagement/Data"
         />
         <Route component={AdminEmailPage} path="/adminManagement/Mass Email" />
+        <Route
+          component={AdminNotificationEmail}
+          path="/adminManagement/Notification Emailing"
+        />
+        <Route
+          component={AdminAdminAuthorization}
+          path="/adminManagement/Admin Authorization"
+        />
+        <Route component={AdminTests} path="/adminManagement/Tests" />
       </Switch>
     </>
   );

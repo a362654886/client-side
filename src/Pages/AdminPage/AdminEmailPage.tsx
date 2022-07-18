@@ -154,16 +154,6 @@ const AdminEmailPage = (): JSX.Element => {
           borderColor="white"
           buttonClick={() => submit()}
         />
-        <AnimeButton
-          para=""
-          text={"Test emails "}
-          width="200px"
-          height="32px"
-          textColor="black"
-          backGroundColor="white"
-          borderColor="black"
-          buttonClick={() => testSendEmails()}
-        />
       </AdminEmailSubmitButton>
     </AdminEmailPageDiv>
   );

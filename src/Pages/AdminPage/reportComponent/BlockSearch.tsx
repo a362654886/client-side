@@ -3,14 +3,10 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import AnimeButton from "../../../components/Button";
-import {
-  SearchDiv,
-} from "../../../cssJs/AdminPage/animeSearchCss";
+import { SearchDiv } from "../../../cssJs/AdminPage/animeSearchCss";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
 import { LoadingType } from "../../../types/EnumTypes";
-import {
-  AdminContentPageDiv,
-} from "../../../cssJs/AdminPage/adminCss";
+import { AdminContentPageDiv } from "../../../cssJs/AdminPage/adminCss";
 import AdminDataHeader from "./AdminDataHeader";
 import { userBlockGet, userUpdateBlock } from "../../../api/userApi";
 import { User } from "../../../types/User";
@@ -64,7 +60,7 @@ const BlockSearch = (): JSX.Element => {
   };
 
   const unBlock = async (user: User) => {
-    console.log(user)
+    console.log(user);
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
@@ -110,15 +106,9 @@ const BlockSearch = (): JSX.Element => {
               />
               <h6>{user.showName}</h6>
               <Button onClick={() => unBlock(user)}>
-                {user.block ?  `UnBlock`:`Block`}
+                {user.block ? `UnBlock` : `Block`}
               </Button>
             </AdminBlockChildEle>
-            <AdminBlockTime>
-              <p>{`${_getDate(new Date(user.blockTime))}`}</p>
-            </AdminBlockTime>
-            <AdminBlockEleReason>
-              <p>{`${user.blockReason}`}</p>
-            </AdminBlockEleReason>
           </AdminBlockEle>
         );
       })}

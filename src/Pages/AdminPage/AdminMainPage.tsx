@@ -60,6 +60,9 @@ const AdminMainPage = (): JSX.Element => {
     "Blocked",
     "Data",
     "Mass Email",
+    "Notification Emailing",
+    "Admin Authorization",
+    "Tests",
   ];
 
   const getMenu = () => {

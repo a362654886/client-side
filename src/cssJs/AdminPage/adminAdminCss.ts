@@ -158,3 +158,43 @@ export const AnimeAddNewSourceInput = styled.div`
     margin-bottom: 4px;
   }
 `;
+
+export const AdminNotificationEmailDiv = styled.div`
+  margin: 24px;
+  p {
+    font-size: 16px;
+    line-height: 32px;
+  }
+`;
+
+export const AdminAuthorizationDiv = styled.div`
+  margin: 24px;
+  h6 {
+    font-size: 16px;
+    line-height: 32px;
+    margin-bottom: 16px;
+    font-weight: bold;
+  }
+  p {
+    font-size: 16px;
+    line-height: 32px;
+    margin-bottom: 16px;
+  }
+  input {
+    width: 300px;
+    margin-right: 20px;
+  }
+`;
+
+export const AdminTestsDiv = styled.div`
+  margin: 24px;
+  p {
+    font-size: 16px;
+    line-height: 32px;
+    margin-bottom: 16px;
+  }
+  div {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+`;
