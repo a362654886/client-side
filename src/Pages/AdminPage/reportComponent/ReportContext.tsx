@@ -40,10 +40,7 @@ import { Button } from "antd";
 import { userUpdateBlock } from "../../../api/userApi";
 import { LoadingType } from "../../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../../redux/loading";
-import {
-  openNewWindowBlank,
-  openNewWindowPath,
-} from "../../../helperFns/windowsFn";
+import { openNewWindowBlank } from "../../../helperFns/windowsFn";
 
 const ReportContext = (): JSX.Element => {
   const history = useHistory();
@@ -235,12 +232,18 @@ const ReportContext = (): JSX.Element => {
           {blockState ? "UnBlock" : "Block"}
         </Button>
       </div>
-      <p
-        style={{ color: "blue", marginLeft: "8px", cursor: "pointer" }}
-        onClick={() => openNewWindowBlank(`${reportBlock?.resourceLink}`)}
-      >
-        Resource Link
-      </p>
+      {reportBlock?.type == "message" ? (
+        <></>
+      ) : (
+        <>
+          <p
+            style={{ color: "blue", marginLeft: "8px", cursor: "pointer" }}
+            onClick={() => openNewWindowBlank(`${reportBlock?.resourceLink}`)}
+          >
+            Resource Link
+          </p>
+        </>
+      )}
       <AdminReportContextDiv style={{ marginLeft: "8px" }}>
         {reportContext}
       </AdminReportContextDiv>

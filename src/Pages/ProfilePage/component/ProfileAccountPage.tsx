@@ -190,6 +190,7 @@ const ProfileAccountPage = (): JSX.Element => {
     const readyUpdateUser: User = {
       _id: loginUser ? loginUser._id : "",
       userEmail: loginUser ? loginUser.userEmail : "",
+      contactEmail: loginUser ? loginUser.contactEmail : "",
       password: password,
       firstName: firstName,
       lastName: lastName,

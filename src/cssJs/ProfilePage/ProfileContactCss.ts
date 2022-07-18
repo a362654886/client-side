@@ -71,6 +71,15 @@ export const SocialDiv = styled.div`
   }
 `;
 
+export const SocialText = styled.p`
+  background-color: #c1eeff;
+  padding: 4px 8px;
+  font-weight: normal !important;
+  width: 320px !important;
+  margin-top: 32px;
+  height: auto !important;
+`;
+
 export const LogoInput = styled.div`
   img {
     margin-top: -8px;

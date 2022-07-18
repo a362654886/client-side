@@ -36,4 +36,5 @@ export enum ReportContextType {
   PRODUCT = "product",
   VIDEO = "video",
   MARKET = "market",
+  MESSAGE = "message",
 }

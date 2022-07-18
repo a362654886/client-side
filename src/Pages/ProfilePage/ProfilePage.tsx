@@ -69,6 +69,7 @@ import { AwesomeLevelType } from "../../types/awesomeLevel";
 import { getLevel } from "../../helperFns/profileFn";
 import { AutoReplyEnum } from "../../types/autoReplyType";
 import { autoReplyAdd } from "../../api/autoReplyAPI";
+import { windowLink } from "../../globalValues";
 
 interface Para {
   id: string;
@@ -249,6 +250,7 @@ const ProfilePage = (): JSX.Element => {
         receiveId: (profileUser as User)._id,
         uploadTime: new Date(),
         message: messageValue,
+        hide: false,
       };
       const r = await messageAdd(messageBody);
       if (r && r < 300) {
@@ -258,7 +260,7 @@ const ProfilePage = (): JSX.Element => {
           _id: Math.random().toString().slice(-9),
           sendUserId: loginUser._id,
           receiveUserId: (profileUser as User)._id,
-          link: ``,
+          link: `${windowLink}/ProfileMessage`,
           uploadTime: new Date().valueOf(),
           type: AutoReplyEnum.Message,
         });

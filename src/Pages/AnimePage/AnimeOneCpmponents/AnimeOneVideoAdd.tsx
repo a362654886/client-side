@@ -72,6 +72,14 @@ const AnimeOneVideoAdd = ({ toVideo }: IProps): JSX.Element => {
   };
 
   const submit = async () => {
+    if (loginUser?.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
     if (videoType && title.trim() == "") {
       openNotification(
         "please input title",

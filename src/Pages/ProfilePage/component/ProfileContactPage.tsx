@@ -13,6 +13,7 @@ import {
   ContactTelInput,
   LogoInput,
   SocialDiv,
+  SocialText,
 } from "../../../cssJs/ProfilePage/ProfileContactCss";
 import { LOGIN_USER_ADD } from "../../../redux/loginUser";
 import { IStoreState } from "../../../types/IStoreState";
@@ -38,7 +39,7 @@ const ProfileContactPage = (): JSX.Element => {
 
   useEffect(() => {
     if (loginUser) {
-      setUserEmail(loginUser.userEmail ? loginUser.userEmail : "");
+      setUserEmail(loginUser.contactEmail ? loginUser.contactEmail : "");
       setTel(loginUser.tel ? loginUser.tel : "tel");
       setLocation(loginUser.location ? loginUser.location : "");
       setFacebook(loginUser.facebook ? loginUser.facebook : "facebook");
@@ -72,8 +73,9 @@ const ProfileContactPage = (): JSX.Element => {
 
   const updateUser = async () => {
     const readyUpdateUser: User = {
-      _id: email,
-      userEmail: email,
+      _id: loginUser ? loginUser._id : "",
+      userEmail: loginUser ? loginUser.userEmail : "",
+      contactEmail: email,
       password: loginUser ? loginUser.password : "",
       firstName: loginUser ? loginUser.firstName : "",
       lastName: loginUser ? loginUser.lastName : "",
@@ -138,7 +140,7 @@ const ProfileContactPage = (): JSX.Element => {
         <>
           <ContactEmailInput>
             <p>Contact Email:</p>
-            <Input placeholder={email} onChange={onChange} disabled></Input>
+            <Input placeholder={email} onChange={onChange}></Input>
           </ContactEmailInput>
           <ContactTelInput>
             <p>Tel:</p>
@@ -184,6 +186,10 @@ const ProfileContactPage = (): JSX.Element => {
                 ></Input>
               </div>
             </LogoInput>
+            <SocialText>
+              Contact Info is displayed on your profile page, telling visitors
+              how to reach you.
+            </SocialText>
           </SocialDiv>
           <ContactSubmitButtonDiv>
             <AnimeButton

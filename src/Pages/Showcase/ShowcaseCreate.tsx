@@ -133,6 +133,14 @@ const ShowcaseCreate = (): JSX.Element => {
 
   const showCaseCreate = async () => {
     const id = new Date().valueOf().toString();
+    if (loginUser && loginUser.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
     if (showCaseType == ShowCaseEnum.Manga && title.trim() == "") {
       openNotification(
         "please input title",
@@ -143,7 +151,7 @@ const ShowcaseCreate = (): JSX.Element => {
     }
     if (imgArr.length == 0) {
       openNotification(
-        "please insert cover image",
+        "please upload cover image",
         NotificationColor.Warning,
         NotificationTitle.Warning
       );

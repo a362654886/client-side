@@ -18,6 +18,7 @@ import {
   ProfileSlider,
 } from "../../cssJs/ProfilePage/ProfileCss";
 import { IStoreState } from "../../types/IStoreState";
+import avatarUpload from "../../files/avatarUpload.png";
 import { User } from "../../types/User";
 import avatarSetting from "../../files/avatarSetting.svg";
 import Flag from "react-flagkit";
@@ -44,7 +45,7 @@ const ProfileLevelPage = (): JSX.Element => {
 
   const getImage = () => {
     const imageArr = loginUser ? loginUser.avatarImage : null;
-    return imageArr ? imageArr[0].imageUrl : "";
+    return imageArr ? imageArr[0].imageUrl : avatarUpload;
   };
 
   const moveToLevel = () => {
@@ -82,7 +83,7 @@ const ProfileLevelPage = (): JSX.Element => {
                     {`${loginUser ? loginUser.firstName : ""}.${
                       loginUser
                         ? loginUser.lastName.substring(0, 1).toUpperCase()
-                        : ""
+                        : "Not Logged In"
                     }`}
                     <Flag
                       style={{ marginLeft: "5px" }}

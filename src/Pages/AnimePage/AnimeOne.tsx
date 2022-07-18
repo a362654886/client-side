@@ -256,12 +256,6 @@ const AnimeOne = (): JSX.Element => {
               </p>
             </MoreRight>
           </AnimOneSide>
-          <AnimOneSideTwo>
-            <h6>FQA</h6>
-            <p>How to gain points?</p>
-            <p>How to redeem a gift product?</p>
-            <p>How to share a resource?</p>
-          </AnimOneSideTwo>
         </div>
       </AnimOne>
     </>

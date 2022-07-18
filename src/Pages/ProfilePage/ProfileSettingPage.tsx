@@ -32,6 +32,7 @@ import { getLevel } from "../../helperFns/profileFn";
 import { AwesomeLevelType } from "../../types/awesomeLevel";
 import { Slider } from "antd";
 import { Helmet } from "react-helmet";
+import avatarUpload from "../../files/avatarUpload.png";
 
 const ProfileSettingPage = (): JSX.Element => {
   const history = useHistory();
@@ -43,7 +44,7 @@ const ProfileSettingPage = (): JSX.Element => {
       backColor: "#F6F6F6",
     },
     {
-      text: "Info",
+      text: "Contact Info",
       color: "black",
       backColor: "white",
     },
@@ -145,7 +146,7 @@ const ProfileSettingPage = (): JSX.Element => {
 
   const getImage = () => {
     const imageArr = loginUser ? loginUser.avatarImage : null;
-    return imageArr ? imageArr[0].imageUrl : "";
+    return imageArr ? imageArr[0].imageUrl : avatarUpload;
   };
 
   const getOneLevel = getLevel(allLevels, loginUser ? loginUser.awesomeNum : 0);
@@ -170,7 +171,7 @@ const ProfileSettingPage = (): JSX.Element => {
                   {`${loginUser ? loginUser.firstName : ""}.${
                     loginUser
                       ? loginUser.lastName.substring(0, 1).toUpperCase()
-                      : ""
+                      : "Not Logged In"
                   }`}
                   <Flag
                     style={{ marginLeft: "5px" }}
@@ -218,12 +219,16 @@ const ProfileSettingPage = (): JSX.Element => {
           </div>
         </ProfileDiv>
         <LineDiv></LineDiv>
-        <div style={{ display: getWidth() > 600 ? "flex" : "inline" }}>
-          <div style={{ width: "233px" }}>
-            <SettingButtonsDiv>{getButtons()}</SettingButtonsDiv>
+        {!loginUser ? (
+          <></>
+        ) : (
+          <div style={{ display: getWidth() > 600 ? "flex" : "inline" }}>
+            <div style={{ width: "233px" }}>
+              <SettingButtonsDiv>{getButtons()}</SettingButtonsDiv>
+            </div>
+            {getPart()}
           </div>
-          {getPart()}
-        </div>
+        )}
       </ProfileSettingBox>
     </>
   );

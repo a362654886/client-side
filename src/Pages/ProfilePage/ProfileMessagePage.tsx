@@ -11,6 +11,7 @@ import {
   ProfileBox,
   ProfileDiv,
   ProfileMessageBox,
+  ProfileMessageBoxText,
   ProfileMessageButtons,
   ProfileMessageMore,
   ProfileReply,
@@ -29,6 +30,7 @@ import { flagGet } from "../../helperFns/flag";
 import AnimeButton from "../../components/Button";
 import loadingImg from "../../files/loading.gif";
 import { useEffect, useState } from "react";
+import avatarUpload from "../../files/avatarUpload.png";
 import {
   messagesAllGetByUserId,
   messagesAllGetByReceivedId,
@@ -60,6 +62,8 @@ import { getLevel } from "../../helperFns/profileFn";
 import { Helmet } from "react-helmet";
 import { AutoReplyEnum } from "../../types/autoReplyType";
 import { autoReplyAdd } from "../../api/autoReplyAPI";
+import { ReportContextType } from "../../types/blockType";
+import { windowLink } from "../../globalValues";
 
 const ProfileMessagePage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -182,6 +186,7 @@ const ProfileMessagePage = (): JSX.Element => {
         receiveId: messageUserId,
         uploadTime: new Date(),
         message: messageValue,
+        hide: false,
       };
       const r = await messageAdd(messageBody);
       if (r && r < 300) {
@@ -191,7 +196,7 @@ const ProfileMessagePage = (): JSX.Element => {
           _id: Math.random().toString().slice(-9),
           sendUserId: loginUser._id,
           receiveUserId: messageUserId,
-          link: ``,
+          link: `${windowLink}/ProfileMessage`,
           uploadTime: new Date().valueOf(),
           type: AutoReplyEnum.Message,
         });
@@ -211,9 +216,8 @@ const ProfileMessagePage = (): JSX.Element => {
 
   const getInMessage = () =>
     inMessages.map((message, index) => {
-      console.log()
       const date = new Date(message.uploadTime);
-      return (
+      return !message.hide ? (
         <ProfileMessageBox key={index}>
           <div style={{ display: "flex" }}>
             <ProfileWrapperDiv
@@ -238,22 +242,24 @@ const ProfileMessagePage = (): JSX.Element => {
               userName={message.receiveName ? message.receiveName : ""}
               userImg={message.receiveAvatar ? message.receiveAvatar : ""}
               marginTop="24px"
-              type={null}
-              contextId={null}
+              type={ReportContextType.MESSAGE}
+              contextId={message._id}
               resourceLink={``}
             />
             <ForumTime>{_getDate(date)}</ForumTime>
           </div>
-          <p>{message.message}</p>
+          <ProfileMessageBoxText>{message.message}</ProfileMessageBoxText>
           <ProfileReply onClick={() => replyOut(message)}>Reply</ProfileReply>
         </ProfileMessageBox>
+      ) : (
+        <></>
       );
     });
 
   const getOutMessage = () =>
     outMessages.map((message, index) => {
       const date = new Date(message.uploadTime);
-      return (
+      return !message.hide ? (
         <ProfileMessageBox key={index}>
           <div style={{ display: "flex" }}>
             <ProfileWrapperDiv
@@ -278,8 +284,8 @@ const ProfileMessagePage = (): JSX.Element => {
               userName={message.userName ? message.userName : ""}
               userImg={message.userAvatar ? message.userAvatar : ""}
               marginTop="24px"
-              type={null}
-              contextId={null}
+              type={ReportContextType.MESSAGE}
+              contextId={message._id}
               resourceLink={``}
             />
             <ForumTime>{_getDate(date)}</ForumTime>
@@ -287,6 +293,8 @@ const ProfileMessagePage = (): JSX.Element => {
           <p>{message.message}</p>
           <ProfileReply onClick={() => reply(message)}>Reply</ProfileReply>
         </ProfileMessageBox>
+      ) : (
+        <></>
       );
     });
 
@@ -345,29 +353,37 @@ const ProfileMessagePage = (): JSX.Element => {
           <div style={{ display: "flex" }}>
             <NamePic
               src={
-                loginUser ? (loginUser.avatarImage as Avatar[])[0].imageUrl : ""
+                loginUser
+                  ? (loginUser.avatarImage as Avatar[])[0].imageUrl
+                  : avatarUpload
               }
             />
             <NameDiv>
               <NameSetting>
                 <p>
-                  {`${loginUser ? loginUser.firstName : ""}.${
-                    loginUser
-                      ? loginUser.lastName.substring(0, 1).toUpperCase()
-                      : ""
-                  }`}
+                  {loginUser
+                    ? `${loginUser ? loginUser.firstName : ""}.${
+                        loginUser
+                          ? loginUser.lastName.substring(0, 1).toUpperCase()
+                          : ""
+                      }`
+                    : `Not Logged In`}
                   <Flag
                     style={{ marginLeft: "5px" }}
                     country={flagGet(loginUser ? loginUser.country : "")}
                   />
                 </p>
                 <SettingImg
-                  userId={(loginUser as User)._id}
-                  userName={`${(loginUser as User).firstName}.${
-                    (loginUser as User).lastName
-                  }`}
+                  userId={loginUser ? loginUser._id : ""}
+                  userName={
+                    loginUser
+                      ? `${(loginUser as User).firstName}.${
+                          (loginUser as User).lastName
+                        }`
+                      : ""
+                  }
                   userImg={`https://animeimagebucket.s3.amazonaws.com/${
-                    (loginUser as User).avatar
+                    loginUser ? loginUser.avatar : ""
                   }`}
                   marginTop="4px"
                   type={null}

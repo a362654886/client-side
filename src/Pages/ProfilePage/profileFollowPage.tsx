@@ -20,6 +20,7 @@ import { followByType } from "../../types/FollowBycopy";
 import { IStoreState } from "../../types/IStoreState";
 import { User } from "../../types/User";
 import avatarSetting from "../../files/avatarSetting.svg";
+import avatarUpload from "../../files/avatarUpload.png";
 import ingfollow from "../../files/Icon-Selected.svg";
 import marketFollow from "../../files/Icon-Follow.svg";
 import AnimeButton, { MoreButtonDiv } from "../../components/Button";
@@ -194,7 +195,7 @@ const ProfileFollowPage = (): JSX.Element => {
         ? loginUser
         : profileUser;
     const imageArr = user ? user.avatarImage : null;
-    return imageArr ? imageArr[0].imageUrl : "";
+    return imageArr ? imageArr[0].imageUrl : avatarUpload;
   };
 
   const followUser = (id: string) => {
@@ -213,6 +214,7 @@ const ProfileFollowPage = (): JSX.Element => {
   };
 
   const getButtons = () => {
+    const user = loginUser ? loginUser : profileUser;
     return buttonsColor.map(
       (
         button: {
@@ -226,9 +228,15 @@ const ProfileFollowPage = (): JSX.Element => {
           return (
             <AnimeButton
               para=""
-              text={`${button.text} ${
-                button.text == "Following" ? followIngCount : followersCount
-              }`}
+              text={
+                user
+                  ? `${button.text} ${
+                      button.text == "Following"
+                        ? followIngCount
+                        : followersCount
+                    }`
+                  : ""
+              }
               width="120px"
               height="32px"
               textColor="black"
@@ -241,9 +249,15 @@ const ProfileFollowPage = (): JSX.Element => {
           return (
             <AnimeButton
               para=""
-              text={`${button.text} ${
-                button.text == "Following" ? followIngCount : followersCount
-              }`}
+              text={
+                user
+                  ? `${button.text} ${
+                      button.text == "Following"
+                        ? followIngCount
+                        : followersCount
+                    }`
+                  : ""
+              }
               width="120px"
               height="32px"
               textColor="black"
@@ -258,142 +272,147 @@ const ProfileFollowPage = (): JSX.Element => {
   };
 
   const getPart = () => {
-    if (chooseButton == 0) {
-      return followIng ? (
-        <>
-          {followIng.map((item: User, index: number) => {
-            return (
-              <FollowElementDiv key={index}>
-                <FollowElementProfileDiv
-                  onClick={() => history.push(`/profilePage/${item._id}`)}
-                >
-                  <img
-                    src={`https://animeimagebucket.s3.amazonaws.com/${item.avatar}`}
-                  />
-                  <FollowElementProfileNameSetting>
-                    <p>
-                      {`${item ? item.firstName : ""}.${
-                        item ? item.lastName.substring(0, 1).toUpperCase() : ""
-                      }`}
-                      <Flag
-                        style={{ marginLeft: "5px" }}
-                        country={flagGet(item ? item.country : "")}
-                      />
-                    </p>
-                    <SettingImg
-                      userId={item ? item._id : ""}
-                      userName={`${item ? item.firstName : ""}.${
-                        item ? item.lastName : ""
-                      }`}
-                      userImg={avatarSetting}
-                      marginTop="4px"
-                      type={null}
-                      contextId={null}
-                      resourceLink={``}
+    const user = loginUser ? loginUser : profileUser;
+    if (user) {
+      if (chooseButton == 0) {
+        return followIng ? (
+          <>
+            {followIng.map((item: User, index: number) => {
+              return (
+                <FollowElementDiv key={index}>
+                  <FollowElementProfileDiv
+                    onClick={() => history.push(`/profilePage/${item._id}`)}
+                  >
+                    <img
+                      src={`https://animeimagebucket.s3.amazonaws.com/${item.avatar}`}
                     />
-                  </FollowElementProfileNameSetting>
-                </FollowElementProfileDiv>
-                <FollowBottomDiv
-                  onClick={() => {
-                    followUser(item._id);
-                  }}
-                >
-                  <img
-                    src={
-                      loginUser?.followUsers.indexOf(item._id) == -1
-                        ? marketFollow
-                        : ingfollow
-                    }
-                  />
-                  <h6>
-                    {loginUser?.followUsers.indexOf(item._id) == -1
-                      ? `Follow`
-                      : `Following`}
-                  </h6>
-                </FollowBottomDiv>
-              </FollowElementDiv>
-            );
-          })}
-          {followIng.length < followIngCount ? (
-            <MoreButtonDiv onClick={() => getFollowingMore()}>
-              <div>
-                <img src={`${getMoreImg}`} />
-                <p>Load More</p>
-              </div>
-            </MoreButtonDiv>
-          ) : (
-            <></>
-          )}
-        </>
-      ) : (
-        <></>
-      );
-    } else {
-      return followers ? (
-        <>
-          {followers.map((item: followByType, index: number) => {
-            return (
-              <FollowElementDiv key={index}>
-                <FollowElementProfileDiv
-                  onClick={() => history.push(`/profilePage/${item._id}`)}
-                >
-                  <img src={`${item.userAvatar}`} />
-                  <FollowElementProfileNameSetting>
-                    <p>
-                      {`${item ? item.userName : ""}`}
-                      <Flag
-                        style={{ marginLeft: "5px" }}
-                        country={flagGet(
-                          item ? (item.country ? item.country : "") : ""
-                        )}
+                    <FollowElementProfileNameSetting>
+                      <p>
+                        {`${item ? item.firstName : ""}.${
+                          item
+                            ? item.lastName.substring(0, 1).toUpperCase()
+                            : ""
+                        }`}
+                        <Flag
+                          style={{ marginLeft: "5px" }}
+                          country={flagGet(item ? item.country : "")}
+                        />
+                      </p>
+                      <SettingImg
+                        userId={item ? item._id : ""}
+                        userName={`${item ? item.firstName : ""}.${
+                          item ? item.lastName : ""
+                        }`}
+                        userImg={avatarSetting}
+                        marginTop="4px"
+                        type={null}
+                        contextId={null}
+                        resourceLink={``}
                       />
-                    </p>
-                    <SettingImg
-                      userId={item ? item._id : ""}
-                      userName={`${item ? item.userName : ""}`}
-                      userImg={avatarSetting}
-                      marginTop="4px"
-                      type={null}
-                      contextId={null}
-                      resourceLink={``}
+                    </FollowElementProfileNameSetting>
+                  </FollowElementProfileDiv>
+                  <FollowBottomDiv
+                    onClick={() => {
+                      followUser(item._id);
+                    }}
+                  >
+                    <img
+                      src={
+                        loginUser?.followUsers.indexOf(item._id) == -1
+                          ? marketFollow
+                          : ingfollow
+                      }
                     />
-                  </FollowElementProfileNameSetting>
-                </FollowElementProfileDiv>
-                <FollowBottomDiv
-                  onClick={() => {
-                    followUser(item.userId);
-                  }}
-                >
-                  <img
-                    src={
-                      loginUser?.followUsers.indexOf(item.userId) == -1
-                        ? marketFollow
-                        : ingfollow
-                    }
-                  />
-                  <h6>
-                    {loginUser?.followUsers.indexOf(item.userId) == -1
-                      ? `Follow`
-                      : `Following`}
-                  </h6>
-                </FollowBottomDiv>
-              </FollowElementDiv>
-            );
-          })}
-          {followers.length < followersCount ? (
-            <MoreButtonDiv onClick={() => getFollowerMore()}>
-              <div>
-                <img src={`${getMoreImg}`} />
-                <p>Load More</p>
-              </div>
-            </MoreButtonDiv>
-          ) : (
-            <></>
-          )}
-        </>
-      ) : (
-        <></>
-      );
+                    <h6>
+                      {loginUser?.followUsers.indexOf(item._id) == -1
+                        ? `Follow`
+                        : `Following`}
+                    </h6>
+                  </FollowBottomDiv>
+                </FollowElementDiv>
+              );
+            })}
+            {followIng.length < followIngCount ? (
+              <MoreButtonDiv onClick={() => getFollowingMore()}>
+                <div>
+                  <img src={`${getMoreImg}`} />
+                  <p>Load More</p>
+                </div>
+              </MoreButtonDiv>
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <></>
+        );
+      } else {
+        return followers ? (
+          <>
+            {followers.map((item: followByType, index: number) => {
+              return (
+                <FollowElementDiv key={index}>
+                  <FollowElementProfileDiv
+                    onClick={() => history.push(`/profilePage/${item._id}`)}
+                  >
+                    <img src={`${item.userAvatar}`} />
+                    <FollowElementProfileNameSetting>
+                      <p>
+                        {`${item ? item.userName : ""}`}
+                        <Flag
+                          style={{ marginLeft: "5px" }}
+                          country={flagGet(
+                            item ? (item.country ? item.country : "") : ""
+                          )}
+                        />
+                      </p>
+                      <SettingImg
+                        userId={item ? item._id : ""}
+                        userName={`${item ? item.userName : ""}`}
+                        userImg={avatarSetting}
+                        marginTop="4px"
+                        type={null}
+                        contextId={null}
+                        resourceLink={``}
+                      />
+                    </FollowElementProfileNameSetting>
+                  </FollowElementProfileDiv>
+                  <FollowBottomDiv
+                    onClick={() => {
+                      followUser(item.userId);
+                    }}
+                  >
+                    <img
+                      src={
+                        loginUser?.followUsers.indexOf(item.userId) == -1
+                          ? marketFollow
+                          : ingfollow
+                      }
+                    />
+                    <h6>
+                      {loginUser?.followUsers.indexOf(item.userId) == -1
+                        ? `Follow`
+                        : `Following`}
+                    </h6>
+                  </FollowBottomDiv>
+                </FollowElementDiv>
+              );
+            })}
+            {followers.length < followersCount ? (
+              <MoreButtonDiv onClick={() => getFollowerMore()}>
+                <div>
+                  <img src={`${getMoreImg}`} />
+                  <p>Load More</p>
+                </div>
+              </MoreButtonDiv>
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <></>
+        );
+      }
     }
   };
 
@@ -406,9 +425,11 @@ const ProfileFollowPage = (): JSX.Element => {
         <NameDiv>
           <NameSetting>
             <p>
-              {`${user ? user.firstName : ""}.${
-                user ? user.lastName.substring(0, 1).toUpperCase() : ""
-              }`}
+              {user
+                ? `${user ? user.firstName : ""}.${
+                    user ? user.lastName.substring(0, 1).toUpperCase() : ""
+                  }`
+                : "Not Logged In"}
               <Flag
                 style={{ marginLeft: "5px" }}
                 country={flagGet(user ? user.country : "")}

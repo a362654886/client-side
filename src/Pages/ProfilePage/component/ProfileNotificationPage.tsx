@@ -45,6 +45,7 @@ const ProfileNotificationPage = (): JSX.Element => {
     const readyUpdateUser: User = {
       _id: loginUser ? loginUser._id : "",
       userEmail: loginUser ? loginUser.userEmail : "",
+      contactEmail: loginUser ? loginUser.contactEmail : "",
       password: loginUser ? loginUser.password : "",
       firstName: loginUser ? loginUser.firstName : "",
       lastName: loginUser ? loginUser.lastName : "",

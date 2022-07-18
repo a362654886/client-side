@@ -228,7 +228,13 @@ const MallCustom = (): JSX.Element => {
   };
 
   const GetAQuote = () => {
-    if (resizeUploadImg.trim() == "") {
+    if (loginUser && loginUser.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (resizeUploadImg.trim() == "") {
       openNotification(
         "please insert image",
         NotificationColor.Warning,

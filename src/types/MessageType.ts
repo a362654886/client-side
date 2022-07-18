@@ -10,4 +10,5 @@ export type MessageType = {
   receiveAvatar?: string;
   receiveName?: string;
   receiveCountry?: string;
+  hide: boolean;
 };

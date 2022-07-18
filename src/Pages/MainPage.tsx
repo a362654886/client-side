@@ -57,6 +57,7 @@ import { AwesomeLevelType } from "../types/awesomeLevel";
 import { awesomeLevelAllGet } from "../api/awesomeLevelAPI";
 import { ALL_LEVELS_UPDATE } from "../redux/allLevels";
 import { getWidth } from "../helperFns/widthFn";
+import AnimeButton from "../components/Button";
 
 const MainPage = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ const MainPage = (): JSX.Element => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("erererer")
+    console.log("erererer");
   }, []);
 
   useEffect(() => {
@@ -510,17 +511,17 @@ const MainPage = (): JSX.Element => {
           <>
             <FootContainer className="col-xl-12 col-lg-12 col-md-12 col-sm-12 row">
               <FooterLogo className="col-xl-7 col-lg-2.4 col-md-2.4 col-sm-2.4">
-                ©2021 AnimePark Limited Inc
+                ©2022 AnimePark.com
               </FooterLogo>
-              <FooterText1 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
-                About Us
-              </FooterText1>
               <FooterText2 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
                 First time visitors
               </FooterText2>
               <FooterText3 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
-                Help/FAQ
+                Privacy Policy
               </FooterText3>
+              <FooterText1 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
+                About Us
+              </FooterText1>
               <FooterText4
                 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4"
                 onClick={() => {
@@ -563,13 +564,40 @@ const MainPage = (): JSX.Element => {
           visible={cookieValue}
           height={132}
         >
-          <p>
-            We and <a style={{ color: "blue" }}>our partners</a> use cookies to
-            personalize your experience, to navigate between pages efficiently,
-            and for measurement and analytics purposes. By using our website and
-            services, you agree to our use of cookies as described in our{" "}
-            <a style={{ color: "blue" }}>Cookie Policy</a>.
-          </p>
+          <div>
+            <p>
+              We use cookies to personalize your experience and improve your
+              access efficiency. By using our website and services, you agree to
+              our use of cookies.
+            </p>
+            <div
+              style={{ display: "flex", width: "220px", margin: "0px auto" }}
+            >
+              <AnimeButton
+                para=""
+                text={"Learn more"}
+                width="150px"
+                height="32px"
+                textColor="#4BA3C3"
+                backGroundColor="#ecf9fe"
+                borderColor="white"
+                buttonClick={() => console.log("")}
+              />
+              <AnimeButton
+                para=""
+                text={"OK"}
+                width="120px"
+                height="32px"
+                textColor="black"
+                backGroundColor="white"
+                borderColor="black"
+                buttonClick={() => {
+                  setCookieValue(false);
+                  localStorage.setItem("cookieAlert", "true");
+                }}
+              />
+            </div>
+          </div>
         </CookieDiv>
       ) : (
         <MobileCookieDiv
@@ -581,13 +609,13 @@ const MainPage = (): JSX.Element => {
           visible={cookieValue}
           height={370}
         >
-          <p>
-            We and <a style={{ color: "blue" }}>our partners</a> use cookies to
-            personalize your experience, to navigate between pages efficiently,
-            and for measurement and analytics purposes. By using our website and
-            services, you agree to our use of cookies as described in our{" "}
-            <a style={{ color: "blue" }}>Cookie Policy</a>.
-          </p>
+          <div>
+            <p>
+              We use cookies to personalize your experience and improve your
+              access efficiency. By using our website and services, you agree to
+              our use of cookies.
+            </p>
+          </div>
         </MobileCookieDiv>
       )}
     </div>

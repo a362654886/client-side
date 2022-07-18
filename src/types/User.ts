@@ -1,9 +1,9 @@
-import { BooleanModel } from "aws-sdk/clients/gamelift";
 
 export type User = {
   _id: string;
   sequenceId?: string;
   userEmail: string;
+  contactEmail: string;
   password: string;
   firstName: string;
   lastName: string;

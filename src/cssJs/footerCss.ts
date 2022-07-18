@@ -19,7 +19,7 @@ export const FooterLogo = styled.p`
 
 export const FooterText1 = styled.p`
   height: 22px;
-  width: 157px;
+  width: 87px;
   color: white;
   padding-top: 37px;
   font-size: 16px;
@@ -41,7 +41,7 @@ export const FooterText2 = styled.p`
 
 export const FooterText3 = styled.p`
   height: 22px;
-  width: 86px;
+  width: 136px;
   color: white;
   padding-top: 37px;
   font-size: 16px;

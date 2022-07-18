@@ -160,6 +160,7 @@ const SettingImg = ({
         receiveId: userId,
         uploadTime: new Date(),
         message: messageValue,
+        hide: false,
       };
       const r = await messageAdd(messageBody);
       if (r && r < 300) {
@@ -174,7 +175,7 @@ const SettingImg = ({
           _id: Math.random().toString().slice(-9),
           sendUserId: loginUser._id,
           receiveUserId: userId,
-          link: ``,
+          link: `${windowLink}/ProfileMessage`,
           uploadTime: new Date().valueOf(),
           type: AutoReplyEnum.Message,
         });

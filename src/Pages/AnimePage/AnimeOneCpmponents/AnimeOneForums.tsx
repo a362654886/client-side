@@ -269,7 +269,13 @@ const AnimeOneForum = ({
       type: LOADING_OPEN,
     });
     const textString = await forumTextCompress(html);
-    if (textString.trim() == "") {
+    if (loginUser?.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (textString.trim() == "") {
       openNotification(
         "please input comment",
         NotificationColor.Warning,
@@ -322,7 +328,13 @@ const AnimeOneForum = ({
           : forums[index]._id + new Date().valueOf()
       }`;
       const textString = await forumTextCompress(newItemHtml[index]);
-      if (textString.trim() == "") {
+      if (loginUser?.block == true) {
+        openNotification(
+          "your account has been blocked,please connect Administrator",
+          NotificationColor.Warning,
+          NotificationTitle.Warning
+        );
+      } else if (textString.trim() == "") {
         openNotification(
           "please input comment",
           NotificationColor.Warning,
@@ -397,7 +409,13 @@ const AnimeOneForum = ({
       const textString = await forumTextCompress(
         newSecondItemHtml[index][secondIndex]
       );
-      if (textString.trim() == "") {
+      if (loginUser?.block == true) {
+        openNotification(
+          "your account has been blocked,please connect Administrator",
+          NotificationColor.Warning,
+          NotificationTitle.Warning
+        );
+      } else if (textString.trim() == "") {
         openNotification(
           "please input comment",
           NotificationColor.Warning,

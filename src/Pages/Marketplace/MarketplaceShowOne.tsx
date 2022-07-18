@@ -271,6 +271,14 @@ const MarketplaceShowOne = (): JSX.Element => {
   };
 
   const insertMarketPrice = async () => {
+    if (loginUser && loginUser.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
     if (marketState && loginUser) {
       const marketPrice: MarketPriceType = {
         _id: marketState._id + new Date().valueOf(),
@@ -380,6 +388,7 @@ const MarketplaceShowOne = (): JSX.Element => {
         receiveId: marketState ? marketState.userId : "",
         uploadTime: new Date(),
         message: messageValue,
+        hide: false,
       };
       const r = await messageAdd(messageBody);
       if (r && r < 300) {
@@ -389,7 +398,7 @@ const MarketplaceShowOne = (): JSX.Element => {
           _id: Math.random().toString().slice(-9),
           sendUserId: loginUser ? loginUser._id : "",
           receiveUserId: marketState ? marketState.userId : "",
-          link: ``,
+          link: `${windowLink}/ProfileMessage`,
           uploadTime: new Date().valueOf(),
           type: AutoReplyEnum.Message,
         });

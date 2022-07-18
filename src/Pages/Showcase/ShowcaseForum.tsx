@@ -251,7 +251,13 @@ const ShowcaseForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (newReplyHtml[index].trim() == "") {
+    if (loginUser?.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (newReplyHtml[index].trim() == "") {
       openNotification(
         "please input comment",
         NotificationColor.Warning,
@@ -316,7 +322,21 @@ const ShowcaseForum = ({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (newSecondReplyHtml[index][secondIndex].trim() == "") {
+    const replyName = (allShowCases[index].replies as ShowCaseReply[])[
+      secondIndex
+    ].userName;
+    if (loginUser?.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (
+      newSecondReplyHtml[index][secondIndex].trim() == "" ||
+      newSecondReplyHtml[index][secondIndex]
+        .trim()
+        .replace(`@${replyName}`, "") == ""
+    ) {
       openNotification(
         "please input comment",
         NotificationColor.Warning,

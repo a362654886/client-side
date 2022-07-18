@@ -62,6 +62,14 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
     setLink((e.target as HTMLInputElement).value);
 
   const post = async () => {
+    if (loginUser?.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+      return;
+    }
     if (resizeUploadImg == "") {
       openNotification(
         "Please input image",
@@ -133,7 +141,8 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
               border={"1px solid #F6F6F6"}
               text={""}
               setImg={(value: ImageBody) => {
-                //
+                setLoadImg(value.imgBase64);
+                setShowCropper(true);
               }}
               imageAdd={false}
               margin={"20px auto"}
@@ -143,19 +152,23 @@ const AnimeOneProductAdd = ({ toProduct }: IProps): JSX.Element => {
           <img src={`${resizeUploadImg}`} />
         )}
       </div>
-      <ImageUpload
-        width={"240px"}
-        height={"32px"}
-        textColor={"black"}
-        backGroundColor={"#F6F6F6"}
-        border={"1px solid #F6F6F6"}
-        text={"Input Product Image"}
-        setImg={(value: ImageBody) => {
-          setLoadImg(value.imgBase64);
-          setShowCropper(true);
-        }}
-        margin={"20px auto"}
-      />
+      {resizeUploadImg == "" ? (
+        <></>
+      ) : (
+        <ImageUpload
+          width={"240px"}
+          height={"32px"}
+          textColor={"black"}
+          backGroundColor={"#F6F6F6"}
+          border={"1px solid #F6F6F6"}
+          text={"Input Product Image"}
+          setImg={(value: ImageBody) => {
+            setLoadImg(value.imgBase64);
+            setShowCropper(true);
+          }}
+          margin={"20px auto"}
+        />
+      )}
       <ProductInput>
         <h6>Shopping Link</h6>
         <Input placeholder={"link"} onChange={onChange}></Input>

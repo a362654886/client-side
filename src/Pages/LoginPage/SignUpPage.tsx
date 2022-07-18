@@ -237,6 +237,7 @@ const SignUpPage = (): JSX.Element => {
     const user: User = {
       _id: email,
       userEmail: email,
+      contactEmail: "",
       password: password,
       firstName: firstName,
       lastName: lastName,
