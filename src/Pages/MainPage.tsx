@@ -519,9 +519,6 @@ const MainPage = (): JSX.Element => {
               <FooterText3 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
                 Privacy Policy
               </FooterText3>
-              <FooterText1 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
-                About Us
-              </FooterText1>
               <FooterText4
                 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4"
                 onClick={() => {
@@ -530,6 +527,9 @@ const MainPage = (): JSX.Element => {
               >
                 Contact us
               </FooterText4>
+              <FooterText1 className="col-xl-1.5 col-lg-2.4 col-md-2.4 col-sm-2.4">
+                About Us
+              </FooterText1>
             </FootContainer>
           </>
         ) : (
@@ -607,7 +607,6 @@ const MainPage = (): JSX.Element => {
             localStorage.setItem("cookieAlert", "true");
           }}
           visible={cookieValue}
-          height={370}
         >
           <div>
             <p>
@@ -615,6 +614,33 @@ const MainPage = (): JSX.Element => {
               access efficiency. By using our website and services, you agree to
               our use of cookies.
             </p>
+            <div
+              style={{ display: "flex", width: "220px", margin: "0px auto" }}
+            >
+              <AnimeButton
+                para=""
+                text={"Learn more"}
+                width="150px"
+                height="32px"
+                textColor="#4BA3C3"
+                backGroundColor="#ecf9fe"
+                borderColor="white"
+                buttonClick={() => console.log("")}
+              />
+              <AnimeButton
+                para=""
+                text={"OK"}
+                width="120px"
+                height="32px"
+                textColor="black"
+                backGroundColor="white"
+                borderColor="black"
+                buttonClick={() => {
+                  setCookieValue(false);
+                  localStorage.setItem("cookieAlert", "true");
+                }}
+              />
+            </div>
           </div>
         </MobileCookieDiv>
       )}

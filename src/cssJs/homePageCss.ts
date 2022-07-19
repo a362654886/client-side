@@ -415,11 +415,11 @@ export const CookieDiv = styled(Drawer)`
 
 export const MobileCookieDiv = styled(Drawer)`
   .ant-drawer-wrapper-body {
-    height: 370px;
+    height: auto;
   }
   .ant-drawer-body {
     background-color: #ecf9fe;
-    height: 370px;
+    height: auto;
   }
   p {
     margin-top: 16px;
