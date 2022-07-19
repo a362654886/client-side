@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import AnimeButton from "../../components/Button";
-import SettingImg from "../../components/SettingImg";
 import {
   ButtonsDiv,
   ContactInfoContext,
@@ -44,22 +43,8 @@ import showCaseAwesomeClick from "../../files/showCaseAwesomeClick.svg";
 import arrows from "../../files/arrows.svg";
 import Flag from "react-flagkit";
 import { flagGet } from "../../helperFns/flag";
-import { MarketFollow } from "../../cssJs/MarketPage/MarketPlaceCss";
-import marketFollow from "../../files/Icon-Follow.svg";
-import marketFollowing from "../../files/IconFollowing.svg";
-import marketMessage from "../../files/marketMessage.svg";
 import { MessageDiv, MessageModal } from "../../cssJs/settingImgCss";
 import TextArea from "antd/lib/input/TextArea";
-import { LoadingType } from "../../types/EnumTypes";
-import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
-import { MessageType } from "../../types/MessageType";
-import { messageAdd } from "../../api/messageAPI";
-import {
-  NotificationColor,
-  NotificationTitle,
-  openNotification,
-} from "../../helperFns/popUpAlert";
-import { LOGIN_USER_UPDATE_FOLLOW } from "../../redux/loginUser";
 import { useParams } from "react-router-dom";
 import { userGet } from "../../api/userApi";
 import { PROFILE_USER_UPDATE } from "../../redux/profileUser";
@@ -96,18 +81,24 @@ const ProfileLoginPage = (): JSX.Element => {
 
   useEffect(() => {
     (async function anyNameFunction() {
-      const user = await userGet(para.id);
+      const user = await userGet(para.id.replace("Like", ""));
       dispatch({
         payload: user,
         type: PROFILE_USER_UPDATE,
       });
-      await getFollowers(para.id);
+      await getFollowers(para.id.replace("Like", ""));
     })();
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (para.id.indexOf("Like") != -1) {
+      setChooseButton(2);
+    }
+  }, [para]);
 
   useEffect(() => {
     const market = history.location.search.replace("?market=", "");

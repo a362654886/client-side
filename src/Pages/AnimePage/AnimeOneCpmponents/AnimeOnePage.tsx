@@ -299,9 +299,28 @@ const AnimeOnePage = ({ toPage, updateAnime }: IProps): JSX.Element => {
               style={{
                 width: getWidth() > 600 ? "100%" : "269px",
                 margin: getWidth() > 600 ? "" : "0px auto",
+                display: "flex",
               }}
             >
               {getWhereToWatch()}
+              <p
+                style={{
+                  cursor: "pointer",
+                  lineHeight: "40px",
+                  marginBottom: "0px",
+                  fontSize: "16px",
+                  color: "#4BA3C3",
+                }}
+                onClick={() => {
+                  history.push({
+                    pathname: `/profileLoginUser/${
+                      loginUser ? loginUser._id : ""
+                    }Like`,
+                  });
+                }}
+              >
+                see your like-it here
+              </p>
             </div>
           </AnimOneWhereWatchLabel>
           <LikeButton
