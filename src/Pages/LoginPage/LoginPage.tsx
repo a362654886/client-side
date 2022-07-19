@@ -16,7 +16,6 @@ import {
 import { AUTH_FAIL, AUTH_LOADING, AUTH_SUCCESS } from "../../redux/auth";
 import { LOGIN_USER_ADD } from "../../redux/loginUser";
 import { LoadingType, LoginType } from "../../types/EnumTypes";
-import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
 import { PROFILE_USER_UPDATE } from "../../redux/profileUser";
 import avatarUpload from "../../files/avatarUpload.png";

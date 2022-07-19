@@ -208,12 +208,12 @@ const AdminCreatComponent = ({ editAnime }: IProps): JSX.Element => {
         <h6>Aired:</h6>
         <DatePicker
           picker="month"
-          onChange={(e) => setAiredStart(moment(e).format(`YYYY MM`))}
+          onChange={(e) => setAiredStart(moment(e).format(`MM/YYYY`))}
         />
         <p>-</p>
         <DatePicker
           picker="month"
-          onChange={(e) => setAiredEnd(moment(e).format(`YYYY MM`))}
+          onChange={(e) => setAiredEnd(moment(e).format(`MM/YYYY`))}
         />
       </AdminAiredInput>
       <AdminAnimeInput>

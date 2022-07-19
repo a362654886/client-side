@@ -421,7 +421,13 @@ const MarketplaceShowOne = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (newReplyHtml == "") {
+    if (loginUser?.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (newReplyHtml == "") {
       openNotification(
         "please input comment",
         NotificationColor.Warning,
@@ -637,7 +643,13 @@ const MarketplaceShowOne = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    if (newSecondReplyHtml[secondIndex] == "") {
+    if (loginUser?.block == true) {
+      openNotification(
+        "your account has been blocked,please connect Administrator",
+        NotificationColor.Warning,
+        NotificationTitle.Warning
+      );
+    } else if (newSecondReplyHtml[secondIndex] == "") {
       openNotification(
         "please input comment",
         NotificationColor.Warning,

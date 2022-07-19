@@ -67,6 +67,7 @@ import { getWidth } from "../../helperFns/widthFn";
 import { Slider } from "antd";
 import { AwesomeLevelType } from "../../types/awesomeLevel";
 import { getLevel } from "../../helperFns/profileFn";
+import avatarUpload from "../../files/avatarUpload.png";
 
 interface Para {
   id: string;
@@ -229,8 +230,8 @@ const ProfileLoginPage = (): JSX.Element => {
     return loginUser
       ? loginUser.avatarImage
         ? loginUser.avatarImage[0].imageUrl
-        : ""
-      : "";
+        : avatarUpload
+      : avatarUpload;
   };
 
   const getOneLevel = getLevel(allLevels, loginUser ? loginUser.awesomeNum : 0);
@@ -251,7 +252,7 @@ const ProfileLoginPage = (): JSX.Element => {
                 {`${loginUser ? loginUser.firstName : ""}.${
                   loginUser
                     ? loginUser.lastName.substring(0, 1).toUpperCase()
-                    : ""
+                    : "Not Logged In"
                 }`}
                 <Flag
                   style={{ marginLeft: "5px" }}
@@ -333,7 +334,9 @@ const ProfileLoginPage = (): JSX.Element => {
         <ContactInfoContext>
           <InfoDiv>
             <h6>Email:</h6>
-            <p style={{ color: "#4ba3c3" }}>{(loginUser as User).userEmail}</p>
+            <p style={{ color: "#4ba3c3" }}>
+              {(loginUser as User).contactEmail}
+            </p>
           </InfoDiv>
           <InfoDiv>
             <h6>Tel:</h6>

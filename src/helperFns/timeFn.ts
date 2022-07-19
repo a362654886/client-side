@@ -8,9 +8,9 @@ export const getDate = (date: Date): string => {
 export const _getDate = (date: Date): string => {
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  return `${month < 10 ? `0${month}` : month}-${
+  return `${
     day < 10 ? `0${day}` : day
-  }-${date.getFullYear()}`;
+  }-${month < 10 ? `0${month}` : month}-${date.getFullYear()}`;
 };
 
 export const getTimeDifference = (time: Date): string => {

@@ -444,7 +444,7 @@ const ProfilePage = (): JSX.Element => {
           <InfoDiv>
             <h6>Email:</h6>
             <p style={{ color: "#4ba3c3" }}>
-              {(profileUser as User).userEmail}
+              {(profileUser as User).contactEmail}
             </p>
           </InfoDiv>
           <InfoDiv>
