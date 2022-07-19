@@ -37,6 +37,14 @@ const LoginPage = (): JSX.Element => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key == "Enter") {
+        login();
+      }
+    });
+  }, []);
+
   const toPage = (url: string) => history.push(url);
 
   const login = async () => {

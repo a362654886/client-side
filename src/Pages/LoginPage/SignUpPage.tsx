@@ -94,6 +94,13 @@ const SignUpPage = (): JSX.Element => {
     //
   }, [uploadImg, time, chooseAvatar, emailCheck]);
 
+  useEffect(() => {
+    window.addEventListener("keydown", submit);
+    return () => {
+      window.addEventListener("keydown", submit);
+    };
+  }, []);
+
   const getAvatars = async () => {
     //get all plate
     const avatars: Avatar[] | null = await avatarsGet(true);
