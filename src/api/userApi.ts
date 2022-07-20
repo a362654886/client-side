@@ -74,12 +74,13 @@ export const userAdminUpdate = async (
 
 export const userBlockGet = async (
   page: number,
-  id: string
+  id: string,
+  state: boolean
 ): Promise<{
   result: User[];
   count: number;
 }> => {
-  const endpoint = basicURL + `userBlockGet?page=${page}&id=${id}`;
+  const endpoint = basicURL + `userBlockGet?page=${page}&id=${id}&state=${state}`;
   return Axios.get(endpoint)
     .then((response) => {
       const user = response.data;

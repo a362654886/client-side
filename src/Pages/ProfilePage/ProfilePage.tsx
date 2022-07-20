@@ -449,7 +449,7 @@ const ProfilePage = (): JSX.Element => {
           </InfoDiv>
           <InfoDiv>
             <h6>Tel:</h6>
-            <p>{1111}</p>
+            <p>{(profileUser as User).tel}</p>
           </InfoDiv>
           <InfoDiv>
             <h6>Location:</h6>
@@ -467,7 +467,7 @@ const ProfilePage = (): JSX.Element => {
             </p>
             <p>
               <img src={profileLink} />
-              {(profileUser as User).ins}
+              {(profileUser as User).link}
             </p>
           </SocialDiv>
         </ContactInfoContext>

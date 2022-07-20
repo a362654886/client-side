@@ -326,12 +326,14 @@ const ProfileLoginPage = (): JSX.Element => {
           <InfoDiv>
             <h6>Email:</h6>
             <p style={{ color: "#4ba3c3" }}>
-              {(loginUser as User).contactEmail}
+              {(loginUser as User).contactEmail
+                ? (loginUser as User).contactEmail
+                : ""}
             </p>
           </InfoDiv>
           <InfoDiv>
             <h6>Tel:</h6>
-            <p>{1111}</p>
+            <p>{(loginUser as User).tel}</p>
           </InfoDiv>
           <InfoDiv>
             <h6>Location:</h6>
@@ -349,7 +351,7 @@ const ProfileLoginPage = (): JSX.Element => {
             </p>
             <p>
               <img src={profileLink} />
-              {(loginUser as User).ins}
+              {(loginUser as User).link}
             </p>
           </SocialDiv>
         </ContactInfoContext>

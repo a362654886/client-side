@@ -343,15 +343,16 @@ const SignUpPage = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
+    const valueString = new Date().valueOf().toString();
     await avatarAdd({
       _id: new Date().valueOf().toString(),
-      imageName: imgName + new Date().valueOf().toString(),
+      imageName: valueString + imgName,
       imageUrl: value,
       privateAvatar: true,
     });
     setChooseAvatarIndex({
       _id: new Date().valueOf().toString(),
-      imageName: imgName + new Date().valueOf().toString(),
+      imageName: valueString + imgName,
       imageUrl: value,
       privateAvatar: true,
     });

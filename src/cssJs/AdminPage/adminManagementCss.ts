@@ -109,6 +109,7 @@ export const AdminBlockChildEle = styled.div`
     line-height: 32px;
     font-size: 16px;
     font-weight: bold;
+    width: 250px;
   }
   button {
     margin-left: 100px;

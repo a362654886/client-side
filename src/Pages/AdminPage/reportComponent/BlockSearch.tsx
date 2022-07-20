@@ -26,13 +26,15 @@ const BlockSearch = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const [searchValue, setSearchValue] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(0);
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
     (async function anyNameFunction() {
-      await search();
+      if (page > 0) {
+        await search();
+      }
     })();
   }, [page]);
 
@@ -50,7 +52,21 @@ const BlockSearch = (): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    const result = await userBlockGet(page, searchValue);
+    const result = await userBlockGet(page, searchValue, true);
+    setAllUsers(result.result);
+    setCount(result.count);
+    dispatch({
+      payload: LoadingType.CLOSE,
+      type: LOADING_CLOSE,
+    });
+  };
+
+  const searchOne = async () => {
+    dispatch({
+      payload: LoadingType.OPEN,
+      type: LOADING_OPEN,
+    });
+    const result = await userBlockGet(1, searchValue, false);
     setAllUsers(result.result);
     setCount(result.count);
     dispatch({
@@ -60,7 +76,6 @@ const BlockSearch = (): JSX.Element => {
   };
 
   const unBlock = async (user: User) => {
-    console.log(user);
     dispatch({
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
@@ -90,10 +105,27 @@ const BlockSearch = (): JSX.Element => {
           textColor="white"
           backGroundColor="#FFC300"
           borderColor="white"
-          buttonClick={() => search()}
+          buttonClick={() => searchOne()}
         />
       </SearchDiv>
-      <AdminBlockAllBlock>All Blocked</AdminBlockAllBlock>
+      <div style={{ marginLeft: "8px", marginBottom: "8px" }}>
+        <AnimeButton
+          para=""
+          text="All Blocked "
+          width="120px"
+          height="32px"
+          textColor="black"
+          backGroundColor="white"
+          borderColor="black"
+          buttonClick={() => {
+            if (page != 1) {
+              setPage(1);
+            } else {
+              search();
+            }
+          }}
+        />
+      </div>
       {allUsers.map((user, index) => {
         return (
           <AdminBlockEle key={index}>

@@ -164,7 +164,6 @@ const MarketplaceShowOne = (): JSX.Element => {
     (async function anyNameFunction() {
       await getAllTags();
       const market = await marketGet(para.id);
-      await getMoreItems(para.id, replyPage);
       if (market && market.imageArr) {
         setImgArr(market.imageArr);
         addImg(market.imageArr);
@@ -174,6 +173,7 @@ const MarketplaceShowOne = (): JSX.Element => {
         setState(market.state);
         setMarketState(market);
       }
+      await getMoreItems(para.id, replyPage);
     })();
   }, []);
 

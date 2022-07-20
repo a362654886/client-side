@@ -58,7 +58,7 @@ const AvatarSetting = (): JSX.Element => {
     setLoading(true);
     await avatarAdd({
       _id: new Date().valueOf().toString(),
-      imageName: value.imgName + new Date().valueOf().toString(),
+      imageName: new Date().valueOf().toString() + value.imgName,
       imageUrl: value.imgBase64,
       privateAvatar: false,
     });

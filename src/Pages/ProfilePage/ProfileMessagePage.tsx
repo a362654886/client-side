@@ -104,7 +104,7 @@ const ProfileMessagePage = (): JSX.Element => {
         }
       }
     })();
-  }, [ifIn]);
+  }, [ifIn, loginUser]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

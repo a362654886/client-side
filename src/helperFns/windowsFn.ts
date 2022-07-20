@@ -13,7 +13,7 @@ export const openNewWindowPath = (url: string): void => {
 };
 
 export const openAnimeNewWindowPath = (id: string): void => {
-  window.open(`${windowLink}/?${id}`, `_blank`);
+  window.open(`${windowLink}/anime?${id}`, `_blank`);
 };
 
 export const openReportContextPath = (): void => {

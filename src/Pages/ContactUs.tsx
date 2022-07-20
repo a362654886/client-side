@@ -14,22 +14,16 @@ const ContactUs = (): JSX.Element => {
   const [message, setMessage] = useState<string>("");
 
   const sendEmail = async () => {
-    await popUpAPIResult<Promise<number | null>>(
-      emailPost(
-        ``,
-        `
-        <div>name: ${name},
-        email:${email},
-        title:${title},
-        message:${message}</div>
-      `,
-        "contact us",
-        "customerService"
-      ),
-      "send email fail",
-      () => {
-        //
-      }
+    await emailPost(
+      ``,
+      `
+      <div>name: ${name},
+      email:${email},
+      title:${title},
+      message:${message}</div>
+    `,
+      "contact us",
+      "customerService"
     );
   };
 

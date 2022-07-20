@@ -28,6 +28,10 @@ const AdminAdminAuthorization = (): JSX.Element => {
 
   const editEmail = async (id: string, role: string) => {
     await userAdminUpdate(id, role);
+    const users = await userAdminGet();
+    if (users) {
+      setUsers(users);
+    }
   };
 
   return (
@@ -57,7 +61,9 @@ const AdminAdminAuthorization = (): JSX.Element => {
             <>
               <div style={{ display: "flex" }}>
                 <p style={{ width: "250px" }}>{user.userEmail}</p>
-                <Button onClick={() => editEmail(user._id, "")}>Delete</Button>
+                <Button onClick={() => editEmail(user.userEmail, "")}>
+                  Delete
+                </Button>
               </div>
             </>
           );

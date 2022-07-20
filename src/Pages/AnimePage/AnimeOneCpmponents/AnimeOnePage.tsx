@@ -303,24 +303,6 @@ const AnimeOnePage = ({ toPage, updateAnime }: IProps): JSX.Element => {
               }}
             >
               {getWhereToWatch()}
-              <p
-                style={{
-                  cursor: "pointer",
-                  lineHeight: "40px",
-                  marginBottom: "0px",
-                  fontSize: "16px",
-                  color: "#4BA3C3",
-                }}
-                onClick={() => {
-                  history.push({
-                    pathname: `/profileLoginUser/${
-                      loginUser ? loginUser._id : ""
-                    }Like`,
-                  });
-                }}
-              >
-                see your like-it here
-              </p>
             </div>
           </AnimOneWhereWatchLabel>
           <LikeButton
@@ -329,6 +311,25 @@ const AnimeOnePage = ({ toPage, updateAnime }: IProps): JSX.Element => {
             }}
           >
             {getLikesButton()}
+            <p
+              style={{
+                cursor: "pointer",
+                lineHeight: "32px",
+                marginBottom: "0px",
+                fontSize: "16px",
+                color: "#4BA3C3",
+                marginLeft: "8px",
+              }}
+              onClick={() => {
+                history.push({
+                  pathname: `/profileLoginUser/${
+                    loginUser ? loginUser._id : ""
+                  }Like`,
+                });
+              }}
+            >
+              see your like-it here
+            </p>
           </LikeButton>
           <div
             style={{
