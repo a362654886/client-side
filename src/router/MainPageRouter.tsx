@@ -40,7 +40,6 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={Report} path="/report" />
         <Route component={ContactUs} path="/contactUs" />
         <Route component={ForgetPassword} path="/forgetPassword/:email" />
-        <Route component={ErrorPage} path="/" />
       </Switch>
     </>
   );
