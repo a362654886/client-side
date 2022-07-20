@@ -504,8 +504,8 @@ const MainPage = (): JSX.Element => {
           )}
         </HeaderContainer>
       </Header>
-      <MainPageRouter />
       <ProfilePageRouter />
+      <MainPageRouter />
       <Footer>
         {size.width > 769 ? (
           <>
