@@ -257,7 +257,7 @@ const ProfileAccountPage = (): JSX.Element => {
     });
     setChooseAvatarIndex({
       _id: new Date().valueOf().toString(),
-      imageName: imgName + new Date().valueOf().toString(),
+      imageName: new Date().valueOf().toString() + imgName,
       imageUrl: value,
       privateAvatar: true,
     });
