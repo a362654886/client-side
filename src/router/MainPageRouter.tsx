@@ -5,6 +5,7 @@ import AnimeOneSignalPage from "../Pages/AnimePage/AnimeOneSignalPage";
 import AnimeShowPage from "../Pages/AnimePage/AnimeShowPage";
 import ContactUs from "../Pages/ContactUs";
 import Discovery from "../Pages/Discovery/Discovery";
+import ErrorPage from "../Pages/ErrorPage";
 import ForgetPassword from "../Pages/ForgetPassword";
 import HomePage from "../Pages/HomePage/HomePage";
 import ForgetPage from "../Pages/LoginPage/forgotPage";
@@ -38,10 +39,8 @@ const MainPageRouter = (): JSX.Element => {
         <Route component={NewOnePage} path="/oneNew/:id" />
         <Route component={Report} path="/report" />
         <Route component={ContactUs} path="/contactUs" />
-        <Route
-          component={ForgetPassword}
-          path="/forgetPassword/:email"
-        />
+        <Route component={ForgetPassword} path="/forgetPassword/:email" />
+        <Route component={ErrorPage} path="/" />
       </Switch>
     </>
   );

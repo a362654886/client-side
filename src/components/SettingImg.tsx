@@ -122,7 +122,7 @@ const SettingImg = ({
       _id: Math.random().toString().slice(-9),
       sendUserId: loginUser ? loginUser._id : "",
       receiveUserId: userId,
-      link: `${windowLink}/profileFollow/${
+      link: `${windowLink}/profileLoginUserFollowPage/${
         loginUser ? loginUser._id : ""
       }false`,
       uploadTime: new Date().valueOf(),

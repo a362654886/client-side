@@ -109,13 +109,7 @@ const MallTShirt = ({ changeAttributes }: IProps): JSX.Element => {
         {quantities.map((item, index) => {
           return (
             <MallCustomerCheckBoxDiv key={index}>
-              <MallCustomerCheckBox
-                onChange={(e) => {
-                  changeCheckBox(index);
-                }}
-              >
-                {item.name}
-              </MallCustomerCheckBox>
+              <p>{item.name}</p>
               <MallCustomerInput
                 value={item.value}
                 onChange={(e) => changeValue(index, e.target.value)}

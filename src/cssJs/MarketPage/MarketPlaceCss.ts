@@ -12,6 +12,7 @@ export const MarketPlaceTitleDiv = styled.div`
     margin-top: 24px;
     height: 32px;
     margin-bottom: 32px;
+    margin-right: 24px;
   }
 `;
 

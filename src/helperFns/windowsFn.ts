@@ -8,6 +8,10 @@ export const openNewWindowBlank = (url: string): void => {
   window.open(`${url}`, `_blank`);
 };
 
+export const openNewMarketPath = (): void => {
+  window.open(`${windowLink}/marketplace/show/null`, `_blank`);
+};
+
 export const openNewWindowPath = (url: string): void => {
   window.open(`${windowLink}/oneNew/${url}`, `_blank`);
 };

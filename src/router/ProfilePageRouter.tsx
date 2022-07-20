@@ -5,6 +5,7 @@ import ProfileMessagePage from "../Pages/ProfilePage/ProfileMessagePage";
 import ProfileFollowPage from "../Pages/ProfilePage/profileFollowPage";
 import ProfileLevelPage from "../Pages/ProfilePage/ProfileLevelPage";
 import ProfileLoginPage from "../Pages/ProfilePage/ProfileLoginPage";
+import profileLoginUserFollowPage from "../Pages/ProfilePage/profileLoginUserFollowPage";
 
 const ProfilePageRouter = (): JSX.Element => {
   return (
@@ -12,12 +13,13 @@ const ProfilePageRouter = (): JSX.Element => {
       <Switch>
         <Route component={ProfileMessagePage} path="/ProfileMessage" />
         <Route component={ProfileSettingPage} path="/ProfileSetting" />
-        <Route
-          component={ProfileFollowPage}
-          path="/profileFollow/:id"
-        />
+        <Route component={ProfileFollowPage} path="/profileFollow/:id" />
         <Route component={ProfileLevelPage} path="/profileLevel" />
         <Route component={ProfileLoginPage} path="/profileLoginUser/:id" />
+        <Route
+          component={profileLoginUserFollowPage}
+          path="/profileLoginUserFollowPage/:id"
+        />
       </Switch>
     </>
   );

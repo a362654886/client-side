@@ -117,6 +117,7 @@ import forumMore from "../../files/forumMore.svg";
 import { windowLink } from "../../globalValues";
 import { autoReplyAdd } from "../../api/autoReplyAPI";
 import { AutoReplyEnum } from "../../types/autoReplyType";
+import { openNewMarketPath } from "../../helperFns/windowsFn";
 
 interface Para {
   id: string;
@@ -1286,16 +1287,28 @@ const MarketplaceShowOne = (): JSX.Element => {
       >
         <MarketPlaceTitleDiv>
           <MarketPlaceTitle>Marketplace</MarketPlaceTitle>
-          <AnimeButton
-            para=""
-            text={"List an Item"}
-            width="200px"
-            height="32px"
-            textColor="white"
-            backGroundColor="#FFC300"
-            borderColor="#FFC300"
-            buttonClick={() => history.push(`/marketplace/create`)}
-          />
+          <div style={{ display: "flex" }}>
+            <AnimeButton
+              para=""
+              text={"List an Item"}
+              width="200px"
+              height="32px"
+              textColor="white"
+              backGroundColor="#FFC300"
+              borderColor="#FFC300"
+              buttonClick={() => history.push(`/marketplace/create`)}
+            />
+            <AnimeButton
+              para=""
+              text={"All Items"}
+              width="120px"
+              height="32px"
+              textColor="black"
+              backGroundColor="white"
+              borderColor="black"
+              buttonClick={() => openNewMarketPath()}
+            />
+          </div>
         </MarketPlaceTitleDiv>
         <MarketBodyDiv>
           <MarketShowOneTitle>{title}</MarketShowOneTitle>

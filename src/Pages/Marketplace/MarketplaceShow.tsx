@@ -42,6 +42,7 @@ import { marketTagAllGet } from "../../api/tagAPI";
 import { TagType } from "../../types/tagType";
 import hotIcon from "../../files/MarketHotTags.svg";
 import { ShowcaseTagText } from "../../cssJs/ShowCasePage/showCaseCss";
+import { openNewMarketPath } from "../../helperFns/windowsFn";
 
 export enum FilterEnum {
   Latest = "Latest",
@@ -333,16 +334,28 @@ const MarketplaceShow = (): JSX.Element => {
     >
       <MarketPlaceTitleDiv>
         <MarketPlaceTitle>Marketplace</MarketPlaceTitle>
-        <AnimeButton
-          para=""
-          text={"List an Item"}
-          width="200px"
-          height="32px"
-          textColor="white"
-          backGroundColor="#FFC300"
-          borderColor="#FFC300"
-          buttonClick={() => history.push(`/marketplace/create`)}
-        />
+        <div style={{ display: "flex" }}>
+          <AnimeButton
+            para=""
+            text={"List an Item"}
+            width="200px"
+            height="32px"
+            textColor="white"
+            backGroundColor="#FFC300"
+            borderColor="#FFC300"
+            buttonClick={() => history.push(`/marketplace/create`)}
+          />
+          <AnimeButton
+            para=""
+            text={"All Items"}
+            width="120px"
+            height="32px"
+            textColor="black"
+            backGroundColor="white"
+            borderColor="black"
+            buttonClick={() => openNewMarketPath()}
+          />
+        </div>
       </MarketPlaceTitleDiv>
       {para.id != "null" ? <ShowcaseTagText>{para.id}</ShowcaseTagText> : <></>}
       <MarketBodyDiv>
