@@ -209,6 +209,7 @@ const SettingImg = ({
       <MessageModal
         footer={[]}
         onCancel={() => setMessageVisible(false)}
+        zIndex={20000}
         visible={messageVisible}
       >
         <MessageDiv>

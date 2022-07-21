@@ -1471,7 +1471,6 @@ const ShowcaseMangaOne = (): JSX.Element => {
               left: button.text == "Illustrations" ? "138px" : "0px",
               top: button.text == "Manga" ? "58px" : "15px",
             };
-
       return (
         <div key={index} style={style as React.CSSProperties}>
           <AnimeButton
@@ -1479,18 +1478,18 @@ const ShowcaseMangaOne = (): JSX.Element => {
             text={button.text}
             width="120px"
             height="32px"
-            textColor={index == 2 ? "black" : "#4BA3C3"}
-            backGroundColor={index == 2 ? "#AAFFC9" : "white"}
-            borderColor={index == 2 ? "#AAFFC9" : "#4BA3C3"}
-            buttonClick={() =>
-              index == 2
-                ? console.log("")
-                : toPage(
-                    index == 0
-                      ? `/showcase/showCollection?page=1`
-                      : "/showcase/showIllustrations?page=1"
-                  )
-            }
+            textColor="#4BA3C3"
+            backGroundColor="white "
+            borderColor="#4BA3C3"
+            buttonClick={() => {
+              if (index == 0) {
+                toPage(`/showcase/showCollection?page=1`);
+              } else if (index == 1) {
+                toPage(`/showcase/showIllustrations?page=1`);
+              } else {
+                toPage(`/showcase/showManga?page=1`);
+              }
+            }}
           />
         </div>
       );

@@ -392,7 +392,7 @@ const AnimeOneVideo = ({
           <MiddleBiggerDiv>
             <MoreRight onClick={() => (toVideo ? toVideo(1) : {})}>
               <img src={moreRightImg} />
-              <p>More</p>
+              <p>View All</p>
             </MoreRight>
           </MiddleBiggerDiv>
         </>

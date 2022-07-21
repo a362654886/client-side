@@ -203,7 +203,7 @@ export const ShowcaseReply = styled.div`
   word-wrap: break-word;
 `;
 
-export const ShowcaseTag = styled.span`
+export const ShowcaseTag = styled.label`
   span {
     margin-top: 8px;
     min-height: 40px;

@@ -334,41 +334,83 @@ const MarketplaceShowOne = (): JSX.Element => {
   const getMarketPricesDiv = () => {
     return marketPrices ? (
       marketPrices.map((item, index) => {
-        return (
-          <MarketPriceContextDiv key={index}>
-            <MarketPriceImg src={marketPrice} />
-            <ProfileWrapperDiv
-              userId={item.userId}
-              element={
-                <>
-                  <MarketItemImg src={`${item.userAvatar}`} />
-                  <MarketPricePriceName>
-                    {item.userName}
-                    <Flag
-                      style={{ marginLeft: "5px", marginRight: "10px" }}
-                      country={flagGet(
-                        item.userCountry ? item.userCountry : ""
-                      )}
-                    />
-                  </MarketPricePriceName>
-                </>
-              }
-            ></ProfileWrapperDiv>
-            <SettingImg
-              userId={item.userId}
-              userName={item.userName ? item.userName : ""}
-              userImg={item.userAvatar ? item.userAvatar : ""}
-              marginTop="8px"
-              type={ReportContextType.MARKET}
-              contextId={item._id}
-              resourceLink={`${windowLink}/marketplace/showOne//${marketState?._id}`}
-            />
-            <MarketItemTime style={{ marginTop: "4px" }}>
-              {_getDate(new Date(item.uploadTime))}
-            </MarketItemTime>
-            <MarketPriceNum>{`$${item.price} (NZD)`}</MarketPriceNum>
-          </MarketPriceContextDiv>
-        );
+        if (getWidth() > 600) {
+          return (
+            <MarketPriceContextDiv key={index}>
+              <MarketPriceImg src={marketPrice} />
+              <ProfileWrapperDiv
+                userId={item.userId}
+                element={
+                  <>
+                    <MarketItemImg src={`${item.userAvatar}`} />
+                    <MarketPricePriceName>
+                      {item.userName}
+                      <Flag
+                        style={{ marginLeft: "5px", marginRight: "10px" }}
+                        country={flagGet(
+                          item.userCountry ? item.userCountry : ""
+                        )}
+                      />
+                    </MarketPricePriceName>
+                  </>
+                }
+              ></ProfileWrapperDiv>
+              <SettingImg
+                userId={item.userId}
+                userName={item.userName ? item.userName : ""}
+                userImg={item.userAvatar ? item.userAvatar : ""}
+                marginTop="8px"
+                type={ReportContextType.MARKET}
+                contextId={item._id}
+                resourceLink={`${windowLink}/marketplace/showOne//${marketState?._id}`}
+              />
+              <MarketItemTime style={{ marginTop: "4px" }}>
+                {_getDate(new Date(item.uploadTime))}
+              </MarketItemTime>
+              <MarketPriceNum>{`$${item.price} (NZD)`}</MarketPriceNum>
+            </MarketPriceContextDiv>
+          );
+        } else {
+          return (
+            <>
+              <MarketPriceContextDiv key={index} style={{ height: "42px" }}>
+                <MarketPriceImg src={marketPrice} />
+                <ProfileWrapperDiv
+                  userId={item.userId}
+                  element={
+                    <>
+                      <MarketItemImg src={`${item.userAvatar}`} />
+                      <MarketPricePriceName>
+                        {item.userName}
+                        <Flag
+                          style={{ marginLeft: "5px", marginRight: "10px" }}
+                          country={flagGet(
+                            item.userCountry ? item.userCountry : ""
+                          )}
+                        />
+                      </MarketPricePriceName>
+                    </>
+                  }
+                ></ProfileWrapperDiv>
+                <SettingImg
+                  userId={item.userId}
+                  userName={item.userName ? item.userName : ""}
+                  userImg={item.userAvatar ? item.userAvatar : ""}
+                  marginTop="8px"
+                  type={ReportContextType.MARKET}
+                  contextId={item._id}
+                  resourceLink={`${windowLink}/marketplace/showOne//${marketState?._id}`}
+                />
+              </MarketPriceContextDiv>
+              <MarketPriceContextDiv key={index} style={{ height: "42px" }}>
+                <MarketItemTime style={{ marginTop: "4px" }}>
+                  {_getDate(new Date(item.uploadTime))}
+                </MarketItemTime>
+                <MarketPriceNum>{`$${item.price} (NZD)`}</MarketPriceNum>
+              </MarketPriceContextDiv>
+            </>
+          );
+        }
       })
     ) : (
       <></>
@@ -1536,7 +1578,12 @@ const MarketplaceShowOne = (): JSX.Element => {
               height: getWidth() > 600 ? "48px" : "226px",
             }}
           >
-            <div style={{ display: "flex", marginLeft: "16px" }}>
+            <div
+              style={{
+                display: "flex",
+                marginLeft: getWidth() > 600 ? "16px" : "36px",
+              }}
+            >
               <p>$</p>
               <Input
                 value={bidPrice}

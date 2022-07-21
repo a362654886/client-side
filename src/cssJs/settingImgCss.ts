@@ -25,6 +25,9 @@ export const SettingDiv = styled.div`
     border: 1px solid red;
     padding: 0px;
   }
+  .ant-modal-content {
+    z-index: 20000;
+  }
 `;
 
 export const MessageModal = styled(Modal)`
@@ -32,10 +35,12 @@ export const MessageModal = styled(Modal)`
   .ant-modal-body {
     width: 100%;
     height: 338px;
+    z-index: 20000;
   }
 `;
 
 export const MessageDiv = styled.div`
+  z-index: 100000;
   div {
     height: 56px;
     margin-top: 12px;

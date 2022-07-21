@@ -634,7 +634,7 @@ export const MarketPriceMoreDiv = styled.div`
 
 //tag
 
-export const MarketTag = styled.span`
+export const MarketTag = styled.label`
   span {
     margin-top: 8px;
     min-height: 40px;
