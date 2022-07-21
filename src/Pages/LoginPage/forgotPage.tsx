@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { emailPost } from "../../api/emailAPI";
-import { userGet } from "../../api/userApi";
+import { userEmailGet } from "../../api/userApi";
 import AnimeButton from "../../components/Button";
 import {
   EmailInput,
@@ -45,7 +45,7 @@ const ForgetPage = (): JSX.Element => {
       type: LOADING_OPEN,
     });
     if (email.trim() !== "") {
-      const user = await userGet(email);
+      const user = await userEmailGet(email);
       return user == null ? "this email don't exist" : true;
     } else {
       return "please input an email";

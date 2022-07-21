@@ -21,7 +21,7 @@ import {
   VitrifyButton,
 } from "../../cssJs/loginCss";
 import { Avatar, User } from "../../types/User";
-import { userAdd, userGet } from "../../api/userApi";
+import { userAdd, userEmailGet, userGet } from "../../api/userApi";
 import AlertBox, { ColorType } from "../../components/AlertBox";
 import { LoadingType } from "../../types/EnumTypes";
 import { LOADING_CLOSE, LOADING_OPEN } from "../../redux/loading";
@@ -141,7 +141,7 @@ const SignUpPage = (): JSX.Element => {
     if (!checkEmail) {
       setEmailCheck("please input valid email address");
     } else {
-      const user = await userGet(email);
+      const user = await userEmailGet(email);
       setEmailCheck(user !== null ? "this email already exists" : "");
     }
   };

@@ -41,6 +41,18 @@ export const userGet = async (id: string): Promise<User | null> => {
     });
 };
 
+export const userEmailGet = async (email: string): Promise<User | null> => {
+  const endpoint = basicURL + `userEmailGet?email=${email}`;
+  return Axios.get(endpoint)
+    .then((response) => {
+      const user = response.data;
+      return user;
+    })
+    .catch(() => {
+      return null;
+    });
+};
+
 export const userAdminGet = async (): Promise<User[] | null> => {
   const endpoint = basicURL + `userAdminGet`;
   return Axios.get(endpoint)
@@ -80,7 +92,8 @@ export const userBlockGet = async (
   result: User[];
   count: number;
 }> => {
-  const endpoint = basicURL + `userBlockGet?page=${page}&id=${id}&state=${state}`;
+  const endpoint =
+    basicURL + `userBlockGet?page=${page}&id=${id}&state=${state}`;
   return Axios.get(endpoint)
     .then((response) => {
       const user = response.data;

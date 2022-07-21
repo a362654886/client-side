@@ -75,7 +75,7 @@ const ForgetPassword = (): JSX.Element => {
       </InputDiv>
       <AnimeButton
         para=""
-        text={"Send"}
+        text={"Reset"}
         width="120px"
         height="32px"
         textColor="white"

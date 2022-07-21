@@ -166,7 +166,7 @@ const EpisodeShow = (): JSX.Element => {
       });
     } else {
       openNotification(
-        "this is the first page",
+        "This is the first episode",
         NotificationColor.Info,
         NotificationTitle.Info
       );
@@ -197,7 +197,7 @@ const EpisodeShow = (): JSX.Element => {
       });
     } else {
       openNotification(
-        "This is the end",
+        "This is the latest episode",
         NotificationColor.Info,
         NotificationTitle.Info
       );
@@ -218,7 +218,7 @@ const EpisodeShow = (): JSX.Element => {
         <EpisodeShowHeader>
           <EpisodeShowHeaderLeft
             style={{ fontSize: getWidth() > 600 ? "20px" : "13px" }}
-            onClick={() => history.push("/showcase/Manga")}
+            onClick={() => history.push(`/showcase/Manga/${episode?episode.mangaType:""}`)}
           >
             Back
           </EpisodeShowHeaderLeft>

@@ -352,7 +352,7 @@ const MarketplaceShow = (): JSX.Element => {
             height="32px"
             textColor="black"
             backGroundColor="white"
-            borderColor="black"
+            borderColor="#a1a1b3"
             buttonClick={() => openNewMarketPath()}
           />
         </div>
