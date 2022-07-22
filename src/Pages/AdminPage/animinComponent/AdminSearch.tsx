@@ -17,6 +17,7 @@ import { LoadingType } from "../../../types/EnumTypes";
 import editIcon from "../../../files/editIcon.svg";
 import deleteIcon from "../../../files/deleteIcon.svg";
 import getMoreImg from "../../../files/getMore.svg";
+import { openAnimeNewWindowPath } from "../../../helperFns/windowsFn";
 
 interface IProps {
   editAnime: (anime: Anime) => void;
@@ -51,12 +52,7 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
       payload: LoadingType.OPEN,
       type: LOADING_OPEN,
     });
-    const animeResult = await animeAllGet(
-      searchValue,
-      "new",
-      page,
-      pageSize
-    );
+    const animeResult = await animeAllGet(searchValue, "new", page, pageSize);
     if (animeResult) {
       setAllAnime(
         page == 1 ? animeResult.result : allAnime.concat(animeResult.result)
@@ -94,7 +90,9 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
     <>
       {allAnime.map((anime, index) => (
         <AnimeTableElement key={index}>
-          <AnimeTableItem>{anime.title}</AnimeTableItem>
+          <AnimeTableItem onClick={() => openAnimeNewWindowPath(anime._id)}>
+            {anime.title}
+          </AnimeTableItem>
           <div>
             <ViewButton onClick={() => editAnime(anime)}>
               <img src={editIcon} />
@@ -128,7 +126,11 @@ const AdminSearch = ({ editAnime }: IProps): JSX.Element => {
           backGroundColor="#FFC300"
           borderColor="white"
           buttonClick={() => {
-            setPage(1);
+            if (page == 1) {
+              search();
+            } else {
+              setPage(1);
+            }
           }}
         />
       </SearchDiv>

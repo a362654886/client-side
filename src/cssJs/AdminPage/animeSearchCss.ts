@@ -57,6 +57,7 @@ export const AnimeTableItem = styled.h2`
   height: auto;
   line-height: 40px;
   font-size: 24px;
+  cursor: pointer;
 `;
 
 export const ViewButton = styled.p`
@@ -66,6 +67,7 @@ export const ViewButton = styled.p`
   cursor: pointer;
   margin-right: 32px;
   display: flex;
+  margin-bottom: 24px;
   img {
     height: 24px;
     weight: 24px;
