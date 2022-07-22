@@ -67,14 +67,15 @@ export const AnimeShowBox = styled.div`
 
 export const AnimeBox = styled.div`
   width: 260px;
-  height: 344px;
+  min-height: 344px;
+  height: auto;
   margin-right: 19px;
   img {
     width: 260px;
     height: 264px;
   }
   h6 {
-    height: 80px;
+    min-height: 80px;
     padding: 8px;
     background-color: #f6f6f6;
     color: #4a4a4a;
@@ -110,6 +111,7 @@ export const LikeDiv = styled.div`
   height: 96px;
   background-color: #302d46;
   text-align: center;
+  margin-bottom: 24px;
   p {
     color: white;
     margin-bottom: 0px;

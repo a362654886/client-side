@@ -84,7 +84,7 @@ const AnimeOnePage = ({ toPage, updateAnime }: IProps): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    //
+    console.log(chooseAnime)
   }, [loginUser, chooseAnime, enterRate]);
 
   const likeAnimeFn = () => {
@@ -166,8 +166,9 @@ const AnimeOnePage = ({ toPage, updateAnime }: IProps): JSX.Element => {
   const getStar = (rate: RateBody | null) => {
     if (rate) {
       const rateNum = rate.totalRate / rate.ratePeople;
+      console.log(rateNum)
       return [1, 2, 3, 4, 5].map((n) => {
-        if (rateNum > n) {
+        if (rateNum >= n) {
           return (
             <img
               style={{ width: "24px", height: "24px", marginRight: "16px" }}

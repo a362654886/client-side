@@ -308,6 +308,7 @@ const MarketplaceShow = (): JSX.Element => {
           {marketTags.map((tag, index) => {
             return (
               <p
+                style={{ marginBottom: "24px" }}
                 onClick={() => {
                   history.push({
                     pathname: `/marketplace/show/${tag.text}`,

@@ -207,7 +207,11 @@ const ShowcaseCreate = (): JSX.Element => {
         );
       } else if (TagCheck(tags)) {
         await showCaseAdd(showCase);
-        backToShowcasePage();
+        if(showCaseType !== ShowCaseEnum.Manga){
+          backToShowcasePage();
+        }else{
+          history.push(`/showcase/Manga/${id}`);
+        }
       } else {
         openNotification(
           "please add # before tag",

@@ -260,11 +260,13 @@ export const TagSelectDiv = styled.div`
 export const TagSelect = styled(Select)`
   width: 80%;
   .ant-select-selection-overflow {
-    height: 32px;
+    height: auto;
+    min-height: 32px;
   }
   .ant-select-selection-item {
     background-color: #c1eeff;
-    height: 32px;
+    height: auto;
+    in-height: 32px;
     line-height: 32px;
     margin: 0px;
   }
